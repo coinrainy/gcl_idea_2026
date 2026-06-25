@@ -40,22 +40,31 @@ No experiments have been run.
 | Config skeletons | drafted |
 | Synthetic smoke tests | passed |
 | Pytest smoke tests | skipped: pytest not installed |
-| Actual split JSON files | not started |
+| Actual split JSON files | partial: Wiki-CS/Actor written, Cora blocked |
 | Config templates | not started |
 | Metric extraction script | not started |
 | Pilot summary script | not started |
-| Real dataset loaders | not started |
-| Real loader probe | partial: dependencies found, local caches missing |
+| Real dataset loaders | partial: Wiki-CS/Actor available, Cora loader timeout |
+| Stage 3.1.5 real loader probe | blocked: dependencies found, local caches missing |
 | Dataset metadata schema | drafted |
 | Dataset metadata writer | implemented |
 | Dataset metadata files | written |
-| Real split generation smoke | failed: no local dataset cache |
-| Validated split JSON files | not written |
+| Stage 3.1.5 real split generation smoke | blocked: no local dataset cache |
+| Validated split JSON files | partial: Wiki-CS/Actor written and validated |
 | Training scripts | not started |
 | Real-data smoke tests | not started |
 | Pilot runs | not started |
-| Stage 3.2 | blocked |
+| Stage 3.2 | planning_only_allowed; pilot_run_blocked |
 | Stage 3.1.5 auditor report | blocked |
+| Controlled dataset access | partial: Wiki-CS/Actor passed, Cora blocked by PyG Planetoid timeout |
+| Stage 3.1.6 dataset metadata files | written for Cora/Wiki-CS/Actor |
+| Stage 3.1.6 validated split JSON files | partial: Wiki-CS/Actor written and validated |
+| Cora split JSON | blocked: PyG Planetoid `FSTimeoutError` |
+| Wiki-CS split JSON | written and validated: official_wikics seeds 0,1,2 |
+| Actor split JSON | written and validated: heterophily_fixed seeds 0,1,2 |
+| Evaluator runs | not started |
+| Stage 3.1.6 auditor report | WARN |
+| Cora-including Stage 3.2 pilot/GPU run | blocked until Cora split is fixed or scope is explicitly narrowed |
 | Kill-condition checklist | specified in Stage 2B docs |
 
 ## Rules

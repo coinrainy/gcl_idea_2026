@@ -1,4 +1,4 @@
-"""Dataset metadata writer for Stage 3.1.5."""
+"""Dataset metadata writer for loader and split readiness stages."""
 
 from __future__ import annotations
 
@@ -9,6 +9,20 @@ from typing import Any
 from gcl_diag.io.schema_validate import load_json, validate
 
 
+APPROVED_CONTROLLED_DOWNLOAD_DATASETS = {"Cora", "Wiki-CS", "Actor"}
+FORBIDDEN_METADATA_FIELDS = {
+    "accuracy",
+    "loss",
+    "performance",
+    "performance_table",
+    "embedding",
+    "embeddings",
+    "objective_ranking",
+    "test_label_distribution",
+    "class_distribution_test",
+}
+
+
 def build_metadata(
     *,
     dataset_name: str,
@@ -16,6 +30,9 @@ def build_metadata(
     loader_status: str,
     local_cache_used: bool = False,
     download_attempted: bool = False,
+    data_access_mode: str = "no_download",
+    cache_path: str | None = None,
+    download_source: str | None = None,
     num_nodes: int | None = None,
     num_edges: int | None = None,
     num_features: int | None = None,
@@ -33,6 +50,9 @@ def build_metadata(
         "loader_status": loader_status,
         "local_cache_used": local_cache_used,
         "download_attempted": download_attempted,
+        "data_access_mode": data_access_mode,
+        "cache_path": cache_path,
+        "download_source": download_source,
         "num_nodes": num_nodes,
         "num_edges": num_edges,
         "num_features": num_features,
@@ -53,8 +73,7 @@ def write_metadata(
     path: str | Path,
     schema_path: str | Path = "schemas/dataset_metadata_schema.json",
 ) -> dict[str, Any]:
-    if metadata.get("download_attempted") is not False:
-        raise ValueError("Stage 3.1.5 metadata must record download_attempted=false")
+    _validate_metadata_boundaries(metadata)
     validate(metadata, load_json(schema_path))
     out = Path(path)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -62,3 +81,14 @@ def write_metadata(
         json.dump(metadata, f, indent=2, sort_keys=True)
         f.write("\n")
     return metadata
+
+
+def _validate_metadata_boundaries(metadata: dict[str, Any]) -> None:
+    forbidden = FORBIDDEN_METADATA_FIELDS & set(metadata)
+    if forbidden:
+        raise ValueError(f"metadata must not contain performance/test-label fields: {sorted(forbidden)}")
+    if metadata.get("download_attempted") is True:
+        if metadata.get("data_access_mode") != "controlled_download":
+            raise ValueError("download_attempted=true requires data_access_mode=controlled_download")
+        if metadata.get("dataset_name") not in APPROVED_CONTROLLED_DOWNLOAD_DATASETS:
+            raise ValueError("controlled download is only allowed for Cora, Wiki-CS and Actor")

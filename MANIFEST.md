@@ -62,3 +62,15 @@
 | 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_REPORT.md | implementation | Stage 3.1.5 final report |
 | 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_AUDITOR_REPORT.md | implementation | fresh auditor report |
 | 2026-06-26 01:00 | stage3.1.5-loader-split | .aris/traces/stage3_1_5_loader_split_smoke/STAGE3_1_5_AUDITOR_REPORT.md | implementation | auditor trace copy |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_SCOPE.md | implementation | Stage 3.1.6 scope boundary |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | src/gcl_diag/data/controlled_loaders.py | implementation | controlled PyG loader whitelist |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | scripts/run_stage3_1_6_controlled_data_access.py | implementation | controlled dataset access script |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | scripts/run_stage3_1_6_split_generation.py | implementation | controlled split generation script |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | dataset_metadata/stage3_1_6/ | implementation | Stage 3.1.6 dataset metadata artifacts |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | splits/Wiki-CS/ | implementation | validated official Wiki-CS split JSON files |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | splits/Actor/ | implementation | validated fixed Actor split JSON files |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_DATA_ACCESS_REPORT.md | implementation | Stage 3.1.6 data access report |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_SPLIT_REPORT.md | implementation | Stage 3.1.6 split report |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_REPORT.md | implementation | Stage 3.1.6 final report |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_AUDITOR_REPORT.md | implementation | fresh auditor report |
+| 2026-06-26 01:30 | stage3.1.6-controlled-data | .aris/traces/stage3_1_6_data_access/STAGE3_1_6_AUDITOR_REPORT.md | implementation | auditor trace copy |

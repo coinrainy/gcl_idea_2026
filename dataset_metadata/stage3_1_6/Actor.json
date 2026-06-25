@@ -1,0 +1,22 @@
+{
+  "cache_path": "data/Actor",
+  "commit_hash": "303a04a58c5922db02abb3c2c8ce8a8f185c0345",
+  "created_at": "2026-06-25T17:05:16Z",
+  "data_access_mode": "controlled_download",
+  "dataset_name": "Actor",
+  "download_attempted": true,
+  "download_source": "pyg_official_loader",
+  "error_message": null,
+  "evaluation_setting": "transductive",
+  "graph_visibility": "metadata probe only; no training/evaluator/pilot run",
+  "has_labels": true,
+  "has_masks_or_official_splits": true,
+  "loader_backend": "pyg_actor",
+  "loader_status": "available",
+  "local_cache_used": true,
+  "num_classes": 5,
+  "num_edges": 30019,
+  "num_features": 932,
+  "num_nodes": 7600,
+  "split_source": "heterophily_fixed"
+}

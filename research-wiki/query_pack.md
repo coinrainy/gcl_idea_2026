@@ -151,3 +151,23 @@ Metadata files were written under `dataset_metadata/stage3_1_5/` and validated a
 Auditor verdict: `BLOCKED`. Post-audit fixes applied: split schema now requires `class_distribution_test=null`; placeholder Cora split generation was disabled until labels can be safely read from an approved local cache; command provenance was added to the Stage 3.1.5 report.
 
 Stage 3.1.5 verdict: `BLOCKED`. This is a data-access/cache blocker, not an experimental result. No training, evaluator, GPU, baseline clone, pilot run or accuracy exists. Stage 3.2 planning and pilot execution remain disallowed until data access is explicitly resolved and a rerun passes independent review.
+
+## Stage 3.1.6 Controlled Dataset Access Status
+
+User explicitly authorized `DATA_ACCESS_MODE=controlled_download` for Cora, Wiki-CS and Actor only, through PyG official dataset loaders. No hand-written URL downloader, baseline clone, dependency install, training, evaluator, GPU command, pilot run, accuracy, loss or performance table was used.
+
+Dataset status:
+
+- Cora: blocked by PyG Planetoid official source timeout, `FSTimeoutError`; metadata written at `dataset_metadata/stage3_1_6/Cora.json`; no Cora split JSON.
+- Wiki-CS: available; metadata at `dataset_metadata/stage3_1_6/Wiki-CS.json`; official splits written and validated at `splits/Wiki-CS/split_seed_0.json`, `splits/Wiki-CS/split_seed_1.json`, `splits/Wiki-CS/split_seed_2.json`.
+- Actor: available; metadata at `dataset_metadata/stage3_1_6/Actor.json`; fixed heterophily splits written and validated at `splits/Actor/split_seed_0.json`, `splits/Actor/split_seed_1.json`, `splits/Actor/split_seed_2.json`.
+
+Split status:
+
+- Wiki-CS split type: `official_wikics`.
+- Actor split type: `heterophily_fixed`.
+- All written split files have `class_distribution_test=null`.
+
+Stage 3.1.6 executor verdict: `GO` because at least two datasets completed metadata + validated split JSON. Fresh `gcl_experiment_auditor` verdict: `WARN`.
+
+This only allows Stage 3.2 planning / implementation approval. Stage 3.2 pilot run remains disallowed until a separate approval. Any Cora-including pilot/GPU run is blocked until Cora has a validated `custom_stratified_random_1_1_8` split, or Stage 3.2 scope is explicitly narrowed and recorded. Do not mix Cora custom, Wiki-CS official and Actor fixed split results in one directly comparable main table.

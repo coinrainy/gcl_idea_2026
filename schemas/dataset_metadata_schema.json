@@ -37,6 +37,11 @@
     },
     "local_cache_used": { "type": "boolean" },
     "download_attempted": { "type": "boolean" },
+    "data_access_mode": {
+      "enum": ["no_download", "controlled_download"]
+    },
+    "cache_path": { "type": ["string", "null"] },
+    "download_source": { "type": ["string", "null"] },
     "num_nodes": { "type": ["integer", "null"], "minimum": 1 },
     "num_edges": { "type": ["integer", "null"], "minimum": 0 },
     "num_features": { "type": ["integer", "null"], "minimum": 0 },
