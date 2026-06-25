@@ -26,6 +26,7 @@ For copied Codex installs, use:
 - 2026-06-25：完成 Stage 1.6 DeepXiv 增强文献与协议补全，保存 raw retrieval 到 `notes/stage1_6_deepxiv/`，更新 closest-work/protocol/delta/wiki 记录；本轮未进入 Stage 2，未生成 idea，未运行实验。
 - 2026-06-25：完成 Stage 2A gap-driven idea discovery，生成 10 个候选 idea、5 份 targeted novelty check、fresh `gcl_scientific_reviewer` 审查和 research-wiki idea 记录；主候选为 `GCL-I03` 与 `GCL-I02`，备选为 `GCL-I04`，本轮未进入 Stage 2B、未实现代码、未运行实验。
 - 2026-06-25：将 GitHub 仓库 `coinrainy/gcl_idea_2026` 可见性从 private 修改为 public，并通过 `gh repo view` 验证当前状态为 `PUBLIC`。
+- 2026-06-25：完成 Stage 2B refine 决策，SELECT `GCL-I03` 作为 active idea，`GCL-I02` 降为辅助 negative-validity audit / fallback；生成 `refine-logs/` 与 `docs/` 下的 Stage 2B 决策、pilot plan、claim matrix、metric leakage audit、closest-work 和 kill-argument 文档；本轮未运行实验、未写论文。
 
 # GCL Node Classification Research Contract
 
