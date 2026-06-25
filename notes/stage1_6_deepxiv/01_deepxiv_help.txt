@@ -1,0 +1,26 @@
+Usage: deepxiv [OPTIONS] COMMAND [ARGS]...
+
+  deepxiv - Access arXiv papers from the command line.
+
+  Set token via --token option or DEEPXIV_TOKEN environment variable.
+
+Options:
+  --version  Show the version and exit.
+  --help     Show this message and exit.
+
+Commands:
+  agent     Intelligent agent for paper research.
+  biorxiv   Get a bioRxiv paper by DOI.
+  config    Configure DEEPXIV_TOKEN in .env file.
+  debug     Print debug information and environment settings.
+  health    Check API health and token validity.
+  help      Show detailed help and usage examples.
+  medrxiv   Get a medRxiv paper by DOI.
+  paper     Get an arXiv paper by ID (or bioRxiv/medRxiv paper with...
+  pmc       Get a PMC (PubMed Central) paper by ID.
+  sc        Get paper data by Semantic Scholar ID.
+  search    Search papers across arXiv (default), bioRxiv, or medRxiv.
+  serve     Start the MCP server.
+  token     Show the current DEEPXIV token and support contact.
+  trending  Get trending arXiv papers.
+  wsearch   Search the web.

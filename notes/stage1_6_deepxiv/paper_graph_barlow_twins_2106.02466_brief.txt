@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2106.02466",
+  "src_url": "https://arxiv.org/pdf/2106.02466",
+  "title": "Graph Barlow Twins: A self-supervised representation learning framework for graphs",
+  "tldr": "[research paper] Graph Barlow Twins introduces a self-supervised graph representation learning framework that replaces contrastive learning's reliance on negative samples with a cross-correlation-based loss function derived from Barlow Twins. It uses symmetric, fully identical encoder architectures without asymmetry (e.g., gradient stopping or momentum updates), enabling faster convergence and simpler hyperparameter tuning. The method achieves performance comparable to state-of-the-art contrastive methods and fully supervised baselines across diverse graph benchmarks—including transductive and inductive node classification on datasets like ogb-arxiv, PPI, and ogb-products—while being approximately 30 times faster than BGRL.",
+  "keywords": [
+    "cross-correlation loss",
+    "symmetric graph encoders",
+    "negative-sample-free learning",
+    "self-supervised graph representation",
+    "graph augmentation"
+  ],
+  "publish_at": "2021-06-04T00:00:00",
+  "citations": 185,
+  "github_url": "https://github.com/pbielak/graph-barlow-twins"
+}

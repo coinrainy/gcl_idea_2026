@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2205.10053",
+  "src_url": "https://arxiv.org/pdf/2205.10053",
+  "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+  "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+  "keywords": [
+    "masked graph modeling",
+    "graph autoencoders",
+    "self-supervised learning",
+    "contrastive learning",
+    "graph representation learning"
+  ],
+  "publish_at": "2022-05-20T00:00:00",
+  "citations": 163,
+  "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+}

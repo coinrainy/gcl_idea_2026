@@ -1,0 +1,133 @@
+{
+  "arxiv_id": "2010.14945",
+  "src_url": "https://arxiv.org/pdf/2010.14945",
+  "title": "Graph Contrastive Learning with Adaptive Augmentation",
+  "abstract": "Recently, contrastive learning (CL) has emerged as a successful method for unsupervised graph representation learning. Most graph CL methods first perform stochastic augmentation on the input graph to obtain two graph views and maximize the agreement of representations in the two views. Despite the prosperous development of graph CL methods, the design of graph augmentation schemes -- a crucial component in CL -- remains rarely explored. We argue that the data augmentation schemes should preserve intrinsic structures and attributes of graphs, which will force the model to learn representations that are insensitive to perturbation on unimportant nodes and edges. However, most existing methods adopt uniform data augmentation schemes, like uniformly dropping edges and uniformly shuffling features, leading to suboptimal performance. In this paper, we propose a novel graph contrastive representation learning method with adaptive augmentation that incorporates various priors for topological and semantic aspects of the graph. Specifically, on the topology level, we design augmentation schemes based on node centrality measures to highlight important connective structures. On the node attribute level, we corrupt node features by adding more noise to unimportant node features, to enforce the model to recognize underlying semantic information. We perform extensive experiments of node classification on a variety of real-world datasets. Experimental results demonstrate that our proposed method consistently outperforms existing state-of-the-art baselines and even surpasses some supervised counterparts, which validates the effectiveness of the proposed contrastive framework with adaptive augmentation.",
+  "authors": [
+    {
+      "misc": {
+        "email": "yanqiao.zhu@cripac.ia.ac.cn"
+      },
+      "name": "Yanqiao Zhu",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    },
+    {
+      "misc": {
+        "email": "linyxus@bupt.edu.cn"
+      },
+      "name": "Yichen Xu",
+      "orgs": [
+        "School of Computer Science, Beijing University of Posts and Telecommunications"
+      ]
+    },
+    {
+      "misc": {
+        "email": "yf271406@alibaba-inc.com"
+      },
+      "name": "Feng Yu",
+      "orgs": [
+        "Alibaba Group"
+      ]
+    },
+    {
+      "misc": {
+        "email": "qiang.liu@nlpr.ia.ac.cn"
+      },
+      "name": "Qiang Liu",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    },
+    {
+      "misc": {
+        "email": "shu.wu@nlpr.ia.ac.cn"
+      },
+      "name": "Shu Wu",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    },
+    {
+      "misc": {
+        "email": "wangliang@nlpr.ia.ac.cn"
+      },
+      "name": "Liang Wang",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    }
+  ],
+  "token_count": 21160,
+  "venue": "The Web Conference",
+  "journal_name": "Proceedings of the Web Conference 2021",
+  "citations": 1443,
+  "sections": [
+    {
+      "name": "Introduction",
+      "idx": 1,
+      "tldr": "The novel contribution of this paper is the proposal of Graph Contrastive Learning with Adaptive Augmentation (GCA), which addresses the limitations of existing graph contrastive methods by introducing adaptive, structure- and attribute-aware data augmentation that dynamically adjusts to the graph's intrinsic properties to generate diverse and meaningful graph views, thereby improving representation learning, especially in sparse and complex graph settings.",
+      "token_count": 1256
+    },
+    {
+      "name": "Related Work",
+      "idx": 2,
+      "tldr": "This paper addresses the limitation of existing contrastive graph representation methods by proposing a novel approach that learns robust node embeddings without relying on explicit graph-level representations or injective readouts, positioning itself as a significant advancement in unsupervised graph representation learning.",
+      "token_count": 1170
+    },
+    {
+      "name": "Method",
+      "idx": 3,
+      "tldr": "GCA proposes a contrastive learning framework for graph representation learning that uses adaptive graph augmentation to generate multiple graph views and maximizes the agreement between node embeddings across views through a discriminative contrastive objective with a nonlinear projection function.",
+      "token_count": 5987
+    },
+    {
+      "name": "Experiments",
+      "idx": 4,
+      "tldr": "The proposed GCA outperforms baseline methods in node classification across all datasets, with adaptive graph augmentation schemes consistently improving performance—particularly on sparse datasets—and the model shows robustness to hyperparameters, achieving average accuracy improvements of up to 5.2% over baselines.",
+      "token_count": 4495
+    },
+    {
+      "name": "Conclusion",
+      "idx": 5,
+      "tldr": "The paper proposes a novel graph contrastive learning framework with adaptive augmentation that enhances representation quality by selectively perturbing unimportant edges and features, outperforming state-of-the-art methods on real-world datasets.",
+      "token_count": 151
+    },
+    {
+      "name": "A Implementation Details",
+      "idx": 7,
+      "tldr": "This section details the software and hardware setups, hyperparameter configurations, and dataset-specific settings used for implementing and training the models.",
+      "token_count": 866
+    },
+    {
+      "name": "B Detailed Proofs",
+      "idx": 8,
+      "tldr": "The proof establishes that the proposed objective $\\mathcal{J}$ is a lower bound of the mutual information between node embeddings in two graph views by relating it to the InfoNCE estimator and leveraging known bounds on mutual information.",
+      "token_count": 3293
+    },
+    {
+      "name": "References#2",
+      "idx": 9,
+      "tldr": "This section lists key academic references that support the development and application of contrastive learning, mutual information maximization, and representation learning in both visual and graph domains.",
+      "token_count": 3198
+    }
+  ],
+  "categories": [
+    "cs.LG"
+  ],
+  "publish_at": "2020-10-27T00:00:00",
+  "keywords": [
+    "adaptive augmentation",
+    "graph topology",
+    "node centrality",
+    "feature noise injection",
+    "contrastive representation learning"
+  ],
+  "tldr": "[research paper] The paper proposes Graph Contrastive Learning with Adaptive Augmentation (GCA), a novel unsupervised framework that introduces adaptive data augmentation schemes tailored to graph topology and node attributes. Unlike uniform augmentation methods (e.g., random edge dropping or feature shuffling), GCA uses centrality-based priors to selectively corrupt unimportant edges and features—removing edges with low centrality and adding noise to low-impact feature dimensions—thereby preserving intrinsic graph structures and forcing the model to learn robust, semantically meaningful representations. Extensive experiments on real-world datasets show GCA outperforms state-of-the-art contrastive and supervised baselines in node classification, validating the effectiveness of adaptive augmentation in improving representation quality and invariance to perturbations.",
+  "github_url": "https://github.com/CRIPAC-DIG/GCA"
+}

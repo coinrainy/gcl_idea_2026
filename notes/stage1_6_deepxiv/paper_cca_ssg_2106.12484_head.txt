@@ -1,0 +1,156 @@
+{
+  "arxiv_id": "2106.12484",
+  "src_url": "https://arxiv.org/pdf/2106.12484",
+  "title": "From Canonical Correlation Analysis to Self-supervised Graph Neural Networks",
+  "abstract": "We introduce a conceptually simple yet effective model for self-supervised representation learning with graph data. It follows the previous methods that generate two views of an input graph through data augmentation. However, unlike contrastive methods that focus on instance-level discrimination, we optimize an innovative feature-level objective inspired by classical Canonical Correlation Analysis. Compared with other works, our approach requires none of the parameterized mutual information estimator, additional projector, asymmetric structures, and most importantly, negative samples which can be costly. We show that the new objective essentially 1) aims at discarding augmentation-variant information by learning invariant representations, and 2) can prevent degenerated solutions by decorrelating features in different dimensions. Our theoretical analysis further provides an understanding for the new objective which can be equivalently seen as an instantiation of the Information Bottleneck Principle under the self-supervised setting. Despite its simplicity, our method performs competitively on seven public graph datasets. The code is available at: https://github.com/hengruizhang98/CCA-SSG.",
+  "authors": [
+    {
+      "misc": {
+        "email": "hzhan55@uic.edu"
+      },
+      "name": "Hengrui Zhang",
+      "orgs": [
+        "Department of Computer Science, University of Illinois at Chicago"
+      ]
+    },
+    {
+      "misc": {
+        "email": "echo740@sjtu.edu.cn"
+      },
+      "name": "Qitian Wu",
+      "orgs": [
+        "Department of Computer Science and Engineering, Shanghai Jiao Tong University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "yanjunchi@sjtu.edu.cn"
+      },
+      "name": "Junchi Yan",
+      "orgs": [
+        "Department of Computer Science and Engineering, Shanghai Jiao Tong University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "daviwipf@amazon.com"
+      },
+      "name": "David Wipf",
+      "orgs": [
+        "AWS Shanghai AI Lab"
+      ]
+    },
+    {
+      "misc": {
+        "email": "psyu@uic.edu"
+      },
+      "name": "Philip S. Yu",
+      "orgs": [
+        "Department of Computer Science, University of Illinois at Chicago"
+      ]
+    }
+  ],
+  "token_count": 28928,
+  "venue": "Neural Information Processing Systems",
+  "journal_name": null,
+  "citations": 300,
+  "sections": [
+    {
+      "name": "Introduction",
+      "idx": 0,
+      "tldr": "The novel contribution of CCA-SSG is a simple, negative-sample-free self-supervised learning method for graph neural networks that replaces contrastive discrimination with a non-contrastive, feature-level objective inspired by Canonical Correlation Analysis, eliminating the need for complex architectures, mutual information estimators, or negative samples while achieving effective representation learning.",
+      "token_count": 1529
+    },
+    {
+      "name": "Related Work",
+      "idx": 1,
+      "tldr": "This paper proposes a self-supervised graph representation learning method based on soft Canonical Correlation Analysis, addressing the limitations of instance-level contrastive methods by jointly maximizing view correlation and decorrelating feature dimensions in a computationally efficient and theoretically grounded manner.",
+      "token_count": 1207
+    },
+    {
+      "name": "Approach",
+      "idx": 2,
+      "tldr": "The paper proposes a self-supervised node representation learning method that uses random graph augmentations (edge dropping and node feature masking) to generate two views of a graph, which are encoded by a shared GNN to produce node embeddings, and then optimizes a feature-level objective based on Canonical Correlation Analysis to maximize the correlation between the two views while enforcing their embedding distributions to be close to identity matrices.",
+      "token_count": 3006
+    },
+    {
+      "name": "Theoretical Insights with Connection to Information Theory",
+      "idx": 3,
+      "tldr": "This section interprets the proposed objective function through information theory, showing that it maximizes the mutual information between representations and input data while minimizing information loss due to augmentation, and establishes a connection to the Information Bottleneck principle by aligning with its core goal of balancing informative and compact representations.",
+      "token_count": 3192
+    },
+    {
+      "name": "Experiments",
+      "idx": 4,
+      "tldr": "CCA-SSG outperforms existing unsupervised and supervised methods across most benchmarks, achieving state-of-the-art accuracy—particularly on Cora, Pubmed, and the larger co-author and co-purchase networks—despite its simple two-layer GCN architecture, with notable performance on Coauthor-CS where linear models outperform GNNs.",
+      "token_count": 3203
+    },
+    {
+      "name": "Conclusion",
+      "idx": 5,
+      "tldr": "CCA-SSG offers a simple, effective self-supervised graph representation learning method based on Canonical Correlation Analysis, though it faces limitations in feature dimension requirements, augmentation quality, and potential societal impacts such as reduced labeling jobs and bias against minority groups.",
+      "token_count": 329
+    },
+    {
+      "name": "A Algorithm",
+      "idx": 8,
+      "tldr": "The paper proposes a contrastive learning method called CCA-SSG that leverages graph augmentations and normalized node embeddings to learn robust graph representations by maximizing the similarity between augmented graph embeddings through a contrastive loss function.",
+      "token_count": 566
+    },
+    {
+      "name": "B Discussions on Degenerated Solutions in SSL",
+      "idx": 9,
+      "tldr": "The method effectively prevents both complete collapse (via feature-wise normalization) and dimensional collapse (via the decorrelation term), as evidenced by stable embeddings that maintain positive pair alignment and negative pair dissimilarity, with performance validated through consistent representation quality and uniform distribution on the hypersphere.",
+      "token_count": 1640
+    },
+    {
+      "name": "C Properties of Mutual Information and Entropy",
+      "idx": 10,
+      "tldr": "This section outlines key properties of mutual information and entropy, including non-negativity, the chain rule, data processing inequality, entropy relationships, and specific entropy values for deterministic functions and Gaussian distributions, which are essential for subsequent theoretical proofs.",
+      "token_count": 429
+    },
+    {
+      "name": "D Proofs in Section 4",
+      "idx": 11,
+      "tldr": "This section proves that minimizing the invariance and decorrelation losses in the encoder is equivalent to minimizing the conditional entropy of augmented data given the input, and maximizing the overall entropy of the augmented representations, respectively.",
+      "token_count": 4426
+    },
+    {
+      "name": "E Implementation Details",
+      "idx": 12,
+      "tldr": "The section details the implementation of the loss function, graph augmentations (edge dropping and node feature masking), and the benchmark datasets used in the experiments, with a focus on simplifying the loss formulation and using consistent augmentation parameters across views.",
+      "token_count": 2991
+    },
+    {
+      "name": "Experiments#2",
+      "idx": 13,
+      "tldr": "The decorrelation term effectively prevents dimensional collapse by enabling nearly orthogonal node embeddings, as evidenced by low off-diagonal correlations in the correlation matrix, while the method's performance remains robust across varying augmentation intensities with an optimal balance of feature masking and edge dropping.",
+      "token_count": 2765
+    },
+    {
+      "name": "Methods",
+      "idx": 14,
+      "tldr": "The paper proposes a non-contrastive, non-discriminative self-supervised learning framework that uses canonical correlation analysis (CCA) to learn node representations by maximizing the correlation between different augmented views of the graph, shifting focus from instance-level contrastive learning to a view-level correlation-based approach.",
+      "token_count": 1075
+    },
+    {
+      "name": "Footnotes",
+      "idx": 15,
+      "tldr": "The section lists footnotes containing author affiliations, citations, dataset links, and software repository details with associated licenses.",
+      "token_count": 183
+    }
+  ],
+  "categories": [
+    "cs.LG"
+  ],
+  "publish_at": "2021-06-23T00:00:00",
+  "keywords": [
+    "feature-level objective",
+    "canonical correlation analysis",
+    "augmentation-invariant representation",
+    "information bottleneck principle",
+    "negative-sample-free learning"
+  ],
+  "tldr": "[research paper] CCA-SSG introduces a non-contrastive, negative-sample-free self-supervised objective for graph neural networks inspired by Canonical Correlation Analysis (CCA), which maximizes feature-level correlation between augmented graph views while decorrelating feature dimensions to preserve augmentation-invariant representations. Unlike contrastive methods, it avoids parameterized mutual information estimators, projectors, asymmetric architectures, and negative samples—reducing complexity and memory overhead—while theoretically aligning with the Information Bottleneck Principle. Empirical results show competitive or superior performance on seven graph benchmarks, with strong ablation evidence supporting its core components.",
+  "github_url": "https://github.com/hengruizhang98/CCA-SSG"
+}

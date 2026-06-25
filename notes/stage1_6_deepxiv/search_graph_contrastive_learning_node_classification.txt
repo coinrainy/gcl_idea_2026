@@ -1,0 +1,259 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2306.11344",
+      "score": 0.6666667,
+      "title": "Contrastive Disentangled Learning on Graph for Node Classification",
+      "tldr": "[research paper] CDLG introduces a contrastive disentangled learning framework for graph node classification that uses a disentangled graph encoder with a neighborhood routing mechanism to separate latent factors in node representations. It designs two label-free self-supervision signals—node specificity and channel independence—to guide disentanglement without relying on labeled data, improving downstream classification performance on citation networks by reducing embedding entanglement and capturing finer semantic components of node neighborhoods.",
+      "abstract": "Contrastive learning methods have attracted considerable attention due to their remarkable success in analyzing graph-structured data. Inspired by the success of contrastive learning, we propose a novel framework for contrastive disentangled learning on graphs, employing a disentangled graph encoder and two carefully crafted self-supervision signals. Specifically, we introduce a disentangled graph encoder to enforce the framework to distinguish various latent factors corresponding to underlying semantic information and learn the disentangled node embeddings. Moreover, to overcome the heavy reliance on labels, we design two self-supervision signals, namely node specificity and channel independence, which capture informative knowledge without the need for labeled data, thereby guiding the automatic disentanglement of nodes. Finally, we perform node classification tasks on three citation networks by using the disentangled node embeddings, and the relevant analysis is provided. Experimental results validate the effectiveness of the proposed framework compared with various baselines.",
+      "authors": [
+        {
+          "misc": {
+            "email": "XiaojuanZhang123@gmail.com"
+          },
+          "name": "Xiaojuan Zhang",
+          "orgs": [
+            "State Key Laboratory of Synthetical Automation for Process Industries",
+            "Northeastern University",
+            "Shenyang, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "junfu@mail.neu.edu.cn"
+          },
+          "name": "Jun Fu",
+          "orgs": [
+            "State Key Laboratory of Synthetical Automation for Process Industries",
+            "Northeastern University",
+            "Shenyang, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shuangli@bit.edu.cn"
+          },
+          "name": "Shuang Li",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Beijing Institute of Technology",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.11344",
+      "date": "2023-06-20T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "Cyber ..",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2203.15936",
+      "score": 0.56666666,
+      "title": "Supervised Graph Contrastive Learning for Few-shot Node Classification",
+      "tldr": "[research paper] The paper challenges the dominance of episodic meta-learning in few-shot node classification by proposing a supervised graph contrastive learning framework that directly learns transferable topological patterns from base classes without requiring synthetic meta-tasks. It introduces novel data augmentation via subgraph perturbations, multi-scale graph views, and contrastive learning to capture rich, discriminative node representations, achieving superior performance on CoraFull, Reddit, and Ogbn benchmarks with reduced computational overhead and avoidance of piecemeal knowledge acquisition inherent in meta-learning.",
+      "abstract": "Graphs are present in many real-world applications, such as financial fraud detection, commercial recommendation, and social network analysis. But given the high cost of graph annotation or labeling, we face a severe graph label-scarcity problem, i.e., a graph might have a few labeled nodes. One example of such a problem is the so-called \\\\textit{few-shot node classification}. A predominant approach to this problem resorts to \\\\textit{episodic meta-learning}. In this work, we challenge the status quo by asking a fundamental question whether meta-learning is a must for few-shot node classification tasks. We propose a new and simple framework under the standard few-shot node classification setting as an alternative to meta-learning to learn an effective graph encoder. The framework consists of supervised graph contrastive learning with novel mechanisms for data augmentation, subgraph encoding, and multi-scale contrast on graphs. Extensive experiments on three benchmark datasets (CoraFull, Reddit, Ogbn) show that the new framework significantly outperforms state-of-the-art meta-learning based methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhen.tan@xxx.edu"
+          },
+          "name": "Zhen Tan",
+          "orgs": [
+            "11"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Kaize Ding",
+          "orgs": [
+            "11"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ruocheng Guo",
+          "orgs": [
+            "22"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Huan Liu",
+          "orgs": [
+            "11"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2203.15936",
+      "date": "2022-03-29T00:00:00",
+      "citation_count": 14,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "ECML/PKDD",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2212.06423",
+      "score": 0.33333334,
+      "title": "Coarse-to-Fine Contrastive Learning on Graphs",
+      "tldr": "[research paper] The paper reinterprets contrastive learning (CL) as a special case of learning to rank (L2R), proposing a coarse-to-fine ranking framework to leverage the inherent order of augmented graph views generated via perturbations (e.g., edge dropping). Coarse ranking models the similarity order among positive views based on perturbation degree, while fine-grained ranking introduces self-supervised pseudo-labels for negative samples to preserve structural integrity and enhance node discriminability. The proposed Coarse-to-Fine Contrastive Learning (C2F) jointly optimizes ranking within and across views, capturing both inter-view order and intra-view discrimination, outperforming baseline CL methods in node classification tasks by better preserving graph structure under perturbation.",
+      "abstract": "Inspired by the impressive success of contrastive learning (CL), a variety of graph augmentation strategies have been employed to learn node representations in a self-supervised manner. Existing methods construct the contrastive samples by adding perturbations to the graph structure or node attributes. Although impressive results are achieved, it is rather blind to the wealth of prior information assumed: with the increase of the perturbation degree applied on the original graph, 1) the similarity between the original graph and the generated augmented graph gradually decreases; 2) the discrimination between all nodes within each augmented view gradually increases. In this paper, we argue that both such prior information can be incorporated (differently) into the contrastive learning paradigm following our general ranking framework. In particular, we first interpret CL as a special case of learning to rank (L2R), which inspires us to leverage the ranking order among positive augmented views. Meanwhile, we introduce a self-ranking paradigm to ensure that the discriminative information among different nodes can be maintained and also be less altered to the perturbations of different degrees. Experiment results on various benchmark datasets verify the effectiveness of our algorithm compared with the supervised and unsupervised models.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Peiyao Zhao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yuangang Pan",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xin Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xu Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ivor W. Tsang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Lejian Liao",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2212.06423",
+      "date": "2022-12-13T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2210.12020",
+      "score": 0.33333334,
+      "title": "HCL: Improving Graph Representation with Hierarchical Contrastive Learning",
+      "tldr": "[research paper] HCL introduces a hierarchical contrastive learning framework that addresses the limitations of fixed-scale graph representation by enabling multi-scale contrastive learning through adaptive graph pooling and multi-channel pseudo-siamese networks. The L2Pool module uses topology-enhanced self-attention to recursively coarsen graphs while preserving structural information, and the multi-channel pseudo-siamese network enhances mutual information learning across scales via bootstrapped contrastive objectives, resulting in richer, more comprehensive graph representations that outperform existing methods on node and graph-level tasks.",
+      "abstract": "Contrastive learning has emerged as a powerful tool for graph representation learning. However, most contrastive learning methods learn features of graphs with fixed coarse-grained scale, which might underestimate either local or global information. To capture more hierarchical and richer representation, we propose a novel Hierarchical Contrastive Learning (HCL) framework that explicitly learns graph representation in a hierarchical manner. Specifically, HCL includes two key components: a novel adaptive Learning to Pool (L2Pool) method to construct more reasonable multi-scale graph topology for more comprehensive contrastive objective, a novel multi-channel pseudo-siamese network to further enable more expressive learning of mutual information within each scale. Comprehensive experimental results show HCL achieves competitive performance on 12 datasets involving node classification, node clustering and graph classification. In addition, the visualization of learned representation reveals that HCL successfully captures meaningful characteristics of graphs.",
+      "authors": [
+        {
+          "misc": {
+            "equal_contribution": true
+          },
+          "name": "Jun Wang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "star": true
+          },
+          "name": "Weixun Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Changyu Hou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xin Tang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yixuan Qiao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Rui Fang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Pengyong Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Peng Gao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Guotong Xie",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2210.12020",
+      "date": "2022-10-21T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "International Workshop on the Semantic Web",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2006.05582",
+      "score": 0.31111112,
+      "title": "Contrastive Multi-View Representation Learning on Graphs",
+      "tldr": "[research paper] The paper proposes a self-supervised contrastive learning framework for graph representations by contrasting structural views derived from first-order neighbors and graph diffusion, demonstrating that increasing view count beyond two or using multi-scale encodings does not improve performance. It achieves state-of-the-art results on 8 out of 8 node and graph classification benchmarks via a simple architecture without specialized encoders, outperforming prior contrastive methods and supervised baselines on 4 benchmarks, with key findings showing that graph readout outperforms hierarchical pooling and that regularization or normalization degrades performance.",
+      "abstract": "We introduce a self-supervised approach for learning node and graph level representations by contrasting structural views of graphs. We show that unlike visual representation learning, increasing the number of views to more than two or contrasting multi-scale encodings do not improve performance, and the best performance is achieved by contrasting encodings from first-order neighbors and a graph diffusion. We achieve new state-of-the-art results in self-supervised learning on 8 out of 8 node and graph classification benchmarks under the linear evaluation protocol. For example, on Cora (node) and Reddit-Binary (graph) classification benchmarks, we achieve 86.8% and 84.5% accuracy, which are 5.5% and 2.4% relative improvements over previous state-of-the-art. When compared to supervised baselines, our approach outperforms them in 4 out of 8 benchmarks. Source code is released at: https://github.com/kavehhassani/mvgrl",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2006.05582",
+      "date": "2020-06-10T00:00:00",
+      "citation_count": 1664,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

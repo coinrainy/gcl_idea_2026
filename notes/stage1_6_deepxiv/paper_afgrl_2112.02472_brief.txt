@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2112.02472",
+  "src_url": "https://arxiv.org/pdf/2112.02472",
+  "title": "Augmentation-Free Self-Supervised Learning on Graphs",
+  "tldr": "[research paper] AFGRL introduces an augmentation-free self-supervised framework for graphs that avoids arbitrary semantic distortion caused by graph augmentations. Instead of generating perturbed views, it constructs a semantically aligned alternative view via k-NN search in representation space, with positive samples filtered to preserve both local adjacency and global cluster structure. By leveraging BYOL and eliminating negative sampling, AFGRL achieves stable, high-performance graph representation learning across node classification, clustering, and similarity search without hyperparameter sensitivity.",
+  "keywords": [
+    "augmentation-free learning",
+    "graph representation learning",
+    "k-nearest-neighbor filtering",
+    "local-global semantics alignment",
+    "relational inductive bias"
+  ],
+  "publish_at": "2021-12-05T00:00:00",
+  "citations": 295,
+  "github_url": "https://github.com/Namkyeong/AFGRL"
+}

@@ -1,0 +1,23 @@
+Section 'Limitations' not found in paper 2205.10053. Available sections: 1. Introduction, 2. Related Work, 3. Problem Formulation and Preliminaries, 4. Theoretical Justification and Motivation, 5. Present Work: MaskGAE, 6. Experiments, 7. Conclusion, Appendix A Proofs, Appendix B Algorithm, Appendix C Further Discussions
+Traceback (most recent call last):
+  File "/root/miniconda3/bin/deepxiv", line 6, in <module>
+    sys.exit(main())
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1524, in __call__
+    return self.main(*args, **kwargs)
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1445, in main
+    rv = self.invoke(ctx)
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1912, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1308, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 877, in invoke
+    return callback(*args, **kwargs)
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/cli.py", line 616, in paper
+    content = run_reader_call(lambda: reader.section(arxiv_id, section), command_name="paper")
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/cli.py", line 183, in run_reader_call
+    return fn()
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/cli.py", line 616, in <lambda>
+    content = run_reader_call(lambda: reader.section(arxiv_id, section), command_name="paper")
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/reader.py", line 684, in section
+    raise ValueError(
+ValueError: Section 'Limitations' not found in paper 2205.10053

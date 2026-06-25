@@ -1,0 +1,111 @@
+{
+  "arxiv_id": "2106.02466",
+  "src_url": "https://arxiv.org/pdf/2106.02466",
+  "title": "Graph Barlow Twins: A self-supervised representation learning framework for graphs",
+  "abstract": "The self-supervised learning (SSL) paradigm is an essential exploration area, which tries to eliminate the need for expensive data labeling. Despite the great success of SSL methods in computer vision and natural language processing, most of them employ contrastive learning objectives that require negative samples, which are hard to define. This becomes even more challenging in the case of graphs and is a bottleneck for achieving robust representations. To overcome such limitations, we propose a framework for self-supervised graph representation learning - Graph Barlow Twins, which utilizes a cross-correlation-based loss function instead of negative samples. Moreover, it does not rely on non-symmetric neural network architectures - in contrast to state-of-the-art self-supervised graph representation learning method BGRL. We show that our method achieves as competitive results as the best self-supervised methods and fully supervised ones while requiring fewer hyperparameters and substantially shorter computation time (ca. 30 times faster than BGRL).",
+  "authors": [
+    {
+      "misc": {},
+      "name": "Piotr Bielak",
+      "orgs": [
+        "Department of Artificial Intelligence, Wroclaw University of Science and Technology, Poland",
+        "Department of Computer Science and Engineering, University of Notre Dame, Notre Dame, IN, USA"
+      ]
+    },
+    {
+      "misc": {},
+      "name": "Tomasz Kajdanowicz",
+      "orgs": [
+        "Department of Artificial Intelligence, Wroclaw University of Science and Technology, Poland",
+        "Department of Computer Science and Engineering, University of Notre Dame, Notre Dame, IN, USA"
+      ]
+    },
+    {
+      "misc": {},
+      "name": "Nitesh V. Chawla",
+      "orgs": [
+        "Department of Artificial Intelligence, Wroclaw University of Science and Technology, Poland",
+        "Department of Computer Science and Engineering, University of Notre Dame, Notre Dame, IN, USA"
+      ]
+    }
+  ],
+  "token_count": 20070,
+  "venue": "Knowledge-Based Systems",
+  "journal_name": "ArXiv",
+  "citations": 185,
+  "sections": [
+    {
+      "name": "Introduction",
+      "idx": 0,
+      "tldr": "The novel contribution of this paper is the introduction of Graph Barlow Twins (G-BT), a self-supervised graph representation learning framework that uses symmetric network architecture and cross-correlation of distorted graph views to learn high-quality embeddings without relying on negative samples, thereby addressing the lack of clear negative sample definitions in graph data.",
+      "token_count": 1267
+    },
+    {
+      "name": "Related works",
+      "idx": 1,
+      "tldr": "This paper addresses the problem of self-supervised graph representation learning by proposing a novel contrastive framework that avoids negative sampling and achieves efficient, scalable representation learning, positioning itself within the growing body of graph-based self-supervised methods inspired by vision and NLP advancements.",
+      "token_count": 1060
+    },
+    {
+      "name": "Proposed framework",
+      "idx": 2,
+      "tldr": "Graph Barlow Twins proposes a self-supervised framework for graph representation learning that uses symmetric graph augmentations and an empirical cross-correlation loss to learn node embeddings by maximizing the correlation between augmented graph views.",
+      "token_count": 2537
+    },
+    {
+      "name": "Experiments",
+      "idx": 3,
+      "tldr": "Our model achieves state-of-the-art performance across diverse graph benchmarks, outperforming BGRL in both transductive (e.g., WikiCS, Coauthor-CS with 90%+ accuracy) and inductive settings (e.g., ogb-products with 85% accuracy), demonstrating strong generalization on small to large-scale datasets.",
+      "token_count": 6733
+    },
+    {
+      "name": "Ablation and hyperparameter sensitivity study",
+      "idx": 4,
+      "tldr": "The ablation and hyperparameter study shows that using both node feature masking and edge dropping augmentations with a two-layer GCN encoder yields the best performance.",
+      "token_count": 2161
+    },
+    {
+      "name": "Conclusions",
+      "idx": 5,
+      "tldr": "Graph Barlow Twins presents a fast, efficient, and competitive self-supervised graph representation learning method that achieves state-of-the-art performance with faster convergence and reduced computational cost.",
+      "token_count": 296
+    },
+    {
+      "name": "Appendix A Augmentation hyperparameters",
+      "idx": 8,
+      "tldr": "The proposed framework uses a single pair of augmentation hyperparameters $p_A$ and $p_X$ optimized via grid search to achieve optimal performance across datasets, with values selected based on classification accuracy or Micro-F1 score in a symmetrical network architecture.",
+      "token_count": 506
+    },
+    {
+      "name": "Appendix B Training setup",
+      "idx": 9,
+      "tldr": "The training setup for the Graph Barlow Twins framework uses AdamW with cosine annealing and warmup, evaluates the frozen embeddings at specified intervals, and selects the best-performing model based on downstream task performance across various datasets.",
+      "token_count": 509
+    },
+    {
+      "name": "Appendix C Encoder architecture",
+      "idx": 10,
+      "tldr": "The paper proposes a self-supervised graph representation learning framework called Graph Barlow Twins (G-BT) that uses a modified GCN or GAT encoder without predictor networks or final layer normalization, relying instead on a contrastive loss inspired by Barlow Twins to learn robust node embeddings.",
+      "token_count": 984
+    },
+    {
+      "name": "Appendix D Code and reproducibility",
+      "idx": 11,
+      "tldr": "The section describes a fully reproducible experimental pipeline using PyTorch-Geometric and DVC, with detailed stages for dataset preprocessing, hyperparameter search, model training, evaluation, and performance comparison across various graph learning methods.",
+      "token_count": 644
+    }
+  ],
+  "categories": [
+    "cs.LG"
+  ],
+  "publish_at": "2021-06-04T00:00:00",
+  "keywords": [
+    "cross-correlation loss",
+    "symmetric graph encoders",
+    "negative-sample-free learning",
+    "self-supervised graph representation",
+    "graph augmentation"
+  ],
+  "tldr": "[research paper] Graph Barlow Twins introduces a self-supervised graph representation learning framework that replaces contrastive learning's reliance on negative samples with a cross-correlation-based loss function derived from Barlow Twins. It uses symmetric, fully identical encoder architectures without asymmetry (e.g., gradient stopping or momentum updates), enabling faster convergence and simpler hyperparameter tuning. The method achieves performance comparable to state-of-the-art contrastive methods and fully supervised baselines across diverse graph benchmarks—including transductive and inductive node classification on datasets like ogb-arxiv, PPI, and ogb-products—while being approximately 30 times faster than BGRL.",
+  "github_url": "https://github.com/pbielak/graph-barlow-twins"
+}

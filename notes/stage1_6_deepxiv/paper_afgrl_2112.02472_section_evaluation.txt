@@ -1,0 +1,23 @@
+Section 'Evaluation' not found in paper 2112.02472. Available sections: Introduction, Related Work, Problem Statement, Preliminary: Bootstrap Your Own Latent, Proposed Method, Experiments, Conclusion
+Traceback (most recent call last):
+  File "/root/miniconda3/bin/deepxiv", line 6, in <module>
+    sys.exit(main())
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1524, in __call__
+    return self.main(*args, **kwargs)
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1445, in main
+    rv = self.invoke(ctx)
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1912, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 1308, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/root/miniconda3/lib/python3.10/site-packages/click/core.py", line 877, in invoke
+    return callback(*args, **kwargs)
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/cli.py", line 616, in paper
+    content = run_reader_call(lambda: reader.section(arxiv_id, section), command_name="paper")
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/cli.py", line 183, in run_reader_call
+    return fn()
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/cli.py", line 616, in <lambda>
+    content = run_reader_call(lambda: reader.section(arxiv_id, section), command_name="paper")
+  File "/root/miniconda3/lib/python3.10/site-packages/deepxiv_sdk/reader.py", line 684, in section
+    raise ValueError(
+ValueError: Section 'Evaluation' not found in paper 2112.02472

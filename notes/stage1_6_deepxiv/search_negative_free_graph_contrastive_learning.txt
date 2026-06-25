@@ -1,0 +1,410 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.5,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2102.13085",
+      "score": 0.5,
+      "title": "Towards Robust Graph Contrastive Learning",
+      "tldr": "[research paper] Graph Robust Contrastive Learning (GROC) introduces a self-supervised method that enhances adversarial robustness in graph contrastive learning by integrating both adversarial edge perturbations (insertion/removal) and feature masking during view generation. The method leverages gradient signals to dynamically modify graph structures in a way that strengthens representation stability under structural attacks, while maintaining performance on clean data. Preliminary experiments on transductive node classification tasks show improved robustness against graph adversarial attacks without sacrificing clean accuracy, marking the first explicit incorporation of adversarial robustness as a training objective in graph contrastive learning.",
+      "abstract": "We study the problem of adversarially robust self-supervised learning on graphs. In the contrastive learning framework, we introduce a new method that increases the adversarial robustness of the learned representations through i) adversarial transformations and ii) transformations that not only remove but also insert edges. We evaluate the learned representations in a preliminary set of experiments, obtaining promising results. We believe this work takes an important step towards incorporating robustness as a viable auxiliary task in graph contrastive learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "njovanovic@ethz.ch"
+          },
+          "name": "Nikola Jovanović",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lfaber@ethz.ch"
+          },
+          "name": "Lukas Faber",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhmeng@ethz.ch"
+          },
+          "name": "Zhao Meng",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wattenhofer@ethz.ch"
+          },
+          "name": "Roger Wattenhofer",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2102.13085",
+      "date": "2021-02-25T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.SI",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2212.04604",
+      "score": 0.33333334,
+      "title": "Localized Contrastive Learning on Graphs",
+      "tldr": "[research paper] LOCAL-GCL introduces an augmentation-free, scalable contrastive learning framework for graph node representation by directly using first-order neighbors as positive examples, eliminating the need for data augmentation and leveraging graph homophily. A kernelized contrastive loss replaces the quadratic InfoNCE loss with linear-time approximation, enabling efficient training on large graphs without sacrificing performance—achieving state-of-the-art results on six out of seven benchmarks and outperforming existing methods in both accuracy and training speed, especially on heterogeneous and large-scale graphs.",
+      "abstract": "Contrastive learning methods based on InfoNCE loss are popular in node representation learning tasks on graph-structured data. However, its reliance on data augmentation and its quadratic computational complexity might lead to inconsistency and inefficiency problems. To mitigate these limitations, in this paper, we introduce a simple yet effective contrastive model named Localized Graph Contrastive Learning (Local-GCL in short). Local-GCL consists of two key designs: 1) We fabricate the positive examples for each node directly using its first-order neighbors, which frees our method from the reliance on carefully-designed graph augmentations; 2) To improve the efficiency of contrastive learning on graphs, we devise a kernelized contrastive loss, which could be approximately computed in linear time and space complexity with respect to the graph size. We provide theoretical analysis to justify the effectiveness and rationality of the proposed methods. Experiments on various datasets with different scales and properties demonstrate that in spite of its simplicity, Local-GCL achieves quite competitive performance in self-supervised node representation learning tasks on graphs with various scales and properties.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hzhan55@uic.edu"
+          },
+          "name": "Hengrui Zhang",
+          "orgs": [
+            "University of Illinois, Chicago"
+          ]
+        },
+        {
+          "misc": {
+            "email": "echo740@sjtu.edu.cn"
+          },
+          "name": "Qitian Wu",
+          "orgs": [
+            "Shanghai Jiao Tong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ywang617@uic.edu"
+          },
+          "name": "Yu Wang",
+          "orgs": [
+            "University of Illinois, Chicago"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sherrylone@sjtu.edu.cn"
+          },
+          "name": "Shaofeng Zhang",
+          "orgs": [
+            "Shanghai Jiao Tong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yanjunchi@sjtu.edu.cn"
+          },
+          "name": "Junchi Yan",
+          "orgs": [
+            "Shanghai Jiao Tong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "psyu@uic.edu"
+          },
+          "name": "Philip S. Yu",
+          "orgs": [
+            "University of Illinois, Chicago"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2212.04604",
+      "date": "2022-12-08T00:00:00",
+      "citation_count": 19,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2210.12020",
+      "score": 0.33333334,
+      "title": "HCL: Improving Graph Representation with Hierarchical Contrastive Learning",
+      "tldr": "[research paper] HCL introduces a hierarchical contrastive learning framework that addresses the limitations of fixed-scale graph representation by enabling multi-scale contrastive learning through adaptive graph pooling and multi-channel pseudo-siamese networks. The L2Pool module uses topology-enhanced self-attention to recursively coarsen graphs while preserving structural information, and the multi-channel pseudo-siamese network enhances mutual information learning across scales via bootstrapped contrastive objectives, resulting in richer, more comprehensive graph representations that outperform existing methods on node and graph-level tasks.",
+      "abstract": "Contrastive learning has emerged as a powerful tool for graph representation learning. However, most contrastive learning methods learn features of graphs with fixed coarse-grained scale, which might underestimate either local or global information. To capture more hierarchical and richer representation, we propose a novel Hierarchical Contrastive Learning (HCL) framework that explicitly learns graph representation in a hierarchical manner. Specifically, HCL includes two key components: a novel adaptive Learning to Pool (L2Pool) method to construct more reasonable multi-scale graph topology for more comprehensive contrastive objective, a novel multi-channel pseudo-siamese network to further enable more expressive learning of mutual information within each scale. Comprehensive experimental results show HCL achieves competitive performance on 12 datasets involving node classification, node clustering and graph classification. In addition, the visualization of learned representation reveals that HCL successfully captures meaningful characteristics of graphs.",
+      "authors": [
+        {
+          "misc": {
+            "equal_contribution": true
+          },
+          "name": "Jun Wang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "star": true
+          },
+          "name": "Weixun Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Changyu Hou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xin Tang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yixuan Qiao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Rui Fang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Pengyong Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Peng Gao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Guotong Xie",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2210.12020",
+      "date": "2022-10-21T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "International Workshop on the Semantic Web",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2310.14525",
+      "score": 0.25,
+      "title": "Graph Ranking Contrastive Learning: A Extremely Simple yet Efficient Method",
+      "tldr": "[research paper] GraphRank proposes a rank-based alternative to contrastive learning in graph representation, eliminating false negative samples by using arbitrary nodes as negatives and computing pairwise similarities without requiring class-labeled negatives. It reduces time complexity from O(N²) to O(N) by replacing negative sampling with ranking-based similarity optimization, while maintaining or outperforming state-of-the-art GCL methods across multiple graph tasks.",
+      "abstract": "Graph contrastive learning (GCL) has emerged as a representative graph self-supervised method, achieving significant success. The currently prevalent optimization objective for GCL is InfoNCE. Typically, it employs augmentation techniques to obtain two views, where a node in one view acts as the anchor, the corresponding node in the other view serves as the positive sample, and all other nodes are regarded as negative samples. The goal is to minimize the distance between the anchor node and positive samples and maximize the distance to negative samples. However, due to the lack of label information during training, InfoNCE inevitably treats samples from the same class as negative samples, leading to the issue of false negative samples. This can impair the learned node representations and subsequently hinder performance in downstream tasks. While numerous methods have been proposed to mitigate the impact of false negatives, they still face various challenges. For instance, while increasing the number of negative samples can dilute the impact of false negatives, it concurrently increases computational burden. Thus, we propose GraphRank, a simple yet efficient graph contrastive learning method that addresses the problem of false negative samples by redefining the concept of negative samples to a certain extent, thereby avoiding the issue of false negative samples. The effectiveness of GraphRank is empirically validated through experiments on the node, edge, and graph level tasks.",
+      "authors": [
+        {
+          "misc": {
+            "url": "mailto:huyulan@ruc.edu.cn",
+            "email": "huyulan@ruc.edu.cn"
+          },
+          "name": "Yulan Hu",
+          "orgs": [
+            "Renmin University of China",
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:ouyangsheng@ruc.edu.cn",
+            "email": "ouyangsheng@ruc.edu.cn"
+          },
+          "name": "Sheng Ouyang",
+          "orgs": [
+            "Renmin University of China",
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:liujingyu@ruc.edu.cn",
+            "email": "liujingyu@ruc.edu.cn"
+          },
+          "name": "Jingyu Liu",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:chenge221@mails.ucas.ac.cn",
+            "email": "chenge221@mails.ucas.ac.cn"
+          },
+          "name": "Ge Chen",
+          "orgs": [
+            "University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:yangzhirui@ruc.edu.cn",
+            "email": "yangzhirui@ruc.edu.cn"
+          },
+          "name": "Zhirui Yang",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:wanjunchen@kuaishou.com",
+            "email": "wanjunchen@kuaishou.com"
+          },
+          "name": "Junchen Wan",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:zhangfuzheng@kuaishou.com",
+            "email": "zhangfuzheng@kuaishou.com"
+          },
+          "name": "Fuzheng Zhang",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:wangzhongyuan@kuaishou.com",
+            "email": "wangzhongyuan@kuaishou.com"
+          },
+          "name": "Zhongyuan Wang",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:liuyonggsai@ruc.edu.cn",
+            "email": "liuyonggsai@ruc.edu.cn"
+          },
+          "name": "Yong Liu",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.14525",
+      "date": "2023-10-23T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

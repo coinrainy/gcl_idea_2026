@@ -62,3 +62,16 @@ No simple gate, reweighting, adapter, residual, temperature schedule, backbone s
 - Exact accepted/rejected status for HLCL and G-Censor.
 - Exact evaluator/seeds/early stopping for Graph Barlow Twins, HLCL, G-Censor, LangGSL, SPGCL.
 - Whether Stage 2 wants a main gap around positives/negatives, MGM comparison, or heterophily boundary conditions.
+
+## Stage 1.6 DeepXiv Addendum
+
+DeepXiv is now usable for targeted arXiv retrieval. Raw Stage 1.6 results are stored in `notes/stage1_6_deepxiv/`, with readable reports in `notes/DEEPXIV_STAGE1_COMPLETION_REPORT.md` and `notes/DEEPXIV_TARGETED_SEARCH.md`.
+
+Additional risk items from targeted search:
+
+- GMA/GMCL (`2401.03638`), ArieL (`2202.06491`), GPA (`2209.06560`) and iGCL (`2211.03710`) strengthen the ban on simple augmentation novelty.
+- Negative Metric Learning for Graphs (`2505.10307`), counterfactual hard negatives (`2207.00148`) and graph ranking CL (`2310.14525`) extend G2 false-negative risk.
+- GCL-OT (`2511.16778`) and heterophilic hypergraph CL (`2511.18783`) should be checked if Stage 2 selects heterophily.
+- Label-free graph learning with LLM annotators (`2605.27913`) strengthens G6 leakage risk.
+
+No Stage 1.6 DeepXiv result is directly comparable under `BENCHMARK_PROTOCOL.md`. Exact saved split JSON, identical seed list and confirmed `test@best validation epoch` remain required.

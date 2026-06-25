@@ -1,0 +1,296 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2102.13085",
+      "score": 0.6,
+      "title": "Towards Robust Graph Contrastive Learning",
+      "tldr": "[research paper] Graph Robust Contrastive Learning (GROC) introduces a self-supervised method that enhances adversarial robustness in graph contrastive learning by integrating both adversarial edge perturbations (insertion/removal) and feature masking during view generation. The method leverages gradient signals to dynamically modify graph structures in a way that strengthens representation stability under structural attacks, while maintaining performance on clean data. Preliminary experiments on transductive node classification tasks show improved robustness against graph adversarial attacks without sacrificing clean accuracy, marking the first explicit incorporation of adversarial robustness as a training objective in graph contrastive learning.",
+      "abstract": "We study the problem of adversarially robust self-supervised learning on graphs. In the contrastive learning framework, we introduce a new method that increases the adversarial robustness of the learned representations through i) adversarial transformations and ii) transformations that not only remove but also insert edges. We evaluate the learned representations in a preliminary set of experiments, obtaining promising results. We believe this work takes an important step towards incorporating robustness as a viable auxiliary task in graph contrastive learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "njovanovic@ethz.ch"
+          },
+          "name": "Nikola Jovanović",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lfaber@ethz.ch"
+          },
+          "name": "Lukas Faber",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhmeng@ethz.ch"
+          },
+          "name": "Zhao Meng",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wattenhofer@ethz.ch"
+          },
+          "name": "Roger Wattenhofer",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2102.13085",
+      "date": "2021-02-25T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.SI",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2311.17853",
+      "score": 0.5769231,
+      "title": "On the Adversarial Robustness of Graph Contrastive Learning Methods",
+      "tldr": "[research paper] The paper evaluates the adversarial robustness of graph contrastive learning (GCL) methods through a comprehensive protocol using adaptive structural attacks in evasion scenarios. It finds that GCL models generally degrade in robustness under such attacks—contrary to expectations—highlighting that common augmentations in GCL do not enhance robustness and that naive proxies like random noise or transfer attacks overestimate real robustness. The study establishes a critical gap in current GCL evaluation practices, advocating for more realistic, structure-targeted adversarial testing.",
+      "abstract": "Contrastive learning (CL) has emerged as a powerful framework for learning representations of images and text in a self-supervised manner while enhancing model robustness against adversarial attacks. More recently, researchers have extended the principles of contrastive learning to graph-structured data, giving birth to the field of graph contrastive learning (GCL). However, whether GCL methods can deliver the same advantages in adversarial robustness as their counterparts in the image and text domains remains an open question. In this paper, we introduce a comprehensive robustness evaluation protocol tailored to assess the robustness of GCL models. We subject these models to adaptive adversarial attacks targeting the graph structure, specifically in the evasion scenario. We evaluate node and graph classification tasks using diverse real-world datasets and attack strategies. With our work, we aim to offer insights into the robustness of GCL methods and hope to open avenues for potential future research directions.",
+      "authors": [
+        {
+          "misc": {
+            "email": "f.guerranti@tum.de"
+          },
+          "name": "Filippo Guerranti",
+          "orgs": [
+            "Department of Computer Science",
+            "Munich Data Science Institute",
+            "Technical University of Munich"
+          ]
+        },
+        {
+          "misc": {
+            "email": "z.yi@tum.de"
+          },
+          "name": "Zinuo Yi",
+          "orgs": [
+            "Department of Computer Science",
+            "Munich Data Science Institute",
+            "Technical University of Munich"
+          ]
+        },
+        {
+          "misc": {
+            "email": "a.starvoit@tum.de"
+          },
+          "name": "Anna Starovoit",
+          "orgs": [
+            "Department of Computer Science",
+            "Munich Data Science Institute",
+            "Technical University of Munich"
+          ]
+        },
+        {
+          "misc": {
+            "email": "r.kamel@tum.de"
+          },
+          "name": "Rafiq Kamel",
+          "orgs": [
+            "Department of Computer Science",
+            "Munich Data Science Institute",
+            "Technical University of Munich"
+          ]
+        },
+        {
+          "misc": {
+            "email": "s.geisler@tum.de"
+          },
+          "name": "Simon Geisler",
+          "orgs": [
+            "Department of Computer Science",
+            "Munich Data Science Institute",
+            "Technical University of Munich"
+          ]
+        },
+        {
+          "misc": {
+            "email": "s.guennemann@tum.de"
+          },
+          "name": "Stephan Gunnemann",
+          "orgs": [
+            "Department of Computer Science",
+            "Munich Data Science Institute",
+            "Technical University of Munich"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2311.17853",
+      "date": "2023-11-29T00:00:00",
+      "citation_count": 4,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2411.18905",
+      "score": 0.3655914,
+      "title": "FedRGL: Robust Federated Graph Learning for Label Noise",
+      "tldr": "[research paper] FedRGL introduces a dual-perspective noise mitigation framework for federated graph learning under label noise, combining global model predictions with class-aware subgraph structural analysis to dynamically filter noisy nodes via dynamic thresholds. It employs graph contrastive learning on client-side to enhance encoder robustness and assign high-confidence pseudo-labels to noisy nodes, while using predictive entropy on unlabeled nodes to assess model quality before aggregation, enabling adaptive, robust global model updates that outperform baselines across diverse noise regimes and client configurations.",
+      "abstract": "Federated Graph Learning (FGL) is a distributed machine learning paradigm based on graph neural networks, enabling secure and collaborative modeling of local graph data among clients. However, label noise can degrade the global model's generalization performance. Existing federated label noise learning methods, primarily focused on computer vision, often yield suboptimal results when applied to FGL. To address this, we propose a robust federated graph learning method with label noise, termed FedRGL. FedRGL introduces dual-perspective consistency noise node filtering, leveraging both the global model and subgraph structure under class-aware dynamic thresholds. To enhance client-side training, we incorporate graph contrastive learning, which improves encoder robustness and assigns high-confidence pseudo-labels to noisy nodes. Additionally, we measure model quality via predictive entropy of unlabeled nodes, enabling adaptive robust aggregation of the global model. Comparative experiments on multiple real-world graph datasets show that FedRGL outperforms 12 baseline methods across various noise rates, types, and numbers of clients.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "De Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Haodong Qian",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Qiyu Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zhou Tan",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zemin Gan",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jinyan Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xianxian Li",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2411.18905",
+      "date": "2024-11-28T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1908.11308",
+      "score": 0.33333334,
+      "title": "Structural Robustness to Noise in Consensus Networks: Impact of Degrees and Distances, Fundamental Limits, and Extremal Graphs",
+      "tldr": "[research paper] The paper establishes tight upper and lower bounds on structural robustness to noise in undirected consensus networks, defined as the minimal steady-state population variance under noisy dynamics with edge weights in [0,1]. It proves a fundamental trade-off between robustness and average degree: high robustness requires large average degree, yet dense graphs can still be suboptimal. Random k-regular graphs achieve near-optimal robustness among graphs with fixed average degree k for large n, and when k grows with n, they maintain robustness within a constant factor of the complete graph while minimizing average degree.",
+      "abstract": "We investigate how the graph topology influences the robustness to noise in undirected linear consensus networks. We measure the structural robustness by using the smallest possible value of steady state population variance of states under the noisy consensus dynamics with edge weights from the unit interval. We derive tight upper and lower bounds on the structural robustness of networks based on the average distance between nodes and the average node degree. Using the proposed bounds, we characterize the networks with different types of robustness scaling under increasing size. Furthermore, we present a fundamental trade-off between the structural robustness and the average degree of networks. While this trade-off implies that a desired level of structural robustness can only be achieved by graphs with a sufficiently large average degree, we also show that there exist dense graphs with poor structural robustness. We then show that, random k-regular graphs (the degree of each node is k) with n nodes typically have near-optimal structural robustness among all the graphs with size n and average degree k for sufficiently large n and k. We also show that when k increases properly with n, random k-regular graphs maintain a structural robustness within a constant factor of the complete graph's while also having the minimum average degree required for such robustness.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ayasin@umn.edu"
+          },
+          "name": "Yasin Yazicioglu",
+          "orgs": [
+            "Department of Electrical and Computer Engineering, University of Minnesota, Minneapolis, MN, USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "waseem.abbas@vanderbilt.edu"
+          },
+          "name": "Waseem Abbas",
+          "orgs": [
+            "Department of Electrical Engineering and Computer Science, Vanderbilt University, Nashville, TN, USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mudassir@rutgers.edu"
+          },
+          "name": "Mudassir Shabbir",
+          "orgs": [
+            "Computer Science Department, Information Technology University, Lahore, Punjab, Pakistan"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/1908.11308",
+      "date": "2019-08-29T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "eess.SY",
+        "cs.SY",
+        "math.CO",
+        "math.OC"
+      ],
+      "venue": "IEEE Transactions on Automatic Control",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2312.12108",
+      "score": 0.25,
+      "title": "Knowledge Graph Error Detection with Contrastive Confidence Adaption",
+      "tldr": "[research paper] CCA introduces an end-to-end knowledge graph error detection framework that leverages triplet reconstruction to jointly model textual and structural triplet representations. By designing interactive contrastive learning, it captures disparities between textual and graph-based embeddings to distinguish semantically-similar and adversarial noise—types of errors that evade traditional embedding-based methods due to shared structural patterns. Experimental results show superior performance on real-world noise types, particularly where semantic similarity masks structural validity, demonstrating the critical role of textual context in error detection.",
+      "abstract": "Knowledge graphs (KGs) often contain various errors. Previous works on detecting errors in KGs mainly rely on triplet embedding from graph structure. We conduct an empirical study and find that these works struggle to discriminate noise from semantically-similar correct triplets. In this paper, we propose a KG error detection model CCA to integrate both textual and graph structural information from triplet reconstruction for better distinguishing semantics. We design interactive contrastive learning to capture the differences between textual and structural patterns. Furthermore, we construct realistic datasets with semantically-similar noise and adversarial noise. Experimental results demonstrate that CCA outperforms state-of-the-art baselines, especially in detecting semantically-similar noise and adversarial noise.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Xiangyu Liu",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yang Liu",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Wei Hu",
+          "orgs": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2312.12108",
+      "date": "2023-12-19T00:00:00",
+      "citation_count": 16,
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/nju-websoft/CCA"
+    }
+  ]
+}

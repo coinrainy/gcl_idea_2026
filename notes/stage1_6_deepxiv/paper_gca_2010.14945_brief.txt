@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2010.14945",
+  "src_url": "https://arxiv.org/pdf/2010.14945",
+  "title": "Graph Contrastive Learning with Adaptive Augmentation",
+  "tldr": "[research paper] The paper proposes Graph Contrastive Learning with Adaptive Augmentation (GCA), a novel unsupervised framework that introduces adaptive data augmentation schemes tailored to graph topology and node attributes. Unlike uniform augmentation methods (e.g., random edge dropping or feature shuffling), GCA uses centrality-based priors to selectively corrupt unimportant edges and features—removing edges with low centrality and adding noise to low-impact feature dimensions—thereby preserving intrinsic graph structures and forcing the model to learn robust, semantically meaningful representations. Extensive experiments on real-world datasets show GCA outperforms state-of-the-art contrastive and supervised baselines in node classification, validating the effectiveness of adaptive augmentation in improving representation quality and invariance to perturbations.",
+  "keywords": [
+    "adaptive augmentation",
+    "graph topology",
+    "node centrality",
+    "feature noise injection",
+    "contrastive representation learning"
+  ],
+  "publish_at": "2020-10-27T00:00:00",
+  "citations": 1443,
+  "github_url": "https://github.com/CRIPAC-DIG/GCA"
+}

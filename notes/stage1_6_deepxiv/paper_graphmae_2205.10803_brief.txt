@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2205.10803",
+  "src_url": "https://arxiv.org/pdf/2205.10803",
+  "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+  "tldr": "[research paper] GraphMAE introduces a generative self-supervised approach to graph autoencoding that replaces structure reconstruction with feature reconstruction using a masked input and scaled cosine error (SCE), addressing key limitations in prior graph autoencoders such as sensitivity to reconstruction metrics, training instability, and reliance on structural augmentation. The method achieves superior performance across 21 datasets in node and graph classification tasks by eliminating the need for negative sampling or complex training dynamics, demonstrating that simple, well-designed generative objectives can outperform contrastive baselines in graph pre-training.",
+  "keywords": [
+    "masked graph autoencoding",
+    "feature reconstruction",
+    "scaled cosine error",
+    "generative self-supervised learning",
+    "graph autoencoder robustness"
+  ],
+  "publish_at": "2022-05-22T00:00:00",
+  "citations": 941,
+  "github_url": "https://github.com/THUDM/GraphMAE"
+}

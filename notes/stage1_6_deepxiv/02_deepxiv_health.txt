@@ -1,0 +1,14 @@
+🏥 Checking deepxiv API health...
+
+1️⃣  Checking API connectivity...
+   ✅ API server is reachable
+
+2️⃣  Checking token validity...
+   ✅ Token is valid
+
+3️⃣  Checking free test papers...
+   ✅ arXiv test paper available: 2409.05591
+
+============================================================
+✅ Health check completed!
+============================================================

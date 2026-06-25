@@ -1,0 +1,428 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.537037,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2001.07524",
+      "score": 0.5,
+      "title": "Node Masking: Making Graph Neural Networks Generalize and Scale Better",
+      "tldr": "[research paper] The paper introduces Node Masking as a theoretical and empirical technique to improve generalization and scalability of spatial Graph Neural Networks (GNNs) by exposing them to missing node information during training, thereby mitigating over-smoothing and over-fitting. Through analysis of aggregation-based GNNs, it demonstrates that masking nodes during message passing forces the model to learn more robust, neighborhood-aware representations, leading to better performance in both transductive and inductive node classification settings on standard benchmarks.",
+      "abstract": "Graph Neural Networks (GNNs) have received a lot of interest in the recent times. From the early spectral architectures that could only operate on undirected graphs per a transductive learning paradigm to the current state of the art spatial ones that can apply inductively to arbitrary graphs, GNNs have seen significant contributions from the research community. In this paper, we utilize some theoretical tools to better visualize the operations performed by state of the art spatial GNNs. We analyze the inner workings of these architectures and introduce a simple concept, Node Masking, that allows them to generalize and scale better. To empirically validate the concept, we perform several experiments on some widely-used datasets for node classification in both the transductive and inductive settings, hence laying down strong benchmarks for future research.",
+      "authors": [
+        {
+          "misc": {
+            "email": "pushkarmishra@fb.com"
+          },
+          "name": "Pushkar Mishra",
+          "orgs": [
+            "Facebook AI",
+            "London",
+            "United Kingdom"
+          ]
+        },
+        {
+          "misc": {
+            "email": "piktus@fb.com"
+          },
+          "name": "Aleksandra Piktus",
+          "orgs": [
+            "Facebook AI",
+            "London",
+            "United Kingdom"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ggoossen@fb.com"
+          },
+          "name": "Gerard Goossen",
+          "orgs": [
+            "Facebook",
+            "London",
+            "United Kingdom"
+          ]
+        },
+        {
+          "misc": {
+            "email": "fsilvestri@fb.com"
+          },
+          "name": "Fabrizio Silvestri",
+          "orgs": [
+            "Facebook AI",
+            "London",
+            "United Kingdom"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2001.07524",
+      "date": "2020-01-17T00:00:00",
+      "citation_count": 21,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2507.14484",
+      "score": 0.4166667,
+      "title": "ReDiSC: A Reparameterized Masked Diffusion Model for Scalable Node Classification with Structured Predictions",
+      "tldr": "[research paper] ReDiSC introduces a discrete-domain reparameterized masked diffusion model (RMDM) for structured node classification, explicitly modeling joint label dependencies without relying on continuous latent spaces. It leverages variational EM with a priority queue to efficiently learn from sparse labels, enabling scalable inference via a labeled-first denoising procedure that mirrors GNN+label propagation hybrids. Theoretical analysis shows superior efficiency over continuous diffusion models (e.g., DPM-SNC), while empirical results confirm state-of-the-art accuracy and scalability across homophilic/heterophilic graphs of varying sizes.",
+      "abstract": "In recent years, graph neural networks (GNN) have achieved unprecedented successes in node classification tasks. Although GNNs inherently encode specific inductive biases (e.g., acting as low-pass or high-pass filters), most existing methods implicitly assume conditional independence among node labels in their optimization objectives. While this assumption is suitable for traditional classification tasks such as image recognition, it contradicts the intuitive observation that node labels in graphs remain correlated, even after conditioning on the graph structure. To make structured predictions for node labels, we propose ReDiSC, namely, Reparameterized masked Diffusion model for Structured node Classification. ReDiSC estimates the joint distribution of node labels using a reparameterized masked diffusion model, which is learned through the variational expectation-maximization (EM) framework. Our theoretical analysis shows the efficiency advantage of ReDiSC in the E-step compared to DPM-SNC, a state-of-the-art model that relies on a manifold-constrained diffusion model in continuous domain. Meanwhile, we explicitly link ReDiSC's M-step objective to popular GNN and label propagation hybrid approaches. Extensive experiments demonstrate that ReDiSC achieves superior or highly competitive performance compared to state-of-the-art GNN, label propagation, and diffusion-based baselines across both homophilic and heterophilic graphs of varying sizes. Notably, ReDiSC scales effectively to large-scale datasets on which previous structured diffusion methods fail due to computational constraints, highlighting its significant practical advantage in structured node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liyle3@mail2.sysu.edu.cn"
+          },
+          "name": "Yule Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "luyf55@mail2.sysu.edu.cn"
+          },
+          "name": "Yifeng Lu",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wangzh665@mail.sysu.edu.cn",
+            "corresponding": true
+          },
+          "name": "Zhen Wang",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhewei@ruc.edu.cn"
+          },
+          "name": "Zhewei Wei",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yaliang.li@alibaba-inc.com"
+          },
+          "name": "Yaliang Li",
+          "orgs": [
+            "Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "bolin.ding@alibaba-inc.com"
+          },
+          "name": "Bolin Ding",
+          "orgs": [
+            "Alibaba Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2507.14484",
+      "date": "2025-07-19T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/liyle3/REDISC"
+    },
+    {
+      "arxiv_id": "2201.02534",
+      "score": 0.3611111,
+      "title": "MGAE: Masked Autoencoders for Self-Supervised Learning on Graphs",
+      "tldr": "[research paper] MGAE introduces a masked autoencoding framework for graph self-supervised learning by randomly masking up to 70% of edges and reconstructing them via a cross-correlation decoder that leverages latent node representations. Unlike traditional graph autoencoders or edge-drop GSSL methods, MGAE operates on a sparsely masked graph, enabling efficient training with high masking ratios while preserving robust node representations through cross-node correlation modeling, outperforming state-of-the-art methods on link prediction and node classification tasks.",
+      "abstract": "We introduce a novel masked graph autoencoder (MGAE) framework to perform effective learning on graph structure data. Taking insights from self-supervised learning, we randomly mask a large proportion of edges and try to reconstruct these missing edges during training. MGAE has two core designs. First, we find that masking a high ratio of the input graph structure, e.g., $70\\\\%$, yields a nontrivial and meaningful self-supervisory task that benefits downstream applications. Second, we employ a graph neural network (GNN) as an encoder to perform message propagation on the partially-masked graph. To reconstruct the large number of masked edges, a tailored cross-correlation decoder is proposed. It could capture the cross-correlation between the head and tail nodes of anchor edge in multi-granularity. Coupling these two designs enables MGAE to be trained efficiently and effectively. Extensive experiments on multiple open datasets (Planetoid and OGB benchmarks) demonstrate that MGAE generally performs better than state-of-the-art unsupervised learning competitors on link prediction and node classification.",
+      "authors": [
+        {
+          "misc": {
+            "email": "qytan@tamu.edu"
+          },
+          "name": "Qiaoyu Tan",
+          "orgs": [
+            "Texas A&M University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ninghao.liu@uga.edu"
+          },
+          "name": "Ninghao Liu",
+          "orgs": [
+            "University of Georgia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaohuang@comp.polyu.edu.hk"
+          },
+          "name": "Xiao Huang",
+          "orgs": [
+            "The Hong Kong Polytechnic University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "rui.chen1@samsung.com"
+          },
+          "name": "Rui Chen",
+          "orgs": [
+            "Samsung Research America"
+          ]
+        },
+        {
+          "misc": {
+            "email": "soohyunc@gmail.com"
+          },
+          "name": "Soo-Hyun Choi",
+          "orgs": [
+            "Samsung Research America"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xia.hu@rice.edu"
+          },
+          "name": "Xia Hu",
+          "orgs": [
+            "Rice University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.02534",
+      "date": "2022-01-07T00:00:00",
+      "citation_count": 55,
+      "categories": [
+        "cs.LG",
+        "cs.IR",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2407.15431",
+      "score": 0.33333334,
+      "title": "Pre-Training and Prompting for Few-Shot Node Classification on Text-Attributed Graphs",
+      "tldr": "[research paper] P2TAG introduces a joint pre-training framework for few-shot node classification on text-attributed graphs (TAGs) by co-training language models (LMs) and graph neural networks (GNNs) via self-supervised learning with masked language modeling. It integrates GNNs into LM processing by using node-level [CLS] token embeddings as input to GNNs for neighbor aggregation, and modifies masked language modeling to incorporate neighbor context. During prompting, a mixed approach combines graph-level and text-level prompts to align pre-training with downstream tasks, achieving +18.98% to +35.98% performance gains over existing methods on six real-world datasets.",
+      "abstract": "The text-attributed graph (TAG) is one kind of important real-world graph-structured data with each node associated with raw texts. For TAGs, traditional few-shot node classification methods directly conduct training on the pre-processed node features and do not consider the raw texts. The performance is highly dependent on the choice of the feature pre-processing method. In this paper, we propose P2TAG, a framework designed for few-shot node classification on TAGs with graph pre-training and prompting. P2TAG first pre-trains the language model (LM) and graph neural network (GNN) on TAGs with self-supervised loss. To fully utilize the ability of language models, we adapt the masked language modeling objective for our framework. The pre-trained model is then used for the few-shot node classification with a mixed prompt method, which simultaneously considers both text and graph information. We conduct experiments on six real-world TAGs, including paper citation networks and product co-purchasing networks. Experimental results demonstrate that our proposed framework outperforms existing graph few-shot learning methods on these datasets with +18.98% ~ +35.98% improvements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hwangyeong@mail.tsinghua.edu.cn"
+          },
+          "name": "Huanjing Zhao",
+          "orgs": [
+            "Tsinghua University",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "renjy19@mails.tsinghua.edu.cn"
+          },
+          "name": "Junyu Ren",
+          "orgs": [
+            "Tsinghua University",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "evgeny.kharlamov@de.bosch.com"
+          },
+          "name": "Evgeny Kharlamov",
+          "orgs": [
+            "Bosch Center for Artificial Intelligence",
+            "Renningen, Germany"
+          ]
+        },
+        {
+          "misc": {
+            "email": "B.Yang-32@sms.ed.ac.uk"
+          },
+          "name": "Beining Yang",
+          "orgs": [
+            "University of Edinburgh",
+            "Edinburgh, UK"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenhui.zhang@zhipuai.cn"
+          },
+          "name": "Chenhui Zhang",
+          "orgs": [
+            "Zhipu AI",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhaoshuzs@ahu.edu.cn"
+          },
+          "name": "Shu Zhao",
+          "orgs": [
+            "Anhui University",
+            "Anhui, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yukuo.cen@zhipuai.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Zhipu AI",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2407.15431",
+      "date": "2024-07-22T00:00:00",
+      "citation_count": 21,
+      "categories": [
+        "cs.SI",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

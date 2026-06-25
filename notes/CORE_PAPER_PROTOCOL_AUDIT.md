@@ -35,3 +35,19 @@ A bucket is empty. Even when a paper uses 10/10/80, published results still lack
 ## Highest Priority Reruns Later
 
 GRACE, GCA, ProGCL, BGRL, AFGRL, GraphMAE/GraphMAE2 and HLCL, depending on selected Stage 2 gap.
+
+## Stage 1.6 DeepXiv Protocol Addendum
+
+DeepXiv evidence narrows several `UNCLEAR` fields but does not create any A-class direct comparison.
+
+| Paper | New DeepXiv evidence | Audit change |
+| --- | --- | --- |
+| GCA | Public Wiki-CS, 10/10/80 for other datasets, frozen logistic evaluator, 20 runs | remains C because exact saved split JSON/seed list/test@best are not project-aligned |
+| CCA-SSG | Public citation splits and 10/10/80 appendix details; logistic regression | remains C/D due split ambiguity and missing test@best |
+| AFGRL | Logistic evaluator; test performance selected at best validation | remains C due missing exact seed list/project splits |
+| MaskGAE | 1:1:8 for Photo/Computer node classification; frozen linear classifier | moves from D toward C/D, but exact seeds/test@best still missing |
+| SPGCL | Frozen linear classifier, ten repeats, homophily/heterophily tables, ablations | remains D/C because exact split files, seed identities and test@best are not confirmed |
+| LangGSL | LLM/GSLM mutual learning, robustness/TI/TR settings | remains D and not directly comparable to frozen GCL |
+| Graph Barlow Twins | no-negative/decorrelation objective and ablation evidence | remains D/C due evaluator/split/seed uncertainty |
+
+Protocol conclusion: the A bucket remains empty.

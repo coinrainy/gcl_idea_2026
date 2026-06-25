@@ -1,0 +1,139 @@
+{
+  "arxiv_id": "2410.12096",
+  "src_url": "https://arxiv.org/pdf/2410.12096",
+  "title": "Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning",
+  "abstract": "Graph representation learning, involving both node features and graph structures, is crucial for real-world applications but often encounters pervasive noise. State-of-the-art methods typically address noise by focusing separately on node features with large language models (LLMs) and on graph structures with graph structure learning models (GSLMs). In this paper, we introduce LangGSL, a robust framework that integrates the complementary strengths of pre-trained language models and GSLMs to jointly enhance both node feature and graph structure learning. In LangGSL, we first leverage LLMs to filter noise in the raw data and extract valuable cleaned information as features, enhancing the synergy of downstream models. During the mutual learning phase in LangGSL, the core idea is to leverage the relatively small language model (LM) to process local attributes and generate reliable pseudo-labels and informative node embeddings, which are then integrated into the GSLM's prediction phase. This approach enriches the global context and enhances overall performance. Meanwhile, GSLM refines the evolving graph structure constructed from the LM's output, offering updated labels back to the LM as additional guidance, thus facilitating a more effective mutual learning process. The LM and GSLM work synergistically, complementing each other's strengths and offsetting weaknesses within a variational information-maximizing framework, resulting in enhanced node features and a more robust graph structure. Extensive experiments on diverse graph datasets of varying scales and across different task scenarios demonstrate the scalability and effectiveness of the proposed approach.",
+  "authors": [
+    {
+      "misc": {
+        "email": "guangxin.su@unsw.edu.au"
+      },
+      "name": "Guangxin Su",
+      "orgs": [
+        "The University of New South Wales",
+        "Sydney, Australia"
+      ]
+    },
+    {
+      "misc": {
+        "email": "yifan.zhu4@student.unsw.edu.au"
+      },
+      "name": "Yifan Zhu",
+      "orgs": [
+        "The University of New South Wales",
+        "Sydney, Australia"
+      ]
+    },
+    {
+      "misc": {
+        "email": "wenjie.zhang@unsw.edu.au"
+      },
+      "name": "Wenjie Zhang",
+      "orgs": [
+        "The University of New South Wales",
+        "Sydney, Australia"
+      ]
+    },
+    {
+      "misc": {
+        "email": "hanchen.wang@unsw.edu.au"
+      },
+      "name": "Hanchen Wang",
+      "orgs": [
+        "The University of New South Wales",
+        "Sydney, Australia"
+      ]
+    }
+  ],
+  "token_count": 26806,
+  "venue": "arXiv.org",
+  "journal_name": "ArXiv",
+  "citations": 3,
+  "sections": [
+    {
+      "name": "Introduction",
+      "idx": 1,
+      "tldr": "This paper proposes a novel modular framework that jointly learns robust, noise-resistant node representations from text attributes using large language models and dynamically infers and updates graph structures to address the challenges of noisy, incomplete, or absent graph structures in real-world applications.",
+      "token_count": 1441
+    },
+    {
+      "name": "Related Work",
+      "idx": 2,
+      "tldr": "This paper addresses the key problem of graph structure learning in GNNs, which remains limited by reliance on noisy or sparse supervisory signals, and positions itself within the academic landscape by proposing a novel LLM-GSLM iterative framework that jointly refines graph structure and node representations while preserving structural integrity.",
+      "token_count": 968
+    },
+    {
+      "name": "Method",
+      "idx": 3,
+      "tldr": "LangGSL proposes a framework that leverages large language models (LLMs) for data cleaning and mutual learning between graph structure and node representations, using an evidence lower bound (ELBO) to jointly optimize graph topology and node features by modeling label dependencies through variational inference.",
+      "token_count": 6211
+    },
+    {
+      "name": "Experiments",
+      "idx": 4,
+      "tldr": "LangGSL outperforms state-of-the-art GSLMs and GraphLLMs in transductive node classification, achieving an average 3.1% improvement across datasets and a near 15% gain over GCN on Pubmed, demonstrating superior performance and robustness through effective mutual learning with unlabeled data.",
+      "token_count": 3627
+    },
+    {
+      "name": "Conclusion",
+      "idx": 5,
+      "tldr": "LangGSL integrates language models and graph neural networks to enhance graph representation learning by improving node feature quality, structural refinement, and robustness across noisy and complex graph data.",
+      "token_count": 474
+    },
+    {
+      "name": "References#2",
+      "idx": 6,
+      "tldr": "This section presents a collection of research papers exploring the integration of large language models (LLMs) with graph neural networks, focusing on tasks such as graph understanding, structure learning, node embedding, and self-supervised learning.",
+      "token_count": 4535
+    },
+    {
+      "name": "A Deriving The Evidence Lower Bound (Elbo)",
+      "idx": 7,
+      "tldr": "This section derives the Evidence Lower Bound (ELBO) as a tractable lower bound on the log-likelihood of observed labels by approximating the posterior over unobserved labels with a variational distribution and applying Jensen's inequality.",
+      "token_count": 1420
+    },
+    {
+      "name": "B Prompt Design",
+      "idx": 8,
+      "tldr": "The B Prompt Design section demonstrates that data cleaning significantly improves LangGSL's performance, with summary-based prompts using GPT-4 yielding the best results for accurate classification of users in text-attributed graphs.",
+      "token_count": 1685
+    },
+    {
+      "name": "C Dataset",
+      "idx": 9,
+      "tldr": "This section describes four real-world datasets—Instagram, PubMed, ogbn-arxiv, and Cora—used for evaluation, highlighting their graph structures, node and edge representations, text preprocessing methods, and feature dimensions.",
+      "token_count": 605
+    },
+    {
+      "name": "Results",
+      "idx": 10,
+      "tldr": "LangGSL outperforms baseline GNN and LM methods across datasets and settings, with LangGSL-GSLM showing greater stability and LangGSL-LM achieving optimal performance at intermediate pseudo-label weights (α = 0.3–0.5), demonstrating robustness and effectiveness in node classification.",
+      "token_count": 449
+    },
+    {
+      "name": "E Implementation",
+      "idx": 11,
+      "tldr": "This section details the hyperparameter tuning, experimental setup, and baseline comparisons for LangGSL across multiple datasets, ensuring rigorous and comparable evaluations of graph structure and language model-based learning methods.",
+      "token_count": 4903
+    },
+    {
+      "name": "Footnotes",
+      "idx": 12,
+      "tldr": "The section outlines key footnotes detailing copyright information, a comparison between LMs and LLMs highlighting their trade-offs in capability and flexibility, and a reference to a dataset repository.",
+      "token_count": 345
+    }
+  ],
+  "categories": [
+    "cs.LG",
+    "cs.AI"
+  ],
+  "publish_at": "2024-10-15T00:00:00",
+  "keywords": [
+    "mutual learning",
+    "text-attributed graph",
+    "graph structure refinement",
+    "language model integration",
+    "variational information maximization"
+  ],
+  "tldr": "[research paper] LangGSL introduces a mutual learning framework that integrates large language models (LLMs) and graph structure learning models (GSLMs) to jointly improve node feature quality and graph structure robustness. LLMs clean noisy text attributes and generate pseudo-labels for local feature refinement, while GSLMs refine the global graph structure using these enhanced features, feeding updated labels back to the LLM. The framework operates within a variational information-maximizing objective, enabling iterative synergy between local text semantics and global structural inference, with demonstrated superiority in noisy, sparse, or absent-structure graph scenarios."
+}

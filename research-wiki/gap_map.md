@@ -97,3 +97,15 @@ Stable gap IDs. These are research gaps and novelty boundaries, not final method
 - Must-run falsification: pretrain on one graph family, freeze/evaluate on another with controlled evaluator.
 - Stage 2 recommendation: DEFER unless Stage 2 targets cross-domain.
 - Risk: HIGH
+
+## Stage 1.6 DeepXiv Gap Update
+
+DeepXiv targeted retrieval did not overturn the Stage 1.5 gap map. It sharpened the following boundaries:
+
+- G1 remains open but high risk because GMA/GMCL, GPA, iGCL, AFGRL and G-Censor-like task-oriented views already cover many positive/augmentation heuristics.
+- G2 remains open and high risk because ProGCL/SPGCL plus newer negative-metric/counterfactual-hard-negative works cover generic negative refinement.
+- G3 remains open because GraphMAE/GraphMAE2/MaskGAE report strong masked objectives, but DeepXiv still does not establish exact protocol equivalence with this project.
+- G5 remains high risk because HLCL, GCL-OT and related heterophily papers already address filter/transport/heterophily variants.
+- G6 remains `UNCLEAR` for main Stage 2 direction because LangGSL and label-free LLM graph learning raise leakage and contamination issues.
+
+No new final method or idea was generated in Stage 1.6.

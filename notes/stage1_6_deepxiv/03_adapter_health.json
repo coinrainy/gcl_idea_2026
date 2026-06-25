@@ -1,0 +1,4 @@
+{
+  "ok": true,
+  "output": "🏥 Checking deepxiv API health...\n\n1️⃣  Checking API connectivity...\n   ✅ API server is reachable\n\n2️⃣  Checking token validity...\n   ✅ Token is valid\n\n3️⃣  Checking free test papers...\n   ✅ arXiv test paper available: 2409.05591\n\n============================================================\n✅ Health check completed!\n============================================================"
+}

@@ -28,3 +28,16 @@ Semantic Scholar recovered BGRL metadata: ICLR venue, arXiv id `2102.06514`, cit
 ## OpenReview Status
 
 CM-GCL: accepted NeurIPS 2022. InfoGCL: NeurIPS 2021 Poster. Transductive Linear Probing: LoG 2022 Oral. Directed GCL: NeurIPS 2021 Poster. HLCL and G-Censor remain `UNCLEAR` for final acceptance status in this pass.
+
+## Stage 1.6 DeepXiv Addendum
+
+DeepXiv raw evidence is stored in `notes/stage1_6_deepxiv/`.
+
+Newly strengthened risk boundaries:
+
+- SPGCL (`2606.10284`): strongest recent positive-sample risk. DeepXiv confirms frozen linear evaluation, ten repeats and ablations, but exact saved split files and seed identities remain missing.
+- LangGSL (`2410.12096`): strongest LLM/TAG semantic-prior risk. DeepXiv confirms TR/TI robustness and LLM/GSLM comparisons, but leakage-safe protocol remains unresolved.
+- MaskGAE (`2205.10053`): node classification protocol is clearer for Photo/Computer 1:1:8 and frozen linear classifier, but still not directly comparable.
+- GCA/CCA-SSG/AFGRL: DeepXiv confirms important evaluator/split details, but no result meets project direct-comparability requirements.
+
+Audit verdict remains: A-class direct comparability is empty.

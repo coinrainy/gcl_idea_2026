@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2006.04131",
+  "src_url": "https://arxiv.org/pdf/2006.04131",
+  "title": "Deep Graph Contrastive Representation Learning",
+  "tldr": "[research paper] GRACE introduces a node-level contrastive framework for unsupervised graph representation learning that avoids reliance on global graph embeddings or injective readout functions. By jointly corrupting graph topology (edge removal) and node attributes (feature masking), it generates diverse node contexts to maximize agreement between node embeddings across two corrupted views. Theoretical analysis links the contrastive objective to mutual information and triplet loss, while empirical results show superior performance over state-of-the-art methods, including outperforming supervised baselines on transductive tasks.",
+  "keywords": [
+    "node-level contrastive learning",
+    "graph corruption",
+    "topology-attribute joint corruption",
+    "mutual information maximization",
+    "unsupervised graph representation"
+  ],
+  "publish_at": "2020-06-07T00:00:00",
+  "citations": 1078,
+  "github_url": "https://github.com/CRIPAC-DIG/GRACE"
+}

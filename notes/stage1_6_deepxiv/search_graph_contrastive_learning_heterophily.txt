@@ -1,0 +1,223 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2303.06344",
+      "score": 1.0,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2102.13085",
+      "score": 0.33333334,
+      "title": "Towards Robust Graph Contrastive Learning",
+      "tldr": "[research paper] Graph Robust Contrastive Learning (GROC) introduces a self-supervised method that enhances adversarial robustness in graph contrastive learning by integrating both adversarial edge perturbations (insertion/removal) and feature masking during view generation. The method leverages gradient signals to dynamically modify graph structures in a way that strengthens representation stability under structural attacks, while maintaining performance on clean data. Preliminary experiments on transductive node classification tasks show improved robustness against graph adversarial attacks without sacrificing clean accuracy, marking the first explicit incorporation of adversarial robustness as a training objective in graph contrastive learning.",
+      "abstract": "We study the problem of adversarially robust self-supervised learning on graphs. In the contrastive learning framework, we introduce a new method that increases the adversarial robustness of the learned representations through i) adversarial transformations and ii) transformations that not only remove but also insert edges. We evaluate the learned representations in a preliminary set of experiments, obtaining promising results. We believe this work takes an important step towards incorporating robustness as a viable auxiliary task in graph contrastive learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "njovanovic@ethz.ch"
+          },
+          "name": "Nikola Jovanović",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lfaber@ethz.ch"
+          },
+          "name": "Lukas Faber",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhmeng@ethz.ch"
+          },
+          "name": "Zhao Meng",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wattenhofer@ethz.ch"
+          },
+          "name": "Roger Wattenhofer",
+          "orgs": [
+            "ETH Zurich",
+            "Zurich, Switzerland"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2102.13085",
+      "date": "2021-02-25T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.SI",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2511.18783",
+      "score": 0.33333334,
+      "title": "Hypergraph Contrastive Learning for both Homophilic and Heterophilic Hypergraphs",
+      "tldr": "[research paper] HONOR introduces the first unsupervised hypergraph contrastive learning framework that explicitly models heterophilic relationships in hypergraphs by combining a prompt-based hyperedge feature construction strategy—using central pattern features and cosine similarity to preserve global semantics and suppress local noise—and an adaptive attention aggregation module that dynamically weights node contributions. These mechanisms enable high-pass filtering to amplify heterophilic distinctions without introducing instability, resulting in more discriminative and robust node and hyperedge representations under both homophilic and heterophilic conditions, with theoretical and empirical validation of superior generalization and robustness.",
+      "abstract": "Hypergraphs, as a generalization of traditional graphs, naturally capture high-order relationships. In recent years, hypergraph neural networks (HNNs) have been widely used to capture complex high-order relationships. However, most existing hypergraph neural network methods inherently rely on the homophily assumption, which often does not hold in real-world scenarios that exhibit significant heterophilic structures. To address this limitation, we propose \\\\textbf{HONOR}, a novel unsupervised \\\\textbf{H}ypergraph c\\\\textbf{ON}trastive learning framework suitable for both hom\\\\textbf{O}philic and hete\\\\textbf{R}ophilic hypergraphs. Specifically, HONOR explicitly models the heterophilic relationships between hyperedges and nodes through two complementary mechanisms: a prompt-based hyperedge feature construction strategy that maintains global semantic consistency while suppressing local noise, and an adaptive attention aggregation module that dynamically captures the diverse local contributions of nodes to hyperedges. Combined with high-pass filtering, these designs enable HONOR to fully exploit heterophilic connection patterns, yielding more discriminative and robust node and hyperedge representations. Theoretically, we demonstrate the superior generalization ability and robustness of HONOR. Empirically, extensive experiments further validate that HONOR consistently outperforms state-of-the-art baselines under both homophilic and heterophilic datasets.",
+      "authors": [
+        "Renchu Guan",
+        "Xuyang Li",
+        "Yachao Zhang",
+        "Wei Pang",
+        "Fausto Giunchiglia",
+        "Ximing Li",
+        "Yonghao Liu",
+        "Xiaoyue Feng"
+      ],
+      "url": "https://arxiv.org/abs/2511.18783",
+      "date": "2025-11-24T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2501.08538",
+      "score": 0.27941176,
+      "title": "Homophily-aware Heterogeneous Graph Contrastive Learning",
+      "tldr": "[research paper] HGMS introduces a homophily-aware contrastive learning framework for heterogeneous graphs by leveraging connection strength and multi-view self-expression to counteract heterophily. It proposes a heterogeneous edge dropping augmentation strategy that preserves high-strength metapath connections to enhance homophily in augmented views, and a multi-view self-expressive learning method that infers node homophily via a self-expressive matrix—used both as an augmented view and to identify false negative pairs in contrastive loss—resulting in tighter mutual information bounds and improved downstream performance.",
+      "abstract": "Heterogeneous graph pre-training (HGP) has demonstrated remarkable performance across various domains. However, the issue of heterophily in real-world heterogeneous graphs (HGs) has been largely overlooked. To bridge this research gap, we proposed a novel heterogeneous graph contrastive learning framework, termed HGMS, which leverages connection strength and multi-view self-expression to learn homophilous node representations. Specifically, we design a heterogeneous edge dropping augmentation strategy that enhances the homophily of augmented views. Moreover, we introduce a multi-view self-expressive learning method to infer the homophily between nodes. In practice, we develop two approaches to solve the self-expressive matrix. The solved self-expressive matrix serves as an additional augmented view to provide homophilous information and is used to identify false negatives in contrastive loss. Extensive experimental results demonstrate the superiority of HGMS across different downstream tasks.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Haosen Wang",
+          "orgs": [
+            "Southeast University",
+            "China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chenglong Shi",
+          "orgs": [
+            "Southeast University",
+            "Nanjing, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Can Xu",
+          "orgs": [
+            "East China Normal University",
+            "Shanghai, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Surong Yan",
+          "orgs": [
+            "g University of Finance and Economics",
+            "Hangzhou, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Pan Tang",
+          "orgs": [
+            "Southeast University",
+            "Nanjing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2501.08538",
+      "date": "2025-01-15T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2511.16778",
+      "score": 0.25,
+      "title": "GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs",
+      "tldr": "[research paper] GCL-OT introduces optimal transport (OT)-based graph contrastive learning for text-attributed graphs (TAGs) to address multi-granular heterophily—partial, complete, and latent homophily—by enabling flexible, bidirectional alignment between structural and textual representations. It proposes three tailored mechanisms: (1) RealSoftMax for partial heterophily to emphasize key word-neighbor interactions, (2) a prompt-based filter to exclude irrelevant noise in complete heterophily, and (3) OT-guided soft supervision to discover latent semantic neighbors. Theoretical analysis shows improved mutual information bounds and reduced Bayes error, with empirical validation on nine benchmarks confirming superior performance over state-of-the-art methods in both homophilic and heterophilic settings.",
+      "abstract": "Recently, structure-text contrastive learning has shown promising performance on text-attributed graphs by leveraging the complementary strengths of graph neural networks and language models. However, existing methods typically rely on homophily assumptions in similarity estimation and hard optimization objectives, which limit their applicability to heterophilic graphs. Although existing methods can mitigate heterophily through structural adjustments or neighbor aggregation, they usually treat textual embeddings as static targets, leading to suboptimal alignment. In this work, we identify the multi-granular heterophily in text-attributed graphs, including complete heterophily, partial heterophily, and latent homophily, which makes structure-text alignment particularly challenging due to mixed, noisy, and missing semantic correlations. To achieve flexible and bidirectional alignment, we propose GCL-OT, a novel graph contrastive learning framework with optimal transport, equipped with tailored mechanisms for each type of heterophily. Specifically, for partial heterophily, we design a RealSoftMax-based similarity estimator to emphasize key neighbor-word interactions while easing background noise. For complete heterophily, we introduce a prompt-based filter that adaptively excludes irrelevant noise during optimal transport alignment. Furthermore, we incorporate OT-guided soft supervision to uncover potential neighbors with similar semantics, enhancing the learning of latent homophily. Theoretical analysis shows that GCL-OT can improve the mutual information bound and Bayes error guarantees. Extensive experiments on nine benchmarks show that GCL-OT consistently outperforms state-of-the-art methods, verifying its effectiveness and robustness.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yating Ren",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yikun Ban",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Huobin Tan",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2511.16778",
+      "date": "2025-11-20T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

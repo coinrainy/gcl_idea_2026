@@ -1,0 +1,141 @@
+{
+  "arxiv_id": "2006.04131",
+  "src_url": "https://arxiv.org/pdf/2006.04131",
+  "title": "Deep Graph Contrastive Representation Learning",
+  "abstract": "Graph representation learning nowadays becomes fundamental in analyzing graph-structured data. Inspired by recent success of contrastive methods, in this paper, we propose a novel framework for unsupervised graph representation learning by leveraging a contrastive objective at the node level. Specifically, we generate two graph views by corruption and learn node representations by maximizing the agreement of node representations in these two views. To provide diverse node contexts for the contrastive objective, we propose a hybrid scheme for generating graph views on both structure and attribute levels. Besides, we provide theoretical justification behind our motivation from two perspectives, mutual information and the classical triplet loss. We perform empirical experiments on both transductive and inductive learning tasks using a variety of real-world datasets. Experimental experiments demonstrate that despite its simplicity, our proposed method consistently outperforms existing state-of-the-art methods by large margins. Moreover, our unsupervised method even surpasses its supervised counterparts on transductive tasks, demonstrating its great potential in real-world applications.",
+  "authors": [
+    {
+      "misc": {
+        "email": "yanqiao.zhu@cripac.ia.ac.cn"
+      },
+      "name": "Yanqiao Zhu",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    },
+    {
+      "misc": {
+        "email": "linyxus@bupt.edu.cn"
+      },
+      "name": "Yichen Xu",
+      "orgs": [
+        "School of Computer Science, Beijing University of Posts and Telecommunications"
+      ]
+    },
+    {
+      "misc": {
+        "email": "feng.yu@nlpr.ia.ac.cn"
+      },
+      "name": "Feng Yu",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    },
+    {
+      "misc": {
+        "email": "qiang.liu@realai.ai"
+      },
+      "name": "Qiang Liu",
+      "orgs": [
+        "RealAI",
+        "Tsinghua University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "shu.wu@nlpr.ia.ac.cn"
+      },
+      "name": "Shu Wu",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    },
+    {
+      "misc": {
+        "email": "wangliang@nlpr.ia.ac.cn"
+      },
+      "name": "Liang Wang",
+      "orgs": [
+        "Center for Research on Intelligent Perception and Computing, Institute of Automation, Chinese Academy of Sciences",
+        "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+      ]
+    }
+  ],
+  "token_count": 19914,
+  "venue": "arXiv.org",
+  "journal_name": "ArXiv",
+  "citations": 1078,
+  "sections": [
+    {
+      "name": "Introduction",
+      "idx": 0,
+      "tldr": "GRACE introduces a novel contrastive learning framework that replaces graph proximity reconstruction with mutual information maximization via local-global representation alignment, addressing the limitations of existing methods by enabling effective learning even with sparse features and relaxing the restrictive injective readout requirement.",
+      "token_count": 1105
+    },
+    {
+      "name": "Related Work",
+      "idx": 1,
+      "tldr": "This paper addresses the limitation of existing contrastive methods in unsupervised graph representation learning by focusing on node embedding agreement across corrupted graph views, offering a more robust and scalable alternative to prior approaches that rely on graph embeddings or local structural patterns.",
+      "token_count": 611
+    },
+    {
+      "name": "Deep Graph Contrastive Representation Learning",
+      "idx": 2,
+      "tldr": "GRACE proposes a contrastive learning framework for graph representation learning by generating two corrupted graph views and maximizing node-level agreement between their embeddings through a critic-based objective, grounded in the InfoMax principle and triplet loss.",
+      "token_count": 4109
+    },
+    {
+      "name": "Experiments",
+      "idx": 3,
+      "tldr": "The experiment shows that the proposed method outperforms baseline models in both transductive and inductive node classification, achieving state-of-the-art F1-scores on citation networks and accuracy on social and biological graphs, with average micro-averaged F1-scores of 88.2% on Cora, 84.5% on Citeseer, and 89.1% on Pubmed in transductive settings, and consistent superior performance on inductive tasks with unseen graphs.",
+      "token_count": 3400
+    },
+    {
+      "name": "Conclusion",
+      "idx": 4,
+      "tldr": "This paper presents a novel self-supervised graph contrastive learning framework that effectively learns high-quality node representations by maximizing agreement across perturbed graph views, outperforming state-of-the-art methods while addressing label scarcity and showing promising applications in real-world systems like recommendation and drug discovery, though potential biases in data remain a concern.",
+      "token_count": 328
+    },
+    {
+      "name": "A Dataset Details",
+      "idx": 6,
+      "tldr": "This section describes the datasets and experimental settings for transductive, inductive, and multi-graph learning tasks, including citation networks, a large-scale social network, and protein-protein interaction networks, with detailed statistics and evaluation protocols.",
+      "token_count": 1135
+    },
+    {
+      "name": "B Implementation",
+      "idx": 7,
+      "tldr": "The section details the implementation setup, hyperparameter configurations, and training settings for all models using PyTorch Geometric, with specific parameters tailored to each dataset and task.",
+      "token_count": 972
+    },
+    {
+      "name": "Experiments#2",
+      "idx": 8,
+      "tldr": "GRACE demonstrates robustness to hyperparameter perturbations and outperforms models using only edge removal or feature masking, achieving superior node classification accuracy (e.g., 83.2% on Cora, 72.1% on Citeseer) compared to ablated variants, while also showing that the InfoNCE loss is less effective than the proposed contrastive objective in learning discriminative node embeddings.",
+      "token_count": 2202
+    },
+    {
+      "name": "D Detailed Proofs",
+      "idx": 9,
+      "tldr": "The proof establishes that the proposed objective $\\mathcal{J}$ is a lower bound of the mutual information between node embeddings in two graph views by relating it to the InfoNCE estimator and leveraging known bounds on mutual information.",
+      "token_count": 3560
+    }
+  ],
+  "categories": [
+    "cs.LG",
+    "stat.ML"
+  ],
+  "publish_at": "2020-06-07T00:00:00",
+  "keywords": [
+    "node-level contrastive learning",
+    "graph corruption",
+    "topology-attribute joint corruption",
+    "mutual information maximization",
+    "unsupervised graph representation"
+  ],
+  "tldr": "[research paper] GRACE introduces a node-level contrastive framework for unsupervised graph representation learning that avoids reliance on global graph embeddings or injective readout functions. By jointly corrupting graph topology (edge removal) and node attributes (feature masking), it generates diverse node contexts to maximize agreement between node embeddings across two corrupted views. Theoretical analysis links the contrastive objective to mutual information and triplet loss, while empirical results show superior performance over state-of-the-art methods, including outperforming supervised baselines on transductive tasks.",
+  "github_url": "https://github.com/CRIPAC-DIG/GRACE"
+}

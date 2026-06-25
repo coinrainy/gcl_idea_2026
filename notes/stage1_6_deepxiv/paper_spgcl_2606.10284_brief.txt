@@ -1,0 +1,15 @@
+{
+  "arxiv_id": "2606.10284",
+  "src_url": "https://arxiv.org/pdf/2606.10284",
+  "title": "Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing",
+  "tldr": "[Research Paper] This paper investigates why positive samples in Graph Contrastive Learning (GCL) often fail to provide significant performance gains, attributing the issue to message passing trivializing sample similarity. To address this, the authors propose SPGCL, a method that uses an energy-aware propagation mechanism and a Dirichlet energy-based sampling matrix to restore the learning efficacy of positive samples.",
+  "keywords": [
+    "graph contrastive learning",
+    "message passing",
+    "dirichlet energy",
+    "positive samples",
+    "graph neural networks"
+  ],
+  "publish_at": "2026-06-09T01:13:44",
+  "citations": null
+}

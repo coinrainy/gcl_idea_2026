@@ -1,0 +1,327 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2401.03638",
+      "score": 0.6111111,
+      "title": "Unifying Graph Contrastive Learning via Graph Message Augmentation",
+      "tldr": "[research paper] The paper proposes Graph Message Augmentation (GMA), a universal graph data augmentation framework that operates on graph message representations rather than raw graph structures. GMA unifies existing augmentation methods (node/edge dropping, attribute perturbation) by modeling graph messages as a shared representation, enabling consistent performance across diverse graph datasets. It naturally extends to mixup operations—traditionally challenging in graphs—by mixing message representations, and forms the basis of Graph Message Contrastive Learning (GMCL), which outperforms traditional GCL methods in self-supervised graph representation learning.",
+      "abstract": "Graph contrastive learning is usually performed by first conducting Graph Data Augmentation (GDA) and then employing a contrastive learning pipeline to train GNNs. As we know that GDA is an important issue for graph contrastive learning. Various GDAs have been developed recently which mainly involve dropping or perturbing edges, nodes, node attributes and edge attributes. However, to our knowledge, it still lacks a universal and effective augmentor that is suitable for different types of graph data. To address this issue, in this paper, we first introduce the graph message representation of graph data. Based on it, we then propose a novel Graph Message Augmentation (GMA), a universal scheme for reformulating many existing GDAs. The proposed unified GMA not only gives a new perspective to understand many existing GDAs but also provides a universal and more effective graph data augmentation for graph self-supervised learning tasks. Moreover, GMA introduces an easy way to implement the mixup augmentor which is natural for images but usually challengeable for graphs. Based on the proposed GMA, we then propose a unified graph contrastive learning, termed Graph Message Contrastive Learning (GMCL), that employs attribution-guided universal GMA for graph contrastive learning. Experiments on many graph learning tasks demonstrate the effectiveness and benefits of the proposed GMA and GMCL approaches.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Ziyan Zhang",
+          "orgs": [
+            "School of Computer Science and Technology, Anhui University, Hefei 230009, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiangbo@ahu.edu.cn"
+          },
+          "name": "Bo Jiang",
+          "orgs": [
+            "School of Computer Science and Technology, Anhui University, Hefei 230009, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jin Tang",
+          "orgs": [
+            "School of Computer Science and Technology, Anhui University, Hefei 230009, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Bin Luo",
+          "orgs": [
+            "School of Computer Science and Technology, Anhui University, Hefei 230009, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2401.03638",
+      "date": "2024-01-08T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "cs.LG",
+        "cs.CV"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2202.06491",
+      "score": 0.5833334,
+      "title": "Adversarial Graph Contrastive Learning with Information Regularization",
+      "tldr": "[research paper] ArieL introduces adversarial graph augmentation—perturbing both graph topology and node features under a constrained adversarial framework—to generate high-quality, discriminative contrastive samples. By incorporating information regularization, it stabilizes training and prevents model collapse, achieving superior node classification performance and enhanced robustness across real-world and adversarially attacked graphs compared to existing contrastive learning methods.",
+      "abstract": "Contrastive learning is an effective unsupervised method in graph representation learning. Recently, the data augmentation based contrastive learning method has been extended from images to graphs. However, most prior works are directly adapted from the models designed for images. Unlike the data augmentation on images, the data augmentation on graphs is far less intuitive and much harder to provide high-quality contrastive samples, which are the key to the performance of contrastive learning models. This leaves much space for improvement over the existing graph contrastive learning frameworks. In this work, by introducing an adversarial graph view and an information regularizer, we propose a simple but effective method, Adversarial Graph Contrastive Learning (ARIEL), to extract informative contrastive samples within a reasonable constraint. It consistently outperforms the current graph contrastive learning methods in the node classification task over various real-world datasets and further improves the robustness of graph contrastive learning. The code is at https://github.com/Shengyu-Feng/ARIEL.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://orcid.org/1234-5678-9012",
+            "email": "shengyu8@illinois.edu",
+            "orcid": "1234-5678-9012"
+          },
+          "name": "Shengyu Feng",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://orcid.org/1234-5678-9012",
+            "email": "baoyuj2@illinois.edu",
+            "orcid": "1234-5678-9012"
+          },
+          "name": "Baoyu Jing",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://orcid.org/1234-5678-9012",
+            "email": "yzhu@us.ibm.com",
+            "orcid": "1234-5678-9012"
+          },
+          "name": "Yada Zhu",
+          "orgs": [
+            "IBM Research",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://orcid.org/1234-5678-9012",
+            "email": "htong@illinois.edu",
+            "orcid": "1234-5678-9012"
+          },
+          "name": "Hanghang Tong",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2202.06491",
+      "date": "2022-02-14T00:00:00",
+      "citation_count": 76,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2022,
+      "github_url": "https://github.com/Shengyu-Feng/ARIEL"
+    },
+    {
+      "arxiv_id": "2010.13902",
+      "score": 0.5344828,
+      "title": "Graph Contrastive Learning with Augmentations",
+      "tldr": "[research paper] The paper proposes GraphCL, a graph contrastive learning framework that introduces four types of graph augmentations—node deletion, edge perturbation, feature masking, and subgraph sampling—to enable self-supervised representation learning on graph-structured data. By maximizing feature consistency across augmented views, GraphCL learns representations invariant to structural and feature perturbations, achieving state-of-the-art performance in semi-supervised, unsupervised, and transfer learning settings while demonstrating superior generalizability, transferrability, and robustness against adversarial attacks, without requiring architectural tuning or complex augmentation strategies. The framework is shown to unify existing contrastive learning methods on graphs via mutual information maximization, providing both practical gains and theoretical insight into augmentation design.",
+      "abstract": "Generalizable, transferrable, and robust representation learning on graph-structured data remains a challenge for current graph neural networks (GNNs). Unlike what has been developed for convolutional neural networks (CNNs) for image data, self-supervised learning and pre-training are less explored for GNNs. In this paper, we propose a graph contrastive learning (GraphCL) framework for learning unsupervised representations of graph data. We first design four types of graph augmentations to incorporate various priors. We then systematically study the impact of various combinations of graph augmentations on multiple datasets, in four different settings: semi-supervised, unsupervised, and transfer learning as well as adversarial attacks. The results show that, even without tuning augmentation extents nor using sophisticated GNN architectures, our GraphCL framework can produce graph representations of similar or better generalizability, transferrability, and robustness compared to state-of-the-art methods. We also investigate the impact of parameterized graph augmentation extents and patterns, and observe further performance gains in preliminary experiments. Our codes are available at https://github.com/Shen-Lab/GraphCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yuning.you@tamu.edu"
+          },
+          "name": "Yuning You",
+          "orgs": [
+            "Texas A&M University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tianlong.chen@utexas.edu"
+          },
+          "name": "Tianlong Chen",
+          "orgs": [
+            "University of Texas at Austin"
+          ]
+        },
+        {
+          "misc": {
+            "email": "syd2019@mail.ustc.edu.cn"
+          },
+          "name": "Yongduo Sui",
+          "orgs": [
+            "University of Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "iamtingchen@google.com"
+          },
+          "name": "Ting Chen",
+          "orgs": [
+            "Google Research, Brain Team"
+          ]
+        },
+        {
+          "misc": {
+            "email": "atlaswang@utexas.edu"
+          },
+          "name": "Zhangyang Wang",
+          "orgs": [
+            "University of Texas at Austin"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yshen@tamu.edu"
+          },
+          "name": "Yang Shen",
+          "orgs": [
+            "Texas A&M University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2010.13902",
+      "date": "2020-10-22T00:00:00",
+      "citation_count": 2750,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Neural Information Processing Systems",
+      "venue_year": null,
+      "github_url": "https://github.com/Shen-Lab/GraphCL."
+    },
+    {
+      "arxiv_id": "2209.06560",
+      "score": 0.3768116,
+      "title": "Graph Contrastive Learning with Personalized Augmentation",
+      "tldr": "[research paper] GPA introduces the first principled, end-to-end framework for personalized graph augmentation in contrastive learning, where each graph instance independently selects its optimal augmentation strategy (e.g., edge perturbation, node dropping) based on topology and attributes via a learnable augmentation selector. The framework jointly optimizes the augmentation selector and GCL model through iterative updates, addressing the exponential search space and mutual dependency between augmentation choices and representation learning. Experiments on 11 diverse graph datasets show that GPA outperforms state-of-the-art methods by adapting augmentation strategies per graph, revealing that different graphs require distinct perturbation operations for optimal performance.",
+      "abstract": "Graph contrastive learning (GCL) has emerged as an effective tool for learning unsupervised representations of graphs. The key idea is to maximize the agreement between two augmented views of each graph via data augmentation. Existing GCL models mainly focus on applying \\\\textit{identical augmentation strategies} for all graphs within a given scenario. However, real-world graphs are often not monomorphic but abstractions of diverse natures. Even within the same scenario (e.g., macromolecules and online communities), different graphs might need diverse augmentations to perform effective GCL. Thus, blindly augmenting all graphs without considering their individual characteristics may undermine the performance of GCL arts.To deal with this, we propose the first principled framework, termed as \\\\textit{G}raph contrastive learning with \\\\textit{P}ersonalized \\\\textit{A}ugmentation (GPA), to advance conventional GCL by allowing each graph to choose its own suitable augmentation operations.In essence, GPA infers tailored augmentation strategies for each graph based on its topology and node attributes via a learnable augmentation selector, which is a plug-and-play module and can be effectively trained with downstream GCL models end-to-end. Extensive experiments across 11 benchmark graphs from different types and domains demonstrate the superiority of GPA against state-of-the-art competitors.Moreover, by visualizing the learned augmentation distributions across different types of datasets, we show that GPA can effectively identify the most suitable augmentations for each graph based on its characteristics.",
+      "authors": [
+        {
+          "misc": {
+            "email": "xin12.zhang@connect.polyu.hk"
+          },
+          "name": "Xin Zhang",
+          "orgs": [
+            "Department of Computing",
+            "The Hong Kong Polytechnic University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qytan@tamu.edu"
+          },
+          "name": "Qiaoyu Tan",
+          "orgs": [
+            "Department of Computer Science & Engineering",
+            "Texas A&M University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaohuang@comp.polyu.edu.hk"
+          },
+          "name": "Xiao Huang",
+          "orgs": [
+            "Department of Computing",
+            "The Hong Kong Polytechnic University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "comp-bo.li@polyu.edu.hk"
+          },
+          "name": "Bo Li",
+          "orgs": [
+            "Department of Computing",
+            "The Hong Kong Polytechnic University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2209.06560",
+      "date": "2022-09-14T00:00:00",
+      "citation_count": 34,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "IEEE Transactions on Knowledge and Data Engineering",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2211.03710",
+      "score": 0.32692307,
+      "title": "Graph Contrastive Learning with Implicit Augmentations",
+      "tldr": "[research paper] Implicit Graph Contrastive Learning (iGCL) introduces a latent-space augmentation strategy using Variational Graph Auto-Encoders (VGAEs) to generate semantically meaningful graph views, avoiding destructive random perturbations. Instead of manually tuning perturbation ratios, iGCL learns high-level topological semantics in the latent space and formulates an implicit contrastive loss with an entropy-based upper bound for efficient optimization, enabling automatic, data-agnostic augmentation that preserves graph structure while improving performance on both node-level and graph-level tasks.",
+      "abstract": "Existing graph contrastive learning methods rely on augmentation techniques based on random perturbations (e.g., randomly adding or dropping edges and nodes). Nevertheless, altering certain edges or nodes can unexpectedly change the graph characteristics, and choosing the optimal perturbing ratio for each dataset requires onerous manual tuning. In this paper, we introduce Implicit Graph Contrastive Learning (iGCL), which utilizes augmentations in the latent space learned from a Variational Graph Auto-Encoder by reconstructing graph topological structure. Importantly, instead of explicitly sampling augmentations from latent distributions, we further propose an upper bound for the expected contrastive loss to improve the efficiency of our learning algorithm. Thus, graph semantics can be preserved within the augmentations in an intelligent way without arbitrary manual design or prior human knowledge. Experimental results on both graph-level and node-level tasks show that the proposed method achieves state-of-the-art performance compared to other benchmarks, where ablation studies in the end demonstrate the effectiveness of modules in iGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hlia0714@uni.sydney.edu.au"
+          },
+          "name": "Huidong Liang",
+          "orgs": [
+            "Discipline of Business Analytics, The University of Sydney Business School, The University of Sydney, Australia",
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "duxingjian.real@bytedance.com"
+          },
+          "name": "Xingjian Du",
+          "orgs": [
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhubilei@bytedance.com"
+          },
+          "name": "Bilei Zhu",
+          "orgs": [
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mazejun@bytedance.com"
+          },
+          "name": "Zejun Ma",
+          "orgs": [
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "knutchen@ucsd.edu"
+          },
+          "name": "Ke Chen",
+          "orgs": [
+            "University of California San Diego, San Diego, United States"
+          ]
+        },
+        {
+          "misc": {
+            "email": "junbin.gao@sydney.edu.au"
+          },
+          "name": "Junbin Gao",
+          "orgs": [
+            "Discipline of Business Analytics, The University of Sydney Business School, The University of Sydney, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2211.03710",
+      "date": "2022-11-07T00:00:00",
+      "citation_count": 44,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "Neural Networks",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

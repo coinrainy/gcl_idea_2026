@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2110.02027",
+  "src_url": "https://arxiv.org/pdf/2110.02027",
+  "title": "ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning",
+  "tldr": "[research paper] Graph Contrastive Learning (GCL) suffers from poor performance when applying existing hard negative mining techniques due to the prevalence of false negatives—samples that are semantically similar to anchors but are incorrectly classified as negatives. The root cause lies in the bimodal distribution of negative similarities in GCL, which arises from GNN message passing, leading to sampling bias. ProGCL addresses this by modeling negative hardness using a two-component beta mixture model to estimate the probability of a negative being true (i.e., not sharing the same class), combining this probability with similarity to form a more reliable hardness metric. Two schemes—ProGCL-weight and ProGCL-mix—are proposed to leverage this improved measure, resulting in consistent performance gains, state-of-the-art results on unsupervised benchmarks, and superior performance compared to supervised baselines.",
+  "keywords": [
+    "graph contrastive learning",
+    "hard negative mining",
+    "sampling bias",
+    "beta mixture model",
+    "message passing in GNNs"
+  ],
+  "publish_at": "2021-10-05T00:00:00",
+  "citations": 177,
+  "github_url": "https://github.com/junxia97/ProGCL."
+}

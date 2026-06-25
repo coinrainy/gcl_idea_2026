@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2106.12484",
+  "src_url": "https://arxiv.org/pdf/2106.12484",
+  "title": "From Canonical Correlation Analysis to Self-supervised Graph Neural Networks",
+  "tldr": "[research paper] CCA-SSG introduces a non-contrastive, negative-sample-free self-supervised objective for graph neural networks inspired by Canonical Correlation Analysis (CCA), which maximizes feature-level correlation between augmented graph views while decorrelating feature dimensions to preserve augmentation-invariant representations. Unlike contrastive methods, it avoids parameterized mutual information estimators, projectors, asymmetric architectures, and negative samples—reducing complexity and memory overhead—while theoretically aligning with the Information Bottleneck Principle. Empirical results show competitive or superior performance on seven graph benchmarks, with strong ablation evidence supporting its core components.",
+  "keywords": [
+    "feature-level objective",
+    "canonical correlation analysis",
+    "augmentation-invariant representation",
+    "information bottleneck principle",
+    "negative-sample-free learning"
+  ],
+  "publish_at": "2021-06-23T00:00:00",
+  "citations": 300,
+  "github_url": "https://github.com/hengruizhang98/CCA-SSG"
+}

@@ -1,0 +1,375 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2104.01429",
+      "score": 0.7,
+      "title": "Graph Contrastive Clustering",
+      "tldr": "[research paper] The paper proposes Graph Contrastive Clustering (GCC), a framework that lifts instance-level consistency in contrastive learning to cluster-level consistency by leveraging latent category information. It introduces a graph Laplacian-based contrastive loss for discriminative feature learning and a graph-based strategy for compact clustering assignments, jointly minimizing intra-cluster variance and maximizing inter-cluster variance. Experiments on six datasets show superior clustering performance over state-of-the-art methods, with ablation studies validating the effectiveness of both modules.",
+      "abstract": "Recently, some contrastive learning methods have been proposed to simultaneously learn representations and clustering assignments, achieving significant improvements. However, these methods do not take the category information and clustering objective into consideration, thus the learned representations are not optimal for clustering and the performance might be limited. Towards this issue, we first propose a novel graph contrastive learning framework, which is then applied to the clustering task and we come up with the Graph Constrastive Clustering~(GCC) method. Different from basic contrastive clustering that only assumes an image and its augmentation should share similar representation and clustering assignments, we lift the instance-level consistency to the cluster-level consistency with the assumption that samples in one cluster and their augmentations should all be similar. Specifically, on the one hand, the graph Laplacian based contrastive loss is proposed to learn more discriminative and clustering-friendly features. On the other hand, a novel graph-based contrastive learning strategy is proposed to learn more compact clustering assignments. Both of them incorporate the latent category information to reduce the intra-cluster variance while increasing the inter-cluster variance. Experiments on six commonly used datasets demonstrate the superiority of our proposed approach over the state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "huasong.zhs@alibaba-inc.com"
+          },
+          "name": "Huasong Zhong",
+          "orgs": [
+            "DAMO Academy, Alibaba Group",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jlwu1992@sdu.edu.cn"
+          },
+          "name": "Jianlong Wu",
+          "orgs": [
+            "Shandong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cheung.cc@alibaba-inc.com"
+          },
+          "name": "Chong Chen",
+          "orgs": [
+            "DAMO Academy, Alibaba Group",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jianqiang.hjq@alibaba-inc.com"
+          },
+          "name": "Jianqiang Huang",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dengmh@pku.edu.cn"
+          },
+          "name": "Minghua Deng",
+          "orgs": [
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "nieliqiang@gmail.com"
+          },
+          "name": "Liqiang Nie",
+          "orgs": [
+            "Shandong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zlin@pku.edu.cn"
+          },
+          "name": "Zhouchen Lin",
+          "orgs": [
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "huaxiansheng@gmail.com"
+          },
+          "name": "Xian-Sheng Hua",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2104.01429",
+      "date": "2021-04-03T00:00:00",
+      "citation_count": 164,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "IEEE International Conference on Computer Vision",
+      "venue_year": 2021,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2110.08264",
+      "score": 0.6,
+      "title": "Self-supervised Contrastive Attributed Graph Clustering",
+      "tldr": "[research paper] SCAGC introduces a self-supervised contrastive learning framework for attributed graph clustering that directly outputs clustering labels without post-processing, leveraging imprecise pseudo-labels in a joint end-to-end training pipeline. It proposes a novel contrastive clustering loss that aligns intra-cluster node representations while minimizing inter-cluster similarities, enabling effective representation learning and solving the out-of-sample problem by directly assigning labels to new nodes without retraining.",
+      "abstract": "Attributed graph clustering, which learns node representation from node attribute and topological graph for clustering, is a fundamental but challenging task for graph analysis. Recently, methods based on graph contrastive learning (GCL) have obtained impressive clustering performance on this task. Yet, we observe that existing GCL-based methods 1) fail to benefit from imprecise clustering labels; 2) require a post-processing operation to get clustering labels; 3) cannot solve out-of-sample (OOS) problem. To address these issues, we propose a novel attributed graph clustering network, namely Self-supervised Contrastive Attributed Graph Clustering (SCAGC). In SCAGC, by leveraging inaccurate clustering labels, a self-supervised contrastive loss, which aims to maximize the similarities of intra-cluster nodes while minimizing the similarities of inter-cluster nodes, are designed for node representation learning. Meanwhile, a clustering module is built to directly output clustering labels by contrasting the representation of different clusters. Thus, for the OOS nodes, SCAGC can directly calculate their clustering labels. Extensive experimental results on four benchmark datasets have shown that SCAGC consistently outperforms 11 competitive clustering methods.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Wei Xia",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qxgao@xidian.edu.cn",
+            "corresponding_author": true
+          },
+          "name": "Quanxue Gao",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ming Yang",
+          "orgs": [
+            "Westfield State University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Xinbo Gao",
+          "orgs": [
+            "Chongqing University of Posts and Telecommunications"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2110.08264",
+      "date": "2021-10-15T00:00:00",
+      "citation_count": 54,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE transactions on multimedia",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2106.09645",
+      "score": 0.5,
+      "title": "Prototypical Graph Contrastive Learning",
+      "tldr": "[research paper] Prototypical Graph Contrastive Learning (PGCL) introduces a novel contrastive learning framework that mitigates sampling bias in graph representation learning by clustering semantically similar graphs into prototypes. Instead of uniformly sampling negatives from all graphs, PGCL draws negatives from clusters distinct from the query's cluster, ensuring semantic divergence. It further reweights negative samples based on prototype distance to the query, favoring those with moderate semantic disparity, which improves representation quality and outperforms uniform sampling on benchmark graph datasets.",
+      "abstract": "Graph-level representations are critical in various real-world applications, such as predicting the properties of molecules. But in practice, precise graph annotations are generally very expensive and time-consuming. To address this issue, graph contrastive learning constructs instance discrimination task which pulls together positive pairs (augmentation pairs of the same graph) and pushes away negative pairs (augmentation pairs of different graphs) for unsupervised representation learning. However, since for a query, its negatives are uniformly sampled from all graphs, existing methods suffer from the critical sampling bias issue, i.e., the negatives likely having the same semantic structure with the query, leading to performance degradation. To mitigate this sampling bias issue, in this paper, we propose a Prototypical Graph Contrastive Learning (PGCL) approach. Specifically, PGCL models the underlying semantic structure of the graph data via clustering semantically similar graphs into the same group, and simultaneously encourages the clustering consistency for different augmentations of the same graph. Then given a query, it performs negative sampling via drawing the graphs from those clusters that differ from the cluster of query, which ensures the semantic difference between query and its negative samples. Moreover, for a query, PGCL further reweights its negative samples based on the distance between their prototypes (cluster centroids) and the query prototype such that those negatives having moderate prototype distance enjoy relatively large weights. This reweighting strategy is proved to be more effective than uniform sampling. Experimental results on various graph benchmarks testify the advantages of our PGCL over state-of-the-art methods. Code is publicly available at https://github.com/ha-lins/PGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "shuailin97@gmail.com"
+          },
+          "name": "Shuai Lin",
+          "orgs": [
+            "School of Intelligent Systems Engineering, Sun Yat-sen University, Shenzhen 518107, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cathyliu41@gmail.com"
+          },
+          "name": "Chen Liu",
+          "orgs": [
+            "School of Intelligent Systems Engineering, Sun Yat-sen University, Shenzhen 518107, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "panzhou3@gmail.com"
+          },
+          "name": "Pan Zhou",
+          "orgs": [
+            "Sea AI Lab, Galaxis 138522, Singapore"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Zi-Yuan Hu",
+          "orgs": [
+            "School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou 510006, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "skylawang@tencent.com"
+          },
+          "name": "Shuojia Wang",
+          "orgs": [
+            "Tencent Jarvis Lab, Tencent building, Shennan Avenue, Shenzhen 518000, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zacharyzhao@tencent.com"
+          },
+          "name": "Ruihui Zhao",
+          "orgs": [
+            "Tencent Jarvis Lab, Tencent building, Shennan Avenue, Shenzhen 518000, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yefengzheng@tencent.com"
+          },
+          "name": "Yefeng Zheng",
+          "orgs": [
+            "Tencent Jarvis Lab, Tencent building, Shennan Avenue, Shenzhen 518000, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Liang Lin",
+          "orgs": [
+            "School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou 510006, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "eric.xing@mbzuai.ac.ae"
+          },
+          "name": "Eric Xing",
+          "orgs": [
+            "School of Computer Science, Mohamed bin Zayed University of Artificial Intelligence, Masdar City, Abu Dhabi, UAE"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xdliang328@gmail.com"
+          },
+          "name": "Xiaodan Liang",
+          "orgs": [
+            "School of Intelligent Systems Engineering, Sun Yat-sen University, Shenzhen 518107, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2106.09645",
+      "date": "2021-06-17T00:00:00",
+      "citation_count": 115,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "venue_year": null,
+      "github_url": "https://github.com/ha-lins/PGCL"
+    },
+    {
+      "arxiv_id": "2508.15231",
+      "score": 0.4166667,
+      "title": "Center-Oriented Prototype Contrastive Clustering",
+      "tldr": "[research paper] CPCC introduces a center-oriented prototype contrastive clustering framework that addresses inter-class conflicts and prototype drift in contrastive learning. It employs a soft prototype contrastive module that weights prototypes based on sample confidence (probability of belonging to the cluster center), reducing deviation from true cluster centers, and a dual consistency learning module that enforces feature consistency across transformations and neighborhood relationships to enhance intra-cluster compactness and robustness. Experimental results on five datasets show superior performance over state-of-the-art methods in both clustering accuracy and stability.",
+      "abstract": "Contrastive learning is widely used in clustering tasks due to its discriminative representation. However, the conflict problem between classes is difficult to solve effectively. Existing methods try to solve this problem through prototype contrast, but there is a deviation between the calculation of hard prototypes and the true cluster center. To address this problem, we propose a center-oriented prototype contrastive clustering framework, which consists of a soft prototype contrastive module and a dual consistency learning module. In short, the soft prototype contrastive module uses the probability that the sample belongs to the cluster center as a weight to calculate the prototype of each category, while avoiding inter-class conflicts and reducing prototype drift. The dual consistency learning module aligns different transformations of the same sample and the neighborhoods of different samples respectively, ensuring that the features have transformation-invariant semantic information and compact intra-cluster distribution, while providing reliable guarantees for the calculation of prototypes. Extensive experiments on five datasets show that the proposed method is effective compared to the SOTA. Our code is published on https://github.com/LouisDong95/CPCC.",
+      "authors": [
+        {
+          "misc": {
+            "email": "dongshihao@nuist.edu.cn"
+          },
+          "name": "Shihao Dong",
+          "orgs": [
+            "School of Computer Science",
+            "Nanjing University of Information Science and Technology",
+            "Nanjing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaotong_zhou@nuist.edu.cn"
+          },
+          "name": "Xiaotong Zhou",
+          "orgs": [
+            "School of Computer Science",
+            "Nanjing University of Information Science and Technology",
+            "Nanjing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhengyh@vip.126.com"
+          },
+          "name": "Yuhui Zheng",
+          "orgs": [
+            "The State Key Laboratory of Tibetan Intelligence",
+            "Qinghai Normal University",
+            "Xining, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xhy@zjnu.edu.cn"
+          },
+          "name": "Huiying Xu",
+          "orgs": [
+            "Computer Science and Technology",
+            "Zhejiang Normal University",
+            "Jinhua, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xxz@zjnu.edu.cn"
+          },
+          "name": "Xinzhong Zhu",
+          "orgs": [
+            "Computer Science and Technology",
+            "Zhejiang Normal University",
+            "Jinhua, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2508.15231",
+      "date": "2025-08-21T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "IEEE International Conference on Multimedia and Expo",
+      "venue_year": 2025,
+      "github_url": "https://github.com/LouisDong95/CPCC."
+    },
+    {
+      "arxiv_id": "2412.11550",
+      "score": 0.39285713,
+      "title": "THESAURUS: Contrastive Graph Clustering by Swapping Fused Gromov-Wasserstein Couplings",
+      "tldr": "[research paper] THESAURUS introduces a contrastive graph clustering framework that addresses low cluster separability in graph self-supervised learning by integrating semantic prototypes to provide contextual discrimination between similar nodes, employing a cross-view assignment prediction task aligned with downstream clustering, and leveraging Gromov-Wasserstein Optimal Transport (GW-OT) on a dynamically updated prototype graph to exploit structural cluster information. The method mitigates Uniform Effect and Cluster Assimilation through momentum-based adaptation of prototype graphs and marginal distributions, achieving superior cluster separability compared to prior methods like Dink-Net, especially in cases with imbalanced clusters and dense inter-class edges.",
+      "abstract": "Graph node clustering is a fundamental unsupervised task. Existing methods typically train an encoder through selfsupervised learning and then apply K-means to the encoder output. Some methods use this clustering result directly as the final assignment, while others initialize centroids based on this initial clustering and then finetune both the encoder and these learnable centroids. However, due to their reliance on K-means, these methods inherit its drawbacks when the cluster separability of encoder output is low, facing challenges from the Uniform Effect and Cluster Assimilation. We summarize three reasons for the low cluster separability in existing methods: (1) lack of contextual information prevents discrimination between similar nodes from different clusters; (2) training tasks are not sufficiently aligned with the downstream clustering task; (3) the cluster information in the graph structure is not appropriately exploited. To address these issues, we propose conTrastive grapH clustEring by SwApping fUsed gRomov-wasserstein coUplingS (THESAURUS). Our method introduces semantic prototypes to provide contextual information, and employs a cross-view assignment prediction pretext task that aligns well with the downstream clustering task. Additionally, it utilizes Gromov-Wasserstein Optimal Transport (GW-OT) along with the proposed prototype graph to thoroughly exploit cluster information in the graph structure. To adapt to diverse real-world data, THESAURUS updates the prototype graph and the prototype marginal distribution in OT by using momentum. Extensive experiments demonstrate that THESAURUS achieves higher cluster separability than the prior art, effectively mitigating the Uniform Effect and Cluster Assimilation issues",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Bowen Deng",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Tong Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Lele Fu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Sheng Huang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Chuan Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Tao Zhang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2412.11550",
+      "date": "2024-12-16T00:00:00",
+      "citation_count": 14,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/bwdeng20/THESAURUS"
+    }
+  ]
+}

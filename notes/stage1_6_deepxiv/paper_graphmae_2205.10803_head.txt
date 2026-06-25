@@ -1,0 +1,126 @@
+{
+  "arxiv_id": "2205.10803",
+  "src_url": "https://arxiv.org/pdf/2205.10803",
+  "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+  "abstract": "Self-supervised learning (SSL) has been extensively explored in recent years. Particularly, generative SSL has seen emerging success in natural language processing and other AI fields, such as the wide adoption of BERT and GPT. Despite this, contrastive learning-which heavily relies on structural data augmentation and complicated training strategies-has been the dominant approach in graph SSL, while the progress of generative SSL on graphs, especially graph autoencoders (GAEs), has thus far not reached the potential as promised in other fields. In this paper, we identify and examine the issues that negatively impact the development of GAEs, including their reconstruction objective, training robustness, and error metric. We present a masked graph autoencoder GraphMAE that mitigates these issues for generative self-supervised graph pretraining. Instead of reconstructing graph structures, we propose to focus on feature reconstruction with both a masking strategy and scaled cosine error that benefit the robust training of GraphMAE. We conduct extensive experiments on 21 public datasets for three different graph learning tasks. The results manifest that GraphMAE-a simple graph autoencoder with careful designs-can consistently generate outperformance over both contrastive and generative state-of-the-art baselines. This study provides an understanding of graph autoencoders and demonstrates the potential of generative self-supervised pre-training on graphs.",
+  "authors": [
+    {
+      "misc": {
+        "email": "houzy21@mails.tsinghua.edu.cn"
+      },
+      "name": "Zhenyu Hou",
+      "orgs": [
+        "Tsinghua University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "liuxiao21@mails.tsinghua.edu.cn"
+      },
+      "name": "Xiao Liu",
+      "orgs": [
+        "Tsinghua University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "cyk20@mails.tsinghua.edu.cn"
+      },
+      "name": "Yukuo Cen",
+      "orgs": [
+        "Tsinghua University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "yuxiaod@tsinghua.edu.cn"
+      },
+      "name": "Yuxiao Dong",
+      "orgs": [
+        "Tsinghua University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "yang.yhx@alibaba-inc.com"
+      },
+      "name": "Hongxia Yang",
+      "orgs": [
+        "DAMO Academy, Alibaba Group"
+      ]
+    },
+    {
+      "misc": {
+        "email": "cjwang@birentech.com"
+      },
+      "name": "Chunjie Wang",
+      "orgs": [
+        "BirenTech Research"
+      ]
+    },
+    {
+      "misc": {
+        "email": "jietang@tsinghua.edu.cn"
+      },
+      "name": "Jie Tang",
+      "orgs": [
+        "Tsinghua University"
+      ]
+    }
+  ],
+  "token_count": 23179,
+  "venue": "Knowledge Discovery and Data Mining",
+  "journal_name": "Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+  "citations": 941,
+  "sections": [
+    {
+      "name": "1. Introduction",
+      "idx": 0,
+      "tldr": "The novel contribution of GraphMAE is a scalable, self-supervised graph autoencoder that jointly reconstructs node features and graph structure through masked feature and structure prediction, solving the problem of contrastive SSL's reliance on complex training strategies, negative sampling, and data augmentation by offering a simpler, more efficient, and graph-agnostic alternative with linear-time complexity.",
+      "token_count": 2887
+    },
+    {
+      "name": "2. Related Work",
+      "idx": 1,
+      "tldr": "This paper addresses the fundamental challenge of designing interpretable and effective graph augmentations for self-supervised learning by positioning itself within the contrastive learning paradigm, where it advances beyond existing methods by providing a theoretical foundation for label-invariant data augmentation in graph representation learning.",
+      "token_count": 1592
+    },
+    {
+      "name": "3. The GraphMAE Approach",
+      "idx": 2,
+      "tldr": "GraphMAE proposes a self-supervised masked graph autoencoder that masks node features with a [MASK] token, encodes the corrupted graph using a GNN, and decodes the masked code with a GNN decoder re-masked by [DMASK] to reconstruct the original features using scaled cosine loss, addressing the limitations of traditional GAEs by leveraging expressive GNNs for feature reconstruction.",
+      "token_count": 4572
+    },
+    {
+      "name": "4. Experiments",
+      "idx": 3,
+      "tldr": "GraphMAE achieves state-of-the-art or competitive performance across node and graph classification tasks, outperforming existing self-supervised and generative methods, with strong generalization in inductive settings and consistent superiority over supervised and generative baselines.",
+      "token_count": 6268
+    },
+    {
+      "name": "5. Conclusion",
+      "idx": 4,
+      "tldr": "This section concludes that GraphMAE effectively addresses key challenges in generative self-supervised learning for graphs, demonstrating its strong performance and potential for advancing graph representation learning through a simple, scalable masked autoencoding framework.",
+      "token_count": 216
+    },
+    {
+      "name": "Appendix A Appendix",
+      "idx": 6,
+      "tldr": "This section demonstrates that GraphMAE outperforms existing self-supervised and supervised methods in node classification across multiple datasets, with its performance being robust across different GNN backbones and showing that attention mechanisms can be beneficial in certain settings.",
+      "token_count": 3278
+    }
+  ],
+  "categories": [
+    "cs.LG"
+  ],
+  "publish_at": "2022-05-22T00:00:00",
+  "keywords": [
+    "masked graph autoencoding",
+    "feature reconstruction",
+    "scaled cosine error",
+    "generative self-supervised learning",
+    "graph autoencoder robustness"
+  ],
+  "tldr": "[research paper] GraphMAE introduces a generative self-supervised approach to graph autoencoding that replaces structure reconstruction with feature reconstruction using a masked input and scaled cosine error (SCE), addressing key limitations in prior graph autoencoders such as sensitivity to reconstruction metrics, training instability, and reliance on structural augmentation. The method achieves superior performance across 21 datasets in node and graph classification tasks by eliminating the need for negative sampling or complex training dynamics, demonstrating that simple, well-designed generative objectives can outperform contrastive baselines in graph pre-training.",
+  "github_url": "https://github.com/THUDM/GraphMAE"
+}

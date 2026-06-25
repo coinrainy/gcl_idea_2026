@@ -1,0 +1,129 @@
+{
+  "arxiv_id": "2606.10284",
+  "src_url": "https://arxiv.org/pdf/2606.10284",
+  "title": "Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing",
+  "abstract": "Graph Contrastive Learning (GCL), which trains graph encoders by maximizing similarity between positive samples and minimizing it between negative ones, has emerged as a mainstream graph pre-training paradigm. It is widely recognized that positive samples are essential in GCLs. Ideally, maximizing the similarity of positive samples enables graph encoders to capture intrinsic semantic and patterns of graph data. However, we discover an interesting phenomenon: GCLs can achieve competitive performance even without positive samples. This motivates us to revisit the fundamental mechanism of positive samples in GCLs. From the perspective of Dirichlet energy, we theoretically finds that message passing, a key mechanism in graph encoders, trivializes the maximization of positive samples, preventing GCLs from effectively learning from positive samples. To address this, we propose SPGCL to mitigate the trivialization caused by message passing and restore the learning efficacy of positive samples. Specifically, we find that high Dirichlet energy features help positive samples provide effective learning signals while low Dirichlet energy features contribute little to positive learning signal but is useful for positive sampling. Based on this, SPGCL propagates only high Dirichlet energy features and uses low energy features to construct a probability matrix for reliable positive sampling. Extensive experiments demonstrate the effectiveness of SPGCL.",
+  "authors": [
+    {
+      "misc": {},
+      "name": "Lianze Shan",
+      "orgs": []
+    },
+    {
+      "misc": {},
+      "name": "Ningchong Wang",
+      "orgs": []
+    },
+    {
+      "misc": {},
+      "name": "Jitao Zhao",
+      "orgs": []
+    },
+    {
+      "misc": {},
+      "name": "Di Jin",
+      "orgs": []
+    },
+    {
+      "misc": {},
+      "name": "Dongxiao He",
+      "orgs": []
+    }
+  ],
+  "token_count": 43902,
+  "venue": null,
+  "journal_name": null,
+  "citations": null,
+  "sections": [
+    {
+      "name": "Introduction",
+      "idx": 1,
+      "tldr": "The paper identifies a pre-alignment effect where message passing reduces positive sample diversity, and proposes SPGCL to mitigate this by separating feature propagation based on Dirichlet energy.",
+      "token_count": 2077
+    },
+    {
+      "name": "Preliminary",
+      "idx": 2,
+      "tldr": "The section defines graph-structured data, Graph Neural Networks using message passing and Laplacian smoothing, and Graph Contrastive Learning via InfoNCE loss for mutual information maximization.",
+      "token_count": 1341
+    },
+    {
+      "name": "Theoretical Analysis",
+      "idx": 3,
+      "tldr": "Theoretical analysis reveals that GNN message passing induces a pre-alignment effect, where low-energy features dominate similarity but provide limited learning signals, motivating the separation of their propagation to enhance informative positive alignment.",
+      "token_count": 2397
+    },
+    {
+      "name": "Methodology",
+      "idx": 4,
+      "tldr": "SPGCL partitions features by Dirichlet energy, propagating high-energy features via GCN and low-energy features via MLP, while using low-energy similarity to guide positive sample construction for robust graph contrastive learning.",
+      "token_count": 2681
+    },
+    {
+      "name": "Experiments",
+      "idx": 5,
+      "tldr": "SPGCL achieves state-of-the-art performance on node classification and clustering across homophilic and heterophilic graphs by mitigating trivial positive similarity through energy-aware feature propagation.",
+      "token_count": 5802
+    },
+    {
+      "name": "Conclusion",
+      "idx": 6,
+      "tldr": "SPGCL addresses the pre-alignment effect in graph contrastive learning by separating feature propagation based on Dirichlet energy, enabling effective positive sampling and outperforming existing methods.",
+      "token_count": 180
+    },
+    {
+      "name": "Impact Statement",
+      "idx": 8,
+      "tldr": "This theoretical study clarifies positive sample utilization in graph contrastive learning by analyzing message passing, offering insights for future research without introducing ethical concerns or negative societal impacts.",
+      "token_count": 178
+    },
+    {
+      "name": "Appendix A Related Work",
+      "idx": 10,
+      "tldr": "This work reveals that message passing induces a pre-alignment effect, weakening the learning signal from positive samples and motivating a novel design to restore informative positive learning in graph contrastive learning.",
+      "token_count": 1444
+    },
+    {
+      "name": "Appendix B Experimental Settings",
+      "idx": 11,
+      "tldr": "The study evaluates SPGCL on diverse citation, co-purchase, co-author, and web datasets using standard splits and a GCN backbone, comparing performance against numerous self-supervised baselines via linear classification and clustering metrics.",
+      "token_count": 3271
+    },
+    {
+      "name": "Appendix C Algorithm Description.",
+      "idx": 12,
+      "tldr": "Algorithm 1 integrates energy-aware propagation and energy-guided positive sampling to construct contrastive pairs, optimizing embeddings via a combined GCN-MLP architecture and InfoNCE loss.",
+      "token_count": 551
+    },
+    {
+      "name": "Appendix D Hyper-parameter Settings",
+      "idx": 13,
+      "tldr": "Grid search optimizes SPGCL hyper-parameters, including $\\alpha$, TopK, and dropout, to mitigate overfitting and ensure robust performance across node classification and clustering tasks.",
+      "token_count": 1137
+    },
+    {
+      "name": "Appendix E Theoretical analysis",
+      "idx": 14,
+      "tldr": "Theoretical analysis demonstrates that message passing induces a pre-alignment effect, increasing positive sample similarity and consequently diminishing the gradient signal for positive alignment in graph contrastive learning.",
+      "token_count": 10969
+    },
+    {
+      "name": "Appendix F Additional Experiment Results.",
+      "idx": 15,
+      "tldr": "SPGCL achieves superior class discrimination, mitigates pre-alignment, and offers greater training efficiency than InfoNCE-based methods while maintaining robust performance across varying hyperparameters and encoder choices.",
+      "token_count": 2007
+    }
+  ],
+  "categories": [
+    "cs.LG"
+  ],
+  "publish_at": "2026-06-09T01:13:44",
+  "keywords": [
+    "graph contrastive learning",
+    "message passing",
+    "dirichlet energy",
+    "positive samples",
+    "graph neural networks"
+  ],
+  "tldr": "[Research Paper] This paper investigates why positive samples in Graph Contrastive Learning (GCL) often fail to provide significant performance gains, attributing the issue to message passing trivializing sample similarity. To address this, the authors propose SPGCL, a method that uses an energy-aware propagation mechanism and a Dirichlet energy-based sampling matrix to restore the learning efficacy of positive samples."
+}

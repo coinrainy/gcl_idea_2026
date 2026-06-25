@@ -16,3 +16,15 @@ This table defines novelty boundaries only. It does not propose final methods.
 ## Stage 2 Priority
 
 Prioritize G1, G2, G3 and G5. Treat G6 as promising but leakage-risky. Keep G7 as reporting/diagnostic companion. Defer G8 unless Stage 2 explicitly targets cross-domain settings.
+
+## Stage 1.6 DeepXiv Delta Check
+
+DeepXiv search and section reads did not kill any Stage 1.5 gap, but they raised the bar for novelty:
+
+- G1: simple positive/augmentation changes are more strongly blocked by GMA/GMCL, GPA, iGCL, AFGRL and G-Censor-like task-oriented views.
+- G2: generic negative reweighting is more strongly blocked by ProGCL, SPGCL, negative metric learning and counterfactual hard negatives.
+- G3: MGM remains a valid comparison gap only if GRACE/GCA/BGRL/GraphMAE/GraphMAE2/MaskGAE are rerun under identical project protocol.
+- G5: heterophily claims must separate from HLCL, GCL-OT, GraphACL/DSSL/HGRL-style baselines and SPGCL heterophily tables.
+- G6: LLM semantic-prior work must begin with a leakage model, not with a performance claim.
+
+No final Stage 2 method is proposed here.

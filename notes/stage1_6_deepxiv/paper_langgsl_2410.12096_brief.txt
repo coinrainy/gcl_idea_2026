@@ -1,0 +1,15 @@
+{
+  "arxiv_id": "2410.12096",
+  "src_url": "https://arxiv.org/pdf/2410.12096",
+  "title": "Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning",
+  "tldr": "[research paper] LangGSL introduces a mutual learning framework that integrates large language models (LLMs) and graph structure learning models (GSLMs) to jointly improve node feature quality and graph structure robustness. LLMs clean noisy text attributes and generate pseudo-labels for local feature refinement, while GSLMs refine the global graph structure using these enhanced features, feeding updated labels back to the LLM. The framework operates within a variational information-maximizing objective, enabling iterative synergy between local text semantics and global structural inference, with demonstrated superiority in noisy, sparse, or absent-structure graph scenarios.",
+  "keywords": [
+    "mutual learning",
+    "text-attributed graph",
+    "graph structure refinement",
+    "language model integration",
+    "variational information maximization"
+  ],
+  "publish_at": "2024-10-15T00:00:00",
+  "citations": 3
+}

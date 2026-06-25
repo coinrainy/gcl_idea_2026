@@ -1,0 +1,229 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2605.27913",
+      "score": 0.5,
+      "title": "Where LLM Annotators Fail: Label-Free Learning on Graphs with LLMs",
+      "tldr": "[Research Paper] This paper introduces Cluster-Aware Noise Estimation (CANE), a label-free learning framework for graph node classification that addresses the issue of cluster-conditional LLM annotation noise. By estimating per-cluster reliability from self-supervised embeddings without ground truth, CANE improves pseudo-label filtering and iterative correction over existing baselines.",
+      "abstract": "Node classification on graphs often requires labeled nodes, yet obtaining labels at graph scale is expensive. When node attributes contain semantic content, such as paper abstracts, web pages, or product descriptions, large language models (LLMs) can provide low-cost supervision by annotating a small subset of nodes. However, these LLM-generated labels are noisy, and existing label-free graph learning methods usually treat this noise as either global or class-conditional. We find that LLM annotation errors are not only class-dependent but also region-dependent: within the same class, reliability can vary sharply across feature-space clusters. In light of this, we propose Cluster-Aware Noise Estimation (CANE), a label-free learning framework that estimates cluster-conditional LLM reliability without ground truth labels, and uses this estimate to decide which pseudo-labels to trust, and which labels to correct. Across various graph benchmarks and GNN backbones, CANE improves over the strongest label-free baselines, with the largest gains on datasets exhibiting stronger cluster-conditional noise.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Safal Thapaliya",
+          "orgs": [
+            "University of Connecticut, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jiatan Huang",
+          "orgs": [
+            "University of Connecticut, USA"
+          ]
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Chuxu Zhang",
+          "orgs": [
+            "University of Connecticut, USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2605.27913",
+      "date": "2026-05-27T03:41:04",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1802.05563",
+      "score": 0.5,
+      "title": "Semi-Supervised Learning on Graphs Based on Local Label Distributions",
+      "tldr": "[research paper] The paper proposes a label-based node embedding method that leverages the class label distribution in a node's local neighborhood—without relying on homophily or node attributes—to improve semi-supervised node classification. It introduces a label distribution aggregation strategy using Approximate Personalized PageRank to identify relevant neighbors, then computes embeddings based solely on neighbor labels to avoid overfitting, enabling generalization to unseen nodes. Experiments on real-world datasets show significant performance gains over attribute-based and connectivity-based baselines, especially in cases where node labels are determined by neighborhood label patterns rather than structural or attribute features.",
+      "abstract": "Most approaches that tackle the problem of node classification consider nodes to be similar, if they have shared neighbors or are close to each other in the graph. Recent methods for attributed graphs additionally take attributes of neighboring nodes into account. We argue that the class labels of the neighbors bear important information and considering them helps to improve classification quality. Two nodes which are similar based on class labels in their neighborhood do not need to be close-by in the graph and may even belong to different connected components. In this work, we propose a novel approach for the semi-supervised node classification. Precisely, we propose a new node embedding which is based on the class labels in the local neighborhood of a node. We show that this is a different setting from attribute-based embeddings and thus, we propose a new method to learn label-based node embeddings which can mirror a variety of relations between the class labels of neighboring nodes. Our experimental evaluation demonstrates that our new methods can significantly improve the prediction quality on real world data sets.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Evgeniy Faerman",
+          "orgs": [
+            "Ludwig-Maximilians-Universität München"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Felix Borutta",
+          "orgs": [
+            "Ludwig-Maximilians-Universität München"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Julian Busch",
+          "orgs": [
+            "Ludwig-Maximilians-Universität München"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Matthias Schubert",
+          "orgs": [
+            "Ludwig-Maximilians-Universität München"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/1802.05563",
+      "date": "2018-02-15T00:00:00",
+      "citation_count": 7,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2302.04626",
+      "score": 0.37179488,
+      "title": "Self-Supervised Node Representation Learning via Node-to-Neighbourhood Alignment",
+      "tldr": "[research paper] The paper proposes an augmentation-free, negative-free self-supervised node representation learning framework via node-to-neighbourhood alignment. It maximizes mutual information between node and neighbourhood representations, theoretically linked to graph smoothing, and introduces Topology-Aware Positive Sampling (TAPS) for efficient positive selection. A negative-free variant (NF-N2N) avoids memory-intensive negative sampling by introducing a Graph Signal Decorrelation (GSD) constraint that prevents representation collapse by decorrelating graph signals, unifying and generalizing existing anti-collapse mechanisms.",
+      "abstract": "Self-supervised node representation learning aims to learn node representations from unlabelled graphs that rival the supervised counterparts. The key towards learning informative node representations lies in how to effectively gain contextual information from the graph structure. In this work, we present simple-yet-effective self-supervised node representation learning via aligning the hidden representations of nodes and their neighbourhood. Our first idea achieves such node-to-neighbourhood alignment by directly maximizing the mutual information between their representations, which, we prove theoretically, plays the role of graph smoothing. Our framework is optimized via a surrogate contrastive loss and a Topology-Aware Positive Sampling (TAPS) strategy is proposed to sample positives by considering the structural dependencies between nodes, which enables offline positive selection. Considering the excessive memory overheads of contrastive learning, we further propose a negative-free solution, where the main contribution is a Graph Signal Decorrelation (GSD) constraint to avoid representation collapse and over-smoothing. The GSD constraint unifies some of the existing constraints and can be used to derive new implementations to combat representation collapse. By applying our methods on top of simple MLP-based node representation encoders, we learn node representations that achieve promising node classification performance on a set of graph-structured datasets from small- to large-scale.",
+      "authors": [
+        {
+          "misc": {
+            "email": "DongWei156@outlook.com",
+            "orcid": "https://orcid.org/0000-0003-0263-3584"
+          },
+          "name": "Wei Dong",
+          "orgs": [
+            "College of Information and Control Engineering, Xi'an University of Architecture and Technology, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ydw753@xauat.edu.cn",
+            "orcid": "https://orcid.org/0000-0001-5202-0255"
+          },
+          "name": "Dawei Yan",
+          "orgs": [
+            "College of Information and Control Engineering, Xi'an University of Architecture and Technology, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "pengw@uow.edu.au",
+            "orcid": "https://orcid.org/0000-0002-5397-9115",
+            "corresponding_author": true
+          },
+          "name": "Peng Wang",
+          "orgs": [
+            "School of Computing and Information Technology, University of Wollongong, Wollongong, NSW 2522, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2302.04626",
+      "date": "2023-02-09T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/dongwei156/n2n"
+    },
+    {
+      "arxiv_id": "2006.05582",
+      "score": 0.33333334,
+      "title": "Contrastive Multi-View Representation Learning on Graphs",
+      "tldr": "[research paper] The paper proposes a self-supervised contrastive learning framework for graph representations by contrasting structural views derived from first-order neighbors and graph diffusion, demonstrating that increasing view count beyond two or using multi-scale encodings does not improve performance. It achieves state-of-the-art results on 8 out of 8 node and graph classification benchmarks via a simple architecture without specialized encoders, outperforming prior contrastive methods and supervised baselines on 4 benchmarks, with key findings showing that graph readout outperforms hierarchical pooling and that regularization or normalization degrades performance.",
+      "abstract": "We introduce a self-supervised approach for learning node and graph level representations by contrasting structural views of graphs. We show that unlike visual representation learning, increasing the number of views to more than two or contrasting multi-scale encodings do not improve performance, and the best performance is achieved by contrasting encodings from first-order neighbors and a graph diffusion. We achieve new state-of-the-art results in self-supervised learning on 8 out of 8 node and graph classification benchmarks under the linear evaluation protocol. For example, on Cora (node) and Reddit-Binary (graph) classification benchmarks, we achieve 86.8% and 84.5% accuracy, which are 5.5% and 2.4% relative improvements over previous state-of-the-art. When compared to supervised baselines, our approach outperforms them in 4 out of 8 benchmarks. Source code is released at: https://github.com/kavehhassani/mvgrl",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2006.05582",
+      "date": "2020-06-10T00:00:00",
+      "citation_count": 1664,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.11344",
+      "score": 0.2625,
+      "title": "Contrastive Disentangled Learning on Graph for Node Classification",
+      "tldr": "[research paper] CDLG introduces a contrastive disentangled learning framework for graph node classification that uses a disentangled graph encoder with a neighborhood routing mechanism to separate latent factors in node representations. It designs two label-free self-supervision signals—node specificity and channel independence—to guide disentanglement without relying on labeled data, improving downstream classification performance on citation networks by reducing embedding entanglement and capturing finer semantic components of node neighborhoods.",
+      "abstract": "Contrastive learning methods have attracted considerable attention due to their remarkable success in analyzing graph-structured data. Inspired by the success of contrastive learning, we propose a novel framework for contrastive disentangled learning on graphs, employing a disentangled graph encoder and two carefully crafted self-supervision signals. Specifically, we introduce a disentangled graph encoder to enforce the framework to distinguish various latent factors corresponding to underlying semantic information and learn the disentangled node embeddings. Moreover, to overcome the heavy reliance on labels, we design two self-supervision signals, namely node specificity and channel independence, which capture informative knowledge without the need for labeled data, thereby guiding the automatic disentanglement of nodes. Finally, we perform node classification tasks on three citation networks by using the disentangled node embeddings, and the relevant analysis is provided. Experimental results validate the effectiveness of the proposed framework compared with various baselines.",
+      "authors": [
+        {
+          "misc": {
+            "email": "XiaojuanZhang123@gmail.com"
+          },
+          "name": "Xiaojuan Zhang",
+          "orgs": [
+            "State Key Laboratory of Synthetical Automation for Process Industries",
+            "Northeastern University",
+            "Shenyang, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "junfu@mail.neu.edu.cn"
+          },
+          "name": "Jun Fu",
+          "orgs": [
+            "State Key Laboratory of Synthetical Automation for Process Industries",
+            "Northeastern University",
+            "Shenyang, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shuangli@bit.edu.cn"
+          },
+          "name": "Shuang Li",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Beijing Institute of Technology",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.11344",
+      "date": "2023-06-20T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "Cyber ..",
+      "venue_year": 2023,
+      "github_url": null
+    }
+  ]
+}

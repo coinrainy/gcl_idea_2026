@@ -1,0 +1,15 @@
+{
+  "arxiv_id": "2303.06344",
+  "src_url": "https://arxiv.org/pdf/2303.06344",
+  "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+  "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+  "keywords": [
+    "heterophily",
+    "graph filters",
+    "contrastive learning",
+    "non-smooth representations",
+    "graph signal processing"
+  ],
+  "publish_at": "2023-03-11T00:00:00",
+  "citations": 12
+}

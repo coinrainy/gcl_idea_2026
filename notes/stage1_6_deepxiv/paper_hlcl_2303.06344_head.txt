@@ -1,0 +1,80 @@
+{
+  "arxiv_id": "2303.06344",
+  "src_url": "https://arxiv.org/pdf/2303.06344",
+  "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+  "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+  "authors": [
+    {
+      "misc": {
+        "email": "hangeryang18@g.ucla.edu"
+      },
+      "name": "Wenhan Yang",
+      "orgs": [
+        "Department of Computer Science, University of California, Los Angeles"
+      ]
+    },
+    {
+      "misc": {
+        "email": "baharan@cs.ucla.edu"
+      },
+      "name": "Baharan Mirzasoleiman",
+      "orgs": [
+        "Department of Computer Science, University of California, Los Angeles"
+      ]
+    }
+  ],
+  "token_count": 18698,
+  "venue": "Conference on Uncertainty in Artificial Intelligence",
+  "journal_name": null,
+  "citations": 12,
+  "sections": [
+    {
+      "name": "1. Introduction",
+      "idx": 0,
+      "tldr": "The novel contribution of HLCL is the first graph contrastive learning method designed to capture node dissimilarities under heterophily by integrating a high-pass graph filter into the GNN encoder to generate non-smooth graph views, thereby enabling effective self-supervised representation learning where neighboring nodes have dissimilar features.",
+      "token_count": 1303
+    },
+    {
+      "name": "2. Preliminaries",
+      "idx": 1,
+      "tldr": "This section introduces graph notation and preliminaries, focusing on graph structures, matrices, and graph contrastive learning methods that augment graphs via topology or feature modifications and use GNN encoders to learn node representations through contrastive learning under the assumption of homophily.",
+      "token_count": 2060
+    },
+    {
+      "name": "3. Graph CL under Heterophily",
+      "idx": 2,
+      "tldr": "This section addresses the challenges of graph contrastive learning under heterophily by introducing a method that uses high-pass and low-pass graph filters to simultaneously capture both similarities and dissimilarities in node neighborhoods, enabling high-quality representation learning without labels.",
+      "token_count": 5363
+    },
+    {
+      "name": "4. Experiments",
+      "idx": 3,
+      "tldr": "HLCL achieves state-of-the-art performance in graph contrastive learning under heterophily, outperforming existing methods by up to 10% in accuracy (e.g., 65.26% on Texas vs. 58.42% for FM) and maintaining strong performance under homophily, with its key components—especially the high-pass filter—demonstrating significant gains in capturing fine-grained structural patterns.",
+      "token_count": 5502
+    },
+    {
+      "name": "5. Related Work",
+      "idx": 4,
+      "tldr": "This paper addresses the challenge of learning effective graph representations under heterophily and in unsupervised settings by proposing a contrastive learning framework that leverages high-pass and low-pass frequency signals within a single encoder, offering a label-free alternative to existing methods that rely on label-based fusion of separate encoders.",
+      "token_count": 1402
+    },
+    {
+      "name": "6. Conclusion",
+      "idx": 5,
+      "tldr": "HLCL, a contrastive learning framework using a high-pass graph filter to generate non-smooth augmented representations, significantly improves performance on heterophilic graphs by effectively addressing the limitations of existing methods.",
+      "token_count": 133
+    }
+  ],
+  "categories": [
+    "cs.LG"
+  ],
+  "publish_at": "2023-03-11T00:00:00",
+  "keywords": [
+    "heterophily",
+    "graph filters",
+    "contrastive learning",
+    "non-smooth representations",
+    "graph signal processing"
+  ],
+  "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs."
+}

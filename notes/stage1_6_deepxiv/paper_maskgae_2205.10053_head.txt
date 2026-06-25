@@ -1,0 +1,169 @@
+{
+  "arxiv_id": "2205.10053",
+  "src_url": "https://arxiv.org/pdf/2205.10053",
+  "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+  "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+  "authors": [
+    {
+      "misc": {
+        "email": "lijt55@mail2.sysu.edu.cn"
+      },
+      "name": "Jintang Li",
+      "orgs": [
+        "Sun Yat-sen University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "ruofan.wrf@antgroup.com"
+      },
+      "name": "Ruofan Wu",
+      "orgs": [
+        "Ant Group"
+      ]
+    },
+    {
+      "misc": {
+        "email": "sunwb7@mail2.sysu.edu.cn"
+      },
+      "name": "Wangbin Sun",
+      "orgs": [
+        "Sun Yat-sen University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "chenliang6@mail.sysu.edu.cn"
+      },
+      "name": "Liang Chen",
+      "orgs": [
+        "Sun Yat-sen University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "tiansheng.ts@antgroup.com"
+      },
+      "name": "Sheng Tian",
+      "orgs": [
+        "Ant Group"
+      ]
+    },
+    {
+      "misc": {
+        "email": "tailiang.zl@antgroup.com"
+      },
+      "name": "Liang Zhu",
+      "orgs": [
+        "Ant Group"
+      ]
+    },
+    {
+      "misc": {
+        "email": "changhua.mch@antgroup.com"
+      },
+      "name": "Changhua Meng",
+      "orgs": [
+        "Ant Group"
+      ]
+    },
+    {
+      "misc": {
+        "email": "zhzibin@mail.sysu.edu.cn"
+      },
+      "name": "Zibin Zheng",
+      "orgs": [
+        "Sun Yat-sen University"
+      ]
+    },
+    {
+      "misc": {
+        "email": "weiqiang.wwq@antgroup.com"
+      },
+      "name": "Weiqiang Wang",
+      "orgs": [
+        "Ant Group"
+      ]
+    }
+  ],
+  "token_count": 27826,
+  "venue": "Knowledge Discovery and Data Mining",
+  "journal_name": "Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+  "citations": 163,
+  "sections": [
+    {
+      "name": "1. Introduction",
+      "idx": 0,
+      "tldr": "This paper proposes masked graph modeling (MGM) as a novel pretext task for graph autoencoders, addressing the limitation of traditional graph reconstruction by learning more robust and generalizable representations through predicting masked edges, thereby overcoming the over-emphasis on proximity information and expanding the applicability of GAEs beyond link prediction.",
+      "token_count": 1485
+    },
+    {
+      "name": "2. Related Work",
+      "idx": 1,
+      "tldr": "This paper addresses the limitation of existing graph self-supervised methods by proposing a theoretically grounded masked autoencoding framework for graph representation learning, positioning itself at the intersection of graph autoencoders and masked autoencoding paradigms to advance beyond trial-and-error design in graph self-supervision.",
+      "token_count": 877
+    },
+    {
+      "name": "3. Problem Formulation and Preliminaries",
+      "idx": 2,
+      "tldr": "This section formulates the graph self-supervised learning problem using a masked graph modeling pretext task to learn low-dimensional latent representations from unlabeled graph data.",
+      "token_count": 357
+    },
+    {
+      "name": "4. Theoretical Justification and Motivation",
+      "idx": 3,
+      "tldr": "This section theoretically justifies graph autoencoders by connecting their training objective to contrastive learning through an information-theoretic lens, framing node representation learning as maximizing mutual information between k-hop subgraphs of adjacent and randomly sampled nodes.",
+      "token_count": 3420
+    },
+    {
+      "name": "5. Present Work: MaskGAE",
+      "idx": 4,
+      "tldr": "MaskGAE is a masked graph autoencoder framework that uses asymmetric encoder-decoder architectures with edge-wise or path-wise masking to enable effective and generalizable graph representation learning.",
+      "token_count": 3656
+    },
+    {
+      "name": "6. Experiments",
+      "idx": 5,
+      "tldr": "MaskGAE outperforms state-of-the-art methods on both link prediction and node classification tasks, achieving the highest AUC and AP scores (e.g., 96.42% AUC and 95.91% AP on Cora for MaskGAEedge) and significantly outperforming baselines like GAE, VGAE, and GraphMAE across all datasets.",
+      "token_count": 7449
+    },
+    {
+      "name": "7. Conclusion",
+      "idx": 6,
+      "tldr": "MaskGAE, a theoretically grounded self-supervised framework that uses masked graph modeling as a principled pretext task, improves upon GAEs by reducing subgraph view redundancy and achieves state-of-the-art performance on link prediction and node classification tasks.",
+      "token_count": 167
+    },
+    {
+      "name": "Appendix A Proofs",
+      "idx": 9,
+      "tldr": "The appendix proves a lower bound on the conditional mutual information between node representations in graph autoencoders by applying a subgaussian lemma to the inner product of encoded subgraph features, establishing that the information preserved in the encoding is at least proportional to the square root of the mutual information.",
+      "token_count": 4533
+    },
+    {
+      "name": "Appendix B Algorithm",
+      "idx": 10,
+      "tldr": "MaskGAE proposes a masked graph autoencoding approach that jointly optimizes structure reconstruction and degree preservation by training on masked graph inputs, where the core idea is to learn node representations from visible edges while reconstructing missing edges and maintaining accurate degree distributions through a combined loss function.",
+      "token_count": 774
+    },
+    {
+      "name": "Appendix C Further Discussions",
+      "idx": 11,
+      "tldr": "MaskGAE outperforms GraphMAE by achieving edge and degree reconstruction while providing a theoretical justification for why masking benefits graph autoencoders, demonstrating superior structural recovery and deeper insight into self-supervised graph learning.",
+      "token_count": 713
+    }
+  ],
+  "categories": [
+    "cs.LG",
+    "cs.AI"
+  ],
+  "publish_at": "2022-05-20T00:00:00",
+  "keywords": [
+    "masked graph modeling",
+    "graph autoencoders",
+    "self-supervised learning",
+    "contrastive learning",
+    "graph representation learning"
+  ],
+  "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+  "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+}

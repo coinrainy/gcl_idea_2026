@@ -1,0 +1,16 @@
+{
+  "arxiv_id": "2304.04779",
+  "src_url": "https://arxiv.org/pdf/2304.04779",
+  "title": "GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner",
+  "tldr": "[research paper] GraphMAE2 introduces two regularization strategies—multi-view random re-mask decoding and latent representation prediction—to improve feature reconstruction in masked self-supervised graph learning. Multi-view re-mask decoding injects randomness into the decoding process by repeatedly masking and reconstructing encoded embeddings, reducing overfitting to noisy or low-discriminative input features. Latent representation prediction enforces reconstruction in the embedding space using graph-derived representations as targets, enhancing robustness and generalization. The method achieves at least 2.45% improvement over state-of-the-art on ogbn-Papers100M (111M nodes, 1.6B edges), demonstrating superior performance under feature disturbance and low discriminability.",
+  "keywords": [
+    "decoding regularization",
+    "latent representation prediction",
+    "masked graph autoencoding",
+    "feature discriminability",
+    "graph self-supervised learning"
+  ],
+  "publish_at": "2023-04-10T00:00:00",
+  "citations": 203,
+  "github_url": "https://github.com/THUDM/GraphMAE2"
+}

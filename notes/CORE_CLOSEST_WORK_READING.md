@@ -417,3 +417,19 @@ Fields are set to `UNCLEAR` when the PDF/page did not explicitly say it in this 
 - Blocked idea: KAN + hard negatives as main novelty
 - Remaining gap: node-classification-specific hard-negative semantics
 - Need further reading: no unless Stage 2 targets hard negatives
+
+## Stage 1.6 DeepXiv Addendum
+
+Raw evidence: `notes/stage1_6_deepxiv/`.
+
+DeepXiv confirmed the following high-risk details:
+
+- GCA: Wiki-CS uses public splits; Amazon/Coauthor use random 10/10/80; frozen logistic regression is used; results are averaged over 20 runs.
+- CCA-SSG: appendix states public citation splits and 10/10/80 for Coauthor/Amazon datasets with logistic regression; split ambiguity remains because the main/appendix protocol is not identical.
+- AFGRL: uses logistic regression on learned embeddings and reports test performance when validation performance is best; exact seed list remains unclear.
+- MaskGAE: node classification on Photo/Computer uses 1:1:8 random splits and frozen linear classifier on embeddings; exact seeds/test@best remain unclear.
+- SPGCL: uses homophily and heterophily node classification, standard GCN backbone for SSL baselines, frozen linear classifier, ten repeats, and ablations for energy-aware propagation / energy-guided positive sampling. Exact saved splits and seed identities remain unclear.
+- LangGSL: uses LLM/LM and GSLM mutual learning for TAG/node classification and robustness; it is not a standard frozen GCL evaluator and remains leakage-risky.
+- Graph Barlow Twins: no-negative/decorrelation risk is confirmed, but evaluator/split/seed details remain insufficient for direct comparability.
+
+No paper is promoted to directly comparable. Stage 2 must still rerun selected baselines under project split JSON, seed list, evaluator and `test@best validation epoch`.
