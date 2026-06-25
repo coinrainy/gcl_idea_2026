@@ -1,0 +1,41 @@
+stage: stage3_2_pilot_planning
+status: draft_only
+execution_allowed: false
+datasets:
+  - dataset: Cora
+    split_type: custom_stratified_random_1_1_8
+    split_files:
+      - splits/Cora/split_seed_0.json
+      - splits/Cora/split_seed_1.json
+      - splits/Cora/split_seed_2.json
+  - dataset: Wiki-CS
+    split_type: official_wikics
+    split_files:
+      - splits/Wiki-CS/split_seed_0.json
+      - splits/Wiki-CS/split_seed_1.json
+      - splits/Wiki-CS/split_seed_2.json
+  - dataset: Actor
+    split_type: heterophily_fixed
+    split_files:
+      - splits/Actor/split_seed_0.json
+      - splits/Actor/split_seed_1.json
+      - splits/Actor/split_seed_2.json
+methods:
+  - method: GRACE
+    objective_family: negative_based_contrastive
+  - method: BGRL
+    objective_family: bootstrap_negative_free
+  - method: GraphMAE
+    objective_family: masked_graph_modeling
+seeds: [0, 1, 2]
+rules:
+  - pilot_only
+  - no_formal_claim
+  - no_sota_claim
+  - no_cross_dataset_direct_main_table
+  - same_split_within_dataset
+  - frozen_encoder_linear_evaluator
+  - label_free_metrics_frozen_before_validation
+  - label_audit_not_selector_input
+  - raw_json_required
+  - failed_runs_kept

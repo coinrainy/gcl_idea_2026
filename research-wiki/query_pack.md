@@ -195,3 +195,15 @@ Fresh `gcl_experiment_auditor` verdict: `WARN`, with no reconciliation blocking 
 Stage 3.2 planning / implementation approval is allowed. Stage 3.2 pilot run remains forbidden until a separate approval and run manifest. No completed experiment, accuracy, loss, performance table, GPU output, evaluator run, training run, or baseline clone exists from Stage 3.1.6R.
 
 Protocol warning remains active: Cora custom, Wiki-CS official, and Actor fixed splits must not be mixed into one directly comparable main table.
+
+### Stage 3.2P Pilot Planning
+
+Stage 3.2P completed planning / implementation approval only. It generated scope, data/split readiness, pilot scope, method implementation, evaluator, budget parity, metric freeze, result logging, run manifest draft, and execution-gate documents under `refine-logs/`.
+
+Data/split readiness: PASS for Cora, Wiki-CS, and Actor metadata plus seeds 0/1/2 split JSON. Split protocols remain different: Cora custom stratified random 1:1:8, Wiki-CS official, Actor heterophily fixed. Future results may compare methods within each dataset only and must not put these protocols into one directly comparable main table.
+
+Pilot plan scope: GRACE, BGRL, GraphMAE over Cora/Wiki-CS/Actor seeds 0/1/2, 27 future pilot runs. This is pilot-only and cannot support SOTA, robustness, formal, paper main-table, or survival claims.
+
+Fresh `gcl_experiment_auditor` verdict: `WARN`, no Stage 3.2P planning blocking issue. Stage 3.2E implementation / execution preparation is allowed with WARN if explicitly requested later. Direct pilot run remains blocked because methods are placeholders, the evaluator is synthetic-only, the manifest is draft-only with `execution_allowed=false`, and a later execution gate must pass.
+
+No completed experiment, training run, evaluator run, GPU use, baseline clone, accuracy, loss, performance table, result file, or pilot run exists from Stage 3.2P. Stage 3.2E must not start automatically.

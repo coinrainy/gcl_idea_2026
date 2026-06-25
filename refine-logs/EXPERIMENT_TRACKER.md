@@ -1,7 +1,7 @@
 # Experiment Tracker
 
 Date: 2026-06-26
-Stage: Stage 3.1
+Stage: Stage 3.2P planning
 
 No experiments have been run.
 
@@ -65,6 +65,17 @@ No experiments have been run.
 | Stage 3.1.6R reconciliation | passed: previous Cora auditor inconsistency resolved |
 | Stage 3.1.6R auditor report | WARN; no reconciliation blocking issue |
 | Stage 3.2 planning / implementation approval | allowed |
+| Stage 3.2P planning | completed |
+| Stage 3.2P data/split readiness | passed |
+| Stage 3.2 run manifest draft | drafted |
+| Budget parity plan | drafted |
+| Evaluator plan | drafted |
+| Metric freeze plan | drafted |
+| Result logging plan | drafted |
+| Execution gate | drafted |
+| Stage 3.2P auditor report | WARN; no planning blocking issue |
+| Stage 3.2E implementation / execution preparation | allowed_with_warn |
+| Stage 3.2 execution | blocked |
 | Stage 3.2 pilot run | blocked |
 | Evaluator runs | not started |
 | Stage 3.1.6 auditor report | WARN |
