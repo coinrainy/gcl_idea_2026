@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pilot Metric Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset",
+    "artifact_type",
+    "selector_visible",
+    "freeze_hash",
+    "split_type",
+    "split_seed",
+    "created_at",
+    "commit_hash",
+    "metric_freeze_status",
+    "prohibited_metrics"
+  ],
+  "properties": {
+    "dataset": { "type": "string" },
+    "artifact_type": { "enum": ["label_free_regime_metrics", "label_audit_metrics"] },
+    "selector_visible": { "type": "boolean" },
+    "freeze_hash": { "type": "string" },
+    "split_type": { "type": "string" },
+    "split_seed": { "type": "integer" },
+    "created_at": { "type": "string" },
+    "commit_hash": { "type": "string" },
+    "metric_freeze_status": {
+      "enum": ["draft", "frozen_before_validation_outcome", "invalid_after_outcome_change"]
+    },
+    "label_free_regime_metrics": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "edge_feature_similarity_mean",
+        "edge_feature_similarity_std",
+        "one_hop_feature_smoothness",
+        "two_hop_feature_smoothness",
+        "degree_skew",
+        "degree_entropy",
+        "clustering_coefficient_mean",
+        "connected_component_count",
+        "structural_role_entropy",
+        "masked_feature_reconstruction_difficulty",
+        "edge_reconstruction_difficulty",
+        "augmentation_stability_score",
+        "embedding_rank_proxy",
+        "embedding_variance_proxy",
+        "uniformity_proxy"
+      ],
+      "properties": {
+        "edge_feature_similarity_mean": { "type": ["number", "null"] },
+        "edge_feature_similarity_std": { "type": ["number", "null"] },
+        "one_hop_feature_smoothness": { "type": ["number", "null"] },
+        "two_hop_feature_smoothness": { "type": ["number", "null"] },
+        "degree_skew": { "type": ["number", "null"] },
+        "degree_entropy": { "type": ["number", "null"] },
+        "clustering_coefficient_mean": { "type": ["number", "null"] },
+        "connected_component_count": { "type": ["integer", "null"] },
+        "structural_role_entropy": { "type": ["number", "null"] },
+        "masked_feature_reconstruction_difficulty": { "type": ["number", "null"] },
+        "edge_reconstruction_difficulty": { "type": ["number", "null"] },
+        "augmentation_stability_score": { "type": ["number", "null"] },
+        "embedding_rank_proxy": { "type": ["number", "null"] },
+        "embedding_variance_proxy": { "type": ["number", "null"] },
+        "uniformity_proxy": { "type": ["number", "null"] }
+      }
+    },
+    "label_audit_metrics": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "train_val_label_homophily",
+        "train_val_feature_label_predictability",
+        "validation_objective_ranking",
+        "negative_pair_label_agreement",
+        "ambiguous_pair_precision",
+        "ambiguous_pair_recall"
+      ],
+      "properties": {
+        "train_val_label_homophily": { "type": ["number", "null"] },
+        "train_val_feature_label_predictability": { "type": ["number", "null"] },
+        "validation_objective_ranking": {
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "null" }
+          ]
+        },
+        "negative_pair_label_agreement": { "type": ["number", "null"] },
+        "ambiguous_pair_precision": { "type": ["number", "null"] },
+        "ambiguous_pair_recall": { "type": ["number", "null"] }
+      }
+    },
+    "prohibited_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "test_label_homophily",
+        "test_feature_label_predictability",
+        "test_objective_ranking",
+        "any_metric_computed_after_looking_at_test_accuracy_for_survival_decision"
+      ],
+      "properties": {
+        "test_label_homophily": { "const": "prohibited" },
+        "test_feature_label_predictability": { "const": "prohibited" },
+        "test_objective_ranking": { "const": "prohibited" },
+        "any_metric_computed_after_looking_at_test_accuracy_for_survival_decision": { "const": "prohibited" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "artifact_type": { "const": "label_free_regime_metrics" } }
+      },
+      "then": {
+        "required": ["label_free_regime_metrics"],
+        "properties": {
+          "selector_visible": { "const": true },
+          "metric_freeze_status": { "const": "frozen_before_validation_outcome" },
+          "label_audit_metrics": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "artifact_type": { "const": "label_audit_metrics" } }
+      },
+      "then": {
+        "required": ["label_audit_metrics"],
+        "properties": {
+          "selector_visible": { "const": false },
+          "label_free_regime_metrics": { "type": "null" }
+        }
+      }
+    }
+  ]
+}

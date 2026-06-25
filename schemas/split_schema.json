@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pilot Split Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_name",
+    "split_type",
+    "split_seed",
+    "num_nodes",
+    "train_indices",
+    "val_indices",
+    "test_indices",
+    "num_train",
+    "num_val",
+    "num_test",
+    "class_distribution_train",
+    "class_distribution_val",
+    "class_distribution_test",
+    "created_by",
+    "created_at",
+    "commit_hash"
+  ],
+  "properties": {
+    "dataset_name": { "type": "string" },
+    "split_type": {
+      "type": "string",
+      "description": "Examples: official_fixed, official_wikics, custom_random_1_1_8, planetoid_public"
+    },
+    "split_seed": { "type": "integer" },
+    "num_nodes": { "type": "integer", "minimum": 1 },
+    "train_indices": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 },
+      "uniqueItems": true
+    },
+    "val_indices": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 },
+      "uniqueItems": true
+    },
+    "test_indices": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 },
+      "uniqueItems": true
+    },
+    "num_train": { "type": "integer", "minimum": 0 },
+    "num_val": { "type": "integer", "minimum": 0 },
+    "num_test": { "type": "integer", "minimum": 0 },
+    "class_distribution_train": {
+      "oneOf": [
+        { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        { "type": "null" }
+      ]
+    },
+    "class_distribution_val": {
+      "oneOf": [
+        { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        { "type": "null" }
+      ]
+    },
+    "class_distribution_test": {
+      "oneOf": [
+        { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        { "type": "null" }
+      ]
+    },
+    "created_by": { "type": "string" },
+    "created_at": {
+      "type": "string",
+      "description": "ISO-8601 timestamp"
+    },
+    "commit_hash": { "type": "string" }
+  }
+}

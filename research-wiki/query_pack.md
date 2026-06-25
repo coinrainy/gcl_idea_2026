@@ -95,3 +95,25 @@ Required Stage 2B checks before experiments:
 - For `GCL-I04`: GCL-OT, DSSL, HGRL, GraphACL, relation-aware heterophily learning.
 
 No idea is accepted as a final method.
+
+## Stage 3.0 Readiness Status
+
+Active idea remains `GCL-I03`; `GCL-I02` remains auxiliary audit / fallback only. Stage 3.0 narrows future readiness to:
+
+- datasets: Cora, Wiki-CS, Actor, with PubMed/Coauthor-CS/Chameleon as fallbacks;
+- methods: GRACE, BGRL, GraphMAE as the minimal objective-family set;
+- schemas: split JSON, raw result JSON, metric JSON;
+- manifest: draft only, not executable;
+- engineering direction: prefer unified minimal framework with shared split reader, frozen linear evaluator, logger and metric interface.
+
+No experiment, smoke test, data download, baseline clone or training implementation has been performed in Stage 3.0.
+
+Stage 3.1 remains blocked until auditor review passes or required fixes are applied.
+
+Stage 3.0 auditor result:
+
+- Auditor verdict: `WARN`.
+- Stage 3.0 verdict: `GO` limited to Stage 3.1 minimal implementation / smoke-test scaffold.
+- Stage 3.2 pilot remains blocked.
+- Post-audit fixes applied: raw result traceability fields, metric label-free/audit artifact separation, shared split test-distribution policy, transductive graph visibility declaration.
+- Still no experiment, smoke test, dataset download, baseline clone, training implementation or result evidence.

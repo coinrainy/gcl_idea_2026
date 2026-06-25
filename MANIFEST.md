@@ -24,3 +24,17 @@
 | 2026-06-25 15:29 | /research-refine-pipeline | docs/closest_work_stage2b.md | implementation | latest closest-work assessment |
 | 2026-06-25 15:29 | /research-refine-pipeline | docs/kill_arguments_stage2b_20260625_152922.md | implementation | timestamped kill arguments |
 | 2026-06-25 15:29 | /research-refine-pipeline | docs/kill_arguments_stage2b.md | implementation | latest kill arguments |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/STAGE3_0_SCOPE.md | implementation | Stage 3.0 scope boundary |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/PILOT_DATASET_SELECTION.md | implementation | minimal pilot dataset selection |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/PILOT_METHOD_SELECTION.md | implementation | minimal pilot method selection |
+| 2026-06-26 00:00 | stage3.0-readiness | schemas/split_schema.json | implementation | pilot split JSON schema |
+| 2026-06-26 00:00 | stage3.0-readiness | docs/split_schema_explanation.md | implementation | split schema explanation |
+| 2026-06-26 00:00 | stage3.0-readiness | schemas/raw_result_schema.json | implementation | pilot raw result JSON schema |
+| 2026-06-26 00:00 | stage3.0-readiness | docs/raw_result_schema_explanation.md | implementation | raw result schema explanation |
+| 2026-06-26 00:00 | stage3.0-readiness | schemas/metric_schema.json | implementation | pilot metric JSON schema |
+| 2026-06-26 00:00 | stage3.0-readiness | docs/metric_interface_stage3.md | implementation | Stage 3 metric interface |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/PILOT_RUN_MANIFEST_DRAFT.yaml | implementation | draft-only pilot run manifest |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/PILOT_ENGINEERING_PLAN.md | implementation | pilot engineering plan |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/STAGE3_0_AUDITOR_REPORT.md | implementation | fresh auditor report |
+| 2026-06-26 00:00 | stage3.0-readiness | refine-logs/STAGE3_0_READINESS_REPORT.md | implementation | final Stage 3.0 readiness report |
+| 2026-06-26 00:00 | stage3.0-readiness | .aris/traces/stage3_0_readiness/STAGE3_0_AUDITOR_REPORT.md | implementation | auditor trace copy |

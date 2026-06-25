@@ -1,0 +1,39 @@
+stage: stage3_pilot
+status: draft_only
+note: "Readiness artifact only. Not an executable command file."
+evaluation_setting: transductive
+graph_visibility: "All methods must use identical graph structure and node features for unsupervised pretraining, label-free metric extraction, and frozen evaluation; labels remain split-restricted."
+datasets:
+  - dataset: Cora
+    regime: homophilic_citation
+    split_file: splits/Cora/split_seed_{seed}.json
+  - dataset: Wiki-CS
+    regime: non_planetoid_homophilic
+    split_file: splits/Wiki-CS/split_seed_{seed}.json
+  - dataset: Actor
+    regime: heterophilic
+    split_file: splits/Actor/split_seed_{seed}.json
+methods:
+  - method: GRACE
+    objective_family: negative_based_contrastive
+  - method: BGRL
+    objective_family: bootstrap_negative_free
+  - method: GraphMAE
+    objective_family: masked_graph_modeling
+seeds: [0, 1, 2]
+outputs:
+  raw_results_dir: results/raw/pilot/
+  summaries_dir: results/summary/pilot/
+  metrics_dir: results/metrics/pilot/
+schemas:
+  split_schema: schemas/split_schema.json
+  raw_result_schema: schemas/raw_result_schema.json
+  metric_schema: schemas/metric_schema.json
+rules:
+  - no_test_label_tuning
+  - save_failed_runs
+  - pilot_only
+  - no_sota_claim
+  - no_formal_claim
+  - freeze_label_free_metrics_before_validation_outcome
+  - use_shared_split_files
