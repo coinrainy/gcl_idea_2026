@@ -185,3 +185,13 @@ Current Cora status:
 - `class_distribution_test=null`
 
 Current Stage 3.1.6 data status: Cora, Wiki-CS and Actor all have metadata + validated split JSON. No training, evaluator, GPU use, baseline clone, accuracy/loss/performance table, completed experiment or pilot run has occurred.
+
+### Stage 3.1.6R Reconciliation
+
+Stage 3.1.6R reconciled the mismatch between the final Stage 3.1.6 artifacts and the older auditor report. Metadata recheck PASS, split recheck PASS, and boundary check PASS.
+
+Fresh `gcl_experiment_auditor` verdict: `WARN`, with no reconciliation blocking issue. Previous Cora auditor inconsistency is resolved: `splits/Cora/split_seed_0.json`, `splits/Cora/split_seed_1.json`, and `splits/Cora/split_seed_2.json` exist and validate with `split_type=custom_stratified_random_1_1_8` and `class_distribution_test=null`.
+
+Stage 3.2 planning / implementation approval is allowed. Stage 3.2 pilot run remains forbidden until a separate approval and run manifest. No completed experiment, accuracy, loss, performance table, GPU output, evaluator run, training run, or baseline clone exists from Stage 3.1.6R.
+
+Protocol warning remains active: Cora custom, Wiki-CS official, and Actor fixed splits must not be mixed into one directly comparable main table.

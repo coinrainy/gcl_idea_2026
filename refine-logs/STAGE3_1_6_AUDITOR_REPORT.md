@@ -4,6 +4,14 @@ Date: 2026-06-26
 Auditor: fresh `gcl_experiment_auditor`
 Mode: subagent read-only review
 
+## Correction Note: Superseded by Stage 3.1.6R
+
+The Cora split-missing finding below is a historical Stage 3.1.6 auditor finding from before the Cora post-fix artifacts were reconciled. It is superseded for current artifact status by `refine-logs/STAGE3_1_6R_AUDITOR_REPORT.md`.
+
+Stage 3.1.6R verified that `splits/Cora/split_seed_0.json`, `splits/Cora/split_seed_1.json`, and `splits/Cora/split_seed_2.json` exist, pass `schemas/split_schema.json`, pass `src/gcl_diag/splits/split_io.py::read_split`, use `split_type=custom_stratified_random_1_1_8`, and keep `class_distribution_test=null`.
+
+The Stage 3.1.6R fresh auditor verdict is WARN with no reconciliation blocking issue. Stage 3.2 planning / implementation approval is allowed; direct Stage 3.2 pilot run remains blocked.
+
 ## Verdict
 
 WARN

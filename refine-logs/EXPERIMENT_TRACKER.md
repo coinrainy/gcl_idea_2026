@@ -62,6 +62,10 @@ No experiments have been run.
 | Cora split JSON | written and validated: custom_stratified_random_1_1_8 seeds 0,1,2 |
 | Wiki-CS split JSON | written and validated: official_wikics seeds 0,1,2 |
 | Actor split JSON | written and validated: heterophily_fixed seeds 0,1,2 |
+| Stage 3.1.6R reconciliation | passed: previous Cora auditor inconsistency resolved |
+| Stage 3.1.6R auditor report | WARN; no reconciliation blocking issue |
+| Stage 3.2 planning / implementation approval | allowed |
+| Stage 3.2 pilot run | blocked |
 | Evaluator runs | not started |
 | Stage 3.1.6 auditor report | WARN |
 | Stage 3.1.6 Cora fix | completed: PyG Planetoid fallback endpoint, metadata and split validated |

@@ -92,3 +92,16 @@ Rationale: all three target datasets, Cora / Wiki-CS / Actor, completed metadata
 Fresh `gcl_experiment_auditor` verdict: WARN.
 
 Stage 3.2 planning is allowed. Stage 3.2 pilot run is not allowed.
+
+## Stage 3.1.6R Reconciliation Note
+
+Stage 3.1.6R post-fix auditor reconciliation supersedes the older Cora split-missing auditor finding for current artifact status.
+
+Current reconciled status:
+
+- `dataset_metadata/stage3_1_6/Cora.json`, `dataset_metadata/stage3_1_6/Wiki-CS.json`, and `dataset_metadata/stage3_1_6/Actor.json` validate successfully.
+- `splits/Cora/split_seed_{0,1,2}.json`, `splits/Wiki-CS/split_seed_{0,1,2}.json`, and `splits/Actor/split_seed_{0,1,2}.json` exist and validate successfully.
+- Fresh Stage 3.1.6R `gcl_experiment_auditor` verdict: WARN, with no reconciliation blocking issue.
+- Previous Cora inconsistency: resolved.
+- Stage 3.2 planning / implementation approval: allowed.
+- Direct Stage 3.2 pilot run: blocked.
