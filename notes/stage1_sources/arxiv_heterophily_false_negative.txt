@@ -1,0 +1,232 @@
+[
+  {
+    "id": "2506.09781",
+    "title": "On the Similarities of Embeddings in Contrastive Learning",
+    "authors": [
+      "Chungpa Lee",
+      "Sehee Lim",
+      "Kibok Lee",
+      "Jy-yong Sohn"
+    ],
+    "abstract": "Contrastive learning operates on a simple yet effective principle: Embeddings of positive pairs are pulled together, while those of negative pairs are pushed apart. In this paper, we propose a unified framework for understanding contrastive learning through the lens of cosine similarity, and present two key theoretical insights derived from this framework. First, in full-batch settings, we show that perfect alignment of positive pairs is unattainable when negative-pair similarities fall below a threshold, and this misalignment can be mitigated by incorporating within-view negative pairs into the objective. Second, in mini-batch settings, smaller batch sizes induce stronger separation among negative pairs in the embedding space, i.e., higher variance in their similarities, which in turn degrades the quality of learned representations compared to full-batch settings. To address this, we propose an auxiliary loss that reduces the variance of negative-pair similarities in mini-batch settings. Empirical results show that incorporating the proposed loss improves performance in small-batch settings.",
+    "published": "2025-06-11",
+    "updated": "2025-07-15",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2506.09781.pdf",
+    "abs_url": "https://arxiv.org/abs/2506.09781"
+  },
+  {
+    "id": "2505.15103",
+    "title": "Khan-GCL: Kolmogorov-Arnold Network Based Graph Contrastive Learning with Hard Negatives",
+    "authors": [
+      "Zihu Wang",
+      "Boxun Xu",
+      "Hejia Geng",
+      "Peng Li"
+    ],
+    "abstract": "Graph contrastive learning (GCL) has demonstrated great promise for learning generalizable graph representations from unlabeled data. However, conventional GCL approaches face two critical limitations: (1) the restricted expressive capacity of multilayer perceptron (MLP) based encoders, and (2) suboptimal negative samples that either from random augmentations-failing to provide effective 'hard negatives'-or generated hard negatives without addressing the semantic distinctions crucial for discriminating graph data. To this end, we propose Khan-GCL, a novel framework that integrates the Kolmogorov-Arnold Network (KAN) into the GCL encoder architecture, substantially enhancing its representational capacity. Furthermore, we exploit the rich information embedded within KAN coefficient parameters to develop two novel critical feature identification techniques that enable the generation of semantically meaningful hard negative samples for each graph representation. These strategically constructed hard negatives guide the encoder to learn more discriminative features by emphasizing critical semantic differences between graphs. Extensive experiments demonstrate that our approach achieves state-of-the-art performance compared to existing GCL methods across a variety of datasets and tasks.",
+    "published": "2025-05-21",
+    "updated": "2025-08-08",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2505.15103.pdf",
+    "abs_url": "https://arxiv.org/abs/2505.15103"
+  },
+  {
+    "id": "2206.07869",
+    "title": "Let Invariant Rationale Discovery Inspire Graph Contrastive Learning",
+    "authors": [
+      "Sihang Li",
+      "Xiang Wang",
+      "An zhang",
+      "Yingxin Wu",
+      "Xiangnan He",
+      "Tat-Seng Chua"
+    ],
+    "abstract": "Leading graph contrastive learning (GCL) methods perform graph augmentations in two fashions: (1) randomly corrupting the anchor graph, which could cause the loss of semantic information, or (2) using domain knowledge to maintain salient features, which undermines the generalization to other domains. Taking an invariance look at GCL, we argue that a high-performing augmentation should preserve the salient semantics of anchor graphs regarding instance-discrimination. To this end, we relate GCL with invariant rationale discovery, and propose a new framework, Rationale-aware Graph Contrastive Learning (RGCL). Specifically, without supervision signals, RGCL uses a rationale generator to reveal salient features about graph instance-discrimination as the rationale, and then creates rationale-aware views for contrastive learning. This rationale-aware pre-training scheme endows the backbone model with the powerful representation ability, further facilitating the fine-tuning on downstream tasks. On MNIST-Superpixel and MUTAG datasets, visual inspections on the discovered rationales showcase that the rationale generator successfully captures the salient features (i.e. distinguishing semantic nodes in graphs). On biochemical molecule and social network benchmark datasets, the state-of-the-art performance of RGCL demonstrates the effectiveness of rationale-aware views for contrastive learning. Our codes are available at https://github.com/lsh0520/RGCL.",
+    "published": "2022-06-16",
+    "updated": "2022-06-16",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2206.07869.pdf",
+    "abs_url": "https://arxiv.org/abs/2206.07869"
+  },
+  {
+    "id": "2303.06344",
+    "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+    "authors": [
+      "Wenhan Yang",
+      "Baharan Mirzasoleiman"
+    ],
+    "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+    "published": "2023-03-11",
+    "updated": "2024-06-10",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2303.06344.pdf",
+    "abs_url": "https://arxiv.org/abs/2303.06344"
+  },
+  {
+    "id": "2209.02544",
+    "title": "XSimGCL: Towards Extremely Simple Graph Contrastive Learning for Recommendation",
+    "authors": [
+      "Junliang Yu",
+      "Xin Xia",
+      "Tong Chen",
+      "Lizhen Cui",
+      "Nguyen Quoc Viet Hung",
+      "Hongzhi Yin"
+    ],
+    "abstract": "Contrastive learning (CL) has recently been demonstrated critical in improving recommendation performance. The underlying principle of CL-based recommendation models is to ensure the consistency between representations derived from different graph augmentations of the user-item bipartite graph. This self-supervised approach allows for the extraction of general features from raw data, thereby mitigating the issue of data sparsity. Despite the effectiveness of this paradigm, the factors contributing to its performance gains have yet to be fully understood. This paper provides novel insights into the impact of CL on recommendation. Our findings indicate that CL enables the model to learn more evenly distributed user and item representations, which alleviates the prevalent popularity bias and promoting long-tail items. Our analysis also suggests that the graph augmentations, previously considered essential, are relatively unreliable and of limited significance in CL-based recommendation. Based on these findings, we put forward an eXtremely Simple Graph Contrastive Learning method (XSimGCL) for recommendation, which discards the ineffective graph augmentations and instead employs a simple yet effective noise-based embedding augmentation to generate views for CL. A comprehensive experimental study on four large and highly sparse benchmark datasets demonstrates that, though the proposed method is extremely simple, it can smoothly adjust the uniformity of learned representations and outperforms its graph augmentation-based counterparts by a large margin in both recommendation accuracy and training efficiency. The code and used datasets are released at https://github.com/Coder-Yu/SELFRec.",
+    "published": "2022-09-06",
+    "updated": "2023-06-19",
+    "categories": [
+      "cs.IR"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2209.02544.pdf",
+    "abs_url": "https://arxiv.org/abs/2209.02544"
+  },
+  {
+    "id": "2008.11416",
+    "title": "Learning Node Representations against Perturbations",
+    "authors": [
+      "Xu Chen",
+      "Yuangang Pan",
+      "Ivor Tsang",
+      "Ya Zhang"
+    ],
+    "abstract": "Recent graph neural networks (GNN) has achieved remarkable performance in node representation learning. One key factor of GNN's success is the \\emph{smoothness} property on node representations. Despite this, most GNN models are fragile to the perturbations on graph inputs and could learn unreliable node representations. In this paper, we study how to learn node representations against perturbations in GNN. Specifically, we consider that a node representation should remain stable under slight perturbations on the input, and node representations from different structures should be identifiable, which two are termed as the \\emph{stability} and \\emph{identifiability} on node representations, respectively. To this end, we propose a novel model called Stability-Identifiability GNN Against Perturbations (SIGNNAP) that learns reliable node representations in an unsupervised manner. SIGNNAP formalizes the \\emph{stability} and \\emph{identifiability} by a contrastive objective and preserves the \\emph{smoothness} with existing GNN backbones. The proposed method is a generic framework that can be equipped with many other backbone models (e.g. GCN, GraphSage and GAT). Extensive experiments on six benchmarks under both transductive and inductive learning setups of node classification demonstrate the effectiveness of our method. Codes and data are available online:~\\url{https://github.com/xuChenSJTU/SIGNNAP-master-online}",
+    "published": "2020-08-26",
+    "updated": "2023-05-05",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2008.11416.pdf",
+    "abs_url": "https://arxiv.org/abs/2008.11416"
+  },
+  {
+    "id": "2311.17853",
+    "title": "On the Adversarial Robustness of Graph Contrastive Learning Methods",
+    "authors": [
+      "Filippo Guerranti",
+      "Zinuo Yi",
+      "Anna Starovoit",
+      "Rafiq Kamel",
+      "Simon Geisler",
+      "Stephan Günnemann"
+    ],
+    "abstract": "Contrastive learning (CL) has emerged as a powerful framework for learning representations of images and text in a self-supervised manner while enhancing model robustness against adversarial attacks. More recently, researchers have extended the principles of contrastive learning to graph-structured data, giving birth to the field of graph contrastive learning (GCL). However, whether GCL methods can deliver the same advantages in adversarial robustness as their counterparts in the image and text domains remains an open question. In this paper, we introduce a comprehensive robustness evaluation protocol tailored to assess the robustness of GCL models. We subject these models to adaptive adversarial attacks targeting the graph structure, specifically in the evasion scenario. We evaluate node and graph classification tasks using diverse real-world datasets and attack strategies. With our work, we aim to offer insights into the robustness of GCL methods and hope to open avenues for potential future research directions.",
+    "published": "2023-11-29",
+    "updated": "2023-11-30",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2311.17853.pdf",
+    "abs_url": "https://arxiv.org/abs/2311.17853"
+  },
+  {
+    "id": "2211.06292",
+    "title": "A New Graph Node Classification Benchmark: Learning Structure from Histology Cell Graphs",
+    "authors": [
+      "Claudia Vanea",
+      "Jonathan Campbell",
+      "Omri Dodi",
+      "Liis Salumäe",
+      "Karen Meir",
+      "Drorith Hochner-Celnikier",
+      "Hagit Hochner",
+      "Triin Laisk",
+      "Linda M. Ernst",
+      "Cecilia M. Lindgren",
+      "Christoffer Nellåker"
+    ],
+    "abstract": "We introduce a new benchmark dataset, Placenta, for node classification in an underexplored domain: predicting microanatomical tissue structures from cell graphs in placenta histology whole slide images. This problem is uniquely challenging for graph learning for a few reasons. Cell graphs are large (>1 million nodes per image), node features are varied (64-dimensions of 11 types of cells), class labels are imbalanced (9 classes ranging from 0.21% of the data to 40.0%), and cellular communities cluster into heterogeneously distributed tissues of widely varying sizes (from 11 nodes to 44,671 nodes for a single structure). Here, we release a dataset consisting of two cell graphs from two placenta histology images totalling 2,395,747 nodes, 799,745 of which have ground truth labels. We present inductive benchmark results for 7 scalable models and show how the unique qualities of cell graphs can help drive the development of novel graph neural network architectures.",
+    "published": "2022-11-11",
+    "updated": "2022-11-11",
+    "categories": [
+      "cs.LG",
+      "cs.CV",
+      "eess.IV"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2211.06292.pdf",
+    "abs_url": "https://arxiv.org/abs/2211.06292"
+  },
+  {
+    "id": "2605.12699",
+    "title": "Modeling Heterophily in Multiplex Graphs: An Adaptive Approach for Node Classification",
+    "authors": [
+      "Kamel Abdous",
+      "Nairouz Mrabah",
+      "Mohamed Bouguessa"
+    ],
+    "abstract": "Existing multiplex graph models often assume homophily, where connected nodes tend to belong to the same class or share similar attributes. Consequently, these models may struggle with graphs exhibiting heterophily, where connected nodes typically belong to different classes and have dissimilar attributes. While recent methods have been developed to learn reliable node representations from unidimensional graphs with heterophily, they do not fully address the complexities of multiplex graphs. In a multiplex graph, nodes are linked through multiple types of edges (referred to as dimensions), which can simultaneously exhibit homophilic and heterophilic interactions. To address this gap, we propose \\methodname, a novel method for node classification in multiplex graphs that adapts to both homophilic and heterophilic dimensions. \\methodname introduces dimension-specific compatibility matrices to model varying degrees of homophily and heterophily across dimensions. A key innovation is its use of a product of trainable low-pass and high-pass filters, approximated via Chebyshev polynomials, to capture both smooth and abrupt changes in the graph signal. By composing these filters and optimizing label predictions using a proximal-gradient method, \\methodname dynamically adjusts to the heterophilic characteristics of each dimension. Extensive experiments on synthetic and real-world datasets provide evidence that \\methodname captures the complex interplay of homophilic and heterophilic interactions in multiplex graphs, and tends to yield improved node classification performance compared to state-of-the-art methods.",
+    "published": "2026-05-12",
+    "updated": "2026-05-12",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2605.12699.pdf",
+    "abs_url": "https://arxiv.org/abs/2605.12699"
+  },
+  {
+    "id": "2509.18893",
+    "title": "Exploring Heterophily in Graph-level Tasks",
+    "authors": [
+      "Qinhan Hou",
+      "Yilun Zheng",
+      "Xichun Zhang",
+      "Sitao Luan",
+      "Jing Tang"
+    ],
+    "abstract": "While heterophily has been widely studied in node-level tasks, its impact on graph-level tasks remains unclear. We present the first analysis of heterophily in graph-level learning, combining theoretical insights with empirical validation. We first introduce a taxonomy of graph-level labeling schemes, and focus on motif-based tasks within local structure labeling, which is a popular labeling scheme. Using energy-based gradient flow analysis, we reveal a key insight: unlike frequency-dominated regimes in node-level tasks, motif detection requires mixed-frequency dynamics to remain flexible across multiple spectral components. Our theory shows that motif objectives are inherently misaligned with global frequency dominance, demanding distinct architectural considerations. Experiments on synthetic datasets with controlled heterophily and real-world molecular property prediction support our findings, showing that frequency-adaptive model outperform frequency-dominated models. This work establishes a new theoretical understanding of heterophily in graph-level learning and offers guidance for designing effective GNN architectures.",
+    "published": "2025-09-23",
+    "updated": "2025-09-23",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2509.18893.pdf",
+    "abs_url": "https://arxiv.org/abs/2509.18893"
+  },
+  {
+    "id": "2305.08233",
+    "title": "Addressing Heterophily in Node Classification with Graph Echo State Networks",
+    "authors": [
+      "Alessio Micheli",
+      "Domenico Tortorella"
+    ],
+    "abstract": "Node classification tasks on graphs are addressed via fully-trained deep message-passing models that learn a hierarchy of node representations via multiple aggregations of a node's neighbourhood. While effective on graphs that exhibit a high ratio of intra-class edges, this approach poses challenges in the opposite case, i.e. heterophily, where nodes belonging to the same class are usually further apart. In graphs with a high degree of heterophily, the smoothed representations based on close neighbours computed by convolutional models are no longer effective. So far, architectural variations in message-passing models to reduce excessive smoothing or rewiring the input graph to improve longer-range message passing have been proposed. In this paper, we address the challenges of heterophilic graphs with Graph Echo State Network (GESN) for node classification. GESN is a reservoir computing model for graphs, where node embeddings are recursively computed by an untrained message-passing function. Our experiments show that reservoir models are able to achieve better or comparable accuracy with respect to most fully trained deep models that implement ad hoc variations in the architectural bias or perform rewiring as a preprocessing step on the input graph, with an improvement in terms of efficiency/accuracy trade-off. Furthermore, our analysis shows that GESN is able to effectively encode the structural relationships of a graph node, by showing a correlation between iterations of the recursive embedding function and the distribution of shortest paths in a graph.",
+    "published": "2023-05-14",
+    "updated": "2023-07-03",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2305.08233.pdf",
+    "abs_url": "https://arxiv.org/abs/2305.08233"
+  },
+  {
+    "id": "2306.11344",
+    "title": "Contrastive Disentangled Learning on Graph for Node Classification",
+    "authors": [
+      "Xiaojuan Zhang",
+      "Jun Fu",
+      "Shuang Li"
+    ],
+    "abstract": "Contrastive learning methods have attracted considerable attention due to their remarkable success in analyzing graph-structured data. Inspired by the success of contrastive learning, we propose a novel framework for contrastive disentangled learning on graphs, employing a disentangled graph encoder and two carefully crafted self-supervision signals. Specifically, we introduce a disentangled graph encoder to enforce the framework to distinguish various latent factors corresponding to underlying semantic information and learn the disentangled node embeddings. Moreover, to overcome the heavy reliance on labels, we design two self-supervision signals, namely node specificity and channel independence, which capture informative knowledge without the need for labeled data, thereby guiding the automatic disentanglement of nodes. Finally, we perform node classification tasks on three citation networks by using the disentangled node embeddings, and the relevant analysis is provided. Experimental results validate the effectiveness of the proposed framework compared with various baselines.",
+    "published": "2023-06-20",
+    "updated": "2023-06-20",
+    "categories": [
+      "cs.LG",
+      "cs.SI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2306.11344.pdf",
+    "abs_url": "https://arxiv.org/abs/2306.11344"
+  }
+]

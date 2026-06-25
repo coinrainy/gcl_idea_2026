@@ -1,0 +1,402 @@
+{
+  "mode": "search",
+  "query": "negative-free graph contrastive learning",
+  "group": "all",
+  "content": "all",
+  "source_filter": "papers",
+  "returned": 10,
+  "offset": 0,
+  "data": [
+    {
+      "id": "LiWGbK8_iOB",
+      "number": 3865,
+      "title": "G-Censor: Graph Contrastive Learning with Task-Oriented Counterfactual Views",
+      "authors": [
+        "tianqianjin lin",
+        "Yangyang Kang",
+        "Zhuoren Jiang",
+        "Xurui Li",
+        "Changlong Sun",
+        "cui huang",
+        "Xiaozhong Liu"
+      ],
+      "authorids": [
+        "~tianqianjin_lin1",
+        "~Yangyang_Kang1",
+        "~Zhuoren_Jiang2",
+        "~Xurui_Li1",
+        "~Changlong_Sun2",
+        "huangcui@zju.edu.cn",
+        "~Xiaozhong_Liu2"
+      ],
+      "abstract": "Graph Contrastive learning (GCL) has achieved great success in learning representations from unlabeled graph-structure data. However, how to automatically obtain the optimal contrastive views w.r.t specific downstream tasks is little studied. Theoretically, a downstream task can be causally correlated to particular sub-structures in graphs. The existing GCL methods may fail to enhance model performance on a given task when the task-related semantics are incomplete/preserved in the positive/negative views. To address this problem, we propose G-CENSOR, i.e., Graph Contrastive lEarniNg with taSk-oriented cOunteRfactual views, a model-agnostic framework designed for node property prediction tasks. G-CENSOR can simultaneously generate the optimal task-oriented counterfactual positive/negative views for raw ego-graphs and train graph neural networks (GNNs) with a contrastive objective between the raw ego-graphs and their corresponding counterfac-tual views. Extensive experiments on eight real-world datasets demonstrate that G-CENSOR can consistently outperform existing state-of-the-art GCL methods to improve the task performance and generalizability of a series of typical GNNs. To the best of our knowledge, this is a pioneer investigation to explore task-oriented graph contrastive learning from a counterfactual perspective in node property pre- diction tasks. We will release the source code after the review process.",
+      "keywords": [
+        "graph contrastive learning",
+        "node property prediction",
+        "task-oriented counterfactual views"
+      ],
+      "tl_dr": "Graph Contrastive learning with task-oriented counterfactual positive/negative views, a model-agnostic framework designed for node property prediction tasks.",
+      "venue": "Submitted to ICLR 2023",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "lin|gcensor_graph_contrastive_learning_with_taskoriented_counterfactual_views",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "LiWGbK8_iOB",
+      "replyto": null,
+      "cdate": 1663850253146,
+      "tmdate": 1676330862648,
+      "openreview_url": "https://openreview.net/forum?id=LiWGbK8_iOB",
+      "pdf_url": "https://openreview.net/pdf/3c8bd45f38e3a2f19a8278e960478bcae781c576.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "Vkv4vh7kkz",
+      "number": 648,
+      "title": "Contrastive Learning for Supervised Graph Matching",
+      "authors": [
+        "Gathika Ratnayaka",
+        "Qing Wang",
+        "Yang Li"
+      ],
+      "authorids": [
+        "~Gathika_Ratnayaka1",
+        "~Qing_Wang14",
+        "~Yang_Li64"
+      ],
+      "abstract": "Deep graph matching techniques have shown promising results in recent years. In this work, we cast deep graph matching as a contrastive learning task and introduce a new objective function for contrastive mapping to exploit the relationships between matches and non-matches. To this end, we develop a hardness attention mechanism to select negative samples which captures the relatedness and informativeness of positive and negative samples. Further, we propose a novel deep graph matching framework, Stable Graph Matching (StableGM), which incorporates Sinkhorn ranking into a stable marriage algorithm to efficiently compute one-to-one node correspondences between graphs. We prove that the proposed objective function for contrastive matching is both positive and negative informative, offering theoretical guarantees to achieve dual-optimality in graph matching. We empirically verify the effectiveness of our proposed approach by conducting experiments on standard graph matching benchmarks.",
+      "keywords": [
+        "Graph Matching",
+        "Contrastive Learning",
+        "Deep Learning"
+      ],
+      "tl_dr": "This paper introduces a contrastive learning framework for deep graph matching.",
+      "venue": "UAI 2023",
+      "venueid": "auai.org/UAI/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "ratnayaka|contrastive_learning_for_supervised_graph_matching",
+      "invitation": "auai.org/UAI/2023/Conference/-/Blind_Submission",
+      "forum": "Vkv4vh7kkz",
+      "replyto": null,
+      "cdate": 1676827104224,
+      "tmdate": 1687786888158,
+      "openreview_url": "https://openreview.net/forum?id=Vkv4vh7kkz",
+      "pdf_url": "https://openreview.net/pdf/40ae495b7d0e92d91cb0da01f44fb81e80b44d3a.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "hTCBqt7pgxf",
+      "number": 2485,
+      "title": "Efficient block contrastive learning via parameter-free meta-node approximation",
+      "authors": [
+        "Gayan K Kulatilleke",
+        "Marius Portmann",
+        "Shekhar S. Chandra"
+      ],
+      "authorids": [
+        "~Gayan_K_Kulatilleke1",
+        "~Marius_Portmann1",
+        "~Shekhar_S._Chandra1"
+      ],
+      "abstract": "Contrastive learning has recently achieved remarkable success in many domains including graphs. However contrastive loss, especially for graphs, requires a large number of negative samples which is unscalable and computationally prohibitive with a quadratic time complexity. Sub-sampling is not optimal and incorrect negative sampling leads to sampling bias. In this work, we propose a meta-node based approximation technique that can (a) proxy all negative combinations (b) in quadratic cluster size time complexity, (c) at graph level, not node level, and (d) exploit graph sparsity. By replacing node-pairs with additive cluster-pairs, we compute the negatives in cluster-time at graph level. The resulting Proxy approximated meta-node Contrastive (PamC) loss, based on simple optimized GPU operations, captures the full set of negatives, yet is efficient with a linear time complexity. By avoiding sampling, we effectively eliminate sample bias. We meet the criterion for larger number of samples, thus achieving block-contrastiveness, which is proven to outperform pair-wise losses. We use learnt soft cluster assignments for the meta-node constriction, and avoid possible heterophily and noise added during edge creation. Theoretically, we show that real world graphs easily satisfy conditions necessary for our approximation. Empirically, we show promising accuracy gains over state-of-the-art graph clustering on 6 benchmarks. Importantly, we gain substantially in efficiency; up to 3x in training time, 1.8x in inference time and over 5x in GPU memory reduction.",
+      "keywords": [
+        "Contrastive",
+        "approximation",
+        "efficient",
+        "parameter-free",
+        "block",
+        "theory"
+      ],
+      "tl_dr": "A simple block contrastive loss approximation technique to efficiently contrast all negative samples, in linear cluster time, at graph level",
+      "venue": "Submitted to ICLR 2023",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "kulatilleke|efficient_block_contrastive_learning_via_parameterfree_metanode_approximation",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "hTCBqt7pgxf",
+      "replyto": null,
+      "cdate": 1663850089362,
+      "tmdate": 1768385544544,
+      "openreview_url": "https://openreview.net/forum?id=hTCBqt7pgxf",
+      "pdf_url": "https://openreview.net/pdf/60f9ac4f6f3d61cc29276d351b4b2959d9e77f34.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "yLEcG62ANX",
+      "number": 6609,
+      "title": "Directed Graph Contrastive Learning",
+      "authors": [
+        "Zekun Tong",
+        "Yuxuan Liang",
+        "Henghui Ding",
+        "Yongxing Dai",
+        "Xinke Li",
+        "Changhu Wang"
+      ],
+      "authorids": [
+        "~Zekun_Tong1",
+        "~Yuxuan_Liang1",
+        "~Henghui_Ding2",
+        "~Yongxing_Dai1",
+        "~Xinke_Li1",
+        "~Changhu_Wang3"
+      ],
+      "abstract": "Graph Contrastive Learning (GCL) has emerged to learn generalizable representations from contrastive views. However, it is still in its infancy with two concerns: 1) changing the graph structure through data augmentation to generate contrastive views may mislead the message passing scheme, as such graph changing action deprives the intrinsic graph structural information, especially the directional structure in directed graphs; 2) since GCL usually uses predefined contrastive views with hand-picking parameters, it does not take full advantage of the contrastive information provided by data augmentation, resulting in incomplete structure information for models learning. In this paper, we design a directed graph data augmentation method called Laplacian perturbation and theoretically analyze how it provides contrastive information without changing the directed graph structure. Moreover, we present a directed graph contrastive learning framework, which dynamically learns from all possible contrastive views generated by Laplacian perturbation. Then we train it using multi-task curriculum learning to progressively learn from multiple easy-to-difficult contrastive views. We empirically show that our model can retain more structural features of directed graphs than other GCL models because of its ability to provide complete contrastive information. Experiments on various benchmarks reveal our dominance over the state-of-the-art approaches.",
+      "keywords": [
+        "Contrastive Learning",
+        "Directed Graph",
+        "Graph Neural Network",
+        "Curriculum Learning"
+      ],
+      "tl_dr": "In this paper, we present the first contrastive learning framework for learning directed graph representation.",
+      "venue": "NeurIPS 2021 Poster",
+      "venueid": "NeurIPS.cc/2021/Conference",
+      "presentation_type": null,
+      "paperhash": "tong|directed_graph_contrastive_learning",
+      "invitation": "NeurIPS.cc/2021/Conference/-/Blind_Submission",
+      "forum": "yLEcG62ANX",
+      "replyto": null,
+      "cdate": 1621629882762,
+      "tmdate": 1683307602012,
+      "openreview_url": "https://openreview.net/forum?id=yLEcG62ANX",
+      "pdf_url": "https://openreview.net/pdf/0b0903cb59f15651e73aa532cde3c6710b47cde6.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "s6JD_xBS31",
+      "number": 3847,
+      "title": "Directed Graph Contrastive Learning",
+      "authors": [
+        "Zekun Tong",
+        "Yuxuan Liang",
+        "Henghui Ding",
+        "Yongxing Dai",
+        "Xinke Li",
+        "Changhu Wang"
+      ],
+      "authorids": [
+        "~Zekun_Tong1",
+        "~Yuxuan_Liang1",
+        "~Henghui_Ding2",
+        "~Yongxing_Dai1",
+        "~Xinke_Li1",
+        "~Changhu_Wang3"
+      ],
+      "abstract": "Graph Contrastive Learning (GCL) has emerged to learn generalizable representations from contrastive views. However, it is still in its infancy with two concerns: 1) changing the graph structure through data augmentation to generate contrastive views may mislead the message passing scheme, as such graph changing action deprives the intrinsic graph structural information, especially the directional structure in directed graphs; 2) since GCL usually uses predefined contrastive views with hand-picking parameters, it does not take full advantage of the contrastive information provided by data augmentation, resulting in incomplete structure information for models learning. In this paper, we design a directed graph data augmentation method called Laplacian perturbation and theoretically analyze how it provides contrastive information without changing the directed graph structure. Moreover, we present a directed graph contrastive learning framework, which dynamically learns from all possible contrastive views generated by Laplacian perturbation. Then we train it using multi-task curriculum learning to progressively learn from multiple easy-to-difficult contrastive views. We empirically show that our model can retain more structural features of directed graphs than other GCL models because of its ability to provide complete contrastive information. Experiments on various benchmarks reveal our dominance over the state-of-the-art approaches.",
+      "keywords": [
+        "Contrastive Learning",
+        "Directed Graph",
+        "Graph Neural Network",
+        "Curriculum Learning"
+      ],
+      "tl_dr": "In this paper, we present the first contrastive learning framework for learning directed graph representation.",
+      "venue": "NeurIPS 2021 Poster",
+      "venueid": "NeurIPS.cc/2021/Conference",
+      "presentation_type": null,
+      "paperhash": "tong|directed_graph_contrastive_learning",
+      "invitation": "NeurIPS.cc/2021/Conference/-/Blind_Submission",
+      "forum": "s6JD_xBS31",
+      "replyto": null,
+      "cdate": 1621629882762,
+      "tmdate": 1683307602012,
+      "openreview_url": "https://openreview.net/forum?id=s6JD_xBS31",
+      "pdf_url": "https://openreview.net/pdf/0b0903cb59f15651e73aa532cde3c6710b47cde6.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "fJguu0okUY1",
+      "number": 985,
+      "title": "An Empirical Study on Disentanglement of Negative-free Contrastive Learning",
+      "authors": [
+        "Jinkun Cao",
+        "Ruiqian Nai",
+        "Qing Yang",
+        "Jialei Huang",
+        "Yang Gao"
+      ],
+      "authorids": [
+        "~Jinkun_Cao1",
+        "~Ruiqian_Nai1",
+        "~Qing_Yang9",
+        "~Jialei_Huang1",
+        "~Yang_Gao1"
+      ],
+      "abstract": "Negative-free contrastive learning methods have attracted a lot of attention with simplicity and impressive performances for large-scale pretraining. However, its disentanglement property remains unexplored. In this paper, we examine negative-free contrastive learning methods to study the disentanglement property empirically. We find that existing disentanglement metrics fail to make meaningful measurements for high-dimensional representation models, so we propose a new disentanglement metric based on Mutual Information between latent representations and data factors. With this proposed metric, we benchmark the disentanglement property of negative-free contrastive learning on both popular synthetic datasets and a real-world dataset CelebA. Our study shows that the investigated methods can learn a well-disentangled subset of representation. As far as we know, we are the first to extend the study of disentangled representation learning to high-dimensional representation space and introduce negative-free contrastive learning methods into this area. The source code of this paper is available at https://github.com/noahcao/disentanglement_lib_med.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "cao|an_empirical_study_on_disentanglement_of_negativefree_contrastive_learning",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "fJguu0okUY1",
+      "replyto": null,
+      "cdate": 1652737303776,
+      "tmdate": 1770510503285,
+      "openreview_url": "https://openreview.net/forum?id=fJguu0okUY1",
+      "pdf_url": "https://openreview.net/pdf/771a6b0f7ba3d5ccb177234a2c91a453b0ea9df6.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "5fm_SjcH1l",
+      "number": 744173,
+      "title": "An Empirical Study on Disentanglement of Negative-free Contrastive Learning",
+      "authors": [
+        "Jinkun Cao",
+        "Ruiqian Nai",
+        "Qing Yang",
+        "Jialei Huang",
+        "Yang Gao"
+      ],
+      "authorids": [
+        "~Jinkun_Cao1",
+        "~Ruiqian_Nai1",
+        "https://dblp.org/search/pid/api?q=author:Qing_Yang:",
+        "https://dblp.org/search/pid/api?q=author:Jialei_Huang:",
+        "https://dblp.org/search/pid/api?q=author:Yang_Gao:"
+      ],
+      "abstract": "Negative-free contrastive learning methods have attracted a lot of attention with simplicity and impressive performances for large-scale pretraining. However, its disentanglement property remains unexplored. In this paper, we examine negative-free contrastive learning methods to study the disentanglement property empirically. We find that existing disentanglement metrics fail to make meaningful measurements for high-dimensional representation models, so we propose a new disentanglement metric based on Mutual Information between latent representations and data factors. With this proposed metric, we benchmark the disentanglement property of negative-free contrastive learning on both popular synthetic datasets and a real-world dataset CelebA. Our study shows that the investigated methods can learn a well-disentangled subset of representation. As far as we know, we are the first to extend the study of disentangled representation learning to high-dimensional representation space and introduce negative-free contrastive learning methods into this area. The source code of this paper is available at https://github.com/noahcao/disentanglement<em>lib</em>med.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "NeurIPS 2022",
+      "venueid": "dblp.org/conf/NIPS/2022",
+      "presentation_type": null,
+      "paperhash": "cao|an_empirical_study_on_disentanglement_of_negativefree_contrastive_learning",
+      "invitation": "dblp.org/-/record",
+      "forum": "5fm_SjcH1l",
+      "replyto": null,
+      "cdate": 1640995200000,
+      "tmdate": 1695952285141,
+      "openreview_url": "https://openreview.net/forum?id=5fm_SjcH1l",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/0850e04a62e0f3407780852581c5fcf4-Paper-Conference.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "70WB9-A7Y0O",
+      "number": 524991,
+      "title": "An Empirical Study on Disentanglement of Negative-free Contrastive Learning",
+      "authors": [
+        "Jinkun Cao",
+        "Ruiqian Nai",
+        "Qing Yang",
+        "Jialei Huang",
+        "Yang Gao"
+      ],
+      "authorids": [
+        "~Jinkun_Cao1",
+        "~Ruiqian_Nai1",
+        "https://dblp.org/search/pid/api?q=author:Qing_Yang:",
+        "https://dblp.org/search/pid/api?q=author:Jialei_Huang:",
+        "https://dblp.org/search/pid/api?q=author:Yang_Gao:"
+      ],
+      "abstract": "Negative-free contrastive learning methods have attracted a lot of attention with simplicity and impressive performances for large-scale pretraining. However, its disentanglement property remains unexplored. In this paper, we examine negative-free contrastive learning methods to study the disentanglement property empirically. We find that existing disentanglement metrics fail to make meaningful measurements for high-dimensional representation models, so we propose a new disentanglement metric based on Mutual Information between latent representations and data factors. With this proposed metric, we benchmark the disentanglement property of negative-free contrastive learning on both popular synthetic datasets and a real-world dataset CelebA. Our study shows that the investigated methods can learn a well-disentangled subset of representation. As far as we know, we are the first to extend the study of disentangled representation learning to high-dimensional representation space and introduce negative-free contrastive learning methods into this area. The source code of this paper is available at \\url{https://github.com/noahcao/disentanglement_lib_med}.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "CoRR 2022",
+      "venueid": "dblp.org/journals/CORR/2022",
+      "presentation_type": null,
+      "paperhash": "cao|an_empirical_study_on_disentanglement_of_negativefree_contrastive_learning",
+      "invitation": "dblp.org/-/record",
+      "forum": "70WB9-A7Y0O",
+      "replyto": null,
+      "cdate": 1640995200000,
+      "tmdate": 1691035321387,
+      "openreview_url": "https://openreview.net/forum?id=70WB9-A7Y0O",
+      "pdf_url": "http://arxiv.org/pdf/2206.04756v2",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "519VBzfEaKW",
+      "number": 10026,
+      "title": "InfoGCL: Information-Aware Graph Contrastive Learning",
+      "authors": [
+        "Dongkuan Xu",
+        "Wei Cheng",
+        "Dongsheng Luo",
+        "Haifeng Chen",
+        "Xiang Zhang"
+      ],
+      "authorids": [
+        "~Dongkuan_Xu2",
+        "~Wei_Cheng1",
+        "~Dongsheng_Luo1",
+        "~Haifeng_Chen1",
+        "~Xiang_Zhang4"
+      ],
+      "abstract": "Various graph contrastive learning models have been proposed to improve the performance of tasks on graph datasets in recent years. While effective and prevalent, these models are usually carefully customized. In particular, despite all recent work create two contrastive views, they differ in a variety of view augmentations, architectures, and objectives. It remains an open question how to build your graph contrastive learning model from scratch for particular graph tasks and datasets. In this work, we aim to fill this gap by studying how graph information is transformed and transferred during the contrastive learning process, and proposing an information-aware graph contrastive learning framework called InfoGCL. The key to the success of the proposed framework is to follow the Information Bottleneck principle to reduce the mutual information between contrastive parts while keeping task-relevant information intact at both the levels of the individual module and the entire framework so that the information loss during graph representation learning can be minimized. We show for the first time that all recent graph contrastive learning methods can be unified by our framework. Based on theoretical and empirical analysis on benchmark graph datasets, we show that InfoGCL achieves state-of-the-art performance in the settings of both graph classification and node classification tasks.",
+      "keywords": [
+        "Graph Representation Learning",
+        "Contrastive Learning",
+        "Information Bottleneck"
+      ],
+      "tl_dr": "We study how graph information is transformed and transferred during the contrastive learning process, and propose an information-aware graph contrastive learning framework called InfoGCL.",
+      "venue": "NeurIPS 2021 Poster",
+      "venueid": "NeurIPS.cc/2021/Conference",
+      "presentation_type": null,
+      "paperhash": "xu|infogcl_informationaware_graph_contrastive_learning",
+      "invitation": "NeurIPS.cc/2021/Conference/-/Blind_Submission",
+      "forum": "519VBzfEaKW",
+      "replyto": null,
+      "cdate": 1621630255300,
+      "tmdate": 1683307753649,
+      "openreview_url": "https://openreview.net/forum?id=519VBzfEaKW",
+      "pdf_url": "https://openreview.net/pdf/79dc45ca77e672dd36dcb6590680b2f8b9981eb6.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "UuUbIYnHKO",
+      "number": 285,
+      "title": "An Empirical Study of Graph Contrastive Learning",
+      "authors": [
+        "Yanqiao Zhu",
+        "Yichen Xu",
+        "Qiang Liu",
+        "Shu Wu"
+      ],
+      "authorids": [
+        "~Yanqiao_Zhu1",
+        "~Yichen_Xu1",
+        "~Qiang_Liu8",
+        "~Shu_Wu1"
+      ],
+      "abstract": "Graph Contrastive Learning (GCL) establishes a new paradigm for learning graph representations without human annotations. Although remarkable progress has been witnessed recently, the success behind GCL is still left somewhat mysterious. In this work, we first identify several critical design considerations within a general GCL paradigm, including augmentation functions, contrasting modes, contrastive objectives, and negative mining strategies. Then, to understand the interplay of different GCL components, we conduct comprehensive, controlled experiments over benchmark tasks on datasets across various domains. Our empirical studies suggest a set of general receipts for effective GCL, e.g., simple topology augmentations that produce sparse graph views bring promising performance improvements; contrasting modes should be aligned with the granularities of end tasks. In addition, to foster future research and ease the implementation of GCL algorithms, we develop an easy-to-use library PyGCL, featuring modularized CL components, standardized evaluation, and experiment management. We envision this work to provide useful empirical evidence of effective GCL algorithms and offer several insights for future research.",
+      "keywords": [
+        "Graph contrastive learning",
+        "self-supervised learning",
+        "graph neural networks"
+      ],
+      "tl_dr": "An empirical analysis of graph contrastive learning and an open-source library",
+      "venue": "NeurIPS 2021 Datasets and Benchmarks Track (Round 2)",
+      "venueid": "NeurIPS.cc/2021/Track/Datasets_and_Benchmarks/Round2",
+      "presentation_type": null,
+      "paperhash": "zhu|an_empirical_study_of_graph_contrastive_learning",
+      "invitation": "NeurIPS.cc/2021/Track/Datasets_and_Benchmarks/Round2/-/Submission",
+      "forum": "UuUbIYnHKO",
+      "replyto": null,
+      "cdate": 1629526852148,
+      "tmdate": 1760257822299,
+      "openreview_url": "https://openreview.net/forum?id=UuUbIYnHKO",
+      "pdf_url": "https://openreview.net/pdf/d17f0c0ad9d01518e0d8ecf10cb89eeca4b9189b.pdf",
+      "external_url": "https://github.com/GraphCL/PyGCL",
+      "replies": [],
+      "source": "openreview"
+    }
+  ]
+}

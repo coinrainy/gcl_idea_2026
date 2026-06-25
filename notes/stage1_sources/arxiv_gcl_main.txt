@@ -1,0 +1,390 @@
+[
+  {
+    "id": "2505.15103",
+    "title": "Khan-GCL: Kolmogorov-Arnold Network Based Graph Contrastive Learning with Hard Negatives",
+    "authors": [
+      "Zihu Wang",
+      "Boxun Xu",
+      "Hejia Geng",
+      "Peng Li"
+    ],
+    "abstract": "Graph contrastive learning (GCL) has demonstrated great promise for learning generalizable graph representations from unlabeled data. However, conventional GCL approaches face two critical limitations: (1) the restricted expressive capacity of multilayer perceptron (MLP) based encoders, and (2) suboptimal negative samples that either from random augmentations-failing to provide effective 'hard negatives'-or generated hard negatives without addressing the semantic distinctions crucial for discriminating graph data. To this end, we propose Khan-GCL, a novel framework that integrates the Kolmogorov-Arnold Network (KAN) into the GCL encoder architecture, substantially enhancing its representational capacity. Furthermore, we exploit the rich information embedded within KAN coefficient parameters to develop two novel critical feature identification techniques that enable the generation of semantically meaningful hard negative samples for each graph representation. These strategically constructed hard negatives guide the encoder to learn more discriminative features by emphasizing critical semantic differences between graphs. Extensive experiments demonstrate that our approach achieves state-of-the-art performance compared to existing GCL methods across a variety of datasets and tasks.",
+    "published": "2025-05-21",
+    "updated": "2025-08-08",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2505.15103.pdf",
+    "abs_url": "https://arxiv.org/abs/2505.15103"
+  },
+  {
+    "id": "2410.12096",
+    "title": "Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning",
+    "authors": [
+      "Guangxin Su",
+      "Yifan Zhu",
+      "Wenjie Zhang",
+      "Hanchen Wang",
+      "Ying Zhang"
+    ],
+    "abstract": "Graph representation learning, involving both node features and graph structures, is crucial for real-world applications but often encounters pervasive noise. State-of-the-art methods typically address noise by focusing separately on node features with large language models (LLMs) and on graph structures with graph structure learning models (GSLMs). In this paper, we introduce LangGSL, a robust framework that integrates the complementary strengths of pre-trained language models and GSLMs to jointly enhance both node feature and graph structure learning. In LangGSL, we first leverage LLMs to filter noise in the raw data and extract valuable cleaned information as features, enhancing the synergy of downstream models. During the mutual learning phase in LangGSL, the core idea is to leverage the relatively small language model (LM) to process local attributes and generate reliable pseudo-labels and informative node embeddings, which are then integrated into the GSLM's prediction phase. This approach enriches the global context and enhances overall performance. Meanwhile, GSLM refines the evolving graph structure constructed from the LM's output, offering updated labels back to the LM as additional guidance, thus facilitating a more effective mutual learning process. The LM and GSLM work synergistically, complementing each other's strengths and offsetting weaknesses within a variational information-maximizing framework, resulting in enhanced node features and a more robust graph structure. Extensive experiments on diverse graph datasets of varying scales and across different task scenarios demonstrate the scalability and effectiveness of the proposed approach.",
+    "published": "2024-10-15",
+    "updated": "2024-10-15",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2410.12096.pdf",
+    "abs_url": "https://arxiv.org/abs/2410.12096"
+  },
+  {
+    "id": "1910.03081",
+    "title": "On the Interpretability and Evaluation of Graph Representation Learning",
+    "authors": [
+      "Antonia Gogoglou",
+      "C. Bayan Bruss",
+      "Keegan E. Hines"
+    ],
+    "abstract": "With the rising interest in graph representation learning, a variety of approaches have been proposed to effectively capture a graph's properties. While these approaches have improved performance in graph machine learning tasks compared to traditional graph techniques, they are still perceived as techniques with limited insight into the information encoded in these representations. In this work, we explore methods to interpret node embeddings and propose the creation of a robust evaluation framework for comparing graph representation learning algorithms and hyperparameters. We test our methods on graphs with different properties and investigate the relationship between embedding training parameters and the ability of the produced embedding to recover the structure of the original graph in a downstream task.",
+    "published": "2019-10-07",
+    "updated": "2019-10-07",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1910.03081.pdf",
+    "abs_url": "https://arxiv.org/abs/1910.03081"
+  },
+  {
+    "id": "2206.07869",
+    "title": "Let Invariant Rationale Discovery Inspire Graph Contrastive Learning",
+    "authors": [
+      "Sihang Li",
+      "Xiang Wang",
+      "An zhang",
+      "Yingxin Wu",
+      "Xiangnan He",
+      "Tat-Seng Chua"
+    ],
+    "abstract": "Leading graph contrastive learning (GCL) methods perform graph augmentations in two fashions: (1) randomly corrupting the anchor graph, which could cause the loss of semantic information, or (2) using domain knowledge to maintain salient features, which undermines the generalization to other domains. Taking an invariance look at GCL, we argue that a high-performing augmentation should preserve the salient semantics of anchor graphs regarding instance-discrimination. To this end, we relate GCL with invariant rationale discovery, and propose a new framework, Rationale-aware Graph Contrastive Learning (RGCL). Specifically, without supervision signals, RGCL uses a rationale generator to reveal salient features about graph instance-discrimination as the rationale, and then creates rationale-aware views for contrastive learning. This rationale-aware pre-training scheme endows the backbone model with the powerful representation ability, further facilitating the fine-tuning on downstream tasks. On MNIST-Superpixel and MUTAG datasets, visual inspections on the discovered rationales showcase that the rationale generator successfully captures the salient features (i.e. distinguishing semantic nodes in graphs). On biochemical molecule and social network benchmark datasets, the state-of-the-art performance of RGCL demonstrates the effectiveness of rationale-aware views for contrastive learning. Our codes are available at https://github.com/lsh0520/RGCL.",
+    "published": "2022-06-16",
+    "updated": "2022-06-16",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2206.07869.pdf",
+    "abs_url": "https://arxiv.org/abs/2206.07869"
+  },
+  {
+    "id": "2506.09781",
+    "title": "On the Similarities of Embeddings in Contrastive Learning",
+    "authors": [
+      "Chungpa Lee",
+      "Sehee Lim",
+      "Kibok Lee",
+      "Jy-yong Sohn"
+    ],
+    "abstract": "Contrastive learning operates on a simple yet effective principle: Embeddings of positive pairs are pulled together, while those of negative pairs are pushed apart. In this paper, we propose a unified framework for understanding contrastive learning through the lens of cosine similarity, and present two key theoretical insights derived from this framework. First, in full-batch settings, we show that perfect alignment of positive pairs is unattainable when negative-pair similarities fall below a threshold, and this misalignment can be mitigated by incorporating within-view negative pairs into the objective. Second, in mini-batch settings, smaller batch sizes induce stronger separation among negative pairs in the embedding space, i.e., higher variance in their similarities, which in turn degrades the quality of learned representations compared to full-batch settings. To address this, we propose an auxiliary loss that reduces the variance of negative-pair similarities in mini-batch settings. Empirical results show that incorporating the proposed loss improves performance in small-batch settings.",
+    "published": "2025-06-11",
+    "updated": "2025-07-15",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2506.09781.pdf",
+    "abs_url": "https://arxiv.org/abs/2506.09781"
+  },
+  {
+    "id": "2304.13195",
+    "title": "Connector 0.5: A unified framework for graph representation learning",
+    "authors": [
+      "Thanh Sang Nguyen",
+      "Jooho Lee",
+      "Van Thuy Hoang",
+      "O-Joun Lee"
+    ],
+    "abstract": "Graph representation learning models aim to represent the graph structure and its features into low-dimensional vectors in a latent space, which can benefit various downstream tasks, such as node classification and link prediction. Due to its powerful graph data modelling capabilities, various graph embedding models and libraries have been proposed to learn embeddings and help researchers ease conducting experiments. In this paper, we introduce a novel graph representation framework covering various graph embedding models, ranging from shallow to state-of-the-art models, namely Connector. First, we consider graph generation by constructing various types of graphs with different structural relations, including homogeneous, signed, heterogeneous, and knowledge graphs. Second, we introduce various graph representation learning models, ranging from shallow to deep graph embedding models. Finally, we plan to build an efficient open-source framework that can provide deep graph embedding models to represent structural relations in graphs. The framework is available at https://github.com/NSLab-CUK/Connector.",
+    "published": "2023-04-25",
+    "updated": "2023-04-25",
+    "categories": [
+      "cs.LG",
+      "cs.SI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2304.13195.pdf",
+    "abs_url": "https://arxiv.org/abs/2304.13195"
+  },
+  {
+    "id": "2006.06183",
+    "title": "G5: A Universal GRAPH-BERT for Graph-to-Graph Transfer and Apocalypse Learning",
+    "authors": [
+      "Jiawei Zhang"
+    ],
+    "abstract": "The recent GRAPH-BERT model introduces a new approach to learning graph representations merely based on the attention mechanism. GRAPH-BERT provides an opportunity for transferring pre-trained models and learned graph representations across different tasks within the same graph dataset. In this paper, we will further investigate the graph-to-graph transfer of a universal GRAPH-BERT for graph representation learning across different graph datasets, and our proposed model is also referred to as the G5 for simplicity. Many challenges exist in learning G5 to adapt the distinct input and output configurations for each graph data source, as well as the information distributions differences. G5 introduces a pluggable model architecture: (a) each data source will be pre-processed with a unique input representation learning component; (b) each output application task will also have a specific functional component; and (c) all such diverse input and output components will all be conjuncted with a universal GRAPH-BERT core component via an input size unification layer and an output representation fusion layer, respectively.   The G5 model removes the last obstacle for cross-graph representation learning and transfer. For the graph sources with very sparse training data, the G5 model pre-trained on other graphs can still be utilized for representation learning with necessary fine-tuning. What's more, the architecture of G5 also allows us to learn a supervised functional classifier for data sources without any training data at all. Such a problem is also named as the Apocalypse Learning task in this paper. Two different label reasoning strategies, i.e., Cross-Source Classification Consistency Maximization (CCCM) and Cross-Source Dynamic Routing (CDR), are introduced in this paper to address the problem.",
+    "published": "2020-06-11",
+    "updated": "2020-06-11",
+    "categories": [
+      "cs.LG",
+      "cs.NE",
+      "cs.SI",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2006.06183.pdf",
+    "abs_url": "https://arxiv.org/abs/2006.06183"
+  },
+  {
+    "id": "2209.02544",
+    "title": "XSimGCL: Towards Extremely Simple Graph Contrastive Learning for Recommendation",
+    "authors": [
+      "Junliang Yu",
+      "Xin Xia",
+      "Tong Chen",
+      "Lizhen Cui",
+      "Nguyen Quoc Viet Hung",
+      "Hongzhi Yin"
+    ],
+    "abstract": "Contrastive learning (CL) has recently been demonstrated critical in improving recommendation performance. The underlying principle of CL-based recommendation models is to ensure the consistency between representations derived from different graph augmentations of the user-item bipartite graph. This self-supervised approach allows for the extraction of general features from raw data, thereby mitigating the issue of data sparsity. Despite the effectiveness of this paradigm, the factors contributing to its performance gains have yet to be fully understood. This paper provides novel insights into the impact of CL on recommendation. Our findings indicate that CL enables the model to learn more evenly distributed user and item representations, which alleviates the prevalent popularity bias and promoting long-tail items. Our analysis also suggests that the graph augmentations, previously considered essential, are relatively unreliable and of limited significance in CL-based recommendation. Based on these findings, we put forward an eXtremely Simple Graph Contrastive Learning method (XSimGCL) for recommendation, which discards the ineffective graph augmentations and instead employs a simple yet effective noise-based embedding augmentation to generate views for CL. A comprehensive experimental study on four large and highly sparse benchmark datasets demonstrates that, though the proposed method is extremely simple, it can smoothly adjust the uniformity of learned representations and outperforms its graph augmentation-based counterparts by a large margin in both recommendation accuracy and training efficiency. The code and used datasets are released at https://github.com/Coder-Yu/SELFRec.",
+    "published": "2022-09-06",
+    "updated": "2023-06-19",
+    "categories": [
+      "cs.IR"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2209.02544.pdf",
+    "abs_url": "https://arxiv.org/abs/2209.02544"
+  },
+  {
+    "id": "1910.08249",
+    "title": "Relational Graph Representation Learning for Open-Domain Question Answering",
+    "authors": [
+      "Salvatore Vivona",
+      "Kaveh Hassani"
+    ],
+    "abstract": "We introduce a relational graph neural network with bi-directional attention mechanism and hierarchical representation learning for open-domain question answering task. Our model can learn contextual representation by jointly learning and updating the query, knowledge graph, and document representations. The experiments suggest that our model achieves state-of-the-art on the WebQuestionsSP benchmark.",
+    "published": "2019-10-18",
+    "updated": "2019-10-18",
+    "categories": [
+      "cs.CL",
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1910.08249.pdf",
+    "abs_url": "https://arxiv.org/abs/1910.08249"
+  },
+  {
+    "id": "1905.12665",
+    "title": "Graph Learning Network: A Structure Learning Algorithm",
+    "authors": [
+      "Darwin Saire Pilco",
+      "Adín Ramírez Rivera"
+    ],
+    "abstract": "Recently, graph neural networks (GNNs) have proved to be suitable in tasks on unstructured data. Particularly in tasks as community detection, node classification, and link prediction. However, most GNN models still operate with static relationships. We propose the Graph Learning Network (GLN), a simple yet effective process to learn node embeddings and structure prediction functions. Our model uses graph convolutions to propose expected node features, and predict the best structure based on them. We repeat these steps recursively to enhance the prediction and the embeddings.",
+    "published": "2019-05-29",
+    "updated": "2019-06-05",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1905.12665.pdf",
+    "abs_url": "https://arxiv.org/abs/1905.12665"
+  },
+  {
+    "id": "2203.09020",
+    "title": "Graph Augmentation Learning",
+    "authors": [
+      "Shuo Yu",
+      "Huafei Huang",
+      "Minh N. Dao",
+      "Feng Xia"
+    ],
+    "abstract": "Graph Augmentation Learning (GAL) provides outstanding solutions for graph learning in handling incomplete data, noise data, etc. Numerous GAL methods have been proposed for graph-based applications such as social network analysis and traffic flow forecasting. However, the underlying reasons for the effectiveness of these GAL methods are still unclear. As a consequence, how to choose optimal graph augmentation strategy for a certain application scenario is still in black box. There is a lack of systematic, comprehensive, and experimentally validated guideline of GAL for scholars. Therefore, in this survey, we in-depth review GAL techniques from macro (graph), meso (subgraph), and micro (node/edge) levels. We further detailedly illustrate how GAL enhance the data quality and the model performance. The aggregation mechanism of augmentation strategies and graph learning models are also discussed by different application scenarios, i.e., data-specific, model-specific, and hybrid scenarios. To better show the outperformance of GAL, we experimentally validate the effectiveness and adaptability of different GAL strategies in different downstream tasks. Finally, we share our insights on several open issues of GAL, including heterogeneity, spatio-temporal dynamics, scalability, and generalization.",
+    "published": "2022-03-17",
+    "updated": "2022-03-17",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2203.09020.pdf",
+    "abs_url": "https://arxiv.org/abs/2203.09020"
+  },
+  {
+    "id": "2211.06292",
+    "title": "A New Graph Node Classification Benchmark: Learning Structure from Histology Cell Graphs",
+    "authors": [
+      "Claudia Vanea",
+      "Jonathan Campbell",
+      "Omri Dodi",
+      "Liis Salumäe",
+      "Karen Meir",
+      "Drorith Hochner-Celnikier",
+      "Hagit Hochner",
+      "Triin Laisk",
+      "Linda M. Ernst",
+      "Cecilia M. Lindgren",
+      "Christoffer Nellåker"
+    ],
+    "abstract": "We introduce a new benchmark dataset, Placenta, for node classification in an underexplored domain: predicting microanatomical tissue structures from cell graphs in placenta histology whole slide images. This problem is uniquely challenging for graph learning for a few reasons. Cell graphs are large (>1 million nodes per image), node features are varied (64-dimensions of 11 types of cells), class labels are imbalanced (9 classes ranging from 0.21% of the data to 40.0%), and cellular communities cluster into heterogeneously distributed tissues of widely varying sizes (from 11 nodes to 44,671 nodes for a single structure). Here, we release a dataset consisting of two cell graphs from two placenta histology images totalling 2,395,747 nodes, 799,745 of which have ground truth labels. We present inductive benchmark results for 7 scalable models and show how the unique qualities of cell graphs can help drive the development of novel graph neural network architectures.",
+    "published": "2022-11-11",
+    "updated": "2022-11-11",
+    "categories": [
+      "cs.LG",
+      "cs.CV",
+      "eess.IV"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2211.06292.pdf",
+    "abs_url": "https://arxiv.org/abs/2211.06292"
+  },
+  {
+    "id": "2311.17853",
+    "title": "On the Adversarial Robustness of Graph Contrastive Learning Methods",
+    "authors": [
+      "Filippo Guerranti",
+      "Zinuo Yi",
+      "Anna Starovoit",
+      "Rafiq Kamel",
+      "Simon Geisler",
+      "Stephan Günnemann"
+    ],
+    "abstract": "Contrastive learning (CL) has emerged as a powerful framework for learning representations of images and text in a self-supervised manner while enhancing model robustness against adversarial attacks. More recently, researchers have extended the principles of contrastive learning to graph-structured data, giving birth to the field of graph contrastive learning (GCL). However, whether GCL methods can deliver the same advantages in adversarial robustness as their counterparts in the image and text domains remains an open question. In this paper, we introduce a comprehensive robustness evaluation protocol tailored to assess the robustness of GCL models. We subject these models to adaptive adversarial attacks targeting the graph structure, specifically in the evasion scenario. We evaluate node and graph classification tasks using diverse real-world datasets and attack strategies. With our work, we aim to offer insights into the robustness of GCL methods and hope to open avenues for potential future research directions.",
+    "published": "2023-11-29",
+    "updated": "2023-11-30",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2311.17853.pdf",
+    "abs_url": "https://arxiv.org/abs/2311.17853"
+  },
+  {
+    "id": "2006.12179",
+    "title": "Hierarchical Inter-Message Passing for Learning on Molecular Graphs",
+    "authors": [
+      "Matthias Fey",
+      "Jan-Gin Yuen",
+      "Frank Weichert"
+    ],
+    "abstract": "We present a hierarchical neural message passing architecture for learning on molecular graphs. Our model takes in two complementary graph representations: the raw molecular graph representation and its associated junction tree, where nodes represent meaningful clusters in the original graph, e.g., rings or bridged compounds. We then proceed to learn a molecule's representation by passing messages inside each graph, and exchange messages between the two representations using a coarse-to-fine and fine-to-coarse information flow. Our method is able to overcome some of the restrictions known from classical GNNs, like detecting cycles, while still being very efficient to train. We validate its performance on the ZINC dataset and datasets stemming from the MoleculeNet benchmark collection.",
+    "published": "2020-06-22",
+    "updated": "2020-06-22",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2006.12179.pdf",
+    "abs_url": "https://arxiv.org/abs/2006.12179"
+  },
+  {
+    "id": "2007.08663",
+    "title": "TUDataset: A collection of benchmark datasets for learning with graphs",
+    "authors": [
+      "Christopher Morris",
+      "Nils M. Kriege",
+      "Franka Bause",
+      "Kristian Kersting",
+      "Petra Mutzel",
+      "Marion Neumann"
+    ],
+    "abstract": "Recently, there has been an increasing interest in (supervised) learning with graph data, especially using graph neural networks. However, the development of meaningful benchmark datasets and standardized evaluation procedures is lagging, consequently hindering advancements in this area. To address this, we introduce the TUDataset for graph classification and regression. The collection consists of over 120 datasets of varying sizes from a wide range of applications. We provide Python-based data loaders, kernel and graph neural network baseline implementations, and evaluation tools. Here, we give an overview of the datasets, standardized evaluation procedures, and provide baseline experiments. All datasets are available at www.graphlearning.io. The experiments are fully reproducible from the code available at www.github.com/chrsmrrs/tudataset.",
+    "published": "2020-07-16",
+    "updated": "2020-07-16",
+    "categories": [
+      "cs.LG",
+      "cs.NE",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2007.08663.pdf",
+    "abs_url": "https://arxiv.org/abs/2007.08663"
+  },
+  {
+    "id": "2203.07969",
+    "title": "PDNS-Net: A Large Heterogeneous Graph Benchmark Dataset of Network Resolutions for Graph Learning",
+    "authors": [
+      "Udesh Kumarasinghe",
+      "Fatih Deniz",
+      "Mohamed Nabeel"
+    ],
+    "abstract": "In order to advance the state of the art in graph learning algorithms, it is necessary to construct large real-world datasets. While there are many benchmark datasets for homogeneous graphs, only a few of them are available for heterogeneous graphs. Furthermore, the latter graphs are small in size rendering them insufficient to understand how graph learning algorithms perform in terms of classification metrics and computational resource utilization. We introduce, PDNS-Net, the largest public heterogeneous graph dataset containing 447K nodes and 897K edges for the malicious domain classification task. Compared to the popular heterogeneous datasets IMDB and DBLP, PDNS-Net is 38 and 17 times bigger respectively. We provide a detailed analysis of PDNS-Net including the data collection methodology, heterogeneous graph construction, descriptive statistics and preliminary graph classification performance. The dataset is publicly available at https://github.com/qcri/PDNS-Net. Our preliminary evaluation of both popular homogeneous and heterogeneous graph neural networks on PDNS-Net reveals that further research is required to improve the performance of these models on large heterogeneous graphs.",
+    "published": "2022-03-15",
+    "updated": "2022-03-15",
+    "categories": [
+      "cs.LG",
+      "cs.CR"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2203.07969.pdf",
+    "abs_url": "https://arxiv.org/abs/2203.07969"
+  },
+  {
+    "id": "2107.01994",
+    "title": "Template-Based Graph Clustering",
+    "authors": [
+      "Mateus Riva",
+      "Florian Yger",
+      "Pietro Gori",
+      "Roberto M. Cesar",
+      "Isabelle Bloch"
+    ],
+    "abstract": "We propose a novel graph clustering method guided by additional information on the underlying structure of the clusters (or communities). The problem is formulated as the matching of a graph to a template with smaller dimension, hence matching $n$ vertices of the observed graph (to be clustered) to the $k$ vertices of a template graph, using its edges as support information, and relaxed on the set of orthonormal matrices in order to find a $k$ dimensional embedding. With relevant priors that encode the density of the clusters and their relationships, our method outperforms classical methods, especially for challenging cases.",
+    "published": "2021-07-05",
+    "updated": "2021-07-05",
+    "categories": [
+      "stat.ML",
+      "cs.LG",
+      "cs.SI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2107.01994.pdf",
+    "abs_url": "https://arxiv.org/abs/2107.01994"
+  },
+  {
+    "id": "2311.15289",
+    "title": "Counting cliques without generalized theta graphs",
+    "authors": [
+      "Jun Gao",
+      "Zhuo Wu",
+      "Yisai Xue"
+    ],
+    "abstract": "The \\textit{generalized Turán number} $\\mathrm{ex}(n, T, F)$ is the maximum possible number of copies of $T$ in an $F$-free graph on $n$ vertices for any two graphs $T$ and $F$. For the book graph $B_t$, there is a close connection between $\\ex(n,K_3,B_t)$ and the Ruzsa-Szemerédi triangle removal lemma. Motivated by this, in this paper, we study the generalized Turán problem for generalized theta graphs, a natural extension of book graphs. Our main result provides a complete characterization of the magnitude of $\\ex(n,K_3,H)$ when $H$ is a generalized theta graph, indicating when it is quadratic, when it is nearly quadratic, and when it is subquadratic. Furthermore, as an application, we obtain the exact value of $\\ex(n, K_r, kF)$, where $F$ is an edge-critical generalized theta graph, and $3\\le r\\le k+1$, extending several recent results.",
+    "published": "2023-11-26",
+    "updated": "2026-02-24",
+    "categories": [
+      "math.CO"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2311.15289.pdf",
+    "abs_url": "https://arxiv.org/abs/2311.15289"
+  },
+  {
+    "id": "1910.02574",
+    "title": "Representation Learning of EHR Data via Graph-Based Medical Entity Embedding",
+    "authors": [
+      "Tong Wu",
+      "Yunlong Wang",
+      "Yue Wang",
+      "Emily Zhao",
+      "Yilian Yuan",
+      "Zhi Yang"
+    ],
+    "abstract": "Automatic representation learning of key entities in electronic health record (EHR) data is a critical step for healthcare informatics that turns heterogeneous medical records into structured and actionable information. Here we propose ME2Vec, an algorithmic framework for learning low-dimensional vectors of the most common entities in EHR: medical services, doctors, and patients. ME2Vec leverages diverse graph embedding techniques to cater for the unique characteristic of each medical entity. Using real-world clinical data, we demonstrate the efficacy of ME2Vec over competitive baselines on disease diagnosis prediction.",
+    "published": "2019-10-07",
+    "updated": "2019-10-07",
+    "categories": [
+      "cs.LG",
+      "cs.IR",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1910.02574.pdf",
+    "abs_url": "https://arxiv.org/abs/1910.02574"
+  },
+  {
+    "id": "2506.20362",
+    "title": "Self-Supervised Graph Learning via Spectral Bootstrapping and Laplacian-Based Augmentations",
+    "authors": [
+      "Lorenzo Bini",
+      "Stephane Marchand-Maillet"
+    ],
+    "abstract": "We present LaplaceGNN, a novel self-supervised graph learning framework that bypasses the need for negative sampling by leveraging spectral bootstrapping techniques. Our method integrates Laplacian-based signals into the learning process, allowing the model to effectively capture rich structural representations without relying on contrastive objectives or handcrafted augmentations. By focusing on positive alignment, LaplaceGNN achieves linear scaling while offering a simpler, more efficient, self-supervised alternative for graph neural networks, applicable across diverse domains. Our contributions are twofold: we precompute spectral augmentations through max-min centrality-guided optimization, enabling rich structural supervision without relying on handcrafted augmentations, then we integrate an adversarial bootstrapped training scheme that further strengthens feature learning and robustness. Our extensive experiments on different benchmark datasets show that LaplaceGNN achieves superior performance compared to state-of-the-art self-supervised graph methods, offering a promising direction for efficiently learning expressive graph representations.",
+    "published": "2025-06-25",
+    "updated": "2025-06-25",
+    "categories": [
+      "cs.LG",
+      "cs.AI",
+      "cs.DS"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2506.20362.pdf",
+    "abs_url": "https://arxiv.org/abs/2506.20362"
+  }
+]

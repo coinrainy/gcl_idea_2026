@@ -1,0 +1,404 @@
+{
+  "mode": "search",
+  "query": "masked graph modeling node classification",
+  "group": "all",
+  "content": "all",
+  "source_filter": "papers",
+  "returned": 10,
+  "offset": 0,
+  "data": [
+    {
+      "id": "YCgwkDo56q",
+      "number": 185,
+      "title": "Global-Local Graph Neural Networks for Node-Classification",
+      "authors": [
+        "Moshe Eliasof",
+        "Eran Treister"
+      ],
+      "authorids": [
+        "~Moshe_Eliasof1",
+        "~Eran_Treister1"
+      ],
+      "abstract": "The task of graph node-classification is often approached using a \\emph{local} Graph Neural Network (GNN), that learns only local information from the node input features and their adjacency. In this paper we propose to benefit from global and local information through the form of learning \\emph{label}- and \\emph{node}- features to improve node-classification accuracy. We therefore call our method Global-Local-GNN (GLGNN). To learn proper label features, for each label, we maximize the similarity between its features and nodes features that belong to the label, while maximizing the distance between nodes that do not belong to the considered label. We then use the learnt label features to predict the node-classification map. We demonstrate our GLGNN using GCN and GAT as GNN backbones, and show that our GLGNN approach improves baseline performance on the node-classification task.",
+      "keywords": [
+        "Graph Neural Networks",
+        "Deep Learning",
+        "Node classification"
+      ],
+      "tl_dr": "We propose a method to improve graph node-classification using global (label) information.",
+      "venue": "LoG 2022 Poster",
+      "venueid": "logconference.io/LOG/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "eliasof|globallocal_graph_neural_networks_for_nodeclassification",
+      "invitation": "logconference.io/LOG/2022/Conference/-/Blind_Submission",
+      "forum": "YCgwkDo56q",
+      "replyto": null,
+      "cdate": 1662812639850,
+      "tmdate": 1683308457612,
+      "openreview_url": "https://openreview.net/forum?id=YCgwkDo56q",
+      "pdf_url": "https://openreview.net/pdf/866593caaf54ba0206624a3c58ba3ac8b6c5b967.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "H1e552VKPr",
+      "number": 124,
+      "title": "Subgraph Attention for Node Classification and Hierarchical Graph Pooling",
+      "authors": [
+        "Sambaran Bandyopadhyay",
+        "Manasvi Aggarwal",
+        "M. N. Murty"
+      ],
+      "authorids": [
+        "sambaran.ban89@gmail.com",
+        "manasvia@iisc.ac.in",
+        "mnm@iisc.ac.in"
+      ],
+      "abstract": "Graph neural networks have gained significant interest from the research community for both node classification within a graph and graph classification within a set of graphs. Attention mechanism applied on the neighborhood of a node improves the performance of graph neural networks. Typically, it helps to identify a neighbor node which plays more important role to determine the label of the node under consideration. But in real world scenarios, a particular subset of nodes together, but not the individual nodes in the subset, may be important to determine the label of a node. To address this problem, we introduce the concept of subgraph attention for graphs. To show the efficiency of this, we use subgraph attention with graph convolution for node classification. We further use subgraph attention for the entire graph classification by proposing a novel hierarchical neural graph pooling architecture. Along with attention over the subgraphs, our pooling architecture also uses attention to determine the important nodes within a level graph and attention to determine the important levels in the whole hierarchy. Competitive performance over the state-of-the-arts for both node and graph classification shows the efficiency of the algorithms proposed in this paper.",
+      "keywords": [
+        "Graph Neural Network",
+        "Graph Attention",
+        "Graph Pooling",
+        "Node Classification",
+        "Graph Classification",
+        "Network Representation Learning"
+      ],
+      "tl_dr": "We propose a novel subgraph attention mechanism which can be readily used for node classification and we further propose a hierarchical graph classification technique using it.",
+      "venue": null,
+      "venueid": null,
+      "presentation_type": null,
+      "paperhash": "bandyopadhyay|subgraph_attention_for_node_classification_and_hierarchical_graph_pooling",
+      "invitation": "ICLR.cc/2020/Conference/-/Blind_Submission",
+      "forum": "H1e552VKPr",
+      "replyto": null,
+      "cdate": 1569438865637,
+      "tmdate": 1683306413518,
+      "openreview_url": "https://openreview.net/forum?id=H1e552VKPr",
+      "pdf_url": "https://openreview.net/pdf/b49a5a6125bacf96fba7f9c290053b71609c95e1.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "sVJd511RvaW",
+      "number": 680741,
+      "title": "MaskGAE: Masked Graph Modeling Meets Graph Autoencoders",
+      "authors": [
+        "Jintang Li",
+        "Ruofan Wu",
+        "Wangbin Sun",
+        "Liang Chen",
+        "Sheng Tian",
+        "Liang Zhu",
+        "Changhua Meng",
+        "Zibin Zheng",
+        "Weiqiang Wang"
+      ],
+      "authorids": [
+        "~Jintang_Li1",
+        "~Ruofan_Wu1",
+        "https://dblp.org/search/pid/api?q=author:Wangbin_Sun:",
+        "~Liang_Chen7",
+        "https://dblp.org/search/pid/api?q=author:Sheng_Tian:",
+        "https://dblp.org/search/pid/api?q=author:Liang_Zhu:",
+        "~Changhua_Meng1",
+        "https://dblp.org/search/pid/api?q=author:Zibin_Zheng:",
+        "~Weiqiang_Wang4"
+      ],
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "CoRR 2022",
+      "venueid": "dblp.org/journals/CORR/2022",
+      "presentation_type": null,
+      "paperhash": "li|maskgae_masked_graph_modeling_meets_graph_autoencoders",
+      "invitation": "dblp.org/-/record",
+      "forum": "sVJd511RvaW",
+      "replyto": null,
+      "cdate": 1640995200000,
+      "tmdate": 1707120081592,
+      "openreview_url": "https://openreview.net/forum?id=sVJd511RvaW",
+      "pdf_url": "http://arxiv.org/pdf/2205.10053v2",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "Wz_founSq2U",
+      "number": 898386,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "authors": [
+        "Jintang Li",
+        "Ruofan Wu",
+        "Wangbin Sun",
+        "Liang Chen",
+        "Sheng Tian",
+        "Liang Zhu",
+        "Changhua Meng",
+        "Zibin Zheng",
+        "Weiqiang Wang"
+      ],
+      "authorids": [
+        "~Jintang_Li1",
+        "https://dblp.org/search/pid/api?q=author:Ruofan_Wu:",
+        "https://dblp.org/search/pid/api?q=author:Wangbin_Sun:",
+        "~Liang_Chen17",
+        "https://dblp.org/search/pid/api?q=author:Sheng_Tian:",
+        "https://dblp.org/search/pid/api?q=author:Liang_Zhu:",
+        "https://dblp.org/search/pid/api?q=author:Changhua_Meng:",
+        "https://dblp.org/search/pid/api?q=author:Zibin_Zheng:",
+        "https://dblp.org/search/pid/api?q=author:Weiqiang_Wang:"
+      ],
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "KDD 2023",
+      "venueid": "dblp.org/conf/KDD/2023",
+      "presentation_type": null,
+      "paperhash": "li|whats_behind_the_mask_understanding_masked_graph_modeling_for_graph_autoencoders",
+      "invitation": "dblp.org/-/record",
+      "forum": "Wz_founSq2U",
+      "replyto": null,
+      "cdate": 1672531200000,
+      "tmdate": 1707120081813,
+      "openreview_url": "https://openreview.net/forum?id=Wz_founSq2U",
+      "pdf_url": null,
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "YgK1wNnoCWy",
+      "number": 3078,
+      "title": "Green Hierarchical Vision Transformer for Masked Image Modeling",
+      "authors": [
+        "Lang Huang",
+        "Shan You",
+        "Mingkai Zheng",
+        "Fei Wang",
+        "Chen Qian",
+        "Toshihiko Yamasaki"
+      ],
+      "authorids": [
+        "~Lang_Huang1",
+        "~Shan_You3",
+        "~Mingkai_Zheng1",
+        "~Fei_Wang9",
+        "~Chen_Qian1",
+        "~Toshihiko_Yamasaki1"
+      ],
+      "abstract": "We present an efficient approach for Masked Image Modeling (MIM) with hierarchical Vision Transformers (ViTs), allowing the hierarchical ViTs to discard masked patches and operate only on the visible ones. Our approach consists of three key designs. First, for window attention, we propose a Group Window Attention scheme following the Divide-and-Conquer strategy. To mitigate the quadratic complexity of the self-attention w.r.t. the number of patches, group attention encourages a uniform partition that visible patches within each local window of arbitrary size can be grouped with equal size, where masked self-attention is then performed within each group. Second, we further improve the grouping strategy via the Dynamic Programming algorithm to minimize the overall computation cost of the attention on the grouped patches. Third, as for the convolution layers, we convert them to the Sparse Convolution that works seamlessly with the sparse data, i.e., the visible patches in MIM. As a result, MIM can now work on most, if not all, hierarchical ViTs in a green and efficient way. For example, we can train the hierarchical ViTs, e.g., Swin Transformer and Twins Transformer, about 2.7$\\times$ faster and reduce the GPU memory usage by 70%, while still enjoying competitive performance on ImageNet classification and the superiority on downstream COCO object detection benchmarks.",
+      "keywords": [
+        "Self-Supervised Learning",
+        "Masked Image Modeling",
+        "Vision Transformers"
+      ],
+      "tl_dr": "An efficient approach for Masked Image Modeling with hierarchical Vision Transformers.",
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "huang|green_hierarchical_vision_transformer_for_masked_image_modeling",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "YgK1wNnoCWy",
+      "replyto": null,
+      "cdate": 1652737399091,
+      "tmdate": 1770510462684,
+      "openreview_url": "https://openreview.net/forum?id=YgK1wNnoCWy",
+      "pdf_url": "https://openreview.net/pdf/8a469610a08f87aeb560c0f3ecd133d8df23e2ed.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "Zg8y2-v8ia",
+      "number": 101,
+      "title": "Distribution Free Prediction Sets for Node Classification",
+      "authors": [
+        "Jase Clarkson"
+      ],
+      "authorids": [
+        "~Jase_Clarkson1"
+      ],
+      "abstract": "Graph Neural Networks (GNNs) are able to achieve high classification accuracy on many large real world datasets, but provide no rigorous notion of predictive uncertainty. We leverage recent advances in conformal prediction to construct prediction sets for node classification in inductive learning scenarios, and verify the efficacy of our approach across standard benchmark datasets using popular GNN models. The code is available at \\href{https://github.com/jase-clarkson/graph_cp}{this link}.",
+      "keywords": [
+        "Node Classification",
+        "Uncertainty Quantification",
+        "Conformal Prediction"
+      ],
+      "tl_dr": "We extend conformal prediction to graph structured data to construct valid prediction sets for inductive node classification tasks.",
+      "venue": "LoG 2022 Poster",
+      "venueid": "logconference.io/LOG/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "clarkson|distribution_free_prediction_sets_for_node_classification",
+      "invitation": "logconference.io/LOG/2022/Conference/-/Blind_Submission",
+      "forum": "Zg8y2-v8ia",
+      "replyto": null,
+      "cdate": 1662812630769,
+      "tmdate": 1770510581162,
+      "openreview_url": "https://openreview.net/forum?id=Zg8y2-v8ia",
+      "pdf_url": "https://openreview.net/pdf/978ce0bd000da6f5b4273b40bf277332e4013b06.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "sMezXGG5So",
+      "number": 5539,
+      "title": "NodeFormer: A Scalable Graph Structure Learning Transformer for Node Classification",
+      "authors": [
+        "Qitian Wu",
+        "Wentao Zhao",
+        "Zenan Li",
+        "David Wipf",
+        "Junchi Yan"
+      ],
+      "authorids": [
+        "~Qitian_Wu1",
+        "~Wentao_Zhao1",
+        "~Zenan_Li4",
+        "~David_Wipf1",
+        "~Junchi_Yan2"
+      ],
+      "abstract": "Graph neural networks have been extensively studied for learning with inter-connected data. Despite this, recent evidence has revealed GNNs' deficiencies related to over-squashing, heterophily, handling long-range dependencies, edge incompleteness and particularly, the absence of graphs altogether. While a plausible solution is to learn new adaptive topology for message passing, issues concerning quadratic complexity hinder simultaneous guarantees for scalability and precision in large networks. In this paper, we introduce a novel all-pair message passing scheme for efficiently propagating node signals between arbitrary nodes, as an important building block for a new class of Transformer networks for node classification on large graphs, dubbed as NodeFormer. Specifically, the efficient computation is enabled by a kernerlized Gumbel-Softmax operator that reduces the algorithmic complexity to linearity w.r.t. node numbers for learning latent graph structures from large, potentially fully-connected graphs in a differentiable manner. We also provide accompanying theory as justification for our design. Extensive experiments demonstrate the promising efficacy of the method in various tasks including node classification on graphs (with up to 2M nodes) and graph-enhanced applications (e.g., image classification) where input graphs are missing. The codes are available at https://github.com/qitianwu/NodeFormer.",
+      "keywords": [
+        "Graph Neural Networks",
+        "Graph Transformers",
+        "Large Graphs",
+        "Node Classification",
+        "Scalability",
+        "Graph Structure Learning"
+      ],
+      "tl_dr": "A scalable graph Transformer for large-scale graphs, which achieves all-pair message passing with linear complexity w.r.t. node numbers",
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "wu|nodeformer_a_scalable_graph_structure_learning_transformer_for_node_classification",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "sMezXGG5So",
+      "replyto": null,
+      "cdate": 1652737514659,
+      "tmdate": 1770510418663,
+      "openreview_url": "https://openreview.net/forum?id=sMezXGG5So",
+      "pdf_url": "https://openreview.net/pdf/3fe5665614ee7ec5eafb534a68843cea07fac88e.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "w-x7U26GM7j",
+      "number": 1629,
+      "title": "Advancing Radiograph Representation Learning with Masked Record Modeling",
+      "authors": [
+        "Hong-Yu Zhou",
+        "Chenyu Lian",
+        "Liansheng Wang",
+        "Yizhou Yu"
+      ],
+      "authorids": [
+        "~Hong-Yu_Zhou2",
+        "~Chenyu_Lian1",
+        "~Liansheng_Wang1",
+        "~Yizhou_Yu1"
+      ],
+      "abstract": "Modern studies in radiograph representation learning (R$^2$L) rely on either self-supervision to encode invariant semantics or associated radiology reports to incorporate medical expertise, while the complementarity between them is barely noticed. To explore this, we formulate the self- and report-completion as two complementary objectives and present a unified framework based on masked record modeling (MRM). In practice, MRM reconstructs masked image patches and masked report tokens following a multi-task scheme to learn knowledge-enhanced semantic representations. With MRM pre-training, we obtain pre-trained models that can be well transferred to various radiography tasks. Specifically, we find that MRM offers superior performance in label-efficient fine-tuning. For instance, MRM achieves 88.5% mean AUC on CheXpert using 1% labeled data, outperforming previous R$^2$L methods with 100% labels. On NIH ChestX-ray, MRM outperforms the best performing counterpart by about 3% under small labeling ratios. Besides, MRM surpasses self- and report-supervised pre-training in identifying the pneumonia type and the pneumothorax area, sometimes by large margins.",
+      "keywords": [
+        "Representation Learning",
+        "Radiograph",
+        "Self-supervised Learning",
+        "Medical Imaging"
+      ],
+      "tl_dr": "We propose to learn radiograph representations via masked record modeling.",
+      "venue": "ICLR 2023 poster",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "zhou|advancing_radiograph_representation_learning_with_masked_record_modeling",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "w-x7U26GM7j",
+      "replyto": null,
+      "cdate": 1663849983830,
+      "tmdate": 1768387650544,
+      "openreview_url": "https://openreview.net/forum?id=w-x7U26GM7j",
+      "pdf_url": "https://openreview.net/pdf/fc3034053cc948a50f2822650fee36b83e7cb54b.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "pKRYZpCDr-p",
+      "number": 3411,
+      "title": "Node Importance Specific Meta Learning in Graph Neural Networks",
+      "authors": [
+        "Hao Liu",
+        "Yixin Chen",
+        "Dacheng Tao",
+        "Muhan Zhang"
+      ],
+      "authorids": [
+        "~Hao_Liu25",
+        "~Yixin_Chen1",
+        "~Dacheng_Tao1",
+        "~Muhan_Zhang1"
+      ],
+      "abstract": "While current node classification methods for graphs have enabled significant progress in many applications, they rely on abundant labeled nodes for training. In many real-world datasets, nodes for some classes are always scarce, thus current algorithms are ill-equipped to handle these few-shot node classes. Some meta learning approaches for graphs have demonstrated advantages in tackling such few-shot problems, but they disregard the impact of node importance on a task. Being exclusive to graph data, the dependencies between nodes convey vital information for determining the importance of nodes in contrast to node features only, which poses unique challenges here. In this paper, we investigate the effect of node importance in node classification meta learning tasks. We first theoretically analyze the influence of distinguishing node importance on the lower bound of the model accuracy. Then, based on the theoretical conclusion, we propose a novel Node Importance Meta Learning architecture (NIML) that learns and applies the importance score of each node for meta learning. Specifically, after constructing an attention vector based on the interaction between a node and its neighbors, we train an importance predictor in a supervised manner to capture the distance between node embedding and the expectation of same-class embedding. Extensive experiments on public datasets demonstrate the state-of-the-art performance of NIML on few-shot node classification problems.",
+      "keywords": [
+        "Meta Learning",
+        "Graph Neural Network",
+        "Node Importance"
+      ],
+      "tl_dr": "This paper focuses on the few-shot node classification problem in graph; theoretically studies the influence of node importance on the model accuracy and proposes a node importance calculation method to implement on meta learning GNNs.",
+      "venue": "Submitted to ICLR 2023",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "liu|node_importance_specific_meta_learning_in_graph_neural_networks",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "pKRYZpCDr-p",
+      "replyto": null,
+      "cdate": 1663850199114,
+      "tmdate": 1676330876818,
+      "openreview_url": "https://openreview.net/forum?id=pKRYZpCDr-p",
+      "pdf_url": "https://openreview.net/pdf/48f43a21cbed6c9a1c8311ecd674ee1b26bbfd8c.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "N7-EIciq3R",
+      "number": 4453,
+      "title": "High-Order Pooling for Graph Neural Networks with Tensor Decomposition",
+      "authors": [
+        "Chenqing Hua",
+        "Guillaume Rabusseau",
+        "Jian Tang"
+      ],
+      "authorids": [
+        "~Chenqing_Hua1",
+        "~Guillaume_Rabusseau1",
+        "~Jian_Tang1"
+      ],
+      "abstract": "Graph Neural Networks (GNNs) are attracting growing attention due to their effectiveness and flexibility in modeling a variety of graph-structured data. Exiting GNN architectures usually adopt simple pooling operations~(\\eg{} sum, average, max) when aggregating messages from a local neighborhood for updating node representation or pooling node representations from the entire graph to compute the graph representation. Though simple and effective, these linear operations do not model high-order non-linear interactions among nodes. We propose the Tensorized Graph Neural Network (tGNN), a highly expressive GNN architecture relying on tensor decomposition to model high-order non-linear node interactions. tGNN leverages the symmetric CP decomposition to efficiently parameterize permutation-invariant multilinear maps for modeling node interactions. Theoretical and empirical analysis on both node and graph classification tasks show the superiority of tGNN over competitive baselines. In particular, tGNN achieves the most solid results on two OGB node classification datasets and one OGB graph classification dataset.",
+      "keywords": [
+        "Tensor",
+        "Graph Neural Networks",
+        "Node Classification",
+        "Graph Classification",
+        "CP decomposition"
+      ],
+      "tl_dr": "We propose the Tensorized Graph Neural Network (tGNN), a highly expressive GNN architecture modeling high-order non-linear node interactions based on symmetric tensor decomposition.",
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "hua|highorder_pooling_for_graph_neural_networks_with_tensor_decomposition",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "N7-EIciq3R",
+      "replyto": null,
+      "cdate": 1652737464002,
+      "tmdate": 1673655137684,
+      "openreview_url": "https://openreview.net/forum?id=N7-EIciq3R",
+      "pdf_url": "https://openreview.net/pdf/a1c9f135e2c2e58e5f5f2f359463ae8e19445c59.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    }
+  ]
+}

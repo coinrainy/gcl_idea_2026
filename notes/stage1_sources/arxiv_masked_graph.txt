@@ -1,0 +1,238 @@
+[
+  {
+    "id": "2208.00173",
+    "title": "A Survey on Masked Autoencoder for Self-supervised Learning in Vision and Beyond",
+    "authors": [
+      "Chaoning Zhang",
+      "Chenshuang Zhang",
+      "Junha Song",
+      "John Seon Keun Yi",
+      "Kang Zhang",
+      "In So Kweon"
+    ],
+    "abstract": "Masked autoencoders are scalable vision learners, as the title of MAE \\cite{he2022masked}, which suggests that self-supervised learning (SSL) in vision might undertake a similar trajectory as in NLP. Specifically, generative pretext tasks with the masked prediction (e.g., BERT) have become a de facto standard SSL practice in NLP. By contrast, early attempts at generative methods in vision have been buried by their discriminative counterparts (like contrastive learning); however, the success of mask image modeling has revived the masking autoencoder (often termed denoising autoencoder in the past). As a milestone to bridge the gap with BERT in NLP, masked autoencoder has attracted unprecedented attention for SSL in vision and beyond. This work conducts a comprehensive survey of masked autoencoders to shed insight on a promising direction of SSL. As the first to review SSL with masked autoencoders, this work focuses on its application in vision by discussing its historical developments, recent progress, and implications for diverse applications.",
+    "published": "2022-07-30",
+    "updated": "2022-07-30",
+    "categories": [
+      "cs.CV",
+      "cs.AI",
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2208.00173.pdf",
+    "abs_url": "https://arxiv.org/abs/2208.00173"
+  },
+  {
+    "id": "2205.10053",
+    "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+    "authors": [
+      "Jintang Li",
+      "Ruofan Wu",
+      "Wangbin Sun",
+      "Liang Chen",
+      "Sheng Tian",
+      "Liang Zhu",
+      "Changhua Meng",
+      "Zibin Zheng",
+      "Weiqiang Wang"
+    ],
+    "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+    "published": "2022-05-20",
+    "updated": "2023-05-29",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2205.10053.pdf",
+    "abs_url": "https://arxiv.org/abs/2205.10053"
+  },
+  {
+    "id": "2304.04779",
+    "title": "GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner",
+    "authors": [
+      "Zhenyu Hou",
+      "Yufei He",
+      "Yukuo Cen",
+      "Xiao Liu",
+      "Yuxiao Dong",
+      "Evgeny Kharlamov",
+      "Jie Tang"
+    ],
+    "abstract": "Graph self-supervised learning (SSL), including contrastive and generative approaches, offers great potential to address the fundamental challenge of label scarcity in real-world graph data. Among both sets of graph SSL techniques, the masked graph autoencoders (e.g., GraphMAE)--one type of generative method--have recently produced promising results. The idea behind this is to reconstruct the node features (or structures)--that are randomly masked from the input--with the autoencoder architecture. However, the performance of masked feature reconstruction naturally relies on the discriminability of the input features and is usually vulnerable to disturbance in the features. In this paper, we present a masked self-supervised learning framework GraphMAE2 with the goal of overcoming this issue. The idea is to impose regularization on feature reconstruction for graph SSL. Specifically, we design the strategies of multi-view random re-mask decoding and latent representation prediction to regularize the feature reconstruction. The multi-view random re-mask decoding is to introduce randomness into reconstruction in the feature space, while the latent representation prediction is to enforce the reconstruction in the embedding space. Extensive experiments show that GraphMAE2 can consistently generate top results on various public datasets, including at least 2.45% improvements over state-of-the-art baselines on ogbn-Papers100M with 111M nodes and 1.6B edges.",
+    "published": "2023-04-10",
+    "updated": "2023-04-10",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2304.04779.pdf",
+    "abs_url": "https://arxiv.org/abs/2304.04779"
+  },
+  {
+    "id": "1303.0095",
+    "title": "Label-dependent Feature Extraction in Social Networks for Node Classification",
+    "authors": [
+      "Tomasz Kajdanowicz",
+      "Przemyslaw Kazienko",
+      "Piotr Doskocz"
+    ],
+    "abstract": "A new method of feature extraction in the social network for within-network classification is proposed in the paper. The method provides new features calculated by combination of both: network structure information and class labels assigned to nodes. The influence of various features on classification performance has also been studied. The experiments on real-world data have shown that features created owing to the proposed method can lead to significant improvement of classification accuracy.",
+    "published": "2013-03-01",
+    "updated": "2013-03-01",
+    "categories": [
+      "cs.SI",
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1303.0095.pdf",
+    "abs_url": "https://arxiv.org/abs/1303.0095"
+  },
+  {
+    "id": "2411.13282",
+    "title": "Combining Autoregressive and Autoencoder Language Models for Text Classification",
+    "authors": [
+      "João Gonçalves"
+    ],
+    "abstract": "This paper presents CAALM-TC (Combining Autoregressive and Autoencoder Language Models for Text Classification), a novel method that enhances text classification by integrating autoregressive and autoencoder language models. Autoregressive large language models such as Open AI's GPT, Meta's Llama or Microsoft's Phi offer promising prospects for content analysis practitioners, but they generally underperform supervised BERT based models for text classification. CAALM leverages autoregressive models to generate contextual information based on input texts, which is then combined with the original text and fed into an autoencoder model for classification. This hybrid approach capitalizes on the extensive contextual knowledge of autoregressive models and the efficient classification capabilities of autoencoders. Experimental results on four benchmark datasets demonstrate that CAALM consistently outperforms existing methods, particularly in tasks with smaller datasets and more abstract classification objectives. The findings indicate that CAALM offers a scalable and effective solution for automated content analysis in social science research that minimizes sample size requirements.",
+    "published": "2024-11-20",
+    "updated": "2024-12-05",
+    "categories": [
+      "cs.CL"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2411.13282.pdf",
+    "abs_url": "https://arxiv.org/abs/2411.13282"
+  },
+  {
+    "id": "2208.09957",
+    "title": "Heterogeneous Graph Masked Autoencoders",
+    "authors": [
+      "Yijun Tian",
+      "Kaiwen Dong",
+      "Chunhui Zhang",
+      "Chuxu Zhang",
+      "Nitesh V. Chawla"
+    ],
+    "abstract": "Generative self-supervised learning (SSL), especially masked autoencoders, has become one of the most exciting learning paradigms and has shown great potential in handling graph data. However, real-world graphs are always heterogeneous, which poses three critical challenges that existing methods ignore: 1) how to capture complex graph structure? 2) how to incorporate various node attributes? and 3) how to encode different node positions? In light of this, we study the problem of generative SSL on heterogeneous graphs and propose HGMAE, a novel heterogeneous graph masked autoencoder model to address these challenges. HGMAE captures comprehensive graph information via two innovative masking techniques and three unique training strategies. In particular, we first develop metapath masking and adaptive attribute masking with dynamic mask rate to enable effective and stable learning on heterogeneous graphs. We then design several training strategies including metapath-based edge reconstruction to adopt complex structural information, target attribute restoration to incorporate various node attributes, and positional feature prediction to encode node positional information. Extensive experiments demonstrate that HGMAE outperforms both contrastive and generative state-of-the-art baselines on several tasks across multiple datasets. Codes are available at https://github.com/meettyj/HGMAE.",
+    "published": "2022-08-21",
+    "updated": "2023-02-10",
+    "categories": [
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2208.09957.pdf",
+    "abs_url": "https://arxiv.org/abs/2208.09957"
+  },
+  {
+    "id": "1002.1162",
+    "title": "Node Disjoint Multipath Routing Considering Link and Node Stability protocol: A characteristic Evaluation",
+    "authors": [
+      "Shuchita Upadhayaya",
+      "Charu Gandhi"
+    ],
+    "abstract": "Mobile Ad hoc Networks are highly dynamic networks. Quality of Service (QoS) routing in such networks is usually limited by the network breakage due to either node mobility or energy depletion of the mobile nodes. Also, to fulfill certain quality parameters, presence of multiple node-disjoint paths becomes essential. Such paths aid in the optimal traffic distribution and reliability in case of path breakages. Thus, to cater various challenges in QoS routing in Mobile Add hoc Networks, a Node Disjoint Multipath Routing Considering Link and Node Stability (NDMLNR) protocol has been proposed by the authors. The metric used to select the paths takes into account the stability of the nodes and the corresponding links. This paper studies various challenges in the QoS routing and presents the characteristic evaluation of NDMLNR w.r.t various existing protocols in this area.",
+    "published": "2010-02-05",
+    "updated": "2010-02-05",
+    "categories": [
+      "cs.NI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1002.1162.pdf",
+    "abs_url": "https://arxiv.org/abs/1002.1162"
+  },
+  {
+    "id": "2402.03814",
+    "title": "Masked Graph Autoencoder with Non-discrete Bandwidths",
+    "authors": [
+      "Ziwen Zhao",
+      "Yuhua Li",
+      "Yixiong Zou",
+      "Jiliang Tang",
+      "Ruixuan Li"
+    ],
+    "abstract": "Masked graph autoencoders have emerged as a powerful graph self-supervised learning method that has yet to be fully explored. In this paper, we unveil that the existing discrete edge masking and binary link reconstruction strategies are insufficient to learn topologically informative representations, from the perspective of message propagation on graph neural networks. These limitations include blocking message flows, vulnerability to over-smoothness, and suboptimal neighborhood discriminability. Inspired by these understandings, we explore non-discrete edge masks, which are sampled from a continuous and dispersive probability distribution instead of the discrete Bernoulli distribution. These masks restrict the amount of output messages for each edge, referred to as \"bandwidths\". We propose a novel, informative, and effective topological masked graph autoencoder using bandwidth masking and a layer-wise bandwidth prediction objective. We demonstrate its powerful graph topological learning ability both theoretically and empirically. Our proposed framework outperforms representative baselines in both self-supervised link prediction (improving the discrete edge reconstructors by at most 20%) and node classification on numerous datasets, solely with a structure-learning pretext. Our implementation is available at https://github.com/Newiz430/Bandana.",
+    "published": "2024-02-06",
+    "updated": "2024-02-06",
+    "categories": [
+      "cs.LG",
+      "cs.SI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2402.03814.pdf",
+    "abs_url": "https://arxiv.org/abs/2402.03814"
+  },
+  {
+    "id": "2304.01507",
+    "title": "RARE: Robust Masked Graph Autoencoder",
+    "authors": [
+      "Wenxuan Tu",
+      "Qing Liao",
+      "Sihang Zhou",
+      "Xin Peng",
+      "Chuan Ma",
+      "Zhe Liu",
+      "Xinwang Liu",
+      "Zhiping Cai"
+    ],
+    "abstract": "Masked graph autoencoder (MGAE) has emerged as a promising self-supervised graph pre-training (SGP) paradigm due to its simplicity and effectiveness. However, existing efforts perform the mask-then-reconstruct operation in the raw data space as is done in computer vision (CV) and natural language processing (NLP) areas, while neglecting the important non-Euclidean property of graph data. As a result, the highly unstable local connection structures largely increase the uncertainty in inferring masked data and decrease the reliability of the exploited self-supervision signals, leading to inferior representations for downstream evaluations. To address this issue, we propose a novel SGP method termed Robust mAsked gRaph autoEncoder (RARE) to improve the certainty in inferring masked data and the reliability of the self-supervision mechanism by further masking and reconstructing node samples in the high-order latent feature space. Through both theoretical and empirical analyses, we have discovered that performing a joint mask-then-reconstruct strategy in both latent feature and raw data spaces could yield improved stability and performance. To this end, we elaborately design a masked latent feature completion scheme, which predicts latent features of masked nodes under the guidance of high-order sample correlations that are hard to be observed from the raw data perspective. Specifically, we first adopt a latent feature predictor to predict the masked latent features from the visible ones. Next, we encode the raw data of masked samples with a momentum graph encoder and subsequently employ the resulting representations to improve predicted results through latent feature matching. Extensive experiments on seventeen datasets have demonstrated the effectiveness and robustness of RARE against state-of-the-art (SOTA) competitors across three downstream tasks.",
+    "published": "2023-04-04",
+    "updated": "2023-04-06",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2304.01507.pdf",
+    "abs_url": "https://arxiv.org/abs/2304.01507"
+  },
+  {
+    "id": "2202.08391",
+    "title": "Graph Masked Autoencoders with Transformers",
+    "authors": [
+      "Sixiao Zhang",
+      "Hongxu Chen",
+      "Haoran Yang",
+      "Xiangguo Sun",
+      "Philip S. Yu",
+      "Guandong Xu"
+    ],
+    "abstract": "Recently, transformers have shown promising performance in learning graph representations. However, there are still some challenges when applying transformers to real-world scenarios due to the fact that deep transformers are hard to train from scratch and the quadratic memory consumption w.r.t. the number of nodes. In this paper, we propose Graph Masked Autoencoders (GMAEs), a self-supervised transformer-based model for learning graph representations. To address the above two challenges, we adopt the masking mechanism and the asymmetric encoder-decoder design. Specifically, GMAE takes partially masked graphs as input, and reconstructs the features of the masked nodes. The encoder and decoder are asymmetric, where the encoder is a deep transformer and the decoder is a shallow transformer. The masking mechanism and the asymmetric design make GMAE a memory-efficient model compared with conventional transformers. We show that, when serving as a conventional self-supervised graph representation model, GMAE achieves state-of-the-art performance on both the graph classification task and the node classification task under common downstream evaluation protocols. We also show that, compared with training in an end-to-end manner from scratch, we can achieve comparable performance after pre-training and fine-tuning using GMAE while simplifying the training process.",
+    "published": "2022-02-17",
+    "updated": "2022-05-12",
+    "categories": [
+      "cs.LG",
+      "cs.IR"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2202.08391.pdf",
+    "abs_url": "https://arxiv.org/abs/2202.08391"
+  },
+  {
+    "id": "2008.12578",
+    "title": "Graph Convolutional Neural Networks with Node Transition Probability-based Message Passing and DropNode Regularization",
+    "authors": [
+      "Tien Huu Do",
+      "Duc Minh Nguyen",
+      "Giannis Bekoulis",
+      "Adrian Munteanu",
+      "Nikos Deligiannis"
+    ],
+    "abstract": "Graph convolutional neural networks (GCNNs) have received much attention recently, owing to their capability in handling graph-structured data. Among the existing GCNNs, many methods can be viewed as instances of a neural message passing motif; features of nodes are passed around their neighbors, aggregated and transformed to produce better nodes' representations. Nevertheless, these methods seldom use node transition probabilities, a measure that has been found useful in exploring graphs. Furthermore, when the transition probabilities are used, their transition direction is often improperly considered in the feature aggregation step, resulting in an inefficient weighting scheme. In addition, although a great number of GCNN models with increasing level of complexity have been introduced, the GCNNs often suffer from over-fitting when being trained on small graphs. Another issue of the GCNNs is over-smoothing, which tends to make nodes' representations indistinguishable. This work presents a new method to improve the message passing process based on node transition probabilities by properly considering the transition direction, leading to a better weighting scheme in nodes' features aggregation compared to the existing counterpart. Moreover, we propose a novel regularization method termed DropNode to address the over-fitting and over-smoothing issues simultaneously. DropNode randomly discards part of a graph, thus it creates multiple deformed versions of the graph, leading to data augmentation regularization effect. Additionally, DropNode lessens the connectivity of the graph, mitigating the effect of over-smoothing in deep GCNNs. Extensive experiments on eight benchmark datasets for node and graph classification tasks demonstrate the effectiveness of the proposed methods in comparison with the state of the art.",
+    "published": "2020-08-28",
+    "updated": "2021-03-18",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2008.12578.pdf",
+    "abs_url": "https://arxiv.org/abs/2008.12578"
+  },
+  {
+    "id": "2001.10338",
+    "title": "Short Text Classification via Term Graph",
+    "authors": [
+      "Wei Pang"
+    ],
+    "abstract": "Short text classi cation is a method for classifying short sentence with prede ned labels. However, short text is limited in shortness in text length that leads to a challenging problem of sparse features. Most of existing methods treat each short sentences as independently and identically distributed (IID), local context only in the sentence itself is focused and the relational information between sentences are lost. To overcome these limitations, we propose a PathWalk model that combine the strength of graph networks and short sentences to solve the sparseness of short text. Experimental results on four different available datasets show that our PathWalk method achieves the state-of-the-art results, demonstrating the efficiency and robustness of graph networks for short text classification.",
+    "published": "2020-01-20",
+    "updated": "2020-01-20",
+    "categories": [
+      "cs.IR",
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2001.10338.pdf",
+    "abs_url": "https://arxiv.org/abs/2001.10338"
+  }
+]

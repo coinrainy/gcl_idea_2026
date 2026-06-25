@@ -1,0 +1,235 @@
+[
+  {
+    "id": "1910.03081",
+    "title": "On the Interpretability and Evaluation of Graph Representation Learning",
+    "authors": [
+      "Antonia Gogoglou",
+      "C. Bayan Bruss",
+      "Keegan E. Hines"
+    ],
+    "abstract": "With the rising interest in graph representation learning, a variety of approaches have been proposed to effectively capture a graph's properties. While these approaches have improved performance in graph machine learning tasks compared to traditional graph techniques, they are still perceived as techniques with limited insight into the information encoded in these representations. In this work, we explore methods to interpret node embeddings and propose the creation of a robust evaluation framework for comparing graph representation learning algorithms and hyperparameters. We test our methods on graphs with different properties and investigate the relationship between embedding training parameters and the ability of the produced embedding to recover the structure of the original graph in a downstream task.",
+    "published": "2019-10-07",
+    "updated": "2019-10-07",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1910.03081.pdf",
+    "abs_url": "https://arxiv.org/abs/1910.03081"
+  },
+  {
+    "id": "2410.12096",
+    "title": "Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning",
+    "authors": [
+      "Guangxin Su",
+      "Yifan Zhu",
+      "Wenjie Zhang",
+      "Hanchen Wang",
+      "Ying Zhang"
+    ],
+    "abstract": "Graph representation learning, involving both node features and graph structures, is crucial for real-world applications but often encounters pervasive noise. State-of-the-art methods typically address noise by focusing separately on node features with large language models (LLMs) and on graph structures with graph structure learning models (GSLMs). In this paper, we introduce LangGSL, a robust framework that integrates the complementary strengths of pre-trained language models and GSLMs to jointly enhance both node feature and graph structure learning. In LangGSL, we first leverage LLMs to filter noise in the raw data and extract valuable cleaned information as features, enhancing the synergy of downstream models. During the mutual learning phase in LangGSL, the core idea is to leverage the relatively small language model (LM) to process local attributes and generate reliable pseudo-labels and informative node embeddings, which are then integrated into the GSLM's prediction phase. This approach enriches the global context and enhances overall performance. Meanwhile, GSLM refines the evolving graph structure constructed from the LM's output, offering updated labels back to the LM as additional guidance, thus facilitating a more effective mutual learning process. The LM and GSLM work synergistically, complementing each other's strengths and offsetting weaknesses within a variational information-maximizing framework, resulting in enhanced node features and a more robust graph structure. Extensive experiments on diverse graph datasets of varying scales and across different task scenarios demonstrate the scalability and effectiveness of the proposed approach.",
+    "published": "2024-10-15",
+    "updated": "2024-10-15",
+    "categories": [
+      "cs.LG",
+      "cs.AI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2410.12096.pdf",
+    "abs_url": "https://arxiv.org/abs/2410.12096"
+  },
+  {
+    "id": "2304.13195",
+    "title": "Connector 0.5: A unified framework for graph representation learning",
+    "authors": [
+      "Thanh Sang Nguyen",
+      "Jooho Lee",
+      "Van Thuy Hoang",
+      "O-Joun Lee"
+    ],
+    "abstract": "Graph representation learning models aim to represent the graph structure and its features into low-dimensional vectors in a latent space, which can benefit various downstream tasks, such as node classification and link prediction. Due to its powerful graph data modelling capabilities, various graph embedding models and libraries have been proposed to learn embeddings and help researchers ease conducting experiments. In this paper, we introduce a novel graph representation framework covering various graph embedding models, ranging from shallow to state-of-the-art models, namely Connector. First, we consider graph generation by constructing various types of graphs with different structural relations, including homogeneous, signed, heterogeneous, and knowledge graphs. Second, we introduce various graph representation learning models, ranging from shallow to deep graph embedding models. Finally, we plan to build an efficient open-source framework that can provide deep graph embedding models to represent structural relations in graphs. The framework is available at https://github.com/NSLab-CUK/Connector.",
+    "published": "2023-04-25",
+    "updated": "2023-04-25",
+    "categories": [
+      "cs.LG",
+      "cs.SI"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2304.13195.pdf",
+    "abs_url": "https://arxiv.org/abs/2304.13195"
+  },
+  {
+    "id": "2008.11416",
+    "title": "Learning Node Representations against Perturbations",
+    "authors": [
+      "Xu Chen",
+      "Yuangang Pan",
+      "Ivor Tsang",
+      "Ya Zhang"
+    ],
+    "abstract": "Recent graph neural networks (GNN) has achieved remarkable performance in node representation learning. One key factor of GNN's success is the \\emph{smoothness} property on node representations. Despite this, most GNN models are fragile to the perturbations on graph inputs and could learn unreliable node representations. In this paper, we study how to learn node representations against perturbations in GNN. Specifically, we consider that a node representation should remain stable under slight perturbations on the input, and node representations from different structures should be identifiable, which two are termed as the \\emph{stability} and \\emph{identifiability} on node representations, respectively. To this end, we propose a novel model called Stability-Identifiability GNN Against Perturbations (SIGNNAP) that learns reliable node representations in an unsupervised manner. SIGNNAP formalizes the \\emph{stability} and \\emph{identifiability} by a contrastive objective and preserves the \\emph{smoothness} with existing GNN backbones. The proposed method is a generic framework that can be equipped with many other backbone models (e.g. GCN, GraphSage and GAT). Extensive experiments on six benchmarks under both transductive and inductive learning setups of node classification demonstrate the effectiveness of our method. Codes and data are available online:~\\url{https://github.com/xuChenSJTU/SIGNNAP-master-online}",
+    "published": "2020-08-26",
+    "updated": "2023-05-05",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2008.11416.pdf",
+    "abs_url": "https://arxiv.org/abs/2008.11416"
+  },
+  {
+    "id": "1910.08249",
+    "title": "Relational Graph Representation Learning for Open-Domain Question Answering",
+    "authors": [
+      "Salvatore Vivona",
+      "Kaveh Hassani"
+    ],
+    "abstract": "We introduce a relational graph neural network with bi-directional attention mechanism and hierarchical representation learning for open-domain question answering task. Our model can learn contextual representation by jointly learning and updating the query, knowledge graph, and document representations. The experiments suggest that our model achieves state-of-the-art on the WebQuestionsSP benchmark.",
+    "published": "2019-10-18",
+    "updated": "2019-10-18",
+    "categories": [
+      "cs.CL",
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1910.08249.pdf",
+    "abs_url": "https://arxiv.org/abs/1910.08249"
+  },
+  {
+    "id": "2001.10338",
+    "title": "Short Text Classification via Term Graph",
+    "authors": [
+      "Wei Pang"
+    ],
+    "abstract": "Short text classi cation is a method for classifying short sentence with prede ned labels. However, short text is limited in shortness in text length that leads to a challenging problem of sparse features. Most of existing methods treat each short sentences as independently and identically distributed (IID), local context only in the sentence itself is focused and the relational information between sentences are lost. To overcome these limitations, we propose a PathWalk model that combine the strength of graph networks and short sentences to solve the sparseness of short text. Experimental results on four different available datasets show that our PathWalk method achieves the state-of-the-art results, demonstrating the efficiency and robustness of graph networks for short text classification.",
+    "published": "2020-01-20",
+    "updated": "2020-01-20",
+    "categories": [
+      "cs.IR",
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2001.10338.pdf",
+    "abs_url": "https://arxiv.org/abs/2001.10338"
+  },
+  {
+    "id": "2006.06183",
+    "title": "G5: A Universal GRAPH-BERT for Graph-to-Graph Transfer and Apocalypse Learning",
+    "authors": [
+      "Jiawei Zhang"
+    ],
+    "abstract": "The recent GRAPH-BERT model introduces a new approach to learning graph representations merely based on the attention mechanism. GRAPH-BERT provides an opportunity for transferring pre-trained models and learned graph representations across different tasks within the same graph dataset. In this paper, we will further investigate the graph-to-graph transfer of a universal GRAPH-BERT for graph representation learning across different graph datasets, and our proposed model is also referred to as the G5 for simplicity. Many challenges exist in learning G5 to adapt the distinct input and output configurations for each graph data source, as well as the information distributions differences. G5 introduces a pluggable model architecture: (a) each data source will be pre-processed with a unique input representation learning component; (b) each output application task will also have a specific functional component; and (c) all such diverse input and output components will all be conjuncted with a universal GRAPH-BERT core component via an input size unification layer and an output representation fusion layer, respectively.   The G5 model removes the last obstacle for cross-graph representation learning and transfer. For the graph sources with very sparse training data, the G5 model pre-trained on other graphs can still be utilized for representation learning with necessary fine-tuning. What's more, the architecture of G5 also allows us to learn a supervised functional classifier for data sources without any training data at all. Such a problem is also named as the Apocalypse Learning task in this paper. Two different label reasoning strategies, i.e., Cross-Source Classification Consistency Maximization (CCCM) and Cross-Source Dynamic Routing (CDR), are introduced in this paper to address the problem.",
+    "published": "2020-06-11",
+    "updated": "2020-06-11",
+    "categories": [
+      "cs.LG",
+      "cs.NE",
+      "cs.SI",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2006.06183.pdf",
+    "abs_url": "https://arxiv.org/abs/2006.06183"
+  },
+  {
+    "id": "1810.12836",
+    "title": "Learning Cross-Lingual Sentence Representations via a Multi-task Dual-Encoder Model",
+    "authors": [
+      "Muthuraman Chidambaram",
+      "Yinfei Yang",
+      "Daniel Cer",
+      "Steve Yuan",
+      "Yun-Hsuan Sung",
+      "Brian Strope",
+      "Ray Kurzweil"
+    ],
+    "abstract": "A significant roadblock in multilingual neural language modeling is the lack of labeled non-English data. One potential method for overcoming this issue is learning cross-lingual text representations that can be used to transfer the performance from training on English tasks to non-English tasks, despite little to no task-specific non-English data. In this paper, we explore a natural setup for learning cross-lingual sentence representations: the dual-encoder. We provide a comprehensive evaluation of our cross-lingual representations on a number of monolingual, cross-lingual, and zero-shot/few-shot learning tasks, and also give an analysis of different learned cross-lingual embedding spaces.",
+    "published": "2018-10-30",
+    "updated": "2019-08-01",
+    "categories": [
+      "cs.CL"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1810.12836.pdf",
+    "abs_url": "https://arxiv.org/abs/1810.12836"
+  },
+  {
+    "id": "1910.02574",
+    "title": "Representation Learning of EHR Data via Graph-Based Medical Entity Embedding",
+    "authors": [
+      "Tong Wu",
+      "Yunlong Wang",
+      "Yue Wang",
+      "Emily Zhao",
+      "Yilian Yuan",
+      "Zhi Yang"
+    ],
+    "abstract": "Automatic representation learning of key entities in electronic health record (EHR) data is a critical step for healthcare informatics that turns heterogeneous medical records into structured and actionable information. Here we propose ME2Vec, an algorithmic framework for learning low-dimensional vectors of the most common entities in EHR: medical services, doctors, and patients. ME2Vec leverages diverse graph embedding techniques to cater for the unique characteristic of each medical entity. Using real-world clinical data, we demonstrate the efficacy of ME2Vec over competitive baselines on disease diagnosis prediction.",
+    "published": "2019-10-07",
+    "updated": "2019-10-07",
+    "categories": [
+      "cs.LG",
+      "cs.IR",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1910.02574.pdf",
+    "abs_url": "https://arxiv.org/abs/1910.02574"
+  },
+  {
+    "id": "2211.06292",
+    "title": "A New Graph Node Classification Benchmark: Learning Structure from Histology Cell Graphs",
+    "authors": [
+      "Claudia Vanea",
+      "Jonathan Campbell",
+      "Omri Dodi",
+      "Liis Salumäe",
+      "Karen Meir",
+      "Drorith Hochner-Celnikier",
+      "Hagit Hochner",
+      "Triin Laisk",
+      "Linda M. Ernst",
+      "Cecilia M. Lindgren",
+      "Christoffer Nellåker"
+    ],
+    "abstract": "We introduce a new benchmark dataset, Placenta, for node classification in an underexplored domain: predicting microanatomical tissue structures from cell graphs in placenta histology whole slide images. This problem is uniquely challenging for graph learning for a few reasons. Cell graphs are large (>1 million nodes per image), node features are varied (64-dimensions of 11 types of cells), class labels are imbalanced (9 classes ranging from 0.21% of the data to 40.0%), and cellular communities cluster into heterogeneously distributed tissues of widely varying sizes (from 11 nodes to 44,671 nodes for a single structure). Here, we release a dataset consisting of two cell graphs from two placenta histology images totalling 2,395,747 nodes, 799,745 of which have ground truth labels. We present inductive benchmark results for 7 scalable models and show how the unique qualities of cell graphs can help drive the development of novel graph neural network architectures.",
+    "published": "2022-11-11",
+    "updated": "2022-11-11",
+    "categories": [
+      "cs.LG",
+      "cs.CV",
+      "eess.IV"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2211.06292.pdf",
+    "abs_url": "https://arxiv.org/abs/2211.06292"
+  },
+  {
+    "id": "2502.10522",
+    "title": "GraphiT: Efficient Node Classification on Text-Attributed Graphs with Prompt Optimized LLMs",
+    "authors": [
+      "Shima Khoshraftar",
+      "Niaz Abedini",
+      "Amir Hajian"
+    ],
+    "abstract": "The application of large language models (LLMs) to graph data has attracted a lot of attention recently. LLMs allow us to use deep contextual embeddings from pretrained models in text-attributed graphs, where shallow embeddings are often used for the text attributes of nodes. However, it is still challenging to efficiently encode the graph structure and features into a sequential form for use by LLMs. In addition, the performance of an LLM alone, is highly dependent on the structure of the input prompt, which limits their effectiveness as a reliable approach and often requires iterative manual adjustments that could be slow, tedious and difficult to replicate programmatically. In this paper, we propose GraphiT (Graphs in Text), a framework for encoding graphs into a textual format and optimizing LLM prompts for graph prediction tasks. Here we focus on node classification for text-attributed graphs. We encode the graph data for every node and its neighborhood into a concise text to enable LLMs to better utilize the information in the graph. We then further programmatically optimize the LLM prompts using the DSPy framework to automate this step and make it more efficient and reproducible. GraphiT outperforms our LLM-based baselines on three datasets and we show how the optimization step in GraphiT leads to measurably better results without manual prompt tweaking. We also demonstrated that our graph encoding approach is competitive to other graph encoding methods while being less expensive because it uses significantly less tokens for the same task.",
+    "published": "2025-02-14",
+    "updated": "2025-02-14",
+    "categories": [
+      "cs.AI",
+      "cs.LG"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/2502.10522.pdf",
+    "abs_url": "https://arxiv.org/abs/2502.10522"
+  },
+  {
+    "id": "1811.03508",
+    "title": "A simple yet effective baseline for non-attributed graph classification",
+    "authors": [
+      "Chen Cai",
+      "Yusu Wang"
+    ],
+    "abstract": "Graphs are complex objects that do not lend themselves easily to typical learning tasks. Recently, a range of approaches based on graph kernels or graph neural networks have been developed for graph classification and for representation learning on graphs in general. As the developed methodologies become more sophisticated, it is important to understand which components of the increasingly complex methods are necessary or most effective.   As a first step, we develop a simple yet meaningful graph representation, and explore its effectiveness in graph classification. We test our baseline representation for the graph classification task on a range of graph datasets. Interestingly, this simple representation achieves similar performance as the state-of-the-art graph kernels and graph neural networks for non-attributed graph classification. Its performance on classifying attributed graphs is slightly weaker as it does not incorporate attributes. However, given its simplicity and efficiency, we believe that it still serves as an effective baseline for attributed graph classification. Our graph representation is efficient (linear-time) to compute. We also provide a simple connection with the graph neural networks.   Note that these observations are only for the task of graph classification while existing methods are often designed for a broader scope including node embedding and link prediction. The results are also likely biased due to the limited amount of benchmark datasets available. Nevertheless, the good performance of our simple baseline calls for the development of new, more comprehensive benchmark datasets so as to better evaluate and analyze different graph learning methods. Furthermore, given the computational efficiency of our graph summary, we believe that it is a good candidate as a baseline method for future graph classification (or even other graph learning) studies.",
+    "published": "2018-11-08",
+    "updated": "2022-05-18",
+    "categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "pdf_url": "https://arxiv.org/pdf/1811.03508.pdf",
+    "abs_url": "https://arxiv.org/abs/1811.03508"
+  }
+]

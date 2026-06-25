@@ -1,0 +1,395 @@
+{
+  "mode": "search",
+  "query": "graph self-supervised learning node classification",
+  "group": "all",
+  "content": "all",
+  "source_filter": "papers",
+  "returned": 10,
+  "offset": 0,
+  "data": [
+    {
+      "id": "r1evOhEKvH",
+      "number": 45,
+      "title": "Graph inference learning for semi-supervised classification",
+      "authors": [
+        "Chunyan Xu",
+        "Zhen Cui",
+        "Xiaobin Hong",
+        "Tong Zhang",
+        "Jian Yang",
+        "Wei Liu"
+      ],
+      "authorids": [
+        "cyx@njust.edu.cn",
+        "zhen.cui@njust.edu.cn",
+        "xbhong@njust.edu.cn",
+        "tong.zhang@njust.edu.cn",
+        "csjyang@njust.edu.cn",
+        "wl2223@columbia.edu"
+      ],
+      "abstract": "In this work, we address the semi-supervised classification of graph data, where the categories of those unlabeled nodes are inferred from labeled nodes as well as graph structures. Recent works often solve this problem with the advanced graph convolution in a conventional supervised manner, but the performance could be heavily affected when labeled data is scarce. Here we propose a Graph Inference Learning (GIL) framework to boost the performance of node classification by learning the inference of node labels on graph topology. To bridge the connection of two nodes, we formally define a structure relation by encapsulating node attributes, between-node paths and local topological structures together, which can make inference conveniently deduced from one node to another node. For learning the inference process, we further introduce meta-optimization on structure relations from training nodes to validation nodes, such that the learnt graph inference capability can be better self-adapted into test nodes. Comprehensive evaluations on four benchmark datasets (including Cora, Citeseer, Pubmed and NELL) demonstrate the superiority of our GIL when compared with other state-of-the-art methods in the semi-supervised node classification task.",
+      "keywords": [
+        "semi-supervised classification",
+        "graph inference learning"
+      ],
+      "tl_dr": "We propose a novel graph inference learning framework by building structure relations to infer unknown node labels from those labeled nodes in an end-to-end way.",
+      "venue": null,
+      "venueid": null,
+      "presentation_type": null,
+      "paperhash": "xu|graph_inference_learning_for_semisupervised_classification",
+      "invitation": "ICLR.cc/2020/Conference/-/Blind_Submission",
+      "forum": "r1evOhEKvH",
+      "replyto": null,
+      "cdate": 1569438831249,
+      "tmdate": 1683306407737,
+      "openreview_url": "https://openreview.net/forum?id=r1evOhEKvH",
+      "pdf_url": "https://openreview.net/pdf/03d35e4c92edd9cb8ba89a592f7fe50ec7b372eb.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "dK8vOIBENa3",
+      "number": 8,
+      "title": "Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification",
+      "authors": [
+        "Zhen Tan",
+        "Song Wang",
+        "Kaize Ding",
+        "Jundong Li",
+        "huan liu"
+      ],
+      "authorids": [
+        "~Zhen_Tan2",
+        "~Song_Wang6",
+        "~Kaize_Ding1",
+        "~Jundong_Li2",
+        "~huan_liu1"
+      ],
+      "abstract": "Few-shot node classification is tasked to provide accurate predictions for nodes from novel classes with only few representative labeled nodes. This problem has drawn tremendous attention for its projection to prevailing real-world applications, such as product categorization for newly added commodity categories on an E-commerce platform with scarce records or diagnoses for rare diseases on a patient similarity graph. To tackle such challenging label scarcity issues in the non-Euclidean graph domain, meta-learning has become a successful and predominant paradigm. More recently, inspired by the development of graph self-supervised learning, transferring pretrained node embeddings for few-shot node classification could be a promising alternative to meta-learning but remains unexposed. In this work, we empirically demonstrate the potential of an alternative framework, \\textit{Transductive Linear Probing}, that transfers pretrained node embeddings, which are learned from graph contrastive learning methods. We further extend the setting of few-shot node classification from standard fully supervised to a more realistic self-supervised setting, where meta-learning methods cannot be easily deployed due to the shortage of supervision from training classes. Surprisingly, even without any ground-truth labels, transductive linear probing with self-supervised graph contrastive pretraining can outperform the state-of-the-art fully supervised meta-learning based methods under the same protocol. We hope this work can shed new light on few-shot node classification problems and foster future research on learning from scarcely labeled instances on graphs.",
+      "keywords": [
+        "node classification",
+        "few-shot learning",
+        "graph neural networks",
+        "graph contrastive learning"
+      ],
+      "tl_dr": "In this paper, we propose Transductive Linear Probing as an alternative approach for meta-learning to few-shot node classification.",
+      "venue": "LoG 2022 Oral",
+      "venueid": "logconference.io/LOG/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "tan|transductive_linear_probing_a_novel_framework_for_fewshot_node_classification",
+      "invitation": "logconference.io/LOG/2022/Conference/-/Blind_Submission",
+      "forum": "dK8vOIBENa3",
+      "replyto": null,
+      "cdate": 1662812619982,
+      "tmdate": 1770510583555,
+      "openreview_url": "https://openreview.net/forum?id=dK8vOIBENa3",
+      "pdf_url": "https://openreview.net/pdf/2d367837cc7872cfc75f7a0072f983760223a3a3.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "YCgwkDo56q",
+      "number": 185,
+      "title": "Global-Local Graph Neural Networks for Node-Classification",
+      "authors": [
+        "Moshe Eliasof",
+        "Eran Treister"
+      ],
+      "authorids": [
+        "~Moshe_Eliasof1",
+        "~Eran_Treister1"
+      ],
+      "abstract": "The task of graph node-classification is often approached using a \\emph{local} Graph Neural Network (GNN), that learns only local information from the node input features and their adjacency. In this paper we propose to benefit from global and local information through the form of learning \\emph{label}- and \\emph{node}- features to improve node-classification accuracy. We therefore call our method Global-Local-GNN (GLGNN). To learn proper label features, for each label, we maximize the similarity between its features and nodes features that belong to the label, while maximizing the distance between nodes that do not belong to the considered label. We then use the learnt label features to predict the node-classification map. We demonstrate our GLGNN using GCN and GAT as GNN backbones, and show that our GLGNN approach improves baseline performance on the node-classification task.",
+      "keywords": [
+        "Graph Neural Networks",
+        "Deep Learning",
+        "Node classification"
+      ],
+      "tl_dr": "We propose a method to improve graph node-classification using global (label) information.",
+      "venue": "LoG 2022 Poster",
+      "venueid": "logconference.io/LOG/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "eliasof|globallocal_graph_neural_networks_for_nodeclassification",
+      "invitation": "logconference.io/LOG/2022/Conference/-/Blind_Submission",
+      "forum": "YCgwkDo56q",
+      "replyto": null,
+      "cdate": 1662812639850,
+      "tmdate": 1683308457612,
+      "openreview_url": "https://openreview.net/forum?id=YCgwkDo56q",
+      "pdf_url": "https://openreview.net/pdf/866593caaf54ba0206624a3c58ba3ac8b6c5b967.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "DjzBCrMBJ_p",
+      "number": 4573,
+      "title": "Spectral Augmentation for Self-Supervised Learning on Graphs",
+      "authors": [
+        "Lu Lin",
+        "Jinghui Chen",
+        "Hongning Wang"
+      ],
+      "authorids": [
+        "~Lu_Lin2",
+        "~Jinghui_Chen1",
+        "~Hongning_Wang1"
+      ],
+      "abstract": "Graph contrastive learning (GCL), as an emerging self-supervised learning technique on graphs, aims to learn representations via instance discrimination. Its performance heavily relies on graph augmentation to reflect invariant patterns that are robust to small perturbations; yet it still remains unclear about what graph invariance GCL should capture. Recent studies mainly perform topology augmentations in a uniformly random manner in the spatial domain, ignoring its influence on the intrinsic structural properties embedded in the spectral domain. In this work, we aim to find a principled way for topology augmentations by exploring the invariance of graphs from the spectral perspective. We develop spectral augmentation which guides topology augmentations by maximizing the spectral change. Extensive experiments on both graph and node classification tasks demonstrate the effectiveness of our method in self-supervised representation learning. The proposed method also brings promising generalization capability in transfer learning, and is equipped with intriguing robustness property under adversarial attacks. Our study sheds light on a general principle for graph topology augmentation.",
+      "keywords": [
+        "graph self-supervised learning",
+        "graph spectral theory",
+        "graph augmentation"
+      ],
+      "tl_dr": "We propose a novel spectral augmentation method which uses graph spectrum to capture structural properties and guide topology augmentations for graph self-supervised learning.",
+      "venue": "ICLR 2023 notable top 25%",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "lin|spectral_augmentation_for_selfsupervised_learning_on_graphs",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "DjzBCrMBJ_p",
+      "replyto": null,
+      "cdate": 1663850339960,
+      "tmdate": 1677685375495,
+      "openreview_url": "https://openreview.net/forum?id=DjzBCrMBJ_p",
+      "pdf_url": "https://openreview.net/pdf/f3bc720be318c5e2d1b97759ef657ead63c87974.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "PfStAhJ2t1g",
+      "number": 8142,
+      "title": "A Variational Edge Partition Model for Supervised Graph Representation Learning",
+      "authors": [
+        "Yilin He",
+        "Chaojie Wang",
+        "Hao Zhang",
+        "Bo Chen",
+        "Mingyuan Zhou"
+      ],
+      "authorids": [
+        "~Yilin_He1",
+        "~Chaojie_Wang1",
+        "~Hao_Zhang1",
+        "~Bo_Chen1",
+        "~Mingyuan_Zhou1"
+      ],
+      "abstract": "Graph neural networks (GNNs), which propagate the node features through the edges and learn how to transform the aggregated features under label supervision, have achieved great success in supervised feature extraction for both node-level and graph-level  classification tasks. However, GNNs typically treat the graph structure as given and ignore how the edges are formed. This paper introduces a graph generative process to model how the observed edges are generated by aggregating the node interactions over a set of overlapping node communities, each of which contributes to the edges via a logical OR mechanism. Based on this generative model, we partition each edge into the summation of multiple community-specific weighted edges and use them to define community-specific GNNs. A variational inference framework is proposed to jointly learn a GNN-based inference network  that partitions the edges into different communities, these community-specific GNNs, and a GNN-based predictor that combines community-specific GNNs for the end classification task. Extensive evaluations on real-world graph datasets have verified the effectiveness of the proposed method in learning discriminative representations for both node-level and graph-level classification tasks.",
+      "keywords": [
+        "probabilistic graph modeling",
+        "graph deep learning"
+      ],
+      "tl_dr": "We introduce a deep generative model that learns representation of graphs on each hidden community, which promotes model performance on semi-supervised node classification and supervised graph classification.",
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "he|a_variational_edge_partition_model_for_supervised_graph_representation_learning",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "PfStAhJ2t1g",
+      "replyto": null,
+      "cdate": 1652737641605,
+      "tmdate": 1770510376906,
+      "openreview_url": "https://openreview.net/forum?id=PfStAhJ2t1g",
+      "pdf_url": "https://openreview.net/pdf/0df2ee492878579cd1633ac3679ddf6d170f3452.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "pKRYZpCDr-p",
+      "number": 3411,
+      "title": "Node Importance Specific Meta Learning in Graph Neural Networks",
+      "authors": [
+        "Hao Liu",
+        "Yixin Chen",
+        "Dacheng Tao",
+        "Muhan Zhang"
+      ],
+      "authorids": [
+        "~Hao_Liu25",
+        "~Yixin_Chen1",
+        "~Dacheng_Tao1",
+        "~Muhan_Zhang1"
+      ],
+      "abstract": "While current node classification methods for graphs have enabled significant progress in many applications, they rely on abundant labeled nodes for training. In many real-world datasets, nodes for some classes are always scarce, thus current algorithms are ill-equipped to handle these few-shot node classes. Some meta learning approaches for graphs have demonstrated advantages in tackling such few-shot problems, but they disregard the impact of node importance on a task. Being exclusive to graph data, the dependencies between nodes convey vital information for determining the importance of nodes in contrast to node features only, which poses unique challenges here. In this paper, we investigate the effect of node importance in node classification meta learning tasks. We first theoretically analyze the influence of distinguishing node importance on the lower bound of the model accuracy. Then, based on the theoretical conclusion, we propose a novel Node Importance Meta Learning architecture (NIML) that learns and applies the importance score of each node for meta learning. Specifically, after constructing an attention vector based on the interaction between a node and its neighbors, we train an importance predictor in a supervised manner to capture the distance between node embedding and the expectation of same-class embedding. Extensive experiments on public datasets demonstrate the state-of-the-art performance of NIML on few-shot node classification problems.",
+      "keywords": [
+        "Meta Learning",
+        "Graph Neural Network",
+        "Node Importance"
+      ],
+      "tl_dr": "This paper focuses on the few-shot node classification problem in graph; theoretically studies the influence of node importance on the model accuracy and proposes a node importance calculation method to implement on meta learning GNNs.",
+      "venue": "Submitted to ICLR 2023",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "liu|node_importance_specific_meta_learning_in_graph_neural_networks",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "pKRYZpCDr-p",
+      "replyto": null,
+      "cdate": 1663850199114,
+      "tmdate": 1676330876818,
+      "openreview_url": "https://openreview.net/forum?id=pKRYZpCDr-p",
+      "pdf_url": "https://openreview.net/pdf/48f43a21cbed6c9a1c8311ecd674ee1b26bbfd8c.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "JY6fLgR8Yq",
+      "number": 2285,
+      "title": "Graph Self-supervised Learning with Accurate Discrepancy Learning",
+      "authors": [
+        "Dongki Kim",
+        "Jinheon Baek",
+        "Sung Ju Hwang"
+      ],
+      "authorids": [
+        "~Dongki_Kim1",
+        "~Jinheon_Baek1",
+        "~Sung_Ju_Hwang1"
+      ],
+      "abstract": "Self-supervised learning of graph neural networks (GNNs) aims to learn an accurate representation of the graphs in an unsupervised manner, to obtain transferable representations of them for diverse downstream tasks. Predictive learning and contrastive learning are the two most prevalent approaches for graph self-supervised learning. However, they have their own drawbacks. While the predictive learning methods can learn the contextual relationships between neighboring nodes and edges, they cannot learn global graph-level similarities. Contrastive learning, while it can learn global graph-level similarities, its objective to maximize the similarity between two differently perturbed graphs may result in representations that cannot discriminate two similar graphs with different properties. To tackle such limitations, we propose a framework that aims to learn the exact discrepancy between the original and the perturbed graphs, coined as Discrepancy-based Self-supervised LeArning (D-SLA). Specifically, we create multiple perturbations of the given graph with varying degrees of similarity, and train the model to predict whether each graph is the original graph or the perturbed one. Moreover, we further aim to accurately capture the amount of discrepancy for each perturbed graph using the graph edit distance. We validate our D-SLA on various graph-related downstream tasks, including molecular property prediction, protein function prediction, and link prediction tasks, on which ours largely outperforms relevant baselines.",
+      "keywords": [
+        "Graph Neural Network",
+        "Graph Self-supervised Learning"
+      ],
+      "tl_dr": "We propose a graph self-supervised learning method that aims to learn the discrepancy between the original, perturbed and completely different graphs.",
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "kim|graph_selfsupervised_learning_with_accurate_discrepancy_learning",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "JY6fLgR8Yq",
+      "replyto": null,
+      "cdate": 1652737362510,
+      "tmdate": 1770510479069,
+      "openreview_url": "https://openreview.net/forum?id=JY6fLgR8Yq",
+      "pdf_url": "https://openreview.net/pdf/d0054fa0eace11bed0bbe09c16ed88e304f12660.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "1tHAZRqftM",
+      "number": 1376,
+      "title": "Multi-task Self-supervised Graph Neural Networks Enable Stronger Task Generalization",
+      "authors": [
+        "Mingxuan Ju",
+        "Tong Zhao",
+        "Qianlong Wen",
+        "Wenhao Yu",
+        "Neil Shah",
+        "Yanfang Ye",
+        "Chuxu Zhang"
+      ],
+      "authorids": [
+        "~Mingxuan_Ju1",
+        "~Tong_Zhao3",
+        "~Qianlong_Wen1",
+        "~Wenhao_Yu2",
+        "~Neil_Shah2",
+        "~Yanfang_Ye1",
+        "~Chuxu_Zhang2"
+      ],
+      "abstract": "Self-supervised learning (SSL) for graph neural networks (GNNs) has attracted increasing attention from the graph machine learning community in recent years, owing to its capability to learn performant node embeddings without costly label information. One weakness of conventional SSL frameworks for GNNs is that they learn through a single philosophy, such as mutual information maximization or generative reconstruction. When applied to various downstream tasks, these frameworks rarely perform equally well for every task, because one philosophy may not span the extensive knowledge required for all tasks. To enhance the task generalization across tasks, as an important first step forward in exploring fundamental graph models, we introduce PARETOGNN, a multi-task SSL framework for node representation learning over graphs. Specifically, PARETOGNN is self-supervised by manifold pretext tasks observing multiple philosophies. To reconcile different philosophies, we explore a multiple-gradient descent algorithm, such that PARETOGNN actively learns from every pretext task while minimizing potential conflicts. We conduct comprehensive experiments over four downstream tasks (i.e., node classification, node clustering, link prediction, and partition prediction), and our proposal achieves the best overall performance across tasks on 11 widely adopted benchmark datasets. Besides, we observe that learning from multiple philosophies enhances not only the task generalization but also the single task performances, demonstrating that PARETOGNN achieves better task generalization via the disjoint yet complementary knowledge learned from different philosophies. Our code is publicly available at https://github.com/jumxglhf/ParetoGNN.",
+      "keywords": [
+        "Graph Neural Network",
+        "Self-supervised Learning"
+      ],
+      "tl_dr": "We present ParetoGNN, a novel multi-task self-supervised learning framework for graph neural networks, that enhances the task generalization across various downstream tasks and datasets.",
+      "venue": "ICLR 2023 poster",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "ju|multitask_selfsupervised_graph_neural_networks_enable_stronger_task_generalization",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "1tHAZRqftM",
+      "replyto": null,
+      "cdate": 1663849954495,
+      "tmdate": 1768388163473,
+      "openreview_url": "https://openreview.net/forum?id=1tHAZRqftM",
+      "pdf_url": "https://openreview.net/pdf/3b1a90ddbf7f8ee9be5ac7e8205cc1f71753740e.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "Euk5luAx_q",
+      "number": 948863,
+      "title": "Self-Consistent Graph Neural Networks for Semi-Supervised Node Classification",
+      "authors": [
+        "Yanbei Liu",
+        "Shichuan Zhao",
+        "Xiao Wang",
+        "Lei Geng",
+        "Zhitao Xiao",
+        "Jerry Chun-Wei Lin"
+      ],
+      "authorids": [
+        "~Yanbei_Liu1",
+        "https://dblp.org/search/pid/api?q=author:Shichuan_Zhao:",
+        "https://dblp.org/search/pid/api?q=author:Xiao_Wang_0017:",
+        "https://dblp.org/search/pid/api?q=author:Lei_Geng:",
+        "https://dblp.org/search/pid/api?q=author:Zhitao_Xiao:",
+        "~Jerry_Chun-Wei_Lin1"
+      ],
+      "abstract": "Graph Neural Networks (GNNs), the powerful graph representation technique based on deep learning, have attracted great research interest in recent years. Although many GNNs have achieved the state-of-the-art accuracy on a set of standard benchmark datasets, they are still limited to traditional semi-supervised framework and lack of sufficient supervision information, especially for the large amount of unlabeled data. To overcome this issue, we propose a novel self-consistent graph neural networks (SCGNN) framework to enrich the supervision information from two aspects: the self-consistency of unlabeled data and the label information of labeled data. First, in order to extract the <styled-content style=\"color:#000000\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">self-supervision information</styled-content> from the numerous unlabeled nodes, we perform graph data augmentation and leverage a self-consistent constraint to maximize the mutual information of the unlabeled nodes across different augmented graph views. The self-consistency can sufficiently utilize the intrinsic structural attributes of the graph to extract the <styled-content style=\"color:#000000\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">self-supervision information</styled-content> from unlabeled data and improve the subsequent classification result. Second, to further extract supervision information from scarce labeled nodes, we introduce a fusion mechanism to obtain comprehensive node embeddings by fusing node representations of two positive graph views, and optimize the classification loss over labeled nodes to maximize the utilization of label information. We conduct comprehensive empirical studies on six public benchmark datasets in node classification task. In terms of accuracy, SCGNN improves by an average of 2.08% over the best baseline, and specifically by 5.8% on the Disease dataset.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "IEEE Trans. Big Data 2023",
+      "venueid": "dblp.org/journals/TBD/2023",
+      "presentation_type": null,
+      "paperhash": "liu|selfconsistent_graph_neural_networks_for_semisupervised_node_classification",
+      "invitation": "dblp.org/-/record",
+      "forum": "Euk5luAx_q",
+      "replyto": null,
+      "cdate": 1690848000000,
+      "tmdate": 1769652965933,
+      "openreview_url": "https://openreview.net/forum?id=Euk5luAx_q",
+      "pdf_url": "https://ieeexplore.ieee.org/iel7/6687317/10177823/10100855.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "H1e552VKPr",
+      "number": 124,
+      "title": "Subgraph Attention for Node Classification and Hierarchical Graph Pooling",
+      "authors": [
+        "Sambaran Bandyopadhyay",
+        "Manasvi Aggarwal",
+        "M. N. Murty"
+      ],
+      "authorids": [
+        "sambaran.ban89@gmail.com",
+        "manasvia@iisc.ac.in",
+        "mnm@iisc.ac.in"
+      ],
+      "abstract": "Graph neural networks have gained significant interest from the research community for both node classification within a graph and graph classification within a set of graphs. Attention mechanism applied on the neighborhood of a node improves the performance of graph neural networks. Typically, it helps to identify a neighbor node which plays more important role to determine the label of the node under consideration. But in real world scenarios, a particular subset of nodes together, but not the individual nodes in the subset, may be important to determine the label of a node. To address this problem, we introduce the concept of subgraph attention for graphs. To show the efficiency of this, we use subgraph attention with graph convolution for node classification. We further use subgraph attention for the entire graph classification by proposing a novel hierarchical neural graph pooling architecture. Along with attention over the subgraphs, our pooling architecture also uses attention to determine the important nodes within a level graph and attention to determine the important levels in the whole hierarchy. Competitive performance over the state-of-the-arts for both node and graph classification shows the efficiency of the algorithms proposed in this paper.",
+      "keywords": [
+        "Graph Neural Network",
+        "Graph Attention",
+        "Graph Pooling",
+        "Node Classification",
+        "Graph Classification",
+        "Network Representation Learning"
+      ],
+      "tl_dr": "We propose a novel subgraph attention mechanism which can be readily used for node classification and we further propose a hierarchical graph classification technique using it.",
+      "venue": null,
+      "venueid": null,
+      "presentation_type": null,
+      "paperhash": "bandyopadhyay|subgraph_attention_for_node_classification_and_hierarchical_graph_pooling",
+      "invitation": "ICLR.cc/2020/Conference/-/Blind_Submission",
+      "forum": "H1e552VKPr",
+      "replyto": null,
+      "cdate": 1569438865637,
+      "tmdate": 1683306413518,
+      "openreview_url": "https://openreview.net/forum?id=H1e552VKPr",
+      "pdf_url": "https://openreview.net/pdf/b49a5a6125bacf96fba7f9c290053b71609c95e1.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    }
+  ]
+}

@@ -1,0 +1,397 @@
+{
+  "mode": "search",
+  "query": "graph contrastive learning node classification",
+  "group": "all",
+  "content": "all",
+  "source_filter": "papers",
+  "returned": 10,
+  "offset": 0,
+  "data": [
+    {
+      "id": "f_kvHrM4Q0",
+      "number": 7623,
+      "title": "Co-Modality Graph Contrastive Learning  for Imbalanced Node Classification",
+      "authors": [
+        "Yiyue Qian",
+        "Chunhui Zhang",
+        "Yiming Zhang",
+        "Qianlong Wen",
+        "Yanfang Ye",
+        "Chuxu Zhang"
+      ],
+      "authorids": [
+        "~Yiyue_Qian2",
+        "~Chunhui_Zhang1",
+        "~Yiming_Zhang4",
+        "~Qianlong_Wen1",
+        "~Yanfang_Ye1",
+        "~Chuxu_Zhang2"
+      ],
+      "abstract": "Graph contrastive learning (GCL), leveraging graph augmentations to convert graphs into different views and further train graph neural networks (GNNs), has achieved considerable success on graph benchmark datasets. Yet, there are still some gaps in directly applying existing GCL methods to real-world data. First, handcrafted graph augmentations require trials and errors, but still can not yield consistent performance on multiple tasks. Second, most real-world graph data present class-imbalanced distribution but existing GCL methods are not immune to data imbalance. Therefore, this work proposes to explicitly tackle these challenges, via a principled framework called \\textit{\\textbf{C}o-\\textbf{M}odality \\textbf{G}raph \\textbf{C}ontrastive \\textbf{L}earning} (\\textbf{CM-GCL}) to automatically generate contrastive pairs and further learn balanced representation over unlabeled data. Specifically, we design inter-modality GCL to automatically generate contrastive pairs (e.g., node-text) based on rich node content. Inspired by the fact that minority samples can be ``forgotten'' by pruning deep neural networks, we naturally extend network pruning to our GCL framework for mining minority nodes. Based on this, we co-train two pruned encoders (e.g., GNN and text encoder) in different modalities by pushing the corresponding node-text pairs together and the irrelevant node-text pairs away. Meanwhile, we propose intra-modality GCL by co-training non-pruned GNN and pruned GNN, to ensure node embeddings with similar attribute features stay closed. Last, we fine-tune the GNN encoder on downstream class-imbalanced node classification tasks. Extensive experiments demonstrate that our model significantly outperforms state-of-the-art baseline models and learns more balanced representations on real-world graphs. Our source code is available at https://github.com/graphprojects/CM-GCL.",
+      "keywords": [
+        "graph neural network",
+        "multi-modal learning",
+        "graph contrastive learning"
+      ],
+      "tl_dr": "We design a co-modality graph contrastive learning model with network pruning to learn graph representations on imbalanced data.",
+      "venue": "NeurIPS 2022 Accept",
+      "venueid": "NeurIPS.cc/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "qian|comodality_graph_contrastive_learning_for_imbalanced_node_classification",
+      "invitation": "NeurIPS.cc/2022/Conference/-/Blind_Submission",
+      "forum": "f_kvHrM4Q0",
+      "replyto": null,
+      "cdate": 1652737615572,
+      "tmdate": 1673774112193,
+      "openreview_url": "https://openreview.net/forum?id=f_kvHrM4Q0",
+      "pdf_url": "https://openreview.net/pdf/3de0a53287871c0b929292aa5a2281711a86d8c9.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "519VBzfEaKW",
+      "number": 10026,
+      "title": "InfoGCL: Information-Aware Graph Contrastive Learning",
+      "authors": [
+        "Dongkuan Xu",
+        "Wei Cheng",
+        "Dongsheng Luo",
+        "Haifeng Chen",
+        "Xiang Zhang"
+      ],
+      "authorids": [
+        "~Dongkuan_Xu2",
+        "~Wei_Cheng1",
+        "~Dongsheng_Luo1",
+        "~Haifeng_Chen1",
+        "~Xiang_Zhang4"
+      ],
+      "abstract": "Various graph contrastive learning models have been proposed to improve the performance of tasks on graph datasets in recent years. While effective and prevalent, these models are usually carefully customized. In particular, despite all recent work create two contrastive views, they differ in a variety of view augmentations, architectures, and objectives. It remains an open question how to build your graph contrastive learning model from scratch for particular graph tasks and datasets. In this work, we aim to fill this gap by studying how graph information is transformed and transferred during the contrastive learning process, and proposing an information-aware graph contrastive learning framework called InfoGCL. The key to the success of the proposed framework is to follow the Information Bottleneck principle to reduce the mutual information between contrastive parts while keeping task-relevant information intact at both the levels of the individual module and the entire framework so that the information loss during graph representation learning can be minimized. We show for the first time that all recent graph contrastive learning methods can be unified by our framework. Based on theoretical and empirical analysis on benchmark graph datasets, we show that InfoGCL achieves state-of-the-art performance in the settings of both graph classification and node classification tasks.",
+      "keywords": [
+        "Graph Representation Learning",
+        "Contrastive Learning",
+        "Information Bottleneck"
+      ],
+      "tl_dr": "We study how graph information is transformed and transferred during the contrastive learning process, and propose an information-aware graph contrastive learning framework called InfoGCL.",
+      "venue": "NeurIPS 2021 Poster",
+      "venueid": "NeurIPS.cc/2021/Conference",
+      "presentation_type": null,
+      "paperhash": "xu|infogcl_informationaware_graph_contrastive_learning",
+      "invitation": "NeurIPS.cc/2021/Conference/-/Blind_Submission",
+      "forum": "519VBzfEaKW",
+      "replyto": null,
+      "cdate": 1621630255300,
+      "tmdate": 1683307753649,
+      "openreview_url": "https://openreview.net/forum?id=519VBzfEaKW",
+      "pdf_url": "https://openreview.net/pdf/79dc45ca77e672dd36dcb6590680b2f8b9981eb6.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "YCgwkDo56q",
+      "number": 185,
+      "title": "Global-Local Graph Neural Networks for Node-Classification",
+      "authors": [
+        "Moshe Eliasof",
+        "Eran Treister"
+      ],
+      "authorids": [
+        "~Moshe_Eliasof1",
+        "~Eran_Treister1"
+      ],
+      "abstract": "The task of graph node-classification is often approached using a \\emph{local} Graph Neural Network (GNN), that learns only local information from the node input features and their adjacency. In this paper we propose to benefit from global and local information through the form of learning \\emph{label}- and \\emph{node}- features to improve node-classification accuracy. We therefore call our method Global-Local-GNN (GLGNN). To learn proper label features, for each label, we maximize the similarity between its features and nodes features that belong to the label, while maximizing the distance between nodes that do not belong to the considered label. We then use the learnt label features to predict the node-classification map. We demonstrate our GLGNN using GCN and GAT as GNN backbones, and show that our GLGNN approach improves baseline performance on the node-classification task.",
+      "keywords": [
+        "Graph Neural Networks",
+        "Deep Learning",
+        "Node classification"
+      ],
+      "tl_dr": "We propose a method to improve graph node-classification using global (label) information.",
+      "venue": "LoG 2022 Poster",
+      "venueid": "logconference.io/LOG/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "eliasof|globallocal_graph_neural_networks_for_nodeclassification",
+      "invitation": "logconference.io/LOG/2022/Conference/-/Blind_Submission",
+      "forum": "YCgwkDo56q",
+      "replyto": null,
+      "cdate": 1662812639850,
+      "tmdate": 1683308457612,
+      "openreview_url": "https://openreview.net/forum?id=YCgwkDo56q",
+      "pdf_url": "https://openreview.net/pdf/866593caaf54ba0206624a3c58ba3ac8b6c5b967.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "LiWGbK8_iOB",
+      "number": 3865,
+      "title": "G-Censor: Graph Contrastive Learning with Task-Oriented Counterfactual Views",
+      "authors": [
+        "tianqianjin lin",
+        "Yangyang Kang",
+        "Zhuoren Jiang",
+        "Xurui Li",
+        "Changlong Sun",
+        "cui huang",
+        "Xiaozhong Liu"
+      ],
+      "authorids": [
+        "~tianqianjin_lin1",
+        "~Yangyang_Kang1",
+        "~Zhuoren_Jiang2",
+        "~Xurui_Li1",
+        "~Changlong_Sun2",
+        "huangcui@zju.edu.cn",
+        "~Xiaozhong_Liu2"
+      ],
+      "abstract": "Graph Contrastive learning (GCL) has achieved great success in learning representations from unlabeled graph-structure data. However, how to automatically obtain the optimal contrastive views w.r.t specific downstream tasks is little studied. Theoretically, a downstream task can be causally correlated to particular sub-structures in graphs. The existing GCL methods may fail to enhance model performance on a given task when the task-related semantics are incomplete/preserved in the positive/negative views. To address this problem, we propose G-CENSOR, i.e., Graph Contrastive lEarniNg with taSk-oriented cOunteRfactual views, a model-agnostic framework designed for node property prediction tasks. G-CENSOR can simultaneously generate the optimal task-oriented counterfactual positive/negative views for raw ego-graphs and train graph neural networks (GNNs) with a contrastive objective between the raw ego-graphs and their corresponding counterfac-tual views. Extensive experiments on eight real-world datasets demonstrate that G-CENSOR can consistently outperform existing state-of-the-art GCL methods to improve the task performance and generalizability of a series of typical GNNs. To the best of our knowledge, this is a pioneer investigation to explore task-oriented graph contrastive learning from a counterfactual perspective in node property pre- diction tasks. We will release the source code after the review process.",
+      "keywords": [
+        "graph contrastive learning",
+        "node property prediction",
+        "task-oriented counterfactual views"
+      ],
+      "tl_dr": "Graph Contrastive learning with task-oriented counterfactual positive/negative views, a model-agnostic framework designed for node property prediction tasks.",
+      "venue": "Submitted to ICLR 2023",
+      "venueid": "ICLR.cc/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "lin|gcensor_graph_contrastive_learning_with_taskoriented_counterfactual_views",
+      "invitation": "ICLR.cc/2023/Conference/-/Blind_Submission",
+      "forum": "LiWGbK8_iOB",
+      "replyto": null,
+      "cdate": 1663850253146,
+      "tmdate": 1676330862648,
+      "openreview_url": "https://openreview.net/forum?id=LiWGbK8_iOB",
+      "pdf_url": "https://openreview.net/pdf/3c8bd45f38e3a2f19a8278e960478bcae781c576.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "H1e552VKPr",
+      "number": 124,
+      "title": "Subgraph Attention for Node Classification and Hierarchical Graph Pooling",
+      "authors": [
+        "Sambaran Bandyopadhyay",
+        "Manasvi Aggarwal",
+        "M. N. Murty"
+      ],
+      "authorids": [
+        "sambaran.ban89@gmail.com",
+        "manasvia@iisc.ac.in",
+        "mnm@iisc.ac.in"
+      ],
+      "abstract": "Graph neural networks have gained significant interest from the research community for both node classification within a graph and graph classification within a set of graphs. Attention mechanism applied on the neighborhood of a node improves the performance of graph neural networks. Typically, it helps to identify a neighbor node which plays more important role to determine the label of the node under consideration. But in real world scenarios, a particular subset of nodes together, but not the individual nodes in the subset, may be important to determine the label of a node. To address this problem, we introduce the concept of subgraph attention for graphs. To show the efficiency of this, we use subgraph attention with graph convolution for node classification. We further use subgraph attention for the entire graph classification by proposing a novel hierarchical neural graph pooling architecture. Along with attention over the subgraphs, our pooling architecture also uses attention to determine the important nodes within a level graph and attention to determine the important levels in the whole hierarchy. Competitive performance over the state-of-the-arts for both node and graph classification shows the efficiency of the algorithms proposed in this paper.",
+      "keywords": [
+        "Graph Neural Network",
+        "Graph Attention",
+        "Graph Pooling",
+        "Node Classification",
+        "Graph Classification",
+        "Network Representation Learning"
+      ],
+      "tl_dr": "We propose a novel subgraph attention mechanism which can be readily used for node classification and we further propose a hierarchical graph classification technique using it.",
+      "venue": null,
+      "venueid": null,
+      "presentation_type": null,
+      "paperhash": "bandyopadhyay|subgraph_attention_for_node_classification_and_hierarchical_graph_pooling",
+      "invitation": "ICLR.cc/2020/Conference/-/Blind_Submission",
+      "forum": "H1e552VKPr",
+      "replyto": null,
+      "cdate": 1569438865637,
+      "tmdate": 1683306413518,
+      "openreview_url": "https://openreview.net/forum?id=H1e552VKPr",
+      "pdf_url": "https://openreview.net/pdf/b49a5a6125bacf96fba7f9c290053b71609c95e1.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "dK8vOIBENa3",
+      "number": 8,
+      "title": "Transductive Linear Probing: A Novel Framework for Few-Shot Node Classification",
+      "authors": [
+        "Zhen Tan",
+        "Song Wang",
+        "Kaize Ding",
+        "Jundong Li",
+        "huan liu"
+      ],
+      "authorids": [
+        "~Zhen_Tan2",
+        "~Song_Wang6",
+        "~Kaize_Ding1",
+        "~Jundong_Li2",
+        "~huan_liu1"
+      ],
+      "abstract": "Few-shot node classification is tasked to provide accurate predictions for nodes from novel classes with only few representative labeled nodes. This problem has drawn tremendous attention for its projection to prevailing real-world applications, such as product categorization for newly added commodity categories on an E-commerce platform with scarce records or diagnoses for rare diseases on a patient similarity graph. To tackle such challenging label scarcity issues in the non-Euclidean graph domain, meta-learning has become a successful and predominant paradigm. More recently, inspired by the development of graph self-supervised learning, transferring pretrained node embeddings for few-shot node classification could be a promising alternative to meta-learning but remains unexposed. In this work, we empirically demonstrate the potential of an alternative framework, \\textit{Transductive Linear Probing}, that transfers pretrained node embeddings, which are learned from graph contrastive learning methods. We further extend the setting of few-shot node classification from standard fully supervised to a more realistic self-supervised setting, where meta-learning methods cannot be easily deployed due to the shortage of supervision from training classes. Surprisingly, even without any ground-truth labels, transductive linear probing with self-supervised graph contrastive pretraining can outperform the state-of-the-art fully supervised meta-learning based methods under the same protocol. We hope this work can shed new light on few-shot node classification problems and foster future research on learning from scarcely labeled instances on graphs.",
+      "keywords": [
+        "node classification",
+        "few-shot learning",
+        "graph neural networks",
+        "graph contrastive learning"
+      ],
+      "tl_dr": "In this paper, we propose Transductive Linear Probing as an alternative approach for meta-learning to few-shot node classification.",
+      "venue": "LoG 2022 Oral",
+      "venueid": "logconference.io/LOG/2022/Conference",
+      "presentation_type": null,
+      "paperhash": "tan|transductive_linear_probing_a_novel_framework_for_fewshot_node_classification",
+      "invitation": "logconference.io/LOG/2022/Conference/-/Blind_Submission",
+      "forum": "dK8vOIBENa3",
+      "replyto": null,
+      "cdate": 1662812619982,
+      "tmdate": 1770510583555,
+      "openreview_url": "https://openreview.net/forum?id=dK8vOIBENa3",
+      "pdf_url": "https://openreview.net/pdf/2d367837cc7872cfc75f7a0072f983760223a3a3.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "RRw29XQfQU",
+      "number": 699708,
+      "title": "Supervised Graph Contrastive Learning for Few-Shot Node Classification",
+      "authors": [
+        "Zhen Tan",
+        "Kaize Ding",
+        "Ruocheng Guo",
+        "Huan Liu"
+      ],
+      "authorids": [
+        "~Zhen_Tan2",
+        "https://dblp.org/search/pid/api?q=author:Kaize_Ding:",
+        "~Ruocheng_Guo1",
+        "https://dblp.org/search/pid/api?q=author:Huan_Liu_0001:"
+      ],
+      "abstract": "Graphs present in many real-world applications, such as financial fraud detection, commercial recommendation, and social network analysis. But given the high cost of graph annotation or labeling, we face a severe graph label-scarcity problem, i.e., a graph might have a few labeled nodes. One example of such a problem is the so-called few-shot node classification. A predominant approach to this problem resorts to episodic meta-learning. In this work, we challenge the status quo by asking a fundamental question whether meta-learning is a must for few-shot node classification tasks. We propose a new and simple framework under the standard few-shot node classification setting as an alternative to meta-learning to learn an effective graph encoder. The framework consists of supervised graph contrastive learning with novel mechanisms for data augmentation, subgraph encoding, and multi-scale contrast on graphs. Extensive experiments on three benchmark datasets (CoraFull, Reddit, Ogbn) show that the new framework significantly outperforms state-of-the-art meta-learning based methods.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "ECML/PKDD (2) 2022",
+      "venueid": "dblp.org/conf/PKDD/2022",
+      "presentation_type": null,
+      "paperhash": "tan|supervised_graph_contrastive_learning_for_fewshot_node_classification",
+      "invitation": "dblp.org/-/record",
+      "forum": "RRw29XQfQU",
+      "replyto": null,
+      "cdate": 1640995200000,
+      "tmdate": 1727452704044,
+      "openreview_url": "https://openreview.net/forum?id=RRw29XQfQU",
+      "pdf_url": null,
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "iVFBJKv__u",
+      "number": 558795,
+      "title": "Concordant Contrastive Learning for Semi-supervised Node Classification on Graph",
+      "authors": [
+        "Daqing Wu",
+        "Xiao Luo",
+        "Xiangyang Guo",
+        "Chong Chen",
+        "Minghua Deng",
+        "Jinwen Ma"
+      ],
+      "authorids": [
+        "https://dblp.org/search/pid/api?q=author:Daqing_Wu:",
+        "https://dblp.org/search/pid/api?q=author:Xiao_Luo_0001:",
+        "https://dblp.org/search/pid/api?q=author:Xiangyang_Guo:",
+        "~Chong_Chen2",
+        "~Minghua_Deng2",
+        "~Jinwen_Ma1"
+      ],
+      "abstract": "Semi-supervised object classification has been a fundamental problem in relational data modeling recently. The problem has been extensively studied in the literature of graph neural networks (GNNs). Based on the homophily assumption, GNNs smooth the features of the adjacent nodes, resulting in hybrid class distributions in the feature space when the labeled nodes are scarce. Besides, the existing methods inherently suffer from the non-robustness, due to the deterministic propagation. To address the above two limitations, we propose a novel method Concordant Contrastive Learning (CCL) for semi-supervised node classification on graph. Specifically, we generate two group data augmentations by randomly masking node features and separately perform node feature propagation with low- and high-order graph topology information. Further, we design two granularity regularization losses. The coarse-grained regularization loss (i.e., center-level contrastive loss) preserves the identity of each class against the rest, which benefits to guide the discriminative class distributions. The fine-grained regularization loss (i.e., instance-level contrastive loss) enforces consistency between soft assignments for different augmentations of the same node. Extensive experiments on different benchmark datasets imply that CCL significantly outperforms a wide range of state-of-the-art baselines on the task of semi-supervised node classification.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "ICONIP (1) 2021",
+      "venueid": "dblp.org/conf/ICONIP/2021",
+      "presentation_type": null,
+      "paperhash": "wu|concordant_contrastive_learning_for_semisupervised_node_classification_on_graph",
+      "invitation": "dblp.org/-/record",
+      "forum": "iVFBJKv__u",
+      "replyto": null,
+      "cdate": 1609459200000,
+      "tmdate": 1700056801007,
+      "openreview_url": "https://openreview.net/forum?id=iVFBJKv__u",
+      "pdf_url": null,
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "axOvi2Ie7Hk",
+      "number": 402688,
+      "title": "Concordant Contrastive Learning for Semi-supervised Node Classification on Graph",
+      "authors": [
+        "Daqing Wu",
+        "Xiao Luo",
+        "Xiangyang Guo",
+        "Chong Chen",
+        "Minghua Deng",
+        "Jinwen Ma"
+      ],
+      "authorids": [
+        "https://dblp.org/search/pid/api?q=author:Daqing_Wu:",
+        "~Xiao_Luo2",
+        "https://dblp.org/search/pid/api?q=author:Xiangyang_Guo:",
+        "https://dblp.org/search/pid/api?q=author:Chong_Chen_0002:",
+        "https://dblp.org/search/pid/api?q=author:Minghua_Deng:",
+        "https://dblp.org/search/pid/api?q=author:Jinwen_Ma:"
+      ],
+      "abstract": "Semi-supervised object classification has been a fundamental problem in relational data modeling recently. The problem has been extensively studied in the literature of graph neural networks (GNNs). Based on the homophily assumption, GNNs smooth the features of the adjacent nodes, resulting in hybrid class distributions in the feature space when the labeled nodes are scarce. Besides, the existing methods inherently suffer from the non-robustness, due to the deterministic propagation. To address the above two limitations, we propose a novel method Concordant Contrastive Learning (CCL) for semi-supervised node classification on graph. Specifically, we generate two group data augmentations by randomly masking node features and separately perform node feature propagation with low- and high-order graph topology information. Further, we design two granularity regularization losses. The coarse-grained regularization loss (i.e., center-level contrastive loss) preserves the identity of each class against the rest, which benefits to guide the discriminative class distributions. The fine-grained regularization loss (i.e., instance-level contrastive loss) enforces consistency between soft assignments for different augmentations of the same node. Extensive experiments on different benchmark datasets imply that CCL significantly outperforms a wide range of state-of-the-art baselines on the task of semi-supervised node classification.",
+      "keywords": [],
+      "tl_dr": null,
+      "venue": "ICONIP (1) 2021",
+      "venueid": "dblp.org/conf/ICONIP/2021",
+      "presentation_type": null,
+      "paperhash": "wu|concordant_contrastive_learning_for_semisupervised_node_classification_on_graph",
+      "invitation": "dblp.org/-/record",
+      "forum": "axOvi2Ie7Hk",
+      "replyto": null,
+      "cdate": 1609459200000,
+      "tmdate": 1668472639139,
+      "openreview_url": "https://openreview.net/forum?id=axOvi2Ie7Hk",
+      "pdf_url": null,
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    },
+    {
+      "id": "Vkv4vh7kkz",
+      "number": 648,
+      "title": "Contrastive Learning for Supervised Graph Matching",
+      "authors": [
+        "Gathika Ratnayaka",
+        "Qing Wang",
+        "Yang Li"
+      ],
+      "authorids": [
+        "~Gathika_Ratnayaka1",
+        "~Qing_Wang14",
+        "~Yang_Li64"
+      ],
+      "abstract": "Deep graph matching techniques have shown promising results in recent years. In this work, we cast deep graph matching as a contrastive learning task and introduce a new objective function for contrastive mapping to exploit the relationships between matches and non-matches. To this end, we develop a hardness attention mechanism to select negative samples which captures the relatedness and informativeness of positive and negative samples. Further, we propose a novel deep graph matching framework, Stable Graph Matching (StableGM), which incorporates Sinkhorn ranking into a stable marriage algorithm to efficiently compute one-to-one node correspondences between graphs. We prove that the proposed objective function for contrastive matching is both positive and negative informative, offering theoretical guarantees to achieve dual-optimality in graph matching. We empirically verify the effectiveness of our proposed approach by conducting experiments on standard graph matching benchmarks.",
+      "keywords": [
+        "Graph Matching",
+        "Contrastive Learning",
+        "Deep Learning"
+      ],
+      "tl_dr": "This paper introduces a contrastive learning framework for deep graph matching.",
+      "venue": "UAI 2023",
+      "venueid": "auai.org/UAI/2023/Conference",
+      "presentation_type": null,
+      "paperhash": "ratnayaka|contrastive_learning_for_supervised_graph_matching",
+      "invitation": "auai.org/UAI/2023/Conference/-/Blind_Submission",
+      "forum": "Vkv4vh7kkz",
+      "replyto": null,
+      "cdate": 1676827104224,
+      "tmdate": 1687786888158,
+      "openreview_url": "https://openreview.net/forum?id=Vkv4vh7kkz",
+      "pdf_url": "https://openreview.net/pdf/40ae495b7d0e92d91cb0da01f44fb81e80b44d3a.pdf",
+      "external_url": null,
+      "replies": [],
+      "source": "openreview"
+    }
+  ]
+}

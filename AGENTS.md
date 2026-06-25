@@ -20,6 +20,7 @@ For copied Codex installs, use:
 - 2026-06-25：补充 GCL 节点分类研究契约、benchmark 协议、research brief 与 Codex reviewer 配置，并同步本次更新到 GitHub。
 - 2026-06-25：初始化 `research-wiki/` 持久研究知识库，创建论文、idea、实验、claim 与关系图目录，后续文献、想法、实验和 claim 需持续写入该知识库。
 - 2026-06-25：修复 Stage 0 初始化协议，删除误写入的 shell heredoc 文本，并将阶段决策、协议变更、失败 idea 和证据状态统一记录到 `research-wiki/`。
+- 2026-06-25：完成 Stage 1 文献调研与 research-wiki 更新，生成 GCL 文献地图、benchmark protocol 对照、gap candidates、method transfer pool 和 Stage 1 报告；记录外部源可用性与不可用影响。
 
 # GCL Node Classification Research Contract
 
