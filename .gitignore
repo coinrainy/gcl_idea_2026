@@ -1,0 +1,33 @@
+# Python / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Logs and experiment artifacts
+*.log
+logs/
+runs/
+outputs/
+checkpoints/
+wandb/
+tensorboard/
+
+# Large local data
+data/
+datasets/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+
+# Local ARIS skill symlinks; reinstall from .aris manifest instead.
+.agents/skills/
