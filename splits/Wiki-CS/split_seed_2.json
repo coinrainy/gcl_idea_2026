@@ -24,8 +24,8 @@
     "8": 75,
     "9": 214
   },
-  "commit_hash": "303a04a58c5922db02abb3c2c8ce8a8f185c0345",
-  "created_at": "2026-06-25T17:05:53Z",
+  "commit_hash": "3e3126a4835186920e39dc9f250c6472aaa1638e",
+  "created_at": "2026-06-25T17:16:32Z",
   "created_by": "stage3_1_6_controlled_split_generation",
   "dataset_name": "Wiki-CS",
   "num_nodes": 11701,

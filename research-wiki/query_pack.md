@@ -170,4 +170,18 @@ Split status:
 
 Stage 3.1.6 executor verdict: `GO` because at least two datasets completed metadata + validated split JSON. Fresh `gcl_experiment_auditor` verdict: `WARN`.
 
-This only allows Stage 3.2 planning / implementation approval. Stage 3.2 pilot run remains disallowed until a separate approval. Any Cora-including pilot/GPU run is blocked until Cora has a validated `custom_stratified_random_1_1_8` split, or Stage 3.2 scope is explicitly narrowed and recorded. Do not mix Cora custom, Wiki-CS official and Actor fixed split results in one directly comparable main table.
+This only allows Stage 3.2 planning / implementation approval. Stage 3.2 pilot run remains disallowed until a separate approval. Do not mix Cora custom, Wiki-CS official and Actor fixed split results in one directly comparable main table.
+
+### Stage 3.1.6 Cora Fix
+
+Cora data access was repaired after the initial `FSTimeoutError`. The code still uses PyG `Planetoid`; if the default `github.com/.../raw/...` endpoint times out, it temporarily switches `Planetoid.url` to the same official `kimiyoung/planetoid` raw GitHub endpoint and lets the PyG loader download/process the dataset.
+
+Current Cora status:
+
+- Metadata: `dataset_metadata/stage3_1_6/Cora.json`
+- Split files: `splits/Cora/split_seed_0.json`, `splits/Cora/split_seed_1.json`, `splits/Cora/split_seed_2.json`
+- Split type: `custom_stratified_random_1_1_8`
+- Split counts: train 271 / validation 271 / test 2166
+- `class_distribution_test=null`
+
+Current Stage 3.1.6 data status: Cora, Wiki-CS and Actor all have metadata + validated split JSON. No training, evaluator, GPU use, baseline clone, accuracy/loss/performance table, completed experiment or pilot run has occurred.

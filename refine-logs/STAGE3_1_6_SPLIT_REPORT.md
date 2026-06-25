@@ -6,12 +6,15 @@ Date: 2026-06-26
 
 | dataset | loader backend | split action | block reason |
 | --- | --- | --- | --- |
-| Cora | pyg_planetoid | not_written | FSTimeoutError: FSTimeoutError() |
+| Cora | pyg_planetoid | written |  |
 | Wiki-CS | pyg_wikics | written |  |
 | Actor | pyg_actor | written |  |
 
 ## Split Files Written
 
+- `splits/Cora/split_seed_0.json`
+- `splits/Cora/split_seed_1.json`
+- `splits/Cora/split_seed_2.json`
 - `splits/Wiki-CS/split_seed_0.json`
 - `splits/Wiki-CS/split_seed_1.json`
 - `splits/Wiki-CS/split_seed_2.json`
@@ -21,6 +24,9 @@ Date: 2026-06-26
 
 ## Split Files Validated
 
+- `splits/Cora/split_seed_0.json`
+- `splits/Cora/split_seed_1.json`
+- `splits/Cora/split_seed_2.json`
 - `splits/Wiki-CS/split_seed_0.json`
 - `splits/Wiki-CS/split_seed_1.json`
 - `splits/Wiki-CS/split_seed_2.json`
@@ -30,7 +36,7 @@ Date: 2026-06-26
 
 ## Blocked Datasets
 
-- Cora: FSTimeoutError: FSTimeoutError()
+- none
 
 ## Split Types
 

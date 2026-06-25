@@ -74,3 +74,7 @@
 | 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_REPORT.md | implementation | Stage 3.1.6 final report |
 | 2026-06-26 01:30 | stage3.1.6-controlled-data | refine-logs/STAGE3_1_6_AUDITOR_REPORT.md | implementation | fresh auditor report |
 | 2026-06-26 01:30 | stage3.1.6-controlled-data | .aris/traces/stage3_1_6_data_access/STAGE3_1_6_AUDITOR_REPORT.md | implementation | auditor trace copy |
+| 2026-06-26 01:50 | stage3.1.6-cora-fix | refine-logs/STAGE3_1_6_CORA_FIX_REPORT.md | implementation | Cora PyG Planetoid endpoint fallback and split fix report |
+| 2026-06-26 01:50 | stage3.1.6-cora-fix | splits/Cora/ | implementation | validated custom stratified Cora split JSON files |
+| 2026-06-26 01:50 | stage3.1.6-cora-fix | refine-logs/STAGE3_1_6_CORA_FIX_AUDITOR_REPORT.md | implementation | fresh auditor report after Cora fix |
+| 2026-06-26 01:50 | stage3.1.6-cora-fix | .aris/traces/stage3_1_6_cora_fix/STAGE3_1_6_CORA_FIX_AUDITOR_REPORT.md | implementation | auditor trace copy after Cora fix |

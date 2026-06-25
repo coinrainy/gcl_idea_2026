@@ -5,11 +5,11 @@ Data access mode: `controlled_download`
 
 ## Datasets Checked
 
-| dataset | loader backend | download attempted | download/read success | local cache path | loader status | error |
-| --- | --- | --- | --- | --- | --- | --- |
-| Cora | pyg_planetoid | yes | no | data/Planetoid | loader_error | FSTimeoutError: FSTimeoutError() |
-| Wiki-CS | pyg_wikics | yes | yes | data/WikiCS | available |  |
-| Actor | pyg_actor | yes | yes | data/Actor | available |  |
+| dataset | loader backend | download attempted | download/read success | download source | local cache path | loader status | error |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Cora | pyg_planetoid | yes | yes | pyg_official_loader_cache_reread_after_raw_github_endpoint_fallback | data/Planetoid | available |  |
+| Wiki-CS | pyg_wikics | yes | yes | pyg_official_loader | data/WikiCS | available |  |
+| Actor | pyg_actor | yes | yes | pyg_official_loader | data/Actor | available |  |
 
 ## Metadata Files Written
 
@@ -19,7 +19,7 @@ Data access mode: `controlled_download`
 
 ## Blocked Datasets
 
-- Cora
+- none
 
 ## Split Files Written
 
@@ -38,3 +38,7 @@ Data access mode: `controlled_download`
 - accuracy/loss/performance table generated: no
 - downloaded datasets outside Cora/Wiki-CS/Actor: no
 - loader source: PyG official dataset loaders only
+
+## Cora Provenance Note
+
+Cora initially triggered the PyG Planetoid fallback path because the default `github.com/.../raw/...` endpoint timed out. The fallback still used `torch_geometric.datasets.Planetoid`, with `Planetoid.url` temporarily set to the same official `kimiyoung/planetoid` repository through `raw.githubusercontent.com`. The final metadata regeneration read the local PyG cache produced by that fallback, so the Cora metadata records `pyg_official_loader_cache_reread_after_raw_github_endpoint_fallback`.
