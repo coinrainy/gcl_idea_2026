@@ -5,6 +5,7 @@
 - 2026-06-25T13:05:00Z：Stage 0 协议审查完成。fresh gcl_experiment_auditor verdict=PASS，blocking_issues=none，决策=GO；允许进入 Stage 1 文献调研，但本轮不启动 Stage 1。
 - 2026-06-25T13:35:00Z：Stage 1 文献调研完成。已更新 notes/METHOD_TRANSFER_POOL.md、notes/GCL_LITERATURE_MAP.md、notes/GCL_BENCHMARK_PROTOCOLS.md、notes/GCL_GAP_CANDIDATES.md、research-wiki/papers/、gap_map.md 与 query_pack.md。数据源状态：arXiv 成功，OpenReview 部分成功且限流，Semantic Scholar 429，DeepXiv CLI 缺失，Exa 缺少 API key。Stage 1 verdict=GO；本轮不进入 Stage 2。
 - 2026-06-25T14:05:00Z：Stage 1.5 closest-work 精读与协议补全完成。已生成 SOURCE_RECOVERY_REPORT、CORE_CLOSEST_WORK_READING、CORE_PAPER_PROTOCOL_AUDIT、CLOSEST_WORK_DELTA_TABLE 与 STAGE1_5_DEEPEN_REPORT；补下载并解析 high-risk PDF；Semantic Scholar 仅部分恢复，DeepXiv/Exa 仍不可用。Stage 1.5 verdict=GO；本轮不进入 Stage 2。
+- 2026-06-25T14:20:00Z：修复 DeepXiv 数据源。已安装 deepxiv-sdk 0.3.1，并修补 `/root/aris_repo/tools/deepxiv_fetch.py` 以兼容 SDK 0.3.1 的 search JSON 输出；health/search/paper-brief 验证通过。
 - `2026-06-25T13:19:29Z` ingest_paper: ingested paper:zhu2020_deep_graph_contrastive (arxiv:2006.04131)
 - `2026-06-25T13:19:41Z` ingest_paper: ingested paper:zhu2020_graph_contrastive_learning (arxiv:2010.14945)
 - `2026-06-25T13:19:42Z` ingest_paper: ingested paper:xia2021_progcl_rethinking_hard (arxiv:2110.02027)

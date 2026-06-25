@@ -9,7 +9,7 @@
 ## 2. Sources Still Unavailable
 
 - Semantic Scholar remains rate-limited for most queries: repeated HTTP 429.
-- DeepXiv remains unavailable: `deepxiv` CLI not installed; ARIS wrapper depends on it.
+- DeepXiv was unavailable during Stage 1.5 because `deepxiv` CLI was not installed; it has since been fixed by installing `deepxiv-sdk==0.3.1` and patching the ARIS adapter for SDK 0.3.1 JSON output.
 - Exa remains unavailable: `EXA_API_KEY` is empty.
 - OpenReview reviews were not reliably extracted; HLCL and G-Censor final acceptance status remain `UNCLEAR`.
 
@@ -19,6 +19,7 @@
 - Extracted PDF text locally with `pypdf`.
 - Used OpenReview/WebSearch snippets for status checks.
 - Preserved `UNCLEAR` where exact protocol or decision was not explicit.
+- DeepXiv is now available for future supplemental retrieval.
 
 ## 4. High-Risk Closest Works Read
 

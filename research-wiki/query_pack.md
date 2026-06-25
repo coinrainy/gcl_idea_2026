@@ -6,7 +6,7 @@ GCL for node classification with strict evaluation integrity. Stage 2 may use th
 
 ## Source Reliability
 
-arXiv/PDF recovery succeeded for high-risk closest works. Semantic Scholar is still rate-limited except BGRL metadata. DeepXiv unavailable because CLI missing. Exa unavailable because `EXA_API_KEY` is empty. OpenReview partly recovered; HLCL and G-Censor acceptance status remain `UNCLEAR`.
+arXiv/PDF recovery succeeded for high-risk closest works. Semantic Scholar is still rate-limited except BGRL metadata. DeepXiv has been fixed after Stage 1.5 (`deepxiv-sdk==0.3.1`, adapter search/brief verified). Exa unavailable because `EXA_API_KEY` is empty. OpenReview partly recovered; HLCL and G-Censor acceptance status remain `UNCLEAR`.
 
 ## Top Closest Works
 

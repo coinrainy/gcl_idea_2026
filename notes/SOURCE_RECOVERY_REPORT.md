@@ -23,9 +23,13 @@ which deepxiv || true
 deepxiv --help || true
 ```
 
-Result: `deepxiv` CLI not found. ARIS wrapper exists at `/root/aris_repo/tools/deepxiv_fetch.py`, but it requires the missing CLI.
+Original Stage 1.5 result: `deepxiv` CLI not found. ARIS wrapper exists at `/root/aris_repo/tools/deepxiv_fetch.py`, but it requires the missing CLI.
 
-Compensation: use downloaded arXiv PDFs, OpenReview pages, official conference PDFs, and WebSearch snippets.
+Fix after Stage 1.5: installed `deepxiv-sdk==0.3.1`, patched the ARIS adapter to avoid the deprecated `--mode` argument, and verified health/search/paper-brief.
+
+Current status: available.
+
+Compensation is no longer required for future DeepXiv-backed retrieval, although prior Stage 1/1.5 reports remain valid historical snapshots.
 
 ## Exa
 
@@ -56,4 +60,4 @@ Newly downloaded/read PDFs include AFGRL, CCA-SSG, Graph Barlow Twins, GraphMAE2
 
 ## Remaining Coverage Risk
 
-S2 citation/DOI coverage remains incomplete. OpenReview review details remain under-extracted. This does not block Stage 2 gap ideation, but it does block SOTA claims and any direct comparability claim.
+S2 citation/DOI coverage remains incomplete. OpenReview review details remain under-extracted. DeepXiv is now available for future follow-up retrieval. This does not block Stage 2 gap ideation, but it does block SOTA claims and any direct comparability claim.

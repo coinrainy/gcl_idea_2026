@@ -22,6 +22,7 @@ For copied Codex installs, use:
 - 2026-06-25：修复 Stage 0 初始化协议，删除误写入的 shell heredoc 文本，并将阶段决策、协议变更、失败 idea 和证据状态统一记录到 `research-wiki/`。
 - 2026-06-25：完成 Stage 1 文献调研与 research-wiki 更新，生成 GCL 文献地图、benchmark protocol 对照、gap candidates、method transfer pool 和 Stage 1 报告；记录外部源可用性与不可用影响。
 - 2026-06-25：完成 Stage 1.5 数据源修复与 closest-work 精读，补充 high-risk 论文 PDF、协议审计、closest-work delta 表和 query_pack；仍禁止将 published result 视为 directly comparable，除非后续按项目协议重跑或完全证明一致。
+- 2026-06-25：修复 DeepXiv 数据源，安装 `deepxiv-sdk==0.3.1`，并修补 ARIS DeepXiv adapter 的 deprecated `--mode` JSON 兼容问题；`health`、`search`、`paper-brief` 均验证通过。
 
 # GCL Node Classification Research Contract
 
