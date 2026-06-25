@@ -1,0 +1,1480 @@
+
+
+--- PAGE 1 ---
+Khan-GCL: Kolmogorov–Arnold Network Based Graph Contrastive Learning with
+Hard Negatives
+Zihu Wang, Boxun Xu, Hejia Geng, Peng Li
+University of California, Santa Barbara
+{zihu wang, boxunxu, hejia, lip}@ucsb.edu
+Abstract
+Graph contrastive learning (GCL) has demonstrated great
+promise for learning generalizable graph representations from
+unlabeled data. However, conventional GCL approaches face
+two critical limitations: (1) the restricted expressive capac-
+ity of multilayer perceptron (MLP) based encoders, and (2)
+suboptimal negative samples that are either generated from
+random augmentations—failing to provide effective ‘hard neg-
+atives’—or hard negatives crafted without addressing the se-
+mantic distinctions crucial for discriminating graph data. To
+this end, we propose Khan-GCL, a novel framework that inte-
+grates the Kolmogorov–Arnold Network (KAN) into the GCL
+encoder architecture, substantially enhancing its representa-
+tional capacity. Furthermore, we exploit the rich information
+embedded within KAN coefficient parameters to develop two
+novel critical feature identification techniques that enable the
+generation of semantically meaningful hard negative samples
+for each graph representation. These strategically constructed
+hard negatives guide the encoder to learn more discriminative
+features by emphasizing critical semantic differences between
+graphs. Extensive experiments demonstrate that our approach
+achieves state-of-the-art performance compared to existing
+GCL methods across a variety of datasets and tasks.
+1 Introduction
+Graph Neural Networks (GNNs) are a class of machine learn-
+ing models designed to learn from graph-structured data and
+are critical for tasks such as social network analysis, molec-
+ular property prediction, and recommendation systems. In-
+tegrating self-supervised contrastive learning (CL) that has
+gained popularity across a variety of domains (Oord, Li, and
+Vinyals 2018; Chen et al. 2020; Gao, Yao, and Chen 2021;
+Radford et al. 2021; Wang, Somayaji, and Li 2024; Wang
+et al. 2023a,b, 2024b) into graph learning has given rise to
+Graph Contrastive Learning (GCL), enabling pre-training
+GNN encoders from unlabeled graph data (Veliˇckovi´c et al.
+2018; You et al. 2020; Zhu et al. 2020; You et al. 2021).
+However, how to train good GCL models for real-world ap-
+plications where labeled graphs are unavailable is confronted
+with two challenges. First, existing GCL models employ
+Multilayer Perceptron (MLP)-based encoders while facing
+a dilemma: shallow MLPs limit the generalization ability of
+the encoder (Zhang et al. 2024) while deep MLPs can easily
+overfit (Chen et al. 2022; Rong et al. 2019). In addition, deep
+GNN encoders can overcompress, distort, or homogenize
+node features, making node representations indistinguishable
+from each other and leading to performance degradations (Li,
+Han, and Wu 2018). These difficulties have rendered use of
+MLP encoders with a limited depth. But in general, while be-
+ing critical, striking a good balance between expressiveness
+and need for mitigating deep GNNs’ inherent limitations is
+difficult.
+Second, the performance of GCL heavily relies on the
+construction of augmented graph data pairs. Positive pairs
+consist of views derived from the same graph using aug-
+mentations (You et al. 2020, 2021), which help the encoder
+learn semantically similar graph features. Conversely, neg-
+ative pairs, comprising different graphs, provide crucial in-
+formation about semantic differences and thus encourage the
+learning of discriminative features (You et al. 2020, 2021;
+Xia et al. 2021). In the CL literature, hard negatives refer
+to samples from different classes that share similar latent
+semantic features with a target data point. Recent studies
+(Kalantidis et al. 2020; Xia et al. 2021; Luo et al. 2023; Wang
+et al. 2024a) demonstrate that incorporating such hard neg-
+atives significantly improves the encoder’s performance on
+downstream tasks by making contrastive loss minimization
+more challenging. However, generating high-quality hard
+negatives remains a non-trivial task. The methods in (Chen
+et al. 2020; Cui et al. 2021) enlarge the training batch size to
+include more negatives, but without guaranteeing inclusion
+of more hard negatives, this can lead to performance degra-
+dation(Kalantidis et al. 2020). Additionally, the absence of
+labels in unsupervised pre-training renders the introduction
+of ‘false negatives’, formed by pairs of samples belonging
+to the same class (Kalantidis et al. 2020; Xia et al. 2021).
+Adversarial approaches generate negatives without explicitly
+identifying which latent features are most crucial to discrimi-
+nate negative pairs (Hu et al. 2021; Luo et al. 2023; Zhang,
+Yang, and Shi 2024; Wang et al. 2024a). Therefore, more
+effective methods are desired for generating hard negative
+pairs to improve the performance of GCL.
+We believe that tackling the challenges brought by lack of
+labeled graph data and the inherent GNN problems in real-
+world applications requires advances in both GCL model
+architecture and data augmentation. To this end, we propose
+Khan-GCL: KAN-based hard negative generation for GCL.
+In terms of model architecture, we replace typical MLP en-
+coders with Kolmogorov-Arnold Network (KAN) (Liu et al.
+arXiv:2505.15103v2  [cs.LG]  8 Aug 2025
+
+
+--- PAGE 2 ---
+(a) Two Types of dims combined
+(c) Top discriminative dims
+(b) Top independent dims
+(d) All dims
+Aug. 1
+…………
+critical dimensions
+Kolmogorov-Arnold Network (KAN) Encoder
+largerperturbation on criticaldim
+hardnegative
+positive pair
+Hardnegative pair
+Aug. 2
+graph datagraph views graph representationsCritical KAN Feature Identification (CKFI)
+Type 2: discriminativefeatures
+Type 1: independentfeatures
+critical dimensions
+x
+x1
+x2
+z1
+z2
+Left Right
+Figure 1: Left: Overview of the Khan-GCL framework. The encoder utilizes KAN to enhance expressive power and inter-
+pretability. Leveraging the KAN architecture, we introduce two critical dimension identification techniques. By applying
+small perturbations to these identified dimensions, we generate hard negative samples for each graph, thereby improving the
+performance of this GCL approach. Right: UMAP(2018) visualization of the pre-trained KAN encoder’s output feature vectors
+on the COLLAB dataset(Morris et al. 2020). Points are colored by class (three classes). We use CKFI to calculate features’
+discriminative and independent scores using Equation 6 and 8. In (d), all dimensions yield poor separation. In (b) and (c),
+removing less critical dimensions, the top 25% most independent and discriminative features improve data separation. In (a),
+combining both types of feature dimensions (removing duplicates) achieves the best separation.
+2024). By integrating the Kolmogorov-Arnold representation
+theorem into modern neural networks, KANs introduce pa-
+rameterized and learnable non-linear activation functions in
+the network, replacing traditional fixed activation functions
+in MLPs (Hornik, Stinchcombe, and White 1989; Cybenko
+1989). KANs impose a localized structure on the trainable
+functions through their spline-based kernel activations. This
+acts as a form of regularization, guiding the model to learn
+smoother mappings that generalize better. This increases
+representational power without requiring a deeper network,
+which is critical for avoiding overfitting when data is scarce.
+As a result, KAN-based encoders strike a better balance be-
+tween expensiveness and risks of inherent issues in deep
+GNNs.
+In terms of data augmentation, we develop a method, called
+Critical KAN Feature Identification (CKFI), for generating
+hard negatives in the output representation space of KAN en-
+coders. By exploiting the nature of the B-spline coefficients,
+CKFI identifies two types of critical features—discriminative
+and independent features, highlighting the most sensitive and
+distinctive dimensions of the underlying graph structure. Ap-
+plying small perturbations to these critical features changes
+the essential semantics of the graph while keeping it similar
+to the original graph, hence generates hard negative pairs.
+Such high-quality hard negatives improve the encoder’s abil-
+ity to discriminate subtle but crucial semantics in downstream
+tasks.
+Our main contributions of this paper include:
+1. We propose Khan-GCL, the first graph contrastive learn-
+ing framework that integrates Kolmogorov-Arnold Net-
+work (KAN) encoders into contrastive learning, increas-
+ing the expressive power of GNNs.
+2. We introduceCKFI, a novel approach for identifying two
+types of critical KAN output features, which are most in-
+dependent and most discriminative of varying underlying
+graph structures, by exploiting the global nature of the
+learned B-spline coefficients from KAN encoders.
+3. We present a new method that minimally perturbs the
+most critical output features of each KAN encoder to
+generate semantically meaningful hard negatives, thereby
+enhancing the effectiveness of graph contrastive learning.
+Experiments across various biochemical and social media
+datasets demonstrate that our method achieves state-of-the-art
+performance on different tasks.
+2 Related works
+2.1 Graph Contrastive Learning (GCL)
+Graph Contrastive Learning (GCL) is capable of learn-
+ing powerful representations from unlabeled graph data
+(Veliˇckovi´c et al. 2018; You et al. 2020; Zhu et al. 2020;
+You et al. 2021). Typically, GCL employs random data aug-
+mentation strategies to generate diverse views of graphs to
+form positive and negative pairs(You et al. 2020). Subsequent
+research has introduced automated (You et al. 2021), domain-
+knowledge informed (Zhu et al. 2021; Wang et al. 2021), and
+saliency-guided (Li et al. 2025; Liu et al. 2021; Li et al. 2022)
+augmentation approaches to further improve representation
+quality.
+Recent studies in CL (Kalantidis et al. 2020; Xia et al.
+2021) emphasize the significance of hard negatives, demon-
+strating their effectiveness in enhancing downstream task
+performance. While prior research (Chen et al. 2020; Cui
+et al. 2021) suggests that enlarging training batch size to
+include more negative samples can improve feature discrimi-
+nation, merely increasing the number of negatives does not
+inherently yield harder negative samples. In fact, continually
+increasing batch size can lead to performance degradation
+in contrastive learning (Kalantidis et al. 2020). To explicitly
+
+
+--- PAGE 3 ---
+Input dimensions
+…
+… …
+Output dimensions
+ (b)
+d1 d2 dj… …
+…
+…
+…
+low coefficient variancehighcoefficient variance
+(a) coefficients
+B-spline curve: !"=∑%!&!(")coefficients: %!Basis functions: &!(")
+x
+φ(x)
+(a)
+B-spline curve: !"=∑%!&!(")coefficients: %!Basis functions: &!(")
+x
+φ(x)
+…
+Figure 2: Illustration of a KAN layer and our two proposed critical feature identification techniques. (a) An output dimension is
+deemed independent when its removal from the coefficient tensor prevents accurate reconstruction of the original tensor (i.e.,
+results in great reconstruction error). (b) Output dimensions comprising B-splines with high coefficient variance are considered
+discriminative, as larger coefficient variance typically corresponds to greater functional variance.
+introduce hard negatives, (Kalantidis et al. 2020; Xia et al.
+2021) propose ranking existing negatives in a mini-batch
+based on their similarity and mixing the hardest examples to
+produce hard negatives. However, the absence of labels in un-
+supervised pre-training may introduce false negatives. More
+recent approaches frame hard negative generation in GCL as
+an adversarial process (Hu et al. 2021; Luo et al. 2023; Zhang,
+Yang, and Shi 2024; Wang et al. 2024a), wherein a negative
+generator attempts to maximize the contrastive loss while
+the encoder aims to minimize it. However, current adver-
+sarial approaches primarily focus on bringing negative pairs
+closer without explicitly identifying critical latent dimensions
+responsible for semantic differences.
+2.2 Kolmogorov-Arnold Networks in Graph
+Learning
+Kolmogorov-Arnold Network (KAN) (Liu et al. 2024) is a
+novel neural network architecture demonstrating improved
+generalization ability and interpretability over MLPs. Many
+recent studies (Kiamari, Kiamari, and Krishnamachari 2024;
+Zhang and Zhang 2024; Bresson et al. 2025; Li et al. 2024b)
+have proposed KAN-based GNN architectures by directly
+replacing MLPs in conventional models with KAN. These
+studies reveal that KAN effectively enhances the expressive-
+ness of traditional GNNs while mitigating the over-squashing
+problem inherent in MLP-based architectures. Furthermore,
+several studies have demonstrated KAN’s superior general-
+izability over MLPs in specialized domains, including drug
+discovery (Ahmed and Sifat 2024), molecular property pre-
+diction (Li et al. 2024a), recommendation systems (Xu et al.
+2024), and smart grid intrusion detection (Wu et al. 2025).
+Beyond straightforward MLP substitution, KAA (Fang
+et al. 2025) embeds KANs into the attention scoring func-
+tions of GAT and Transformer-based models. KA-GAT (Chen
+et al. 2025) combines KAN-based feature decomposition
+with multi-head attention and graph convolutions, enhancing
+the model’s capacity in high-dimensional graph data.
+3 Preliminary
+Graph Contrastive Learning aims to train an encoderf (·)
+which maps graph data x ∈ Rm to representations z ∈ Rn.
+In pre-training, a projection head h(·) is often employed to
+project the representations to v ∈ Rp. GCL typically applies
+two random augmentation functions A1(·) and A2(·), sam-
+pled from a set A of augmentations, to produce two views
+of each graph from a batch Bo = {xo
+i }N
+i=1 to get a batch
+of augmented graphs B = {xi}2N
+i=1, where x2i = A1(x0
+i ),
+x2i+1 = A2(x0
+i ). These views are then encoded and pro-
+jected to Rp, i.e., zi = f (xi) and vi = h(zi). A contrastive
+loss (Chen et al. 2020; You et al. 2020) is applied to en-
+courage similarity between positive pairs and dissimilarity
+between negative pairs:
+LCL = 1
+2N
+NX
+i=1
+−[log exp(sim(v2i, v2i+1)/τ )P
+j̸=2i exp(sim(v2i, vj )/τ )
++log exp(sim(v2i+1, v2i)/τ )P
+j̸=2i+1 exp(sim(v2i+1, vj )/τ ) ]
+(1)
+Here sim(·, ·) calculates the cosine similarity between two
+vectors. τ is a temperature hyperparameter. Although various
+GCL methods have been developed, their contrastive losses
+are defined similarly.
+Kolmogorov-Arnold Networks integrate the Kolmogorov-
+Arnold representation theorem into modern neural networks.
+A KAN layer Φ, which maps input data from Rdin to Rdout,
+is defined as:
+xout
+j =
+dinX
+i=1
+ϕi,j (xin
+i ) ∀j ∈ {1, 2, . . . , dout} (2)
+xin
+i and xout
+j denote the input and output components at
+dimensions i and j, respectively. Each univariate function
+ϕi,j represents a learnable non-linear function associated
+with the connection from the ith input dimension to the jth
+output dimension. These functions are usually parameterized
+using B-splines (Liu et al. 2024), such that:
+ϕi,j (·) =
+X
+k
+cijk Bijk (·) (3)
+Bijk (·) denotes the B-spline basis functions for ϕi,j(·), and
+cijk represents their corresponding trainable coefficients.
+All coefficients at a KAN layer can thus be denoted as
+C = {cijk } ∈Rdin×dout×dc, where dc is the number of
+coefficients used to define each B-spline function.
+
+
+--- PAGE 4 ---
+4 Method
+4.1 Overview
+Figure 1 (left) illustrates Khan-GCL, the first GCL frame-
+work with a KAN-based encoder. By parameterizing non-
+linearity with trainable basis function coefficients, KANs
+offer improved generalizability and interpretability over con-
+ventional MLPs. Leveraging the rich non-linear informa-
+tion in KAN coefficients, we introduce CKFI (Section 4.2)
+to identify two types of critical features. Small perturba-
+tions applied to these features generate hard negatives that
+alter sample semantics while preserving structural similar-
+ity (Section 4.3). Incorporating these hard negatives during
+pre-training guides the encoder to learn more discriminative
+graph features.
+4.2 Critical KAN Feature Identification (CKFI)
+Independent Dimensions in KANs According to Equa-
+tion 2, each latent dimension in a KAN layer combines a
+unique set of non-linear functions, capturing distinct non-
+linear features from the input. However, as each B-spline
+function is a linear combination of basis functions Bijk (·)
+(Equation 3), any output dimension whose coefficients are
+linearly dependent on those of other dimensions can be ex-
+pressed as a linear combination of them, indicating redun-
+dancy.
+Proposition 1 (KAN layer output dependency) . For a
+KAN layer with coefficients C = {cijk } ∈Rdin×dout×dc,
+we denote the slice corresponding to output dimension d
+by C:,d,: ∈ Rdin×dc. If C:,d,: is a linear combination of
+C:,d1,:, C:,d2,:, . . . ,C:,dn,:, the dimension d’s output feature
+can be expressed as a linear combination of dimensions
+d1, d2, . . . , dn.
+We provide the derivation of this dependency in Appendix
+A. Thus, conversely, we define an independent dimension as
+one whose coefficients cannot be expressed as linear combi-
+nations of coefficients from other dimensions, thus encoding
+truly unique features globally from the entire input domain.
+To identify independent dimensions in a KAN layer, as il-
+lustrated in Figure 2(a), we attempt to reconstruct the original
+coefficient tensor C of the layer after removing coefficients
+from each output dimension. Specifically, given the coeffi-
+cients C = [cijk ] ∈ Rdin×dout×dc from a KAN layer, we per-
+form higher-order singular value decomposition (HOSVD)
+with each output dimension dj, 1 ≤ j ≤ dout removed as
+follows:
+C(−j) ≈ G ×1 U(1) ×2 U(2) ×3 U(3) (4)
+Here C(−j) ∈ Rdin×(dout−1)×dc denotes the tensor obtained
+by removing the jth mode-2 slice from C. G ∈ Rr1×r2×r3
+is the core tensor containing singular values of C(−j), and
+U(1), U(2), U(3) are orthogonal bases for each mode of
+C(−j). The notation ×n denotes the mode- n tensor prod-
+uct. A detailed implementation of HOSVD is provided in
+Appendix B.
+Then we reconstruct the coefficients C using C(−j). First,
+we project the removed jth mode-2 slice back to the sub-
+space spanned by U(1) and U(3) to get ˜M(2)
+j . Integrating
+˜M(2)
+j into U(2) ∈ Rr2×(dout−1), we get ˜U(2)
+j ∈ Rr2×dout,
+the approximated basis U(2)
+j including the jth dimension.
+Subsequently, we reconstruct C as follows:
+˜Cj = G ×1 U(1) ×2 ˜U(2)
+j ×3 U(3) (5)
+where ˜Cj is the reconstruction with the jth mode-2 slice
+removed from C. The reconstruction error can be calculated
+using the Frobenius norm:
+δj = ∥ ˜Cj − C∥F (6)
+A larger reconstruction error δj indicates that the jth output
+dimension encodes more unique features, as it becomes diffi-
+cult to be accurately reconstructed when excluded from the
+tensor decomposition. For clarity, the algorithm for identify-
+ing independent features is provided in Appendix C.
+Discriminative Dimensions in KANs In this section, we
+focus on discriminative dimensions, providing an orthogo-
+nal perspective to the aforementioned independent dimen-
+sions. In downstream discrimination tasks, latent dimensions
+exhibiting larger output variance are preferred since they
+effectively separate different data points.
+To implement discriminative feature identification in prac-
+tice, one can naively sample mini-batches from a dataset
+and calculate the variance at each dimension. However, es-
+timating variance from randomly sampled mini-batches can
+introduce bias and additional computational overhead. In-
+stead, we examine the coefficients of KAN layers, which
+provide a ‘global’ view of the distribution of the underlying
+features. As illustrated in Figure 2(b), the shape of a B-spline
+curve closely aligns with the pattern of its coefficients. To
+formally establish this observation, we present the following
+proposition, establishing an upper bound on the variance of a
+uniform B-spline function based on its coefficients’ variance.
+Proposition 2 (Variance Upper Bound of a Uniform B-s-
+pline Function). ϕ(x) = P
+k ckBk(x) is a uniform B-spline
+function defined over the interval [a, b]. {Bk(x)}dc
+k=1 denotes
+the set of uniform B-spline basis functions and {ck}dc
+k=1 are
+the corresponding coefficients. The variance of ϕ(x) over its
+input domain satisfies the following inequality:
+Var[ϕ(x)] =
+Z b
+a
+(ϕ(x) − µϕ)2dx ≤ M (0) · σ2
+c , (7)
+where µϕ = 1
+b−a
+R b
+a ϕ(x)dx is the mean of ϕ(x), M (0) =R
+[Bk(x)]2dx is identical for all Bk(x) for a uniform B-
+spline, and σ2
+c = 1
+dc
+Pdc
+k=1(ck −µc)2 represents the variance
+of the coefficients {ck}dc
+k=1 with µc = 1
+dc
+Pdc
+k=1 ck being the
+mean.
+A detailed derivation of this variance upper bound of B-
+splines is provided in Appendix A.
+Equation (7) implies that the variance of the output of a
+B-spline function over its input domain is bounded by the
+variance of its coefficients. Consequently, as illustrated in
+Figure 2(b), we exploit the variance of coefficients in each
+feature dimension to assess the discriminative power of that
+dimension. Specifically, in a KAN layer whose coefficients
+are denoted by C = [cijk ] ∈ Rdin×dout×dc, we quantify the
+discriminative capability of an output dimension j using the
+
+
+--- PAGE 5 ---
+Datasets BBBP Tox21 ToxCast SIDER ClinTox MUV HIV BACE A VG
+AttrMasking(Hu et al. 2019) 64.3±2.8 76.7 ±0.4 64.2 ±0.5 61.0 ±0.7 71.8 ±4.1 74.7 ±1.4 77.2 ±1.1 79.3 ±1.6 71.1
+GraphCL(You et al. 2020) 69.7±0.7 73.9 ±0.7 62.4 ±0.6 60.5 ±0.9 76.0 ±2.7 69.8 ±2.7 78.5 ±1.2 75.4 ±1.4 70.8
+JOAOv2(You et al. 2021) 71.4±0.9 74.3 ±0.6 63.2 ±0.5 60.5 ±0.5 81.0 ±1.6 73.7 ±1.0 77.5 ±1.2 75.5 ±1.3 72.1
+RGCL(Li et al. 2022) 71.4±0.7 75.2 ±0.3 63.3 ±0.2 61.4 ±0.6 83.4 ±0.9 76.7 ±1.0 77.9 ±0.8 76.0 ±0.8 73.2
+GraphACL(Luo et al. 2023) 73.3±0.5 76.2 ±0.6 64.1 ±0.4 62.6 ±0.6 85.0±1.6 76.9±1.2 78.9±0.7 80.1 ±1.2 74.6
+DRGCL(Ji et al. 2024) 71.2±0.5 74.7 ±0.5 64.0 ±0.5 61.1 ±0.8 78.2 ±1.5 73.8 ±1.1 78.6 ±1.0 78.2 ±1.0 72.5
+CI-GCL(Tan et al. 2024) 74.4±1.9 77.3±0.9 65.4±1.5 64.7±0.3 80.5±1.3 76.5 ±0.9 80.5 ±1.3 84.4±0.9 75.4
+Khan-GCL 73.5±0.6 78.3±0.3 66.3 ±0.3 65.0 ±0.9 84.3±1.2 77.5±0.4 80.7 ±0.6 80.9±1.0 75.8
+Table 1: Transfer learning performance (ROC-AUC scores in %) for graph classification across 8 datasets. Results for benchmark
+methods are reported from their respective original publications.
+average variance across all B-spline functions associated with
+that dimension as follows:
+ρj = 1
+din
+·
+dinX
+i=1
+σ2
+cij (8)
+where µcij = 1
+dc
+Pdc
+k=1 cijk, and σ2
+cij = 1
+dc
+Pdc
+k=1(cijk −
+µcij )2 denoting the variance of coefficients for the B-spline
+function ϕi,j(·) linking the ith input dimension to the jth out-
+put dimension. A dimension j with a large ρj is considered
+more discriminative w.r.t. the input data.
+4.3 Hard Negatives in Khan-GCL
+Prior research (Kalantidis et al. 2020; Xia et al. 2021) sug-
+gests that in contrastive learning, the most effective hard
+negatives for a graph satisfy two key criteria: (a) their key
+identity is different from the original graph, and (b) they main-
+tain high semantic similarity to the original graph. Therefore,
+to generate an effective hard negative for a graph, we aim
+to produce a variant with minimal deviation from the orig-
+inal while strategically distorting its key characteristics .
+As shown in Figure 1 (right), two types of CKFI dimensions
+include the most important features to recognize data from
+different classes. Applying small perturbations to these di-
+mensions can thus effectively change the identity of a feature
+vector.
+We propose applying small perturbations to graph rep-
+resentations from the encoder’s last layer to generate hard
+negatives in the output space of the encoder. Specifically, we
+define these perturbations as follows:
+pδ = {pδ
+i = αi · uδ
+i : uδ
+i ∼ N(ϵδ · δi, σ2
+δ ), αi ∼ Rad}
+pρ = {pρ
+i = αi · uρ
+i : uρ
+i ∼ N(ϵρ · ρi, σ2
+ρ), αi ∼ Rad}
+(9)
+Here ϵδ > 0 and ϵρ > 0 are hyperparameters scaling
+δ = {δi} and ρ = {ρi} computed by the proposed CKFI
+method for feature i per Equations (6) and (8), respectively.
+σ2
+δ and σ2
+ρ represent the variance hyperparameters of the
+Gaussian distributions. With these perturbations, dimensions
+that are highly discriminative or independent (i.e., those with
+large ρi or δi values) receive perturbations from Gaussian dis-
+tributions with larger means. Since ϵρ · ρi > 0 and ϵδ · δi > 0
+for all dimensions i, we introduce αi sampled from the
+Rademacher distribution Rad to ensure that perturbations
+pρ
+i and pδ
+i are approximately equally likely to be positive or
+negative. With these perturbations critical dimensions receive
+more substantial perturbations on average.
+During training, with a mini-batch of N graphs, the aug-
+mented graph data is denoted by B = {xj}2N
+j=1 of size 2N,
+and their latent representations are Bz = {zj}2N
+j=1. For each
+representation zj in Bz, we sample perturbation vectors pρ
+j
+and pδ
+j and produce the hard negative of zj as:
+zhard
+j = zj + pρ
+j + pδ
+j (10)
+The generated hard negative zhard
+j is then projected to
+vhard
+j by the projection head and utilized in our proposed
+hard negative loss:
+LHN = 1
+2N
+2NX
+j=1
+log[exp(sim(vj , sg(vhard
+j )))] (11)
+To prevent model collapse, we apply a stop-gradient operator
+sg(·) to hard negatives vhard
+i . Finally, we write the overall
+training loss LKhan of Khan-GCL as:
+LKhan = LCL + LHN (12)
+We present the detailed algorithm flow of Khan-GCL in
+Appendix D.
+5 Experiments
+In this section, we conduct comprehensive experiments
+across diverse datasets and tasks to demonstrate the efficacy
+of our approach. Furthermore, we conduct extensive ablation
+studies to provide deeper insights into the mechanisms under-
+lying our proposed method. In all experimental results tables,
+bold values denote the best performance on the correspond-
+ing dataset, while underlined values indicate the second-best
+performance. All experiments are run on a single NVIDIA
+A100 GPU.
+Model architecture and hyperparameters. For fair com-
+parison, we follow the general contrastive learning hyper-
+parameter settings of (You et al. 2020). In our KAN-based
+encoder implementation, we systematically replace all MLPs
+in the backbone architectures of (You et al. 2020) with Cubic
+KAN layers (utilizing 3rd order B-spline functions) while
+maintaining identical input, output, and hidden dimensions.
+The comprehensive details regarding model architecture and
+hyperparameter configurations are provided in Appendix F.
+
+
+--- PAGE 6 ---
+Datasets DD MUTAG NCI1 PROTEINS COLLAB RDT-B RDT-M5K IMDB-B A VG
+InfoGraph (Sun et al. 2019) 72.9±1.8 89.0 ±1.1 76.2 ±1.0 74.4 ±0.3 70.1 ±1.1 82.5 ±1.4 53.5 ±1.0 73.0 ±0.9 74.0
+GraphCL(You et al. 2020) 78.6±0.4 86.8 ±1.3 77.9 ±0.4 74.4 ±0.5 71.4 ±1.1 89.5 ±0.8 56.0 ±0.3 71.1 ±0.4 75.7
+JOAOv2(You et al. 2021) 77.4±1.1 87.7 ±0.8 78.4 ±0.5 74.1 ±1.1 69.3 ±0.3 86.4 ±1.5 56.0 ±0.3 70.1 ±0.3 74.9
+AD-GCL (Suresh et al. 2021) 75.8±0.9 88.7 ±1.9 73.9 ±0.8 73.3 ±0.5 72.0 ±0.6 90.1 ±0.9 54.3 ±0.3 70.2 ±0.7 74.8
+RGCL(Li et al. 2022) 78.9±0.5 87.7 ±1.0 78.1 ±1.1 75.0 ±0.4 71.0 ±0.7 90.3 ±0.6 56.4 ±0.4 71.9 ±0.9 76.2
+DRGCL(Ji et al. 2024) 78.4±0.7 89.5 ±0.6 78.7 ±0.4 75.2 ±0.6 70.6 ±0.8 90.8 ±0.3 56.3±0.2 72.0 ±0.5 76.4
+TopoGCL(2024) 79.1±0.3 90.1 ±0.9 81.3±0.3 77.3 ±0.9 - 90.4 ±0.5 - 74.7 ±0.3 -
+CI-GCL(Tan et al. 2024) 79.6±0.3 89.7±0.9 80.5 ±0.5 76.5 ±0.1 74.4 ±0.6 90.8±0.5 56.6±0.3 73.8±0.8 77.7
+Khan-GCL(Ours) 80.6±0.7 91.4 ±1.1 80.8±0.9 76.9±0.8 75.2±0.3 92.2 ±0.3 56.9 ±0.5 75.0 ±0.4 78.6
+Table 2: Unsupervised learning performance (accuracy in %) for graph classification on TU-datasets. Results for benchmark
+methods are quoted from their original publications, except for AD-GCL and InfoGraph, which are reported from (Li et al. 2022).
+Average performance is calculated across all 8 datasets.
+Datasets DD MUTAG NCI1 PROTEINS COLLAB RDT-B RDT-M5K IMDB-B
+AFANS(Wang et al. 2024a) - 90.0 ±1.0 80.4 ±0.5 75.4 ±0.5 74.7 ±0.5 91.1±0.1 - -
+ANGCL(Zhang, Yang, and Shi 2024) 78.8±0.9 92.3±0.7 81.0 ±0.3 75.9±0.4 72.0±0.7 90.8 ±0.7 56.5 ±0.3 71.8±0.6
+GraphACL(Luo et al. 2023) 79.3±0.4 90.2±0.9 - 75.5 ±0.4 74.7 ±0.6 - - 74.3 ±0.7
+Khan-GCL(Ours) 80.6±0.7 91.4±1.1 80.8±0.9 76.9±0.8 75.2 ±0.3 92.2 ±0.3 56.9 ±0.5 75.0 ±0.4
+Table 3: Unsupervised learning performance (accuracy in %) for graph classification on TU-datasets, comparing Khan-GCL
+against existing hard negative integrated GCL methods. Benchmark results are from their corresponding original publications.
+Datasets. We conduct experiments on Zinc-2M (Sterling
+and Irwin 2015), 8 biochemical datasets from (Wu et al.
+2018), 8 diverse biochemical/social network datasets from
+the TU-datasets collection (Morris et al. 2020), and MNIST-
+superpixel (Monti et al. 2017). Details about the datasets are
+provided in Appendix E.
+5.1 Main Results
+Transfer learning is a widely adopted evaluation proto-
+col for assessing the generalizability and transferability of
+representations learned by GCL methods. We pre-train our
+backbone encoder on the large-scale molecular dataset Zinc-
+2M (Sterling and Irwin 2015) using the proposed Khan-GCL
+framework, then finetune the pre-trained encoder on 8 bio-
+chemical datasets for graph classification tasks. Detailed
+training and evaluation settings are provided in Appendix
+E. Table 1 shows the graph classification accuracy across
+these datasets.
+Khan-GCL achieves the best overall results compared to all
+state-of-the-art methods. KAN’s better generalization capa-
+bility over MLPs and our introduced hard negative generation
+technique enhance the encoder’s generalizability and ability
+to discriminate between subtle yet critical differences across
+graph structures.
+Unsupervised learning aims to assess a GCL pre-training
+method’s efficacy on diverse datasets. Following established
+protocols in (Sun et al. 2019; You et al. 2020), we pre-train
+our encoder on 8 datasets from TU-datasets (Morris et al.
+2020). Subsequently, we employ an SVM classifier to eval-
+uate the pre-trained encoder’s feature representation quality.
+More detailed setups can be found in Appendix E.
+Table 2 presents a comprehensive comparison between
+OriginalNearest Neighbors of Hard Negative
+7
+ 1
+ 4
+1
+ 2
+1
+5
+ 0
+8
+7
+5
+ 0
+4
+ 9
+ 2
+5
+ 1
+6
+Figure 3: MNIST-superpixel graphs with their generated hard
+negatives’ nearest neighbors in the latent space. Red numbers
+indicate ground truth labels. The nearest neighbors of a sam-
+ple’s hard negatives are typically similar to the sample while
+belonging to different classes.
+Khan-GCL and other state-of-the-art GCL approaches in un-
+supervised learning experiments. Khan-GCL achieves the
+best performance on 6 out of 8 datasets and yields the best
+overall results across all methods due to the powerful KAN
+encoder and effective generation of hard negatives. Further-
+more, Table 3 compares Khan-GCL’s effectiveness against
+existing hard negative integrated GCL methods, where our
+approach attains optimal results on 6 out of 8 datasets.
+By targeting critical dimensions identified through CKFI,
+Khan-GCL emphasizes essential semantic features, which
+significantly enhance its classification capabilities compared
+to existing hard negative integrated methods.
+Nearest neighbors retrieval of the generated hard nega-
+tives. To better elucidate the effectiveness of the generated
+
+
+--- PAGE 7 ---
+w/o hard neg.w/ random-perturbw/o d-dimsw/o i-dimsKhan-GCL
+MethodsGraphCL
+DDMUTAGNCI1PROTEINSCOLLABRDT-BRDT-M5KIMDB-B
+Figure 4: Ablation study results for Khan-GCL. Unsupervised learning results (in %) for graph classification on TU-datasets are
+shown.
+Datasets DD MUTAG NCI1 PROTEINS
+GraphCL 78.6±0.4 86.8 ±1.3 77.9 ±0.4 74.4 ±0.5
+GraphCL (KAN) 78.9±0.6 88.4±0.9 78.0±1.0 75.1±0.3
+Ours 80.6±0.7 91.4 ±1.1 80.8 ±0.9 76.9 ±0.8
+JOAOv2 77.4±1.1 87.7 ±0.8 78.4 ±0.5 74.1 ±1.1
+JOAOv2 (KAN) 78.7±0.5 88.6±0.8 79.0±0.5 75.3±0.6
+JOAOv2+Ours 80.2±1.1 92.1 ±0.3 81.5 ±0.7 77.0 ±0.9
+Table 4: Ablation study results on the effectiveness of KAN
+in Khan-GCL. Unsupervised learning results (in %) for graph
+classification on TU-datasets are reported.
+hard negatives, we pre-train an encoder using Khan-GCL on
+MNIST-superpixel (Monti et al. 2017), where handwritten
+digits from the MNIST dataset (LeCun et al. 1998) are rep-
+resented as graphs. During pre-training, we generate hard
+negatives for each graph and retrieve the nearest neighbors
+of each hard negative in the feature space across the entire
+dataset. We provide more details of this experiment in Ap-
+pendix E. Figure 3 illustrates sample digit graphs alongside
+the five nearest neighbors of their corresponding hard nega-
+tives. The ground truth label for each graph is displayed in
+red at the bottom right corner. As shown in Figure 3, the near-
+est neighbors of a sample’s hard negatives typically exhibit
+structural similarity to the original sample while belonging
+to different classes. This observation confirms that forming
+negative pairs between a sample and such generated hard neg-
+atives effectively guides the encoder to discriminate between
+semantically similar samples from different classes.
+5.2 Ablation Study
+Effectiveness of the KAN Encoder and Compatibility of
+Khan-GCL with Existing GCL Methods. We conduct
+targeted experiments to assess the KAN encoder’s impact
+on Khan-GCL. Specifically, we evaluate Khan-GCL vari-
+ants without CKFI and hard negative generation (‘GraphCL
+(KAN)’ and ‘JOAOv2 (KAN)’ in Table 4) against their base-
+lines. We also introduce ‘JOAOv2+Ours’, which applies the
+full Khan-GCL framework to JOAOv2. Results show that
+KAN-enhanced variants outperform their counterparts even
+without hard negatives, demonstrating KAN’s superior abil-
+ity in modeling non-linearity. Adding hard negatives yields
+further gains, confirming its effectiveness and Khan-GCL’s
+compatibility with diverse GCL methods.
+Effectiveness of two feature identification techniques in
+hard negative generation. In this section, we evaluate the
+contributions of our two proposed critical feature identifica-
+tion techniques in hard negative generation. We introduce
+three variants of Khan-GCL: (1) ‘w/o d-dims’, where nega-
+tives are generated by perturbing only independent dimen-
+sions; (2) ‘w/o i-dims’, where perturbation is limited to dis-
+criminative dimensions; and (3) ‘w/ rand-perturb’, which gen-
+erates negatives by applying random Gaussian noise across
+all dimensions. Detailed experimental settings for these con-
+figurations are provided in Appendix E. Figure 4 presents
+the performance of these configurations on unsupervised
+learning tasks. While ‘w/ rand-perturb’ yields performance
+improvements over ‘w/o hard neg.’ (a Khan-GCL variant
+with KAN encoder but without hard negative generation)
+on several datasets, it occasionally results in performance
+degradation. Both specialized perturbation approaches (‘w/o
+d-dims’ and ‘w/o i-dims’) outperform the baseline, demon-
+strating the effectiveness of targeted feature identification
+technique. Additionally, Khan-GCL, which integrates both
+proposed feature identification techniques in CKFI, achieves
+the most substantial improvement and the best overall results,
+confirming the complementary nature of our dual feature
+identification approach.
+6 Conclusion
+We propose Khan-GCL, the first KAN-based graph con-
+trastive learning framework, which balances expressive
+power and risks of inherent issues of deep GNNs by using
+a KAN-based encoder. We also introduceCKFI to identify
+discriminative and independent features, enabling the genera-
+tion of hard negatives through minimal perturbations. These
+hard negatives guide the encoder to learn critical semantics
+during contrastive pre-training. Extensive experiments on
+biochemical and social network datasets demonstrate that our
+approach significantly improves generalization and transfer-
+ability, achieving the state-of-the-art performance. Additional
+details and experimental results are provided in the Appendix.
+For future work, exploring feature perturbation and hard
+negative generation in intermediate layers of a KAN encoder
+is promising. Further, reducing the additional training cost
+introduced by KAN’s spline computations through more effi-
+cient architectures is worth investigating.
+
+
+--- PAGE 8 ---
+References
+Ahmed, T.; and Sifat, M. H. R. 2024. GraphKAN: Graph
+Kolmogorov Arnold Network for Small Molecule-Protein
+Interaction Predictions. In ICML’24 Workshop ML for Life
+and Material Science: From Theory to Industry Applications.
+Bresson, R.; Nikolentzos, G.; Panagopoulos, G.; Chatzianas-
+tasis, M.; Pang, J.; and Vazirgiannis, M. 2025. KAGNNs:
+Kolmogorov-Arnold Networks meet Graph Learning.
+arXiv:2406.18380.
+Chen, J.; Yuchi, X.; Yan, Z.; Dong, K.; and Li, H. 2025. KA-
+GAT: Kolmogorov–Arnold based Graph Attention Networks.
+Chen, T.; Kornblith, S.; Norouzi, M.; and Hinton, G. 2020.
+A simple framework for contrastive learning of visual repre-
+sentations. In International conference on machine learning,
+1597–1607. PmLR.
+Chen, T.; Zhou, K.; Duan, K.; Zheng, W.; Wang, P.; Hu, X.;
+and Wang, Z. 2022. Bag of tricks for training deeper graph
+neural networks: A comprehensive benchmark study. IEEE
+Transactions on Pattern Analysis and Machine Intelligence,
+45(3): 2769–2781.
+Chen, Y .; Frias, J.; and Gel, Y . R. 2024. TopoGCL:
+Topological Graph Contrastive Learning. arXiv preprint
+arXiv:2406.17251.
+Cui, G.; Du, Y .; Yang, C.; Zhou, J.; Xu, L.; Zhou, X.; Cheng,
+X.; and Liu, Z. 2021. Evaluating modules in graph contrastive
+learning. arXiv preprint arXiv:2106.08171.
+Cybenko, G. 1989. Approximation by superpositions of a
+sigmoidal function. Mathematics of control, signals and
+systems, 2(4): 303–314.
+De Lathauwer, L.; De Moor, B.; and Vandewalle, J. 2000. A
+multilinear singular value decomposition. SIAM journal on
+Matrix Analysis and Applications, 21(4): 1253–1278.
+Fang, T.; Gao, T.; Wang, C.; Shang, Y .; Chow, W.; Chen,
+L.; and Yang, Y . 2025. KAA: Kolmogorov-Arnold At-
+tention for Enhancing Attentive Graph Neural Networks.
+arXiv:2501.13456.
+Fey, M.; and Lenssen, J. E. 2019. Fast graph represen-
+tation learning with PyTorch Geometric. arXiv preprint
+arXiv:1903.02428.
+Gao, T.; Yao, X.; and Chen, D. 2021. Simcse: Simple con-
+trastive learning of sentence embeddings. arXiv preprint
+arXiv:2104.08821.
+Hornik, K.; Stinchcombe, M.; and White, H. 1989. Multilayer
+feedforward networks are universal approximators. Neural
+networks, 2(5): 359–366.
+Hu, Q.; Wang, X.; Hu, W.; and Qi, G.-J. 2021. Adco: Adver-
+sarial contrast for efficient learning of unsupervised represen-
+tations from self-trained negative adversaries. InProceedings
+of the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, 1074–1083.
+Hu, W.; Liu, B.; Gomes, J.; Zitnik, M.; Liang, P.; Pande,
+V .; and Leskovec, J. 2019. Strategies for pre-training graph
+neural networks. arXiv preprint arXiv:1905.12265.
+Ji, Q.; Li, J.; Hu, J.; Wang, R.; Zheng, C.; and Xu, F. 2024. Re-
+thinking dimensional rationale in graph contrastive learning
+from causal perspective. In Proceedings of the AAAI Confer-
+ence on Artificial Intelligence, volume 38, 12810–12820.
+Kalantidis, Y .; Sariyildiz, M. B.; Pion, N.; Weinzaepfel, P.;
+and Larlus, D. 2020. Hard negative mixing for contrastive
+learning. Advances in neural information processing systems,
+33: 21798–21809.
+Kiamari, M.; Kiamari, M.; and Krishnamachari, B.
+2024. GKAN: Graph Kolmogorov-Arnold Networks.
+arXiv:2406.06470.
+Kingma, D. P. 2014. Adam: A method for stochastic opti-
+mization. arXiv preprint arXiv:1412.6980.
+LeCun, Y .; Bottou, L.; Bengio, Y .; and Haffner, P. 1998.
+Gradient-based learning applied to document recognition.
+Proceedings of the IEEE, 86(11): 2278–2324.
+Li, L.; Zhang, Y .; Wang, G.; and Xia, K. 2024a. KA-GNN:
+Kolmogorov-Arnold Graph Neural Networks for Molecular
+Property Prediction. arXiv:2410.11323.
+Li, Q.; Han, Z.; and Wu, X.-M. 2018. Deeper insights into
+graph convolutional networks for semi-supervised learning.
+In Proceedings of the AAAI conference on artificial intelli-
+gence, volume 32.
+Li, R.; Li, M.; Liu, W.; and Chen, H. 2024b. GNN-SKAN:
+Harnessing the Power of SwallowKAN to Advance Molecu-
+lar Representation Learning with GNNs. arXiv:2408.01018.
+Li, S.; Luo, Y .; Zhang, A.; Wang, X.; Li, L.; Zhou, J.; and
+Chua, T.-S. 2025. Self-attentive rationalization for inter-
+pretable graph contrastive learning. ACM Transactions on
+Knowledge Discovery from Data, 19(2): 1–21.
+Li, S.; Wang, X.; Zhang, A.; He, X.; and Chua, T.-S. 2022.
+Let Invariant Rationale Discovery Inspire Graph Contrastive
+Learning. In ICML.
+Liu, S.; Wang, H.; Liu, W.; Lasenby, J.; Guo, H.; and Tang, J.
+2021. Pre-training molecular graph representation with 3d
+geometry. arXiv preprint arXiv:2110.07728.
+Liu, Z.; Wang, Y .; Vaidya, S.; Ruehle, F.; Halverson,
+J.; Solja ˇci´c, M.; Hou, T. Y .; and Tegmark, M. 2024.
+Kan: Kolmogorov-arnold networks. arXiv preprint
+arXiv:2404.19756.
+Luo, X.; Ju, W.; Gu, Y .; Mao, Z.; Liu, L.; Yuan, Y .; and Zhang,
+M. 2023. Self-supervised graph-level representation learning
+with adversarial contrastive learning. ACM Transactions on
+Knowledge Discovery from Data, 18(2): 1–23.
+McInnes, L.; Healy, J.; and Melville, J. 2018. Umap: Uni-
+form manifold approximation and projection for dimension
+reduction. arXiv preprint arXiv:1802.03426.
+Monti, F.; Boscaini, D.; Masci, J.; Rodola, E.; Svoboda, J.;
+and Bronstein, M. M. 2017. Geometric deep learning on
+graphs and manifolds using mixture model cnns. In Proceed-
+ings of the IEEE conference on computer vision and pattern
+recognition, 5115–5124.
+Morris, C.; Kriege, N. M.; Bause, F.; Kersting, K.; Mutzel,
+P.; and Neumann, M. 2020. Tudataset: A collection of
+benchmark datasets for learning with graphs. arXiv preprint
+arXiv:2007.08663.
+
+
+--- PAGE 9 ---
+Oord, A. v. d.; Li, Y .; and Vinyals, O. 2018. Representation
+learning with contrastive predictive coding. arXiv preprint
+arXiv:1807.03748.
+Paszke, A. 2019. Pytorch: An imperative style, high-
+performance deep learning library. arXiv preprint
+arXiv:1912.01703.
+Radford, A.; Kim, J. W.; Hallacy, C.; Ramesh, A.; Goh, G.;
+Agarwal, S.; Sastry, G.; Askell, A.; Mishkin, P.; Clark, J.;
+et al. 2021. Learning transferable visual models from nat-
+ural language supervision. In International conference on
+machine learning, 8748–8763. PmLR.
+Rong, Y .; Huang, W.; Xu, T.; and Huang, J. 2019. Drope-
+dge: Towards deep graph convolutional networks on node
+classification. arXiv preprint arXiv:1907.10903.
+Sterling, T.; and Irwin, J. J. 2015. ZINC 15–ligand discovery
+for everyone. Journal of chemical information and modeling,
+55(11): 2324–2337.
+Sun, F.-Y .; Hoffmann, J.; Verma, V .; and Tang, J. 2019. In-
+fograph: Unsupervised and semi-supervised graph-level rep-
+resentation learning via mutual information maximization.
+arXiv preprint arXiv:1908.01000.
+Suresh, S.; Li, P.; Hao, C.; and Neville, J. 2021. Adversar-
+ial graph augmentation to improve graph contrastive learn-
+ing. Advances in Neural Information Processing Systems, 34:
+15920–15933.
+Tan, S.; Li, D.; Jiang, R.; Zhang, Y .; and Okumura, M.
+2024. Community-invariant graph contrastive learning.arXiv
+preprint arXiv:2405.01350.
+Tucker, L. R. 1966. Some mathematical notes on three-mode
+factor analysis. Psychometrika, 31(3): 279–311.
+Veliˇckovi´c, P.; Fedus, W.; Hamilton, W. L.; Li`o, P.; Bengio,
+Y .; and Hjelm, R. D. 2018. Deep graph infomax. arXiv
+preprint arXiv:1809.10341.
+Wang, S.; Wang, C.; Meng, P.; and Wang, Z. 2024a. AFANS:
+Augmentation-Free Graph Contrastive Learning with Adver-
+sarial Negative Sampling. In International Conference on
+Intelligent Computing, 376–387. Springer.
+Wang, Y .; Min, Y .; Chen, X.; and Wu, J. 2021. Multi-view
+graph contrastive representation learning for drug-drug in-
+teraction prediction. In Proceedings of the web conference
+2021, 2921–2933.
+Wang, Z.; Hu, H.; He, C.; and Li, P. 2023a. Recognizing
+wafer map patterns using semi-supervised contrastive learn-
+ing with optimized latent representation learning and data
+augmentation. In 2023 IEEE International Test Conference
+(ITC), 141–150. IEEE.
+Wang, Z.; Liu, L.; Weston, S. R. F.; Tian, S.; and Li, P. 2024b.
+On learning discriminative features from synthesized data for
+self-supervised fine-grained visual recognition. In European
+Conference on Computer Vision, 101–117. Springer.
+Wang, Z.; Somayaji, K. N.; and Li, P. 2024. Learn-by-
+Compare: Analog Performance Prediction using Contrastive
+Regression with Design Knowledge. In Proceedings of the
+61st ACM/IEEE Design Automation Conference, 1–6.
+Wang, Z.; Wang, Y .; Chen, Z.; Hu, H.; and Li, P. 2023b.
+Contrastive learning with consistent representations. arXiv
+preprint arXiv:2302.01541.
+Wu, Y .; Zang, Z.; Zou, X.; Luo, W.; Bai, N.; Xiang, Y .; Li,
+W.; and Dong, W. 2025. Graph attention and Kolmogorov–
+Arnold network based smart grids intrusion detection. Scien-
+tific Reports, 15(1): 8648.
+Wu, Z.; Ramsundar, B.; Feinberg, E. N.; Gomes, J.; Ge-
+niesse, C.; Pappu, A. S.; Leswing, K.; and Pande, V . 2018.
+MoleculeNet: a benchmark for molecular machine learning.
+Chemical science, 9(2): 513–530.
+Xia, J.; Wu, L.; Wang, G.; Chen, J.; and Li, S. Z. 2021.
+Progcl: Rethinking hard negative mining in graph contrastive
+learning. arXiv preprint arXiv:2110.02027.
+Xu, J.; Chen, Z.; Li, J.; Yang, S.; Wang, W.; Hu, X.;
+and Ngai, E. C. H. 2024. FourierKAN-GCF: Fourier
+Kolmogorov-Arnold Network – An Effective and Efficient
+Feature Transformation for Graph Collaborative Filtering.
+arXiv:2406.01034.
+You, Y .; Chen, T.; Shen, Y .; and Wang, Z. 2021. Graph
+contrastive learning automated. In International conference
+on machine learning, 12121–12132. PMLR.
+You, Y .; Chen, T.; Sui, Y .; Chen, T.; Wang, Z.; and Shen,
+Y . 2020. Graph contrastive learning with augmentations.
+Advances in neural information processing systems, 33: 5812–
+5823.
+Zhang, B.; Fan, C.; Liu, S.; Huang, K.; Zhao, X.; Huang,
+J.; and Liu, Z. 2024. The expressive power of graph neural
+networks: A survey. IEEE Transactions on Knowledge and
+Data Engineering.
+Zhang, F.; and Zhang, X. 2024. GraphKAN: Enhancing Fea-
+ture Extraction with Graph Kolmogorov Arnold Networks.
+arXiv:2406.13597.
+Zhang, Q.; Yang, C.; and Shi, C. 2024. Adaptive negative
+representations for graph contrastive learning. AI Open, 5:
+79–86.
+Zhu, Y .; Xu, Y .; Yu, F.; Liu, Q.; Wu, S.; and Wang, L.
+2020. Deep graph contrastive representation learning. arXiv
+preprint arXiv:2006.04131.
+Zhu, Y .; Xu, Y .; Yu, F.; Liu, Q.; Wu, S.; and Wang, L. 2021.
+Graph contrastive learning with adaptive augmentation. In
+Proceedings of the web conference 2021, 2069–2080.
+
+
+--- PAGE 10 ---
+A Proofs
+A.1 Kolmogorov-Arnold Network Layer Output
+Dependency.
+We denote the coefficient of a KAN layer with din-
+dimensional input and dout-dimensional output by C =
+{cijk } ∈Rdin×dout×dc. Here each B-spline curve is defined
+with dc coefficients. Given an input x ∈ Rdin, the output y’s
+j-th element can be written as:
+yj =
+X
+i
+X
+k
+cijk Bijk (xi) (13)
+Bijk (·) is the k-th basis function of the edge that connects
+the ith input dimension to the jth output dimension.
+We denote the slice corresponding to output dimension d
+by C:,d,: ∈ Rdin×dc. If for some output index d, there exist
+indices d1, d2, . . . , dn ̸= d and scalars {adl }n
+l=1 such that
+C:,d,: =
+nX
+l=1
+adl C:,dl,:, (14)
+then the corresponding output feature yd of the KAN layer
+can be expressed as
+yd =
+X
+i
+X
+k
+cidkBidk(xi)
+=
+X
+i
+X
+k
+(ad1 cid1k + ad2 cid2k + · · ·+ adn cidnk)Bidk(xi)
+= ad1 yd1 + ad2 yd2 + · · ·+ adn ydn ,
+(15)
+which is the linear combination of the output features
+yd1 , yd2 , . . . , ydn.
+In other words, any output dimension whose coefficient
+slice lies in the linear span of other slices will produce an out-
+put feature that is a linear combination of those corresponding
+dimensions. Therefore, we select those output dimensions
+whose corresponding coefficients can not be expressed as
+a linear combination of others as independent dimensions.
+These dimensions contain lower levels of noise and redun-
+dancy, making them especially informative for discriminative
+tasks.
+A.2 Variance Bound of Uniform B-spline Function
+We denote a uniform B-spline function ϕ(x) as:
+ϕ(x) =
+X
+k
+ckBk(x) (16)
+Here Bk(x) denotes the piecewise polynomial functions, and
+ck represents their corresponding coefficients. The mean of a
+B-spline function ϕ(x) is denoted by µϕ, i.e.,
+µϕ = 1
+b − a
+Z b
+a
+ϕ(x)dx = 1
+b − a
+Z b
+a
+X
+k
+ckBk(x)dx
+= 1
+b − a
+X
+k
+ck
+Z b
+a
+Bk(x)dx
+= 1
+b − a
+X
+k
+ckωk
+(17)
+Let ωk denote
+R b
+a Bk(x)dx. When using uniform grids in the
+domain (a, b) of ϕ(x), all ωk share the same value ω for any
+k. And as uniform B-spline basis functions satisfy:
+X
+k
+Bk(x) = 1 ∀x (18)
+Integral both side of Equation 18:
+X
+k
+Z b
+a
+Bk(x)dx =
+Z b
+a
+1dx = b − a (19)
+For uniform B-spline, we thus have:
+ω = b − a
+n (20)
+Here n represent the number of coefficients. Plugging Equa-
+tion 20 into Equation 17, we get:
+µϕ = 1
+b − a
+X
+k
+ckωk = 1
+n
+X
+k
+ck = ¯c (21)
+The mean of coefficients {ck} is denoted by ¯c.
+Therefore, the variance of ϕ(x) can be written as:
+Var[ϕ(x)] =
+Z
+(ϕ(x) − µϕ)2dx
+=
+Z
+(
+X
+k
+ckBk(x) − ¯c)2dx
+=
+Z
+(
+X
+k
+ckBk(x) − ¯c
+X
+k
+Bk(x))2dx
+=
+Z
+(
+X
+k
+(ck − ¯c)Bk(x))2dx
+=
+Z X
+i
+X
+j
+(ci − ¯c)(cj − ¯c)Bi(x)Bj(x)dx
+=
+X
+i
+X
+j
+(ci − ¯c)(cj − ¯c)
+Z
+Bi(x)Bj(x)dx
+(22)
+We use the following notation:
+Mij =
+Z
+Bi(x)Bj(x)dx
+di = ci − ¯c
+(23)
+Then Equation 22 can be expressed as:
+Var[ϕ(x)] = dT Md (24)
+where M = [Mij] and d = [di] are a matrix and a vector,
+respectively.
+Although the following derivation is applicable to B-spline
+functions of any order, as we used cubic (third-order) B-
+splines throughout our implementations, we present it for
+cubic B-splines. In the case of a uniform cubic B-spline,
+Bk(x) overlaps non-zero with at most 3 neighbors on each
+side (indices k ± 1, k ± 2, k ± 3). As a result, Mij = 0 for
+|i − j| > 3. We can denote the distinct overlap integrals by
+M (0) for i = j, M (1) for |i − j| = 1, M (2) for |i − j| = 2,
+
+
+--- PAGE 11 ---
+Algorithm 1: Higher-Order Singular Value Decomposition (Tucker Decomposition).
+1: Input: An I-way tensor C.
+2: for i = 1 to I do
+3: Ci = Unfold (C, i), # Unfold the tensor along the ith mode.
+4: U(i), Σ(i), V(i) = SVD (Ci), # Perform singular value decomposition on the reshaped tensor.
+5: U(i) = U(i)[:, : ri] # Save the truncated singular vectors U(i) as the model-i basis.
+6: end for
+7: G = C, # Initialize the tensor core with the I-way tensor C.
+8: for i = 1 to I do
+9: G = G ×i (U(i))T , # Multiply the core tensor by the ith orthogonal basis.
+10: end for
+11: Output: Core tensor G, orthogonal basis U(1), U(2), · · ·, U(I).
+Algorithm 2: Algorithm flow of independent feature identification.
+1: Input: coefficient C ∈ Rdin×dout×dc of a KAN layer.
+2: for i = 1 to dc do
+3: C(−j) = C:,{1,...,dout}\{i},:, # jth mode-2 slice removed from C.
+4: G, U(1), U(2), U(3) = HOSVD(C(−j)) # Call Algorithm 1 to decompose C(−j).
+5: P = G ×1 U(1) ×2 I ×3 U(3) # P is a partially reconstructed C(−j).
+6: ˜M(2) = arg min ˜M(2) ∥C:,i,: − Pr2
+s=1 ˜M (2)
+s P:,s,:∥2
+F # Project the missing slice back to the basis to get ˜M(2) = { ˜M (2)
+s }
+by solving the least-squares.
+7: ˜U(2)
+i = [U(2)
+1 , . . . ,U(2)
+i−1, ˜M(2), U(2)
+i+1 . . .] # Plug ˜M(2) to U(2).
+8: ˜Cj = G ×1 U(1) ×2 ˜U(2)
+j ×3 U(3) # Reconstruct C.
+9: δj = ∥ ˜Cj − C∥F # Reconstruction error.
+10: end for
+11: Output: reconstruction error δ = {δi}.
+and M (3) for |i − j| = 3 (with M (k) = 0 for k ≥ 4). The
+matrix M can be written as:
+M =
+
+
+M (0) M (1) M (2) M (3) 0 · · · 0
+M (1) M (0) M (1) M (2) M (3) · · · 0
+M (2) M (1) M (0) M (1) M (2) · · · 0
+M (3) M (2) M (1) M (0) M (1) · · · 0
+0 M (3) M (2) M (1) M (0) · · · 0
+...
+...
+...
+...
+...
+...
+...
+0 0 0 0 0 · · ·M (0)
+
+
+(25)
+Then we can express Var[ϕ(x)] as:
+Var[ϕ(x)] = M (0)
+X
+i
+d2
+i + 2M (1)
+X
+i
+didi+1
++ 2M (2)
+X
+i
+didi+2 + 2M (3)
+X
+i
+didi+3
+(26)
+As M (k) ≥ 0 for any k ∈ {0, 1, 2, 3}, we have:
+Var[ϕ(x)] ≤ M (0)
+X
+i
+d2
+i = M (0)
+X
+i
+(ci − ¯c)2 = M (0)σ2
+c
+(27)
+B Higher-order Singular Value
+Decomposition
+In Algorothm 1, we present the detailed process of Higher-
+Order Singular Value Decomposition (HOSVD), also known
+as Tucker Decomposition (Tucker 1966; De Lathauwer,
+De Moor, and Vandewalle 2000). For each 3-way coefficient
+tensor C ∈ Rnin×nout×nc within the KAN layer architecture,
+HOSVD produces a decomposition consisting of:
+i. A core tensor G ∈ Rr1×r2×r3, and
+ii. Three orthogonal basis matrices U(1) ∈ Rnin×r1,
+U(2) ∈ Rnout×r2, and U(3) ∈ Rnc×r3.
+Each factor matrix U(k) contains the leading rk left singu-
+lar vectors obtained from the SVD of the mode-k unfolding
+of tensor C. These truncated orthonormal bases preserve the
+most significant components of the original tensor while en-
+abling substantial parameter reduction.
+C Algorithm of Independent Feature
+Identification
+In Algorithm 2, we present the detailed algorithm of our pro-
+posed independent feature identification technique in Critical
+KAN Feature Identification (CKFI).
+D Algorithm of Khan-GCL
+In Algorithm 3, we conclude the algorithm flow of our
+proposed Khan-GCL pre-training approach in Pytorch-
+like (Paszke 2019; Fey and Lenssen 2019) style.
+
+
+--- PAGE 12 ---
+Algorithm 3: Algorithm flow of Khan-GCL (Pytorch-like style).
+1: Input: Initial KAN encoder parameters θe; Initial projection head parameters θp; Unlabeled dataloader; Hyperparameters
+ϵδ, ϵρ,σρ,σδ.
+2: for x0 in dataloader do
+3: ′′′Representations of augmented graphs in a mini-batch ′′′
+4: x′, x′′ = A1(x0), A2(x0)
+5: z′, z′′ = encoder(x′), encoder(x′′)
+6: ′′′Identify critical dimensions and calculate perturbations ′′′
+7: delta = independent score(θe) # See Algorithm 2 and Section 4.2.1 for details.
+8: rho = discriminative score(θe) # See Section 4.2.2 for details.
+9: alpha = rademacher(0.5) # rademacher distribution can be implemented by pytorch built-in
+10: function like torch.rand.
+11: pδ, pρ = normal(mean = ϵδ ∗ delta, std = σδ), normal(mean = ϵρ ∗ rho, std = σρ)
+12: zhard′ = z′ + alpha ∗ (pρ + pδ)
+13: alpha = rademacher(0.5)
+14: pδ, pρ = normal(mean = ϵδ ∗ delta, std = σδ), normal(mean = ϵρ ∗ rho, std = σρ)
+15: zhard′′ = z′′ + alpha ∗ (pρ + pδ)
+16: ′′′Project to V space by projection head ′′′
+17: v′, v′′, vhard′, vhard′′ = proj(z′), proj(z′′), proj(zhard′), proj(zhard′′)
+18: ′′′Calculate loss and optimize networks ′′′
+19: Loss CL = contrast loss(v′, v′′)
+20: Loss HN = hn loss(v′, vhard′.detach()) + hn loss(v′′, vhard′′.detach())
+21: Loss Khan = Loss CL + Loss HN
+22: Loss Khan.backward()
+23: update(θe)
+24: update(θp)
+25: end for
+26: Output: Pre-trained encoder parameters θe.
+E Datasets and Evaluation Protocols
+E.1 Datasets
+We summarize the characteristics of all datasets utilized in
+our experiments in Table 5. For transfer learning experiments,
+we pre-train our encoder on Zinc-2M (Sterling and Irwin
+2015) and evaluate its performance across 8 datasets from
+MoleculeNet (Wu et al. 2018): BBBP, Tox21, SIDER, Clin-
+Tox, MUV , HIV , and BACE. In our unsupervised learning
+evaluations, we assess our method on 8 datasets from TU-
+datasets (Morris et al. 2020), comprising NCI1, PROTEINS,
+DD, MUTAG, COLLAB, RDT-B, RDT-M5K, and IMDB-B.
+Additionally, we use MNIST-superpixel (Monti et al. 2017)
+in our experiments.
+E.2 Evaluation Protocols
+In this section, we present the tasks for evaluating our self-
+supervised learning framework. Detailed hyperparameters of
+these tasks are provided in Appendix F.
+Transfer learning. First, we pre-train the encoder on a
+large biochemical dataset Zinc-2M (Sterling and Irwin 2015)
+using our proposed Khan-GCL framework. After pre-training,
+we discard the projection head and append a linear layer
+after the pre-trained encoder. Then we perform end-to-end
+fine-tuning of the encoder and linear layer on the training
+sets of the downstream datasets. Test ROC-AUC at the best
+validation epoch is reported. Each downstream experiment
+is performed 10 times, and the mean and standard deviation
+of ROC-AUC are reported. We refer to (Hu et al. 2019) and
+(You et al. 2020) for more details of this task.
+Unsupervised learning. In this task, we follow the setup
+of (Sun et al. 2019). Specifically, we pre-train the encoder
+on TU-datasets (Morris et al. 2020). While evaluating the
+encoder, we use a SVM classifier to classify the output repre-
+sentations of the encoder. We report 10-fold cross validation
+accuracy averaged for 5 runs.
+More configurations of Khan-GCL in unsupervised learn-
+ing. In Section 5.2, to perform ablation study regarding
+CKFI and the hard negative generation approach, we intro-
+duce three additional configurations of Khan-GCL, i.e., ‘w/
+random-perturb’, ‘w/o d-dims’, and ‘w/o i-dims’. Here we
+provide details of these three configurations.
+i. ‘w/ random-perturb’: perturbations are sampled from
+random Gaussian distribution, i.e., for a graph rep-
+resentation zj, zhard
+j = zj + prand, where prand is
+sampled as follows:
+prand = {prand
+i = αi · urand
+i } (28)
+in which:
+urand
+i ∼ N(ϵrandσ2
+rand), α i ∼ Rad (29)
+ii. ‘w/o d-dims’: perturbations are applied only to the in-
+dependent dimensions, i.e., for a graph representation
+zj, zhard
+j = zj + pδ
+
+
+--- PAGE 13 ---
+Datasets Domain Dataset size Avg. node per graph Avg. degree
+Zinc-2M Biochemical 2,000,000 26.62 57.72
+BBBP Biochemical 2,039 24.06 51.90
+Tox21 Biochemical 7,831 18.57 38.58
+SIDER Biochemical 1,427 33.64 70.71
+ClinTox Biochemical 1,477 26.15 55.76
+MUV Biochemical 93,087 24.23 52.55
+HIV Biochemical 41,127 25.51 54.93
+BACE Biochemical 1,513 34.08 73.71
+NCI1 Biochemical 4,110 29.87 1.08
+PROTEINS Biochemical 1,113 39.06 1.86
+DD Biochemical 1,178 284.32 715.66
+MUTAG Biochemical 188 17.93 19.79
+COLLAB Social Networks 5,000 74.49 32.99
+RDT-B Social Networks 2,000 429.63 1.16
+RDT-M5K Social Networks 4,999 508.52 1.17
+IMDB-B Social Networks 1,000 19.77 96.53
+MNIST-superpixel Superpixel 70,000 70.57 8
+Table 5: Details of datasets used in our experiments.
+Experiments Transfer Learning Unsupervised Learning MNIST-Superpixel
+GNN Type GIN GIN GIN
+Encoder Neuron Number [300,300,300,300,300] [32,32,32] [110,110,110,110]
+Projection Head Neuron Number [300,300] [32,32] [110,110]
+Pooling Layer Global Mean Pool Global Add Pool Global Add Pool
+Table 6: Details of Model Architecture.
+iii. ‘w/o i-dims’: perturbations are applied only to the
+discriminative dimensions, i.e., for a graph represen-
+tation zj, zhard
+j = zj + pρ
+MNIST-superpixel. We follow the settings of (You et al.
+2020) in pre-training the encoder on MNIST-superpixel
+dataset (Monti et al. 2017).
+While performing nearest neighbor retrieval, for a certain
+graph xj (whose representation is zj), we first generate a hard
+negative zhard
+j of it by applying the perturbations. Then we
+search the representations of all graphs across the dataset to
+find the 5 graphs with the largest latent similarity (measured
+by cosine similarity) with zhard
+j .
+F Detailed Experiment Settings
+F.1 Encoder Architecture
+For the sake of fairness across all comparison against existing
+methods, we follow (You et al. 2020) for the input, output,
+and hidden layer size of the encoder. Details of the encoder
+are concluded in Table 6.
+In Khan-GCL, we replace all MLPs in the encoder by
+same-sized KANs. In all implementations, we use cubic B-
+spline-based KANs where the grid sizes are set to 5.
+F.2 Transfer Learning Settings
+In transfer learning pre-training, we train the encoder using
+an Adam optimizer (Kingma 2014) with initial learning rate
+1 × 10−4 for 100 epochs. The temperature hyperparameter
+τ in contrastive loss is 0.1. In hard negative generation, we
+choose ϵδ = ϵρ = 0.075 and σδ = σρ = 0.05.
+F.3 Unsupervised Learning Settings
+In unsupervised learning pre-training, the encoder is opti-
+mized by an Adam optimizer (Kingma 2014) with initial
+learning rate 1 × 10−4 for 60 epochs. The temperature hyper-
+parameter τ in contrastive loss is 0.2. While generating per-
+turbations, we choose ϵδ = ϵρ = 0.075 and σδ = σρ = 0.05.
+Methods GraphCL RGCL Khan-GCL(Ours)
+Time (second/iteration) 0.046 0.059 0.063
+Table 7: Running time comparison in Zinc-2M pre-training.
+G Training Time Comparison of KAN and
+MLP-based Encoder
+All experiments are conducted on a single NVIDIA A100
+GPU. Table 7 compares the runtime of Khan-GCL with sev-
+eral state-of-the-art GCL approaches (GraphCL (You et al.
+2020), RGCL (Li et al. 2022)) in Zinc-2M pre-training. Al-
+though the iterative computation involved in KAN’s B-spline
+functions incurs additional training overhead, Khan-GCL
+achieves a runtime comparable to recent state-of-the-art GCL
+approaches.
+
+
+--- PAGE 14 ---
+!!
+Accuracy
+!"
+ "!
+ ""
+Accuracy
+Figure 5: Ablation study results regarding hyperparameters.
+H Additional Experiment Results
+H.1 MNIST-superpixel classification
+In addition to the nearest neighbor retrieval experiment, we
+also present the classification accuracy of the pre-trained en-
+coder on MNIST-superpixel in Table 8. After pre-training, the
+encoder is fine-tuned on 1% labeled data randomly sampled
+from the whole dataset.
+Methods Acc (in %)
+Infomax (Sun et al. 2019) 63.2±0.8
+GraphCL (You et al. 2020) 83.4±0.3
+RGCL (Li et al. 2022) 83.8±0.4
+Khan-GCL(Ours) 84.2±0.3
+Table 8: Performance comparison in MNIST-superpixel clas-
+sification.
+H.2 Additional ablation study
+In this section, we perform additional ablation studies on the
+hyperparameters ϵδ, ϵρ, σδ, and σρ of Khan-GCL. Figure 5
+presents the results of unsupervised learning on the PRO-
+TEINS dataset and averaged transfer learning performance
+with varying hyperparameter settings.
+I Potential Societal Impacts
+By integrating expressive and interpretable Kol-
+mogorov–Arnold Networks (KANs), Khan-GCL establishes
+a new state-of-the-art approach for self-supervised graph
+learning. This method is applicable to various real-world
+domains, including recommendation systems, cybersecurity,
+and drug discovery. We anticipate that leveraging KANs
+within GCL frameworks, along with our proposed feature
+identification techniques, will inspire further research in
+representation learning and self-supervised graph learning.
+Nevertheless, since KAN architectures rely on iterative
+B-spline computations, they require more training time and
+computational resources compared to conventional MLPs.
+Consequently, this increased resource consumption may lead
+to environmental concerns, such as higher carbon emissions.
+J Declaration of LLM usage
+We used LLMs only for writing assistance, e.g., grammar
+and spell checking, and did not rely on them for generating
+or analyzing core research content.

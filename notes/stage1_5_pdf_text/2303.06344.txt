@@ -1,0 +1,1927 @@
+
+
+--- PAGE 1 ---
+Graph Contrastive Learning under Heterophily via Graph Filters
+Wenhan Yang1 Baharan Mirzasoleiman1
+1Computer Science Department, University of California Los Angeles (UCLA)
+Abstract
+Graph contrastive learning (CL) methods learn
+node representations in a self-supervised manner
+by maximizing the similarity between the aug-
+mented node representations obtained via a GNN-
+based encoder. However, CL methods perform
+poorly on graphs with heterophily, where con-
+nected nodes tend to belong to different classes. In
+this work, we address this problem by proposing
+an effective graph CL method, namely HLCL , for
+learning graph representations under heterophily.
+HLCL first identifies a homophilic and a het-
+erophilic subgraph based on the cosine similar-
+ity of node features. It then uses a low-pass and
+a high-pass graph filter to aggregate representa-
+tions of nodes connected in the homophilic sub-
+graph and differentiate representations of nodes
+in the heterophilic subgraph. The final node repre-
+sentations are learned by contrasting both the aug-
+mented high-pass filtered views and the augmented
+low-pass filtered node views. Our extensive ex-
+periments show that HLCL outperforms state-of-
+the-art graph CL methods on benchmark datasets
+with heterophily, as well as large-scale real-world
+graphs, by up to 7%, and outperforms graph su-
+pervised learning methods on datasets with het-
+erophily by up to 10%.
+1 INTRODUCTION
+1 Graph neural networks (GNNs) are powerful tools for
+learning graph-structured data in various domains [Kipf
+and Welling, 2016, Veliˇckovi´c et al., 2017]. GNNs use the
+graph’s adjacency matrix to aggregate node information
+1Code can be found at https://github.com/
+BigML-CS-UCLA/HLCL
+from their neighbors, effectively acting as a low-pass filter
+that smooths graph signals [Nt and Maehara, 2019]. They
+have shown remarkable success in supervised and semi-
+supervised learning, where task-specific labels are available.
+However, obtaining high-quality labels can be costly in
+many domains, spurring interest in self-supervised learn-
+ing on graphs to learn representations without supervision
+[Velickovic et al., 2019, Peng et al., 2020, Qiu et al., 2020,
+Hassani and Khasahmadi, 2020, Zhu et al., 2020b].
+Among these self-supervised methods, Contrastive Learn-
+ing (CL) has demonstrated remarkable success [Velickovic
+et al., 2019, Peng et al., 2020, Qiu et al., 2020, Hassani
+and Khasahmadi, 2020, Zhu et al., 2020b]. Graph CL meth-
+ods first augment the input graph, either by altering node
+features or the graph topology. Then, they learn represen-
+tations by contrasting the augmented graph views encoded
+with a GNN-based encoder. Existing graph CL methods
+perform well under homophily, where neighboring nodes
+often share the same label. However, they perform poorly on
+heterophilic graphs, where connected nodes tend to belong
+to different classes [Zhu et al., 2020b]. Indeed, for learning
+rich representations in graphs with heterophily, contrasting
+augmented views of every node is not enough, but it is cru-
+cial to differentiate representation of node with different
+labels [Bo et al., 2021, Luan et al., 2020]. However, without
+label information, it is not clear how this can be achieved.
+In this work, we propose an effective graph CL method,
+namely HLCL , for learning node representations under het-
+erophily. HLCL first uses nodes’ feature similarity to iden-
+tify a homophilic and heterophilic subgraph in the original
+graph. Then, for each subgraph, it generates two augmented
+graph views, and applies a high-pass filter to the heterophilic
+subgraphs and a low-pass filter to the homophilic subgraphs.
+The final representations are learned by contrasting the aug-
+mented high-pass filtered views and contrasting the aug-
+mented low-pass filtered views of each node, using thesame
+GNN encoder, as illustrated in Fig. 1. In doing so, HLCL
+achieves state-of-the-art performance under heterophily, sur-
+passing graph supervised learning methods and yielding
+Accepted for the 40th Conference on Uncertainty in Artificial Intelligence (UAI 2024).
+arXiv:2303.06344v2  [cs.LG]  10 Jun 2024
+
+
+--- PAGE 2 ---
+Figure 1: HLCL identifies a homophilic and a heterophilic subgraph Ghom, Ghet, and generates two augmentations for
+each subgraph. Then, it applies low-pass filters FFF LP , ˜FFF LP to the augmented homophilic subgraphs and high-pass filters
+FFF HP , ˜FFF HP to the augmented heterophilic subgraphs, to generate low-pass HHH L, ˜HHH L and high-pass HHH H , ˜HHH H filtered views,
+using the same encoder WWW . HLCL learns the final representations by contrasting the projected low-pass filtered augmented
+views zzzL, ˜zzzL and the high-pass filtered augmented views zzzh, ˜zzzh of every node.
+comparable performance to state-of-the-art graph CL meth-
+ods under homophily. In addition, we prove that the learned
+representations by HLCL encode both low-frequency and
+high-frequency information.
+Our extensive experiments show that on seven benchmark
+datasets, HLCL outperforms existing graph CL methods
+by up to 7% and graph supervised learning methods by up
+to 10% under heterophily, while maintaining comparable
+performance under homophily. Additionally, HLCL scales
+well to large graphs like Penn94, outperforming other graph
+CL methods by up to 5%.
+In summary, our contributions are as follows:
+• Graph CL with graph filters. HLCL is the first graph
+CL method that utilizes graph filters, and combines
+high-pass and low-pass filtered representations using
+contrastive losses. This approach enables learning rich
+representations under heterophily.
+• Careful aggregation. HLCL identifies a homophilic
+and a heterophilic subgraph based on node features or
+representations, for effective information aggregation.
+• Theoretical analysis. By analyzing HLCL , we theoret-
+ically prove that HLCL learns the invariance informa-
+tion from both homophilic and heterophilic subgraphs.
+• Extensive experiments. Empirically, we confirm that
+HLCL achieves state-of-the-art under heterophily and
+a competitive performance under homophily.
+2 RELA TED WORK
+Graph self-supervised learning. Graph self-supervised
+learning (SSL) methods have become a powerful tool for
+learning representations without any labels. Graph con-
+trastive learning (CL) is among the most successful graph
+SSL methods. Numerous methods have been proposed in
+the field: [Velickovic et al., 2019, Peng et al., 2020, Has-
+sani and Khasahmadi, 2020, Zhu et al., 2021c] focus on
+contrasting the global augmented representation with the
+local augmented representation, while [Zhu et al., 2020c,
+You et al., 2020, Qiu et al., 2020, Liu et al., 2022] contrast
+same-scale representation, global or local, in two augmented
+views. Due to the complexity of collecting negative sam-
+ples in graph data, negative-sample free contrastive objec-
+tives have also been studied [Thakoor et al., 2021, Bielak
+et al., 2021]. However, such work focus on encoding the
+homophilic graphs and perform poorly under heterophily.
+Recently, a stream of SSL methods have been proposed to
+learn the node representations of the heterophilic graphs
+without labels. HGRL [Chen et al., 2022] improves the node
+representations on heterophilic graphs by rewiring non-local
+neighbors based on feature information before training. SP-
+GCL [Wang et al., 2022] considers nodes from the T -hop
+neighborhood of a node with high feature similarities as pos-
+itive pairs, without using any explicit augmentations. DSSL
+[Xiao et al., 2022] separates the heterogeneous patterns in
+local neighborhood distributions to capture both homophilic
+and heterophilic information globally. GREET [Liu et al.,
+2023] discriminates homophilic edges from heterophilic
+edges using random walk based graph diffusion and con-
+trasts the projected representations of the two graph views
+directly via a dual-channel contrastive loss. MUSE [Yuan
+et al., 2023] creates two views to capture information from
+the node itself and its neighborhood, and fuses these views
+to enhance node representations. NeCo [He et al., 2023]
+proposes a new pretext task, group discrimination, which
+divides the nodes into k groups and keeps the consistent
+representation of nodes within a group.
+Graph (semi-)supervised learning under heterophily. In
+the supervised setting, recent methods propose to use other
+types of aggregation that better fit graphs with heterophily.
+Zhu et al. [2021a] analyzed and designed a uniform frame-
+work for GNNs’ propagations and proposed GNN-LF and
+2
+
+
+--- PAGE 3 ---
+GNN-HF that preserve information of different frequency
+separately by using different filtering kernels with learn-
+able weights. FAGCN [Bo et al., 2021] and FBGNN [Luan
+et al., 2020] train two separate encoders to capture the high-
+pass and low-pass graph signals separately. Then they rely
+on labels to learn relatively complex mechanisms to com-
+bine the outputs of the encoders. However, learning how to
+combine the encoder outputs is highly sensitive to having
+high-quality labels. This makes such methods highly im-
+practical for self-supervised contrastive learning, where the
+label information is not available. Unlike the above super-
+vised methods, we apply the high-pass and low-pass filters
+to different subgraphs, contrasting the resulting high-pass
+filtered node views and low-pass filtered node views in a
+self-supervised manner, without any label. This is in con-
+trast to learning the best combination of filtered signals of
+different encoders based on labels. A more comprehensive
+overview of related work are provided in Appendix A.6.
+3 PRELIMINARIES
+Notations. We denote by G = ( V, E) an undirected
+graph, where V = {v1, v2, . . . , vN } represents the node
+set, and E ⊆ V × Vrepresents the edge set. We denote
+by AAA ∈ {0, 1}N ×N the symmetric adjacency matrix of
+graph G, where AAAij = 1 if and only if (vi, vj) ∈ E, and
+AAAij = 0 otherwise. We denote the feature matrix by XXX,
+where XXX i. ∈ Rm is the feature vector of the ith node, and
+xxx ∈ RN is a column of the matrix and represents a graph
+signal. DDD is the degree matrix of the graph, with DDDii =P
+j AAAij, and Ni = {j : AAAij = 1} is the neighborhood of
+node i. LLL is the Laplacian matrix of the graph, defined as
+LLL = DDD − AAA. The normalized Laplacian matrix is denoted
+by LLLsym = DDD− 1
+2 LDLDLD− 1
+2 , and the normalized adjacency
+matrix is defined as AAAsym = DDD− 1
+2 ADADAD− 1
+2 . Here, we use
+the renormalized version of the adjacency matrix ˆAˆAˆAsym =
+¯D¯D¯D− 1
+2 ¯A¯A¯A ¯D¯D¯D− 1
+2 as introduced in [Kipf and Welling, 2016],
+where ¯A¯A¯A = AAA + III, ¯D¯D¯D = DDD + III. Similarly, the renormalized
+Laplacian matrix is defined as ˆLˆLˆLsym = III − ˆAˆAˆAsym. ˆLˆLˆLsym
+is a real symmetric matrix, with orthonormal eigenvectors
+{uuui}n
+l=1 ∈ Rn, and corresponding eigenvalues λi ∈ [0, 2)
+[Chung, 1997]. For ˆAˆAˆAsym we have λi( ˆAˆAˆAsym) ∈ (−1, 1].
+3.1 GRAPH CL UNDER HOMOPHILY
+State-of-the-art graph CL methods explicitly augment
+the input graph using feature or topology augmentations,
+encode the augmented graphs using a GNN-based encoder,
+and contrast the encoded node representations [Zhu et al.,
+2020c, 2021b, Velickovic et al., 2019, Thakoor et al., 2021,
+Qiu et al., 2020], as we will discuss in more detail next.
+Graph Augmentation. First, the input graph is explicitly
+augmented, by altering its topology or node features. Topol-
+ogy augmentation methods remove or add nodes or edges,
+and feature augmentation methods alter the node features by
+masking particular columns, dropping features at random,
+or randomly shuffling the node features [Zhu et al., 2020c,
+2021b, Velickovic et al., 2019, Thakoor et al., 2021].
+GNN Encoder . The augmented graphs are then passed
+through a GNN-based encoder to obtain the augmented node
+views. The GNN encoder produces node representations by
+aggregating the node features in a neighborhood as follows:
+HHH l = σ( ˜A˜A˜AsymHHH l−1WWW l−1), HHH 0 = XXX, (1)
+where HHH l
+L is the node representations at layer l of the en-
+coder, WWW l ∈ Rdl×dl−1 is the weight matrix in layer l of the
+encoder, and σ is the activation function. Crucially, the Adja-
+cency matrix ˜A˜A˜Asym is a low-pass filter that aggregates every
+node’s features with the features of nodes in its immediate
+neighborhood. For a multi-layer graph encoder, it iteratively
+aggregates features in a multi-hop neighborhood of every
+node to learn its representation. Hence, it smooths out the
+node representations and produces similar representations
+for the nodes within the same multi-hop neighborhood.
+Contrastive Loss. Finally, the contrastive loss distinguishes
+the representations of the same node in two different aug-
+mented views, from other node representations. For example
+the commonly used InfoNCE loss [Oord et al., 2018] is:
+− log esimτ (uuui,vvvi)
+esimτ (uuui,vvvi) + P
+k̸=i
+esimτ (uuui,vvvk) , (2)
+where uuui, vvvi are representations of two different augmented
+views of node i, sim(uuui, vvvk) is the cosine similarity between
+uuui and vvvk, and τ is a temperature parameter.
+3.2 HIGH-PASS AND LOW-PASS GRAPH FILTERS
+The adjacency and Laplacian matrices can be leveraged to
+filter the smooth and non-smooth graph components, and
+capture similarity and dissimilarity of node features to their
+neighborhoods. Specifically, multiplication of Laplacian
+with a graph signal ˆLˆLˆLsymxxx = P
+i λiuuuiuuuT
+i xxx, acts as a filter-
+ing operation over xxx, adjusting the scale of the components
+of xxx in the frequency domain. The entries of every eigen-
+vector, uuui align with a cluster of connected nodes in the
+graph. For the Laplacian matrix, a smaller eigenvalue λi
+corresponds to a lower frequency (smoother) eigenvectors
+uuui, and a larger cluster of connected nodes. On the other
+hand, a larger λi corresponds to a high frequency (non-
+smooth) eigenvectors uuui, which identify smaller clusters
+of closely connected nodes in the graph. A Laplacian fil-
+ter magnifies the high frequency signals that align well
+with basis functions corresponding to large eigenvalues
+λi ∈ (1, 2) and suppresses the low frequency signal that
+aligns with basis functions corresponding to small eigenval-
+ues λi ∈ [0, 1]. That means, for small clusters of nodes that
+have a large alignment with uuui corresponding to λi > 1,
+3
+
+
+--- PAGE 4 ---
+(a) Homophily neighborhood
+ (b) Heterophily neighborhood
+Figure 2: Chameleon (β=0.23). Heterophilic graphs contain
+neighborhoods with homogeneous & heterogeneous labels.
+the projection λiuuuiuuuT
+i xxx amplifies xxx within the cluster and
+consequently magnifies the difference in xxx among the nodes
+within that cluster. On the other hand, for the larger clusters
+that align well with uuui corresponding to λi < 1, the projec-
+tion λiuuuiuuuT
+i xxx suppresses xxx within the cluster and reduces
+the differences in xxx among the nodes within that cluster.
+Hence the Laplacian matrices can be generally regarded as
+high-pass filters [Ekambaram, 2014], that enlarge the differ-
+ences in node features over small clusters, and smooths out
+the differences over larger clusters in the graph. In contrast,
+affinity matrices, such as the normalized adjacency matrix,
+can be treated as low-pass filters [Nt and Maehara, 2019],
+which suppress and filter out non-smooth components of the
+signals. This is because all of the eigenvalues of the affinity
+matrices are smaller than 1, i.e., λi ∈ (−1, 1].
+On the node level, left multiplying ˆLˆLˆLsym and ˆAˆAˆAsym filters
+with xxx can be understood as diversification and aggregation
+operations, respectively [Luan et al., 2020]. In particular, a
+typical GNN filters smooth graph frequencies by aggregat-
+ing the node representations with those of their neighbors,
+using the adjacency matrix, i.e.,
+( ˆAˆAˆAsymxxx)i =
+X
+j∈Ni
+1
+¯D¯D¯Dii
+xxxj. (3)
+Hence, it results in similar representations for the nodes in a
+neighborhood. In contrast, the high-pass filter only preserves
+the high-pass frequencies, using the Laplacian matrix, i.e.
+(ˆLˆLˆLsymxxx)i =
+X
+j∈Ni
+1
+¯D¯D¯Dii
+(xxxi − xxxj). (4)
+In doing so, it magnifies the dissimilarities between the
+nodes and make the representations of nodes in a neighbor-
+hood distinguishable.
+Homophily Ratio Homophily ratio quantifies how likely
+nodes with same labels are connected in the graph. Formally,
+homophily ratio, β, is defined as follows [Pei et al., 2020]:
+β = 1
+|V |
+X
+v∈V
+No. of similar neighbors of v
+No. of neighbors of v . (5)
+4 GRAPH CL UNDER HETEROPHILY
+In this section, we first discuss the challenges of having
+a universal method for graph CL under heterophily and
+homophily. Then, we present our approach to overcome
+these challenges and learn high-quality representations.
+Challenges. Under heterophily, where nodes in a neigh-
+borhood may have different labels, aggregating the node
+representations in a neighborhood fades out the dissimilarity
+between representations of node in different classes, and
+contrasting those augmented representations further makes
+them indistinguishable. Labels can help guide an appropriate
+aggregation in the neighborhood. However, without labels, it
+is not clear how the neighborhood information should be ag-
+gregated. Additionally, even if one can identify homophilic
+edges, the number of such edges may be too small to learn
+high quality representations via GNNs, under heterophily.
+To achieve rich representations in such graphs, it is crucial
+to not only aggregate representations of neighbors with the
+same label, but also push away representations of neighbors
+with different labels. This allows learning richer node repre-
+sentations based on both similarities and dissimilarities of
+the nodes in different neighborhoods.
+Next, we present our method, HLCL , that can learn high-
+quality representations under heterophily.
+4.1 HIGH-PASS & LOW-PASS GRAPH CL (HLCL )
+As discussed, under heterophily, leveraging node feature
+similarities is not enough for learning high-quality represen-
+tations. It is crucial to capture the dissimilarities between
+the neighboring nodes to separate different classes. A high-
+pass filter like the Laplacian matrix (c.f. Sec. 3.2) filters the
+non-smooth graph component and captures the dissimilarity
+of the node features in a neighborhood. However, without
+labels, we cannot know whether the graph is homophilic or
+heterophilic, and naively using a high-pass filter instead of
+a low-pass filter significantly harms the performance under
+homophily. Moreover, most heterophilic graphs also consist
+of several neighborhoods with homogeneous labels, as illus-
+trated in Fig.2. Hence, simply applying a high-pass filter to
+an unlabeled graph may result in poor performance.
+Idea. To learn rich node representations for both graph
+types, our main idea is to first identify a homophilic
+subgraph and a heterophilic subgraph in the original graph.
+Then, we augment each subgraph, and apply a low-pass fil-
+ter to the augmented homophilic subgraphs and a high-pass
+filter to the augmented heterophilic subgraphs to obtain
+two high-pass and two low-pass filtered views for every
+node, using the same encoder. The final representations are
+learned by contrasting the two high-pass filtered views and
+the two low-pass filtered views of every node.
+Next, we introduce our method, HLCL , which works based
+4
+
+
+--- PAGE 5 ---
+on the above idea.
+Separating Subgraphs. HLCL first identifies two sub-
+graphs in the original graph: a homophilic subgraph with
+edges connecting nodes with homogeneous labels, and a
+heterophilic subgraph with edges connecting nodes with
+heterogeneous labels.
+Formally, given a graph G = (V, E), the heterophilic sub-
+graph Ghet = ( V, E het) and the homophilic subgraph
+Ghom = (V, E hom) each contain all the nodes V, and a sub-
+set of the edges of the original graph, i.e., E het, E hom ⊆ E.
+We denote by AAAhet, AAAhom ∈ {0, 1}N ×N the symmetric ad-
+jacency matrix of subgraphs Ghet, Ghet, respectively. Note
+that the feature matrix XXX for G is the same as Ghet and
+Ghom. However, the neighborhood for a given node i can
+be different in the two subgraphs. We define N het
+i = {j :
+AAAhet
+ij = 1 } and N hom
+i = {j : AAAhom
+ij = 1 } as the neigh-
+borhood of node i in Ghet, Ghom, respectively. Without
+any label supervision, we rely on the important observa-
+tion that for graphs with different homophily ratios, the
+original features can approximately indicate the label in-
+formation [Jin et al., 2021, Chen et al., 2022, Wang et al.,
+2020, Zhu et al., 2020b]. Based on this observation, we
+calculate pairwise feature similarities sij = ⟨xxxi., xxxj.⟩ for
+all i, j∈ [n] = |V|, where ⟨., .⟩ is the cosine similarity.
+Then, we first form the homophilic subgraph by selecting
+k1 fraction of edges in neighborhood of every node i with
+largest cosine similarities. Formally, E hom =
+
+(i, j)|i ∈
+[n], j ∈ arg maxP ⊆Ni,|S|=⌈k1·|Ni|⌉
+P
+p∈P {si,p}
+	
+. Next,
+we form the heterophilic subgraph using k2 fraction of
+the edges in neighborhood of every node with lowest
+cosine similarities, i.e., E het =
+
+(i, j)|i ∈ [n], j ∈
+arg minP ⊆Ni,|S|=⌈k2·|Ni|⌉
+P
+p∈P {si,p}
+	
+.
+The initial subgraphs are constructed via original node fea-
+tures. However, the subgraphs are updated everyT epochs
+with the learned node representations during training. Note
+that, in contrast to prior work [Chen et al., 2022], we do not
+introduce new edges based on feature similarities throughout
+the training, which could change the semantic information
+of the graph [He et al., 2023].
+We note that all the nodes may not be connected in both
+subgraphs. However, as long as one subgraph is mostly con-
+nected, the information can be aggregated effectively and
+a satisfactory performance is obtained. For example, un-
+der homophily the heterophilic subgraph is small, but the
+homophilic subgraph contains almost all the nodes in the
+largest connected component of the original graph. Simi-
+larly, under extreme heterophily almost all the nodes are
+in the heterophilic subgraph and the homophilic subgraph
+is small and minimally affects the performance. As HLCL
+contrasts augmented views of the homophilic subgraph and
+heterophilic separately (it does not contrast the subgraphs
+with each other), only one subgraph needs to be mostly con-
+nected to achieve satisfactory performance. In our ablation
+stuides in Sec. 6.5, we confirm that in real-world graphs at
+least one of the subgraphs are mostly connected.
+Augmenting the Subgraphs. Next, HLCL generates two
+augmented views for each subgraph via random graph
+perturbations. We denote the two augmented graph views
+as G and ˜G. For the homophilic subgraph, we follow [Zhu
+et al., 2020c] and apply edge removal and feature masks
+as our graph augmentations. For the heterophilic subgraph,
+we apply node dropping and feature masks as our aug-
+mentations. We study the effects of different augmentation
+techniques on the heterophilic subgraph in Sec. 6.1.
+Producing the Filtered Representations. Subsequently,
+HLCL applies a high-pass filter to the two augmented views
+of the heterophilic subgraph, and a low-pass filter to the two
+augmented views of the homophilic subgraph, using the
+same encoder. The shared encoder is crucial to ensure a
+good performance under both homophily and heterophily.
+Specifically, to generate the low-pass and high-pass fil-
+tered node views, HLCL leverages the renormalized adja-
+cency matrices of the augmented heterophilic subgraph and
+the renormalized Laplacian matrices of the augmented het-
+erophilic subgraph. Formally, FFF LP = ˆAˆAˆAhom
+sym , and FFF HP =
+ˆLˆLˆLhet
+sym = III − ˆAˆAˆAhom
+sym , are the low-pass and high-pass filters
+corresponding to the first augmented view of the homophilic
+and heterophilic subgraphs, and ˜FFF LP , ˜FFF HP are the low-
+pass and high-pass filters corresponding to the second aug-
+mented view of the homophilic and heterophilic subgraphs.
+Effectively,FFF LP , ˜FFF LP are the aggregation operations in Eq.
+(3) and FFF HP , ˜FFF HP are diversification operations in Eq. (4).
+Then, the two low-pass filtered views of the homophilics
+subgraph are obtained as follows:
+HHH l
+L = σ(FFF LP HHH l−1
+H WWW l−1), (6)
+˜HHH
+l
+L = σ( ˜FFF LP HHH l−1
+H WWW l−1), (7)
+and the two high-pass filtered views of the heterophilic
+subgraph are obtained as follows:
+HHH l
+H = σ(FFF HP HHH l−1
+H WWW l−1), (8)
+˜HHH
+l
+H = σ( ˜FFF HP HHH l−1
+L WWW l−1). (9)
+HHH l
+L, ˜HHH
+l
+L are the low-pass filtered augmented views at layer
+l of the encoder, HHH l
+L, ˜HHH
+l
+L are the high-pass filtered aug-
+mented views at layer l of the encoder, WWW l ∈ Rdl×dl−1 is
+the weight matrix in layer l of the encoder, σ is the activa-
+tion function, and we have HHH 0
+L = HHH 0
+H = XXX, and ˜HHH
+0
+L =
+˜HHH
+0
+H = ˜XXX where XXX, ˜XXX are augmented feature matrices.
+FFF HP , ˜FFF HP filter out the low-frequency signals and pre-
+serve the high-frequency signals. In doing so, they capture
+the difference in feature of each node and its neighbors.
+Using a high-pass encoder within a multi-layer encoder it-
+eratively captures the difference between features of the
+5
+
+
+--- PAGE 6 ---
+nodes in a multi-hop neighborhood of a node in the het-
+erophilic subgraph. Hence, it makes the representations of
+nodes that have different features from their neighbors dis-
+tinct in their multi-hop neighborhood. On the other hand,
+FFF LP , ˜FFF LP , only preserve the low-frequency signals by ag-
+gregating every node’s features with those of its immediate
+neighborhood. Using the low-pass filter within a multi-layer
+graph encoder iteratively aggregates features in a multi-hop
+neighborhood of every node in the homophilic subgraph to
+learn its representation. Hence, they smooth out the node
+representations and produces similar representations for the
+nodes within the same multi-hop neighborhood.
+Note that, we use the Laplacian and adjacency matrices of
+the augmented subgraphs instead of those of the original
+graphs, as they indicate how the information in different
+neighborhoods should be aggregated by the GCN encoder.
+Indeed, it is important to use the corresponding matrices in
+the subgraphs. In doing so, we pull together representations
+of nodes within label-homogeneous neighborhoods by ap-
+plying low-pass filters to homophilic subgraphs, and push
+away representations of nodes within label-heterogeneous
+neighborhoods by applying high-pass filter to heterophilic
+subgraphs. If both filters are applied to the original graph,
+representations of the nodes within each neighborhood will
+be pulled together and pushed apart at the same time.
+Using both high-pass and low-pass filters provide com-
+plementary information and allow learning both smooth
+and non-smooth components of the graphs simultaneously,
+which is particularly useful for graphs under heterophily.
+We note that other types of high-pass and low-pass filters
+can be used in a similar way in our framework.
+Contrasting the Filtered Representations. Finally, by con-
+trastive the augmented views of each subgraph, HLCL
+learns high-quality representations. The augmented views
+HHH, ˜HHH are first projected via a 2-layer non-linear MLP,
+named projection head, to another latent space zzz, ˜zzz where
+the contrastive losses are calculated, as advocated by [Chen
+et al., 2020, Chen and He, 2021, Zhu et al., 2020c, 2021b].
+Then, for each subgraph, we first consider every nodei in the
+first augmented subgraph view as the anchor, and contrast
+it with all the nodes in the second augmented subgraph
+view. This yields the following contrastive losses for the
+homophilic and heterophilic subgraphs, respectively:
+l(zzzi
+l, ˜zzzi
+l) = log esim(zzzi
+l ,˜zzzi
+l )/τ
+esim(zzzi
+l ,˜zzzi
+l )/τ + P
+k∈[N ],
+k̸=i
+esim(zzzi
+l ,˜zzzk
+l )/τ (10)
+l(zzzi
+h, ˜zzzi
+h) = log esim(zzzi
+h,˜zzzi
+h)/τ
+esim(zzzi
+h,˜zzzi
+h)/τ + P
+k∈[N ],
+k̸=i
+esim(zzzi
+h,˜zzzk
+h)/τ ,(11)
+where sim is the cosine similarity between the projected rep-
+resentations, and τ is a temperature parameter. The second
+term in the denominator represent the inter-view negative
+Algorithm 1 High-pass and Low-pass Graph CL (HLCL)
+1: Infer subgraph Ghom by selecting the top ⌈k1 × |Ni|⌉
+edges with highest cosine similarity for every node i.
+2: Infer subgraph Ghet by selecting the top ⌈k2 × |Ni|⌉
+edges with lowest cosine similarity for every node i.
+3: for epoch = 1, 2, 3, · · ·do
+4: Obtain augmented graph views
+Ghom, ˜Ghom, Ghet, ˜Ghet via random perturbations.
+5: Generate high-pass node representations HHH H , ˜HHH H
+based on Eq. (8), (9), using encoder weights WWW .
+6: Generate low-pass node representations based on
+HHH L, ˜HHH L based on Eq. (6), (7)using encoder weights WWW .
+7: Compute the contrastive objective LHLCL in Eq.
+(12).
+8: Update the encoder weights WWW by applying
+stochastic gradient ascent to minimize LHLCL .
+9: if epoch % T = 0 then
+10: update Ghet, Ghom, ˜Ghet, ˜Ghom based on
+current node representations.
+11: end if
+12: end for
+pairs, which are between the anchored view of node i and
+the views of all other nodes from the other view.
+Similarly, for each subgraph we also consider the second
+augmented view of node i as the anchor and contrast it with
+all the nodes in the first augmented subgraph view. Since
+two views are symmetric, the loss for using the other view as
+anchor is defined in a similar fashion. The overall objective
+to be minimized is then defined as the average over all the
+four contrastive losses. Formally, we minimize:
+LHLCL = − 1
+4N
+NX
+i=1
+[l(zzzi
+l, ˜zzzi
+l)+l(zzzi
+h, ˜zzzi
+h)+l(˜zzzi
+l, zzzi
+l)+l(˜zzzi
+h, zzzi
+h)].
+(12)
+Effectively, by maximizing the agreement between the low-
+pass views and between the high-pass views, HLCL pulls
+away the representation of nodes with different features
+from their neighborhood, and allows them to be distin-
+guished from their neighbors.
+Final representations. After minimizing the contrastive
+loss in Eq. (12), we use the low-pass filtered representations
+as the final output.
+The pseudocode is illustrated in Alg. 1.
+Scalability to Large Graphs via Message Passing. The
+high-pass and low-pass filtered representations can be ob-
+tained through message passing in an inductive manner,
+according to Eq. (3), (4), without the need to explicitly cal-
+culate the normalized Adjacency and Laplacian matrix. In
+particular, the high-pass filtered representations can be ob-
+tained by iteratively differentiating the representations of a
+node and those of its neighbors, and the low-pass filtered
+representations can be obtained by aggregating the node’s
+6
+
+
+--- PAGE 7 ---
+representation with those of its neighbors:
+hhhl
+i = σ(WWW l−1hhhl−1
+i ), (13)
+(hhhl
+i)L = Σj∈{N hom
+i ∪{i}}(hhhl
+i + hhhl
+j), (14)
+(hhhl
+i)H = Σj∈{N het
+i ∪{i}}(hhhl
+i − hhhl
+j). (15)
+The above update rules can be applied to both augmented
+subgraphs. This is the same approach used to train GNNs
+on large graphs. Hence, HLCL will have the same complex-
+ity as conducting a normal GNN message passing with an
+additional message being passed to generate the high-pass
+filtered views. This makes HLCL scalable to large graphs,
+as we will also confirm in our experiments.
+In addition, we will empirically confirm in Appendix A.4
+that directly contrasting the high-pass and low-pass filtered
+representations can produce comparable results to HLCL ,
+while speeding up the algorithm by 2x, as it requires mini-
+mizing only one pair of contrastive losses.
+4.2 THEORETICAL ANALYSIS
+Next, we theoretically prove that by separating the graph
+into homophilic and heterophilic subgraphs and applying
+low-pass and high-pass filters on them respectively, HLCL
+can encode both low-frequency and high-frequency infor-
+mation in the learned representations.
+Following [Liu et al., 2022], we simplify the contrastive
+losses (10), (11) by assuming τ = 1 and using inner product
+for sim. Additionally, we assume a one-layer linear encoder.
+Theorem 1 (HLCL : Spectral Invariance). Under the above
+assumptions and given ideal subgraphs Ghom and Ghet, the
+HLCL loss can be lower-bounded as follows:
+LHLCL ≥ −1 − N
+2
+X
+i
+
+αAi
+ 
+2 − (λAAAhom
+i
+− λ ˜AAA
+hom
+i
+)2
++ αLi
+ 
+4 − (λLLLhet
+i
+− λ ˜LLL
+het
+i
+)2
+,
+where λAAAhom , λ˜AAA
+hom
+i
+denote the eigenvalues of the low-pass
+filters corresponding to augmented homophilic subgraph,
+λLLLhet , λ˜LLL
+het
+i
+denote the eigenvalues of the high-pass filters
+corresponding to augmented heterophilic subgraph, and
+αAAAhom, αLLLhet are adaptive weights that change during the
+training as the parameters of the encoder changes.
+Theorem 1 provides a lower-bound for the HLCL loss. The
+lower-bound is in the form of a summation of two terms:
+the first term is the sum of the difference between the low-
+frequency components of the two low-pass filtered aug-
+mented views of the homophilic subgraph, and the second
+term is the sum of the difference between the two high-
+pass filtered augmented views of the heterophilic subgraph.
+Minimizing the HLCL loss ensures a small value for the
+lower bound. In doing so, the encoder changes such that it
+assigns a larger weight (αAi and αLi) to invariant frequen-
+cies i, for which λhom
+Ai ∼ ˆλhom
+Ai and λhet
+Li ∼ ˆλhet
+Li . Notably,
+(λhom
+Ai ∼ λhom
+˜Ai
+) implies that the two contrasted augmenta-
+tions are invariant at ith frequency. Same reasoning holds
+for the second term. Therefore, during training with HLCL ,
+the encoder will emphasize the invariance between two con-
+trasted augmentations from the spectrum domain, for both
+the homophilic and heterophilic subgraphs.
+The proof is given in the Appendix. B
+5 EXPERIMENTS
+In this section, we evaluate the node representations learned
+with HLCL , under linear probe. We compare HLCL with
+existing graph CL, graph SSL and graph supervised learning
+methods, and conduct an extensive ablation study to evaluate
+the effect of each of HLCL’s components.
+Datasets. We consider nine widely-used public benchmark
+datasets with different homophily ratios, β. The details of
+the datasets are shown in Sec. A.2. We repeat the experi-
+ments 10 times for smaller benchmark datasets, and 3 times
+for large real-world datasets, and report the early-stopped
+average accuracy as the final result. For small graphs, we
+follow CPGNN [Zhu et al., 2020a], GRACE [Zhu et al.,
+2020c], and HGRL [Chen et al., 2022] and randomly select
+10% of nodes for training, 10% of nodes for validation, and
+80% of nodes for testing. For large graphs, following [Lim
+et al., 2021] we randomly select 25% of nodes for training,
+25% of nodes for validation, and 50% of nodes for testing.
+Linear Probe Evaluation. For SSL methods, we follow
+the evaluation protocol used in [Zhu et al., 2020c]. Models
+are first trained in a self-supervised manner without labels.
+Then, we fed the final node embeddings into al2-regularized
+logistic regression classifier to fit the labeled data.
+5.1 RESULTS
+HLCL vs Self-supervised Baselines. We compare HLCL
+with existing baselines for self-supervised representation
+learning. We consider general graph self-supervised learn-
+ing methods like DGI [Velickovic et al., 2019], BGRL
+[Thakoor et al., 2021], and GRACE [Zhu et al., 2020c]
+as well as graph self-supervised learning methods that fo-
+cus on learning under heterophily like HGRL [Chen et al.,
+2022], and SP-GCL [Wang et al., 2022]. In addition, we
+also include popular general graph supervised learning meth-
+ods like GCN Kipf and Welling [2016], and graph super-
+vised learning method targeting graphs under heterophily
+like MixHop, H2GCN, GloGNN, and CPGNN [Abu-El-
+Haija et al., 2019, Zhu et al., 2020b, 2021c, Li et al., 2022].
+We record the hyperparameters for our experiments in Sec.
+A.1 Table 1 shows that HLCL achieves a significant boost
+on graphs with heterophily and a comparable performance
+7
+
+
+--- PAGE 8 ---
+Table 1: HLCL vs baselines. Methods identified with † and ∗ are supervised methods and SSL methods for graphs under
+heterophily, respectively.HLCL achieves state-of-the-art under heterophily, and a comparable performance under homophily.
+Homophily Heterophily
+Cora CiteSeer Pubmed Actor Chameleon Squirrel Penn94 Twitch-gamers Genius
+Hom.(β) .83 .71 .79 .09 .23 .19 .48 .56 .51
+Nodes 2,708 3,327 19,717 5,201 2,277 5,201 41,554 168,114 421,961
+Edges 5,278 4,676 44,324 198,493 8,854 46,998 1,362,229 6,797,557 984,979
+Classes 6 7 3 5 5 5 2 2 2
+HLCL 84.1 ± 1.0 70.1 ± 0.8 84.5 ± 0.4 34.0 ± 0.2 50.9 ± 1.0 42.9 ± 2.6 68.1 ± 3.5 67.0 ± 0.9 84.3±0.1
+DGI 84.5 ± 1.1 71.9 ± 0.7 86.0 ± 0.1 28.0 ± 1.4 32.6 ± 2.9 38.8 ± 2.3 62.9 ± 0.4 61.5 ± 0.6 OOM
+BGRL 83.0 ± 0.7 69.8 ± 0.6 80.2 ± 0.6 28.3 ± 0.9 32.6 ± 4.7 35.7 ± 1.4 58.8 ± 0.6 60.9 ± 0.3 76.4 ±3.0
+GRACE 83.7 ± 0.7 71.4 ± 1.0 86.7 ±0.1 34.5 ± 1.1 35.4 ± 3.6 36.2 ± 2.8 62.5 ± 0.4 57.1 ± 0.1 79.6 ±2.9
+SP-GCL∗ 83.2 ± 0.1 72.0 ± 0.4 79.2 ± 0.7 27.7 ± 0.7 36.5 ± 1.9 33.7 ± 1.3 - 62.0 ± 0.2 90.1∗± 0.2
+HGRL∗ 82.1 ± 0.8 71.0 ± 0.7 84.2 ± 0.2 35.4 ± 0.9 43.9 ± 1.7 38.7 ± 1.7 OOM OOM OOM
+GCN† 82.3 ± 1.2 70.2 ± 0.9 86.4 ± 0.3 28.2 ± 0.4 40.9 ± 4.1 39.5 ± 1.5 82.5 ± 0.3 62.2 ± 0.3 87.4 ± 0.4
+MixHop† 81.0 ± 1.6 66.4 ± 1.7 85.1 ± 0.3 29.0 ± 1.0 33.8 ± 1.2 33.4 ± 1.6 83.5 ± 0.7 65.6 ± 0.3 90.6 ± 0.2
+H2GCN† 81.4 ± 1.2 71.8 ± 0.9 85.9 ± 0.4 33.6 ± 0.8 26.8 ± 3.6 35.1 ± 1.2 OOM OOM OOM
+GloGNN† 88.3†± 1.1 77.4†± 1.7 89.6†± 0.4 37.4†± 0.8 25.9 ± 3.6 35.1 ± 1.2 85.6†± 0.4 66.4 ± 0.3 90.7†± 0.1
+CPGNN† 83.6 ± 1.3 72.0 ± 0.5 86.7 ± 0.2 35.6 ± 0.9 33.0 ± 3.2 30.0 ± 2.0 OOM OOM OOM
+(a) Chameleon
+ (b) Chameleon
+(c) Citeseer
+ (d) Citeseer
+Figure 3: GRACE vs HLCL representations. (a), (c) distri-
+bution of eigenvalues in the representation matrix. (b), (d)
+alignment of the labels with the eigenvectors of the represen-
+tation matrix.HLCL produces higher quality representations
+with lower rank and higher alignment with the label vector.
+on graphs with homophily compared to the popular graph
+CL methods, showing up to 7% performance boost on
+Chameleon and 5% boost on Penn94. Compared to super-
+vised methods such as H2GCN trained in an end-to-end
+manner, HLCL achieves a comparable performances under
+homophily and superior performance on heterophilic graphs
+like Chameleon by 10% and Squirrel by 3%. This confirms
+the effectiveness of HLCL.
+HLCL learns superior representations under het-
+erophily. Next, we compare the quality of representations
+learned by HLCL with that of GRACE, which only uses the
+low-pass filter for graph CL. We study Chameleon, a popu-
+lar heterophily dataset [Platonov et al., 2023], and Citeseer,
+a well-known homophily dataset [Yang et al., 2016]. Fig. 3
+compares the distribution of normalized eigenvalues of the
+representation matrices and the alignment of their eigenvec-
+tors with the label vector. Lower-ranked representations that
+have a higher alignment between their prominent eigenval-
+ues and label vector yield superior performance [Xue et al.,
+2022]. Fig. 3a confirms that HLCL ’s representations of
+Chameleon (heterophily) have a lower-rank structure com-
+pare to that of GRACE. Fig. 3b further confirms a strong
+alignment between the eigenvectors of the representation
+matrix and the label vector. Both factors contribute to higher
+classification accuracy of HLCL compared to GRACE. On
+the other hand, on Citeseer (homophily), HLCL exhibits a
+similar but only slightly higher rank spectrum than GRACE.
+Thus, contrasting the low-pass and high-pass views does not
+significantly harm the performances under homophily.
+6 ABLA TION STUDIES
+6.1 HLCL WITH EXPLICIT AUGMENTA TION
+Graph augmentation methods are well studied for graph CL
+under homophily [Zhu et al., 2020c, You et al., 2020, Liu
+et al., 2022]. However, it is unclear if the same techniques
+are effective when a high-pass filter is applied to the graph.
+Here, we study the effects of different structural and fea-
+ture augmentations applied to the heterophilic subgraphs of
+HLCL . We keep the graph augmentations on the homophilic
+subgraph constant, as mentioned in Sec. 4.1 and only investi-
+gate the effect of augmentation on the heterophilic subgraph.
+We consider popular graph augmentation methods includ-
+ing edge dropping, feature masking, node dropping, edge
+adding, and diffusion [You et al., 2020, Hassani and Khasah-
+madi, 2020]. As shown in Table 2, applying node dropping is
+8
+
+
+--- PAGE 9 ---
+Table 2: The effect of applying different augmentations to the heterophilic subgraph.
+Homophily Heterophily
+Cora CiteSeer Chameleon Squirrel Actor
+EdgeRemoving 80.0 ± 0.5 65.8 ± 0.3 47.6 ± 1.1 40.5 ± 1.1 32.4 ± 0.9
+NodeDropping 82.1 ± 0.5 66.7 ± 0.8 48.0 ± 3.4 42.0 ± 0.4 32.9 ± 0.5
+EdgeAdding 81.5 ± 1.7 66.2 ± 0.8 49.1 ± 0.5 42.9 ± 2.6 32.8 ± 1.1
+FeatureMasking 81.9 ± 1.8 65.6 ± 1.5 48.3 ± 1.8 40.8 ± 1.3 33.8 ± 1.5
+PPRDiffusion 75.1 ± 1.8 62.0 ± 1.3 50.2 ± 4.7 40.7 ± 0.2 33.2 ± 1.8
+Table 3: Using high-pass (HP) only, low-pass only (LP) filter
+or both filters (HLCL ) with inferred and ideal homophilic
+and heterophilic subgraphs (found using actual labels).
+Homophily Heterophily
+Cora Chameleon Squirrel
+HLCL 84.1 50.9 42.9
+LP 83.7 35.4 36.2
+HP 32.5 33.1 33.1
+HLCL:ideal 89.7 61.6 47.4
+LP:ideal 87.1 53.7 44.9
+HP:ideal 63.6 58.9 39.9
+Table 4: Performance for different update intervals.
+Dataset T = 10 T = 50 T = 250 No Update
+Cora 80.5 84.1 83.1 82.1
+Chameleon 41.6 50.9 48.3 42.7
+more effective on improving the performance on homophilic
+graph, while feature perturbation is more effective on im-
+proving the performance on heterophilic graph. Overall,
+HLCL’s performance is stable across all augmentations.
+6.2 HLCL WITH SINGLE GRAPH FILTER
+Next, to confirm that both filters are necessary for HLCL ’s
+superior performance, we examine the performance of
+HLCL while applying contrastive loss to either low-pass
+or high-pass filtered representations during training. The
+results are shown in Table 3. To rule out the possibility for
+poor subgraph sampling influencing the results, we also con-
+sider ideal subgraphs obtained via the true labels. That is, in
+Ghom, only nodes of the same labels are connected, while
+in Ghet, only nodes of different labels are connected. First,
+we observe that applying contrastive loss to both high-pass
+and low-pass filtered representations yields the best perfor-
+mance, both on regular subgraphs and ideal subgraphs. This
+demonstrate that utilizing both representations from both
+frequency terms is crucial for HLCL’s success. Besidies, we
+see that more precise homophilic and heterophilic subgraphs
+considerably improves the performance, and finding them
+more accurately is a promising direction for future work.
+In Appendix A.3, we demonstrate the performance of exist-
+ing graph CL methods using only high-pass filters.
+6.3 SUBGRAPH UPDA TE INTERV AL
+We also conduct an ablation study on the interval between
+subgraph updates. The results are shown in Table 4. We
+see that frequent updates (T = 10) or no updates can both
+harm the performance on both homophilic and heterophilic
+graphs. Not updating the subgraphs leads to overfitting their
+inaccuracies, and updating them too frequently does not
+allow aggregating and learning the information effectively.
+A moderate amount of updates yields best performance.
+6.4 HOMOPHILY RA TIO CAN GUIDE TUNING
+Next, we conduct a detailed study to explore the impact of
+varying k1 on HLCL ’s performance. As observed in Table 5,
+different k1 (and k2 = 1 − k1) values can have a significant
+influence on the performance. The performance on the Cora
+dataset varies by 30% with different k1 values, while the
+performance of the Chameleon dataset varies by 7%. Based
+on the results, the homophily ratio of the graph is a good
+indicator of the appropriate k1 (and k2) values. On both
+Cora and Chameleon, the best performances are achieved
+when k1 ≈ homophily ratio. Similar results are observed
+in Citeseer (k1 = 0.9; homophily ratio = 0.71) and Actor
+(k1 = 0.09, homophily ratio = 0.09). In practice, one can
+sample a small subgraph and measure its homophily ratio
+for easier tuning.
+Table 5: Performance for different values of k1.
+Dataset 0.9 0.8 0.5 0.2 0.1
+Cora (β =.83) 84.1 80.2 72.1 54.8 53.7
+Chameleon (β =.23) 42.0 42.0 42.0 50.9 45.0
+6.5 HLCL SUBGRAPH INFERENCE
+We also investigate the connectivity of the homophilic and
+heterophilic subgraphs inferred by HLCL . Specifically, we
+measured the fraction of nodes in the largest connected com-
+ponent of the original graph that are in the largest connected
+9
+
+
+--- PAGE 10 ---
+Table 6: Connectivity of the inferred homophilic and het-
+erophilic subgraphs.
+Data homophilic heterophilic
+Cora (.83) 1 8.5%
+Citeseer (.71) 1 7.7%
+Chameleon (.23) 25.6% 98.2%
+Squirrel (.19) 94.4% 95%
+Actor (.09) 4.7% 99.8%
+component of each subgraph after sampling in Table 6. We
+see that under homophily (Cora, Citeseer), all the nodes are
+in the homophilic subgraphs and the heterophilic subgraph
+is small and minimally affects the performance. Under ex-
+treme heterophily (Actor) almost all the nodes are in the
+heterophilic subgraph and the homophilic subgraph is small
+and minimally affects the performance. For other graphs,
+depending on the tuned value of k1, the size of the largest
+connected component of the two subgraphs changes.
+6.6 USING DIFFERENT FILTERED
+REPRESENTA TIONS AS OUTPUT
+Finally, we study the performance of using different filters
+to produce final representations. We consider using low-pass
+filtered only, high-pass filtered only, and concatenating the
+low-pass filtered and high-pass filtered representations. The
+results are shown in Table 7. We observe that using low-pass
+filtered representations can yield better performances for
+both homophilic and heterophilic graphs. It is important to
+note that the encoder is trained using contrastive loss on
+both high-pass filtered heterophilic subgraphs and low-pass
+filtered homophilic subgraphs. This ensures that nodes in
+the same class have similar representations when a low-pass
+filter is applied, and nodes in different classes have distinct
+representations with a high-pass filter. During inference,
+the goal is to identify nodes with similar representations.
+Hence, using low-pass filtered representatives work better
+in practice, than using the high-pass filtered representations
+or a combination of both.
+7 LIMITA TIONS
+The performance of learning from heterophily graphs heav-
+ily depends on how information is aggregated in different
+neighborhoods. Label availability is crucial for guiding this
+aggregation. In the absence of labels, a significant challenge
+for any graph SSL method, including HLCL , arises when
+nodes with similar labels cannot be approximately identi-
+fied. For instance, in the Penn94 dataset, all SSL methods in
+Table 1, including HLCL , underperform compared to super-
+vised methods. This is due to the lack of correlation between
+node feature similarity and label similarity in this dataset.
+In contrast, in the Cora dataset, nodes belonging to the same
+Table 7: Producing final representations with different graph
+filters. Low-pass filtered representations has the highest
+performance on both homophilic and heterophilic graphs.
+Model Cora Citeseer Chameleon Squirrel
+LP 84.1 ± 1.0 70.1 ± 0.8 50.9 ± 1.0 42.9 ± 2.6
+HP 51.9 ± 2.9 36.2 ± 2.5 35.6 ± 3.1 29.8 ± 1.6
+LP+HP 74.2 ± 2.0 57.6 ± 2.0 48.7 ± 1.0 40.8 ± 2.0
+class exhibit an average of 31% higher feature cosine simi-
+larity than nodes from different classes, while in Chameleon,
+this difference is 11%. However, in Penn94, the difference
+is only 1.4% on average, indicating a high similarity in
+node features across different classes. Consequently, SSL
+methods, including HLCL , face challenges in learning high-
+quality node representations. Despite this, HLCL outper-
+forms other SSL baselines on Penn94, as shown in Table 1.
+Additionally, on graphs where node features cannot dif-
+ferentiate different classes, HLCL can face challenges. For
+instance, for Actor dataset, nodes from different classes have
+similar connectivity patterns to other classes [Ma et al.]. In
+this case, the graph structure is not useful to classify the
+nodes (and may hurt the performance), and only relying on
+node features achieve a better performance. As shown in
+[Ma et al., Chen et al., 2022], models like MLP which do
+not use any graph structure can outperform GNN methods
+like GCN and even H2GCN on the Actor dataset. HGRL
+uses MLP as its encoder and does not leverage the graph
+structure, hence it can slightly outperform HLCL on Actor,
+but is outperformed by HLCL on other datasets.
+In Sec. A.5, we discuss the effectiveness of node features in
+inferring subgraphs, and their limitations if used directly for
+classification without incorporating the graph structure.
+8 CONCLUSION
+We proposed HLCL , a contrastive learning framework that
+finds a homophilic and a heterophilic subgraph in a graph,
+applies high-pass and low-pass filters to the augmented sub-
+graph views, and learns node representations by contrasting
+the filtered augmented views. This is particularly beneficial
+for graphs with heterophily. Through extensive experiments,
+we demonstrated that our proposed framework achieves up
+to 7% boost graphs under heterophily and outperforms popu-
+lar graph supervised learning methods by up to 10%.HLCL
+also provides a comparable performance under homophily.
+We believe our work provides an important direction for
+future work on contrastive learning under heterophily.
+Acknowledgments. This research was partially supported
+by the National Science Foundation CAREER Award
+2146492.
+10
+
+
+--- PAGE 11 ---
+References
+Sami Abu-El-Haija, Bryan Perozzi, Amol Kapoor, Nazanin
+Alipourfard, Kristina Lerman, Hrayr Harutyunyan, Greg
+Ver Steeg, and Aram Galstyan. Mixhop: Higher-order
+graph convolutional architectures via sparsified neighbor-
+hood mixing. In international conference on machine
+learning, pages 21–29. PMLR, 2019.
+Muhammet Balcilar, Guillaume Renton, Pierre Héroux,
+Benoit Gaüzère, Sébastien Adam, and Paul Honeine. An-
+alyzing the expressive power of graph neural networks
+in a spectral perspective. In International Conference on
+Learning Representations, 2020.
+Piotr Bielak, Tomasz Kajdanowicz, and Nitesh V Chawla.
+Graph barlow twins: A self-supervised representa-
+tion learning framework for graphs. arXiv preprint
+arXiv:2106.02466, 2021.
+Deyu Bo, Xiao Wang, Chuan Shi, and Huawei Shen. Be-
+yond low-frequency information in graph convolutional
+networks. In Proceedings of the AAAI Conference on Ar-
+tificial Intelligence, volume 35, pages 3950–3957, 2021.
+Jingfan Chen, Guanghui Zhu, Yifan Qi, Chunfeng Yuan,
+and Yihua Huang. Towards self-supervised learning on
+graphs with heterophily. In Proceedings of the 31st ACM
+International Conference on Information & Knowledge
+Management, pages 201–211, 2022.
+Ting Chen, Simon Kornblith, Mohammad Norouzi, and
+Geoffrey Hinton. A simple framework for contrastive
+learning of visual representations. In International con-
+ference on machine learning, pages 1597–1607. PMLR,
+2020.
+Xinlei Chen and Kaiming He. Exploring simple siamese
+representation learning. In Proceedings of the IEEE/CVF
+conference on computer vision and pattern recognition,
+pages 15750–15758, 2021.
+Fan RK Chung. Spectral graph theory, volume 92. Ameri-
+can Mathematical Soc., 1997.
+Michaël Defferrard, Xavier Bresson, and Pierre Van-
+dergheynst. Convolutional neural networks on graphs
+with fast localized spectral filtering. Advances in neural
+information processing systems, 29, 2016.
+Venkatesan Nallampatti Ekambaram.Graph-structured data
+viewed through a Fourier lens. University of California,
+Berkeley, 2014.
+Will Hamilton, Zhitao Ying, and Jure Leskovec. Inductive
+representation learning on large graphs. Advances in
+neural information processing systems, 30, 2017.
+Kaveh Hassani and Amir Hosein Khasahmadi. Contrastive
+multi-view representation learning on graphs. In Inter-
+national Conference on Machine Learning, pages 4116–
+4126. PMLR, 2020.
+Dongxiao He, Jitao Zhao, Rui Guo, Zhiyong Feng, Di Jin,
+Yuxiao Huang, Zhen Wang, and Weixiong Zhang. Con-
+trastive learning meets homophily: two birds with one
+stone. In International Conference on Machine Learning,
+pages 12775–12789. PMLR, 2023.
+Di Jin, Zhizhi Yu, Cuiying Huo, Rui Wang, Xiao Wang,
+Dongxiao He, and Jiawei Han. Universal graph con-
+volutional networks. Advances in Neural Information
+Processing Systems, 34:10654–10664, 2021.
+Thomas N Kipf and Max Welling. Semi-supervised classifi-
+cation with graph convolutional networks. arXiv preprint
+arXiv:1609.02907, 2016.
+Xiang Li, Renyu Zhu, Yao Cheng, Caihua Shan, Siqiang
+Luo, Dongsheng Li, and Weining Qian. Finding global
+homophily in graph neural networks when meeting het-
+erophily. In International Conference on Machine Learn-
+ing, pages 13242–13256. PMLR, 2022.
+Derek Lim, Felix Hohne, Xiuyu Li, Sijia Linda Huang,
+Vaishnavi Gupta, Omkar Bhalerao, and Ser Nam Lim.
+Large scale learning on non-homophilous graphs: New
+benchmarks and strong simple methods.Advances in Neu-
+ral Information Processing Systems , 34:20887–20902,
+2021.
+Nian Liu, Xiao Wang, Deyu Bo, Chuan Shi, and Jian Pei.
+Revisiting graph contrastive learning from the perspec-
+tive of graph spectrum. Advances in Neural Information
+Processing Systems, 35:2972–2983, 2022.
+Yixin Liu, Yizhen Zheng, Daokun Zhang, Vincent CS Lee,
+and Shirui Pan. Beyond smoothing: Unsupervised graph
+representation learning with edge heterophily discriminat-
+ing. In Proceedings of the AAAI conference on artificial
+intelligence, volume 37, pages 4516–4524, 2023.
+Sitao Luan, Mingde Zhao, Chenqing Hua, Xiao-Wen
+Chang, and Doina Precup. Complete the missing
+half: Augmenting aggregation filtering with diversifica-
+tion for graph convolutional networks. arXiv preprint
+arXiv:2008.08844, 2020.
+Y Ma, X Liu, N Shah, and J Tang. Is homophily a necessity
+for graph neural networks? arxiv 2021. arXiv preprint
+arXiv:2106.06134.
+Miller McPherson, Lynn Smith-Lovin, and James M Cook.
+Birds of a feather: Homophily in social networks. Annual
+review of sociology, 27(1):415–444, 2001.
+11
+
+
+--- PAGE 12 ---
+Hoang Nt and Takanori Maehara. Revisiting graph neural
+networks: All we have is low-pass filters. arXiv preprint
+arXiv:1905.09550, 2019.
+Aaron van den Oord, Yazhe Li, and Oriol Vinyals. Rep-
+resentation learning with contrastive predictive coding.
+arXiv preprint arXiv:1807.03748, 2018.
+Hongbin Pei, Bingzhe Wei, Kevin Chen-Chuan Chang,
+Yu Lei, and Bo Yang. Geom-gcn: Geometric graph con-
+volutional networks. arXiv preprint arXiv:2002.05287,
+2020.
+Zhen Peng, Wenbing Huang, Minnan Luo, Qinghua Zheng,
+Yu Rong, Tingyang Xu, and Junzhou Huang. Graph
+representation learning via graphical mutual information
+maximization. In Proceedings of The Web Conference
+2020, pages 259–270, 2020.
+Oleg Platonov, Denis Kuznedelev, Michael Diskin, Artem
+Babenko, and Liudmila Prokhorenkova. A critical look
+at the evaluation of gnns under heterophily: are we re-
+ally making progress? arXiv preprint arXiv:2302.11640,
+2023.
+Jiezhong Qiu, Qibin Chen, Yuxiao Dong, Jing Zhang,
+Hongxia Yang, Ming Ding, Kuansan Wang, and Jie Tang.
+Gcc: Graph contrastive coding for graph neural network
+pre-training. In Proceedings of the 26th ACM SIGKDD In-
+ternational Conference on Knowledge Discovery & Data
+Mining, pages 1150–1160, 2020.
+Benedek Rozemberczki, Carl Allen, and Rik Sarkar. Multi-
+scale attributed node embedding. Journal of Complex
+Networks, 9(2):cnab014, 2021.
+Shantanu Thakoor, Corentin Tallec, Mohammad Gheshlaghi
+Azar, Mehdi Azabou, Eva L Dyer, Remi Munos, Petar
+Veliˇckovi´c, and Michal Valko. Large-scale representation
+learning on graphs via bootstrapping. arXiv preprint
+arXiv:2102.06514, 2021.
+Petar Veli ˇckovi´c, Guillem Cucurull, Arantxa Casanova,
+Adriana Romero, Pietro Lio, and Yoshua Bengio. Graph
+attention networks. arXiv preprint arXiv:1710.10903 ,
+2017.
+Petar Velickovic, William Fedus, William L Hamilton,
+Pietro Liò, Yoshua Bengio, and R Devon Hjelm. Deep
+graph infomax. ICLR (Poster), 2(3):4, 2019.
+Haonan Wang, Jieyu Zhang, Qi Zhu, and Wei Huang. Can
+single-pass contrastive learning work for both homophilic
+and heterophilic graph? arXiv preprint arXiv:2211.10890,
+2022.
+Xiao Wang, Meiqi Zhu, Deyu Bo, Peng Cui, Chuan Shi,
+and Jian Pei. Am-gcn: Adaptive multi-channel graph
+convolutional networks. In Proceedings of the 26th ACM
+SIGKDD International conference on knowledge discov-
+ery & data mining, pages 1243–1253, 2020.
+Yewen Wang, Ziniu Hu, Yusong Ye, and Yizhou Sun. De-
+mystifying graph neural network via graph filter assess-
+ment. 2019.
+Teng Xiao, Zhengyu Chen, Zhimeng Guo, Zeyang Zhuang,
+and Suhang Wang. Decoupled self-supervised learning
+for graphs. Advances in Neural Information Processing
+Systems, 35:620–634, 2022.
+Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka.
+How powerful are graph neural networks? arXiv preprint
+arXiv:1810.00826, 2018.
+Yihao Xue, Kyle Whitecross, and Baharan Mirzasoleiman.
+Investigating why contrastive learning benefits robust-
+ness against label noise. In International Conference on
+Machine Learning, pages 24851–24871. PMLR, 2022.
+Yujun Yan, Milad Hashemi, Kevin Swersky, Yaoqing Yang,
+and Danai Koutra. Two sides of the same coin: Het-
+erophily and oversmoothing in graph convolutional neural
+networks. arXiv preprint arXiv:2102.06462, 2021.
+Zhilin Yang, William Cohen, and Ruslan Salakhudinov. Re-
+visiting semi-supervised learning with graph embeddings.
+In International conference on machine learning, pages
+40–48. PMLR, 2016.
+Yuning You, Tianlong Chen, Yongduo Sui, Ting Chen,
+Zhangyang Wang, and Yang Shen. Graph contrastive
+learning with augmentations. Advances in Neural Infor-
+mation Processing Systems, 33:5812–5823, 2020.
+Mengyi Yuan, Minjie Chen, and Xiang Li. Muse: Multi-
+view contrastive learning for heterophilic graphs. In Pro-
+ceedings of the 32nd ACM International Conference on
+Information and Knowledge Management, pages 3094–
+3103, 2023.
+Ziwei Zhang, Peng Cui, Xiao Wang, Jian Pei, Xuanrong
+Yao, and Wenwu Zhu. Arbitrary-order proximity pre-
+served network embedding. In Proceedings of the 24th
+ACM SIGKDD international conference on knowledge
+discovery & data mining, pages 2778–2786, 2018.
+Jiong Zhu, Ryan A Rossi, Anup Rao, Tung Mai, Nedim
+Lipka, Nesreen K Ahmed, and Danai Koutra. Graph
+neural networks with heterophily. arXiv preprint
+arXiv:2009.13566, pages 11168–11176, 2020a.
+Jiong Zhu, Yujun Yan, Lingxiao Zhao, Mark Heimann, Le-
+man Akoglu, and Danai Koutra. Beyond homophily in
+graph neural networks: Current limitations and effective
+designs. Advances in Neural Information Processing
+Systems, 33:7793–7804, 2020b.
+Meiqi Zhu, Xiao Wang, Chuan Shi, Houye Ji, and Peng
+Cui. Interpreting and unifying graph neural networks
+with an optimization framework. In Proceedings of the
+Web Conference 2021, pages 1215–1226, 2021a.
+12
+
+
+--- PAGE 13 ---
+Yanqiao Zhu, Yichen Xu, Feng Yu, Qiang Liu, Shu Wu,
+and Liang Wang. Deep graph contrastive representation
+learning. arXiv preprint arXiv:2006.04131, 2020c.
+Yanqiao Zhu, Yichen Xu, Qiang Liu, and Shu Wu. An em-
+pirical study of graph contrastive learning. arXiv preprint
+arXiv:2109.01116, 2021b.
+Yanqiao Zhu, Yichen Xu, Feng Yu, Qiang Liu, Shu Wu, and
+Liang Wang. Graph contrastive learning with adaptive
+augmentation. In Proceedings of the Web Conference
+2021, pages 2069–2080, 2021c.
+13
+
+
+--- PAGE 14 ---
+Graph Contrastive Learning under Heterophily via Graph Filters
+(Supplementary Material)
+Wenhan Yang1 Baharan Mirzasoleiman1
+1Computer Science Department, University of California Los Angeles (UCLA)
+A APPENDIX
+A.1 HYPERPARAMETERS DETAILS
+We list the details of our model hyperparameters for each datasets in Table. 8.
+Table 8: HLCL hyperparameters for each dataset
+Cora CiteS Pubmed Actor Cham Squir Penn TwitchG Genius
+k2 0.9 0.9 0.8 0.1 0.2 0.5 1.0 1.0 1.0
+k1 0.1 0.1 0.2 0.9 0.8 0.5 1.0 1.0 1.0
+lr 1e-3 1e-3 1e-3 1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
+T 50 50 50 50 50 50 50 50 50
+A.2 DA TASET DETAILS
+For graphs with homophily, we use the citation networks including Cora, Citeseer, and Pubmed [Yang et al., 2016]. For
+graphs with heterophily, we use the Wikipedia network and the web page networks including Chameleon, Squirrel, and
+Actor [Rozemberczki et al., 2021, Pei et al., 2020]. Note that, for fair comparison, we adopt the Chameleon and Squirrel
+from [Platonov et al., 2023] with duplicated nodes removed.To illustrate the scalability of HLCL , we also include three
+large-scale real-world datasets, Penn94, Genius, and Twitch-gamers provided by [Lim et al., 2021].
+A.3 EXISTING GCL METHODS WITH HP FILTERS
+In this section, we illustrate the importance of our contrastive structure in achieving performance gains on heterophily
+datasets. We show that contrasting both the low-pass filtered graph views and high-pass filtered graph views is crucial
+to obtain high-quality representation under heterophily, as opposed to applying high-pass filter. To do so, we replace the
+LP filter with HP filter in other popular graph CL methods. The results are shown in Table 9. As demonstrated, while there
+are performance gains on some heterophily datasets, accuracy significantly deteriorates in homophily settings.For larger
+values of β, it is more likely that nodes with the same labels are connected together. In graphs with a large homophily
+ratio, most of the neighborhoods have homogeneous labels. On the other hand, graphs with a small homophily ratio contain
+neighborhoods with homogeneous and heterogeneous labels, as illustrated in Fig. 2. Existing graph CL methods have a
+very poor performance under heterophily, or low homophily ratio, and cannot learn high-quality representations.
+Accepted for the 40th Conference on Uncertainty in Artificial Intelligence (UAI 2024).
+
+
+--- PAGE 15 ---
+Table 9: Using high-pass filter in existing Graph CL methods. HLCL denotes our method
+Homophily Heterophily
+Cora CiteSeer Chameleon Squirrel Actor
+HLCL 84.1 ± 1.0 70.1 ± 0.8 50.9 ± 1.0 42.9 ± 2.6 34.0 ± 0.2
+DGI:low 84.53 ± 1.1 71.88 ± 0.7 32.58 ± 2.9 38.83 ± 2.3 28.00 ± 1.4
+DGI:high 31.95 ± 2.8 30.54 ± 1.7 29.89 ± 3.0 36.86 ± 3.0 32.03 ± 0.9
+BGRL:low 83.01 ± 0.7 69.81 ± 0.6 32.58 ± 4.7 35.70 ± 1.4 28.32 ± 0.9
+BGRL:high 29.63 ± 2.8 24.99 ± 3.1 37.30 ± 6.0 38.03 ± 1.1 33.87 ± 1.9
+GRACE:low 83.69 ± 0.7 71.37 ± 1.0 35.39 ± 3.6 36.18 ± 2.8 34.5 ±1.1
+GRACE:high 32.46 ± 2.0 26.55 ± 3.1 33.03 ± 3.9 33.05 ± 2.1 32.00 ± 1.3
+A.4 SIMPLIFIED HLCL
+Empirically, we observed that directly contrasting the high-pass filtered representations with the low-pass filtered representa-
+tions can produce comparable results to HLCL , as shown in Table 10. This simplified version can speed up the algorithm by
+2×, as it requires only one contrasting learning process.
+Table 10: Comprasion between HLCL and Simplified HLCL
+Homophily Heterophily
+Cora CiteSeer Chameleon Squirrel Actor
+HLCL 84.1 ± 1.0 70.1 ± 0.8 50.9 ± 1.0 42.9 ± 2.6 34.0 ± 0.2
+HLCL Simplif ied 83.5 ± 2.7 71.8 ± 1.4 48.3 ± 6.8 39.5 ± 5.3 35.5 ± 1.9
+A.5 USING FEA TURES TO INFER LABEL INFORMA TION
+HLCL uses feature information to approximately estimate the label information. Here, we justify this choice empirically
+and demonstrate that while feature information can help in inferring subgraphs approximately, it cannot be used for accurte
+node classification. First, we show that the node features are sufficient to give approximate neighborhood information,
+which is helpful in splitting the subgraph. We provide the homophily ratios of the original graph, the homophilic subgraph,
+and the heterophilic subgraph selected based on feature similarity across different datasets. As shown in Table 11, using
+feature cosine similarity, HLCL can approximately create homophilic and heterophilic subgraphs from the original graph.
+However, while features can approximately indicate if neighboring nodes are of the same class, they are insufficient for
+accurate (multi-class) node classification, and the graph structure is crucial to take into account. Otherwise, one could
+simply use an MLP classifier on node features. It is important to note that approximately identifying a homophilic and
+a heterophilic subgraph is a binary classification task, which is significantly easier than multi-class node classification.
+We show the insufficiency of node features for accurate classification without graph structure in Table 12. We conducted
+additional experiments with an MLP classifier on various homophily and heterophily datasets, which showed that MLP
+yields very poor performances, particularly under heterophily.
+Table 11: Homophily ratios of the subgraphs sampled via node features. After sampling, homophilic subgraph has a higher
+homophily ratio, while the heterophilic subgraph has a lower homophily ratio compared to the original graph.
+Cora(hom) Citeseer(hom) Chameleon(het) Squirrel(het)
+orig graph hom% 0.83 0.71 0.23 0.19
+hom subgraph hom% 0.87 0.82 0.74 0.42
+het subgraph hom% 0.08 0.05 0.24 0.19
+15
+
+
+--- PAGE 16 ---
+Table 12: Using node feature only (MLP) to classify the nodes. As shown, without graph structures, the model can only
+achieve sub-optimal performances.
+Cora (6 classes) Citeseer (7 classes) Chameleon (5 classes) Squirrel (5 classes)
+MLP 64.8 ± 1.2 66 .5 ± 1.0 37 .4 ± 2.1 25 .5 ± 0.9
+HLCL 84.1 ± 1.0 70 .1 ± 0.8 50 .9 ± 1.0 42 .9 ± 2.6
+A.6 EXTENDED RELA TED WORK
+(Semi-)supervised learning on graphs. In recent years, GNNs have become one of the most prominent tools for processing
+graph-structured data. In general, GNNs utilize the adjacency matrix to learn the node representations, by aggregating
+information within every node’s neighborhood [Defferrard et al., 2016, Kipf and Welling, 2016]. Existing variants, including
+GraphSAGE [Hamilton et al., 2017], Graph Attention (GAT) [Veliˇckovi´c et al., 2017], MixHop [Abu-El-Haija et al., 2019],
+SGC [Nt and Maehara, 2019], GAT [Velickovic et al., 2019], and GIN [Xu et al., 2018], learn a more general class of
+neighborhood mixing relationships, by aggregating weighted information within a multi-hop neighborhood of every node.
+GNNs can be generally seen as applying a fix, or a parametric and learnable (e.g. GAT) low-pass graph filter to graph
+signals. Those with trainable parameters can adapt to a wider range of frequency levels on different graphs. However,
+they still have a higher emphasis on lower-frequency signals and discard the high-frequency signals in a graph. While the
+aggregation operation makes GNNs powerful tools for semi-supervised learning, it can make the learned node representations
+indistinguishable in a neighborhood [Nt and Maehara, 2019]. As a result, typical GNNs and their variants have been long
+criticized for their poor generalization performance under heterophily [Balcilar et al., 2020].
+Graph self-supervised learning. Graph self-supervised learning methods have become a powerful tool for learning
+representations without any labels, and graph contrastive learning is the most successful and popular model structure.
+Numerous methods have been proposed in the field: [Velickovic et al., 2019, Peng et al., 2020, Hassani and Khasahmadi,
+2020, Zhu et al., 2021c] focus on contrasting the global augmented representation with the local augmented representation,
+while [Zhu et al., 2020c, You et al., 2020, Qiu et al., 2020, Liu et al., 2022] contrast same-scale representation, global or local,
+in two augmented views. Due to the complexity of collecting negative samples in graph data, negative-sample free contrastive
+objectives have also been studied [Thakoor et al., 2021, Bielak et al., 2021]. However, works mentioned above focus on
+encoding the homophily graphs and perform poorly on graphs with heterophily. Recently, a stream of self-supervised
+learning methods have been proposed to learn effectively the node representations of the heterophily graphs without any
+labels. HGRL [Chen et al., 2022] improves the node representations on heterophilic graphs by preserving the node original
+features and rewiring informative nodes that are not in the local neighborhood. SP-GCL [Wang et al., 2022] proposed
+using nodes from the T-hop neighborhood of a node with high feature similarities as positive pairs, without using any
+explicit augmentations. DSSL [Xiao et al., 2022] separates the heterogeneous patterns in local neighborhood distributions to
+capture both homophilic and heterophilic information globally. GREET [Liu et al., 2023] discriminates homophilic edges
+from heterophilic edges using random walk based graph diffusion and contrasts the projected representations of the two
+graph views directly via a dual-channel contrastive loss. MUSE [Yuan et al., 2023] utilize semantic view contrast based
+on ego node feature perturbations and contextual view contrast based on topology perturbations. Then, it integrates the
+representations learned from both contrasting views to construct a fusion contrast that combines both structural and semantic
+information. NeCo [He et al., 2023] proposes a new pretext task, group discrimination, which divides the nodes into k
+groups and keeps the consistent representation of nodes within a group.
+Graph (semi-)supervised learning under heterophily. To address over-smoothing issue of GNNs, recent methods propose
+to use other types of aggregation that better fit graphs with heterophily. Geom-GCN uses geometric aggregation in place of
+the typical aggregation [Pei et al., 2020], H2GCN uses several special model designs including separate aggregation and
+higher-neighborhood aggregation to train the model for handling graphs with heterophily, and CPGNN trains a compatibility
+matrix to model the heterophily level [Zhu et al., 2020a]. More recently, Wang et al. [2019] proposed to learn an aggregation
+filter for every graph from a set of based filters designed based on different ways of normalizing the adjacency matrix.
+GGCN introduced degree corrections and signed message passing on GCN to address both oversmoothing problems and the
+model’s poor performances on heterophily graphs [Yan et al., 2021]. Zhu et al. [2021a] analyzed and designed a uniform
+framework for GNNs propagations and proposed GNN-LF and GNN-HF that preserve information of different frequency
+separately by using different filtering kernels with learnable weights. FAGCN [Bo et al., 2021] and FBGNN [Luan et al.,
+2020] train two separate encoders to capture the high-pass and low-pass graph signals separately. Then they rely on labels to
+learn relatively complex mechanisms to combine the outputs of the encoders. However, learning how to combine the encoder
+outputs is highly sensitive to having high-quality labels. This makes such methods highly impractical for unsupervised
+16
+
+
+--- PAGE 17 ---
+contrastive learning, where the label information is not available.
+Unlike the above supervised methods, we apply the high-pass and low-pass filters to different subgraphs, contrasting the
+resulting high-pass filtered node views and low-pass filtered node views in a self-supervised manner, without any label. This
+is in contrast to learning the best combination of filtered signals of different encoders based on labels.
+B PROOF
+Assumption 1. Let XXX be the feature matrix of Ghom and WWW be the learnable weights of the GNN encoder. Then,
+XXXWWW WWW XXX = w0 + w1AAAhom + w2(AAAhom)2 + · · ·+ wj(AAAhom)j.
+XW W XXW W XXW W Xunder homophily captures the similarities of features between every two nodes in the subgraph after passing
+through the low-pass graph filter. Assumptions 1 aims to expand XW W XXW W XXW W Xwith the weighted sum of different orders of AAA.
+Here, wi s are the weights of different orders of AAA. That is wi is the weight of i-th order of AAA, representing the number of
+length-i paths between nodes i and j in its (i, j) entry. For homophilic subgraphs, which adhere to the homophily principle,
+the weights for closer-hop connections (represented by AAA, AAA2, etc.) are higher, since the closer the nodes are, the more
+similar they are. This is based on the homophily principle [McPherson et al., 2001, Luan et al., 2020]. This principle suggests
+that, in homophily graphs, nodes within closer neighborhoods exhibit greater feature similarities. After projection, the
+similarities also become higher [Zhang et al., 2018].
+Assumption 2. Let XXX be the feature matrix of Ghet and WWW be the learnable weights of the GNN encoder. Then,
+XXXWWWWWW XXX = w0 + w1LLLhet + w2(LLLhet)2 + · · ·+ wj(LLLhet)j.
+XW W XXW W XXW W Xunder heterophily captures the dissimilarities of features between every two nodes in the subgraph after passing
+through the high-pass graph filters. Assumptions 2 aims to expand XW W XXW W XXW W Xwith the weighted sum of different orders of LLL.
+Here, wi is the weight of i-th order of LLL. In contrast to homophilic graphs, for heterophilic subgraphs, the closer the nodes
+are, the more dissimilar they are [Zhu et al., 2020c].
+Lemma 1. Let AAA and eAAA be adjacency matrices of the target graph and its augmented counterpart. Suppose that AAA and eAAA
+have the same eigenspaces, and let DDD and eDDD be the corresponding degree matrices, where DDD = eDDD. Then the Laplacian
+matrices LLL and eLLL have the same eigenspaces.
+Proof. Given that AAA and eAAA have the same eigenspaces, there exists an orthogonal matrix QQQ such that:
+AAA = QQQΛΛΛQQQT and eAAA = QQQeΛΛΛQQQT
+where ΛΛΛ and eΛΛΛ are diagonal matrices containing the eigenvalues of AAA and eAAA, respectively. SinceDDD = eDDD, let DDD = eDDD. The
+Laplacian matrices are defined as:
+LLL = DDD − AAA and eLLL = DDD − eAAA
+Substituting the spectral decompositions of AAA and eAAA, we have:
+LLL = DDD − QQQΛΛΛQQQT
+eLLL = DDD − QQQeΛΛΛQQQT
+Both LLL and eLLL can be written as:
+LLL = QQQ(QQQT DDDQQQ − ΛΛΛ)QQQT
+eLLL = QQQ(QQQT DDDQQQ − eΛΛΛ)QQQT
+Since DDD is diagonal, QQQT DDDQQQ remains a diagonal matrix (as the orthogonal transformation of a diagonal matrix preserves
+diagonal structure). Let DDD′ = QQQT DDDQQQ, then:
+LLL = QQQ(DDD′ − ΛΛΛ)QQQT
+eLLL = QQQ(DDD′ − eΛΛΛ)QQQT
+The eigenvalues of LLL and eLLL are given by the diagonal entries of DDD′ − ΛΛΛ and DDD′ − eΛΛΛ, respectively. Since QQQ is the same for
+both LLL and eLLL, they have the same eigenspaces. Thus, LLL and eLLL have the same eigenspaces.
+17
+
+
+--- PAGE 18 ---
+B.1 THEOREM 1 [HLCL: SPECTRAL INV ARIANCE]
+Given a graph G, we infer a homophilic and a heterophilic subgraph from it, denoted as Ghom and Ghet, respectively. Their
+augmented counterparts are denoted as ˜Ghom and ˜Ghet. For graph augmentations, we follow [Liu et al., 2022], where the
+adjacency matrix of the homophilic subgraph and the augmented homophilic subgraph share the same eigenspaces (AAAhom
+and ˜AAAhom). Similarly, the adjacency matrix of the heterophilic subgraph and the augmented heterophilic subgraph share
+the same eigenspaces (AAAhet and ˜AAAhet). By Lemma 1, the Laplacian matrix of the homophilic subgraph and the augmented
+homophilic subgraph share the same eigenspaces (LLLhom and ˜LLLhom), and the Laplacian matrix of the heterophilic subgraph
+and the augmented heterophilic subgraph share the same eigenspaces (LLLhet and ˜LLLhet).
+We establish the following lower bound:
+LHLCL ≥ −1 − N
+2
+X
+i
+
+αAAAi
+
+2 − (λAAAhom
+i
+− λ ˜AAA
+hom
+i
+)2
+
++ αLLLi
+
+4 − (λLLLhet
+i
+− λ ˜LLL
+het
+i
+)2
+
+where λAAAhom and λLLLhet denote the eigenvalues of the homophilic subgraph low-pass filter and the heterophilic subgraph
+high-pass filter, respectively, andαAAAhom and αLLLhet denote the adaptive weights for the i-th adjacency and Laplacian matrix
+components.
+Proof. By minimizing the HLCL loss, we minimize the losses for contrasting augmented views of both heterophilic and
+homophilc subgraphs. Hence we discuss each in our proof.
+For simplification, since the HLCL loss is symmetric, we only choose one graph view as the anchor view.
+L = − 1
+2N
+NX
+i=1
+(l(zzzi
+l, ˜zzzi
+l) + l(zzzi
+h, ˜zzzi
+h)) (16)
+= − 1
+2N
+NX
+i=1
+(log ezzzi
+l ˜zzzi
+l
+T
+ezzzi
+h˜zzzi
+h
+T
++ P
+k∈[N ],)
+k̸=i
+ezzzi
+l ˜zzzk
+l
+T + log ezzzi
+h˜zzzi
+h
+T
+ezzzi
+h˜zzzi
+h
+T
++ P
+k∈[N ],
+k̸=i
+ezzzi
+h˜zzzk
+h
+T ) (17)
+= − 1
+2N
+NX
+i=1
+(zzzi
+l˜zzzi
+l
+T
++ zzzi
+h˜zzzi
+h
+T
+− log
+NX
+k
+ezzzi
+l ˜zzzk
+l
+T
+− log
+NX
+k
+ezzzi
+h˜zzzk
+h
+T
+) (18)
+≥ −1
+2N
+NX
+i=1
+(zzzi
+l˜zzzi
+l
+T
++ zzzi
+h˜zzzi
+h
+T
+− log N · e
+PN
+k zzzi
+l ˜zzzk
+l
+T /N − log N · e
+PN
+k zzzi
+h˜zzzk
+h
+T /N) (19)
+≡ −
+NX
+i=1
+(zzzi
+l˜zzzi
+l
+T
++ zzzi
+h˜zzzi
+h
+T
+− 1
+N
+X
+N
+zzzi
+l˜zzzi
+l
+T
++ zzzi
+h˜zzzi
+h
+T
+) (20)
+= −(tr(ZZZ l ˜ZZZ l
+T
+) + tr(ZZZ h ˜ZZZ h
+T
+) − 1
+N sum(ZZZ l ˜ZZZ l
+T
+) − 1
+N sum(ZZZ h ˜ZZZ h
+T
+)) (21)
+ZZZ l is the projected representation of Ghom, ˜ZZZ l is the projected representation of ˜Ghom, ZZZ h is the projected representation
+of Ghet, and ˜ZZZ h is the projected representation of ˜Ghet. As mentioned before, AAAhom and ˜AAAhom share the same eigenspaces,
+so we have that AAAhom = QQQhomΛhomQQQT
+hom and ˜AAAhom = QQQhom ˜ΛΛΛhomQQQT
+hom, where QQQhom is the collection of eigenspaces, and
+Λhom = diag(λAAAhom
+i
+) and ˜ΛΛΛhom = diag(λ ˜AAA
+hom
+i
+) are their diagonal weight matrices. Similarly, AAAhet = QQQhetΛhetQQQT
+het and
+˜AAAhet = QQQhet ˜ΛΛΛhetQQQT
+het, where QQQhet is the collection of eigenspaces, and ΛΛΛhet = diag(λLLLhet
+i
+) and ˜ΛΛΛhet = diag(λ ˜LLL
+het
+i
+). With
+the simplification of the HLCL loss, we have ZZZ h ˜ZZZ h
+T
+= LXW W X˜LLXW W X˜LLXW W X˜L and ZZZ l ˜ZZZ l
+T
+= AXW W X˜AAXW W X˜AAXW W X˜A, where W is learnable
+parameters of the encoder.
+Lemma 2. With assumption 1, for homophilic subgraphGhom, when j ≥ N −1, XW W XXW W XXW W X= w0 +w1AAAhom +w2(AAAhom)2 +
+· · ·+ wj(AAAhom)j = QQQhomAAAhomQQQT
+hom, where AAAhom = diag(αAAA1 . . . αAAAN ). αAAA1 . . . αAAAN are N different parameters, if
+λAAAhom
+1
+. . . λAAAhom
+N
+are N different frequency amplitudes.
+Proof. The proof can be found in Theorem 4 of [Liu et al., 2022].
+18
+
+
+--- PAGE 19 ---
+Lemma 3. With assumption 2, for heterophilic subgraphGhet, when j ≥ N −1, XW W XXW W XXW W X= w0 +w1LLLhet +w2(LLLhet)2 +· · ·+
+wj(LLLhet)j = QQQhetAAAhetQQQT
+het, where AAAhet = diag(αLLL1 . . . αLLLN ). αLLL1 . . . αLLLN are N different parameters, if λAAAhet
+1
+. . . λAAAhet
+N
+are N different frequency amplitudes.
+Proof. The proof can be found in Theorem 4 of [Liu et al., 2022], by replacing LLL as the decomposing matrix.
+For ZZZ l ˜ZZZ l
+T
+, using Lemma 2, we have:
+ZZZ l ˜ZZZ l
+T
+= AXW W X˜AAXW W X˜AAXW W X˜A
+= QQQhomΛΛΛhomQQQT
+homQQQhomAAAhomQQQT
+homQQQhom ˜ΛΛΛhomQQQT
+hom
+= QQQhomΛΛΛhomAAAhom ˜ΛΛΛhomQQQT
+hom
+= QQQhom
+
+
+λAAAhom
+1
+αAAA1 λ ˜AAA
+hom
+1
+0 · · · 0
+0 λAAAhom
+2
+αAAA2 λ ˜AAA
+hom
+2
+· · · 0
+... ... ... ...
+0 0 · · ·λAAAhom
+N
+αAAAN λ ˜AAA
+hom
+N
+
+
+QQQT
+hom
+=
+NX
+i=1
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
+qAAAi qT
+AAAi ,
+where qAAAi is the ith column of the matrix QQQhom.
+For ZZZ h ˜ZZZ h
+T
+, using Lemma 3, we have:
+ZZZ h ˜ZZZ h
+T
+= LXW W X˜LLXW W X˜LLXW W X˜L
+= QQQhetΛΛΛhetQQQT
+hetQQQhetAAAhetQQQT
+hetQQQhet ˜ΛΛΛhetQQQT
+het
+= QQQhetΛΛΛhetAAAhet ˜ΛΛΛhetQQQT
+het
+= QQQhet
+
+
+λLLLhet
+1
+αLLL1 λ ˜LLL
+het
+1
+0 · · · 0
+0 λLLLhet
+2
+αLLL2 λ ˜LLL
+het
+2
+· · · 0
+... ... ... ...
+0 0 · · ·λLLLhet
+N
+αLLLN λ ˜LLL
+het
+N
+
+
+QQQT
+het
+=
+NX
+i=1
+λLLLhet
+i
+αLLLi λ ˜LLL
+het
+i
+qLLLi qT
+LLLi ,
+where qLLLi is the ith column of the matrix QQQhet. Therefore, we have:
+tr(ZZZ l ˜ZZZ l
+T
+) =
+NX
+i=1
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
+, sum (ZZZ l ˜ZZZ l
+T
+) =
+X
+i
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
+sum(qAAAi qT
+AAAi )
+tr(ZZZ h ˜ZZZ h
+T
+) =
+NX
+i=1
+λLLLhet
+i
+αLLLi λ ˜LLL
+het
+i
+, sum (ZZZ h ˜ZZZ h
+T
+) =
+X
+i
+λLLLhet
+i
+αLLLi λ ˜LLL
+het
+i
+sum(qLLLi qT
+LLLi )
+By substituting this into Eq. (21), we have
+LHLCL ≥ −
+ NX
+i=1
+
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
++ λLLLhet
+i
+αLLLi λ ˜LLL
+het
+i
+
+− 1
+N
+NX
+i=1
+
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
+X
+(qAAAi qT
+AAAi ) + λLLLhet
+i
+αLLLi λ ˜LLL
+het
+i
+X
+(qLLLi qT
+LLLi )
+!
+= −
+ NX
+i=1
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
+
+1 − 1
+N
+X
+(qAAAi qT
+AAAi )
+
++ λAAAhet
+i
+αLLLi λ ˜AAA
+het
+i
+
+1 − 1
+N
+X
+(qLLLi qT
+LLLi )
+!
+19
+
+
+--- PAGE 20 ---
+Since qT
+i qi = 1, |qij| < 1, P(qiqT
+i ) > −N 2, we have
+LHLCL ≥ (−1 − N )
+NX
+i=1
+
+λAAAhom
+i
+αAAAi λ ˜AAA
+hom
+i
++ λAAAhet
+i
+αLLLi λ ˜AAA
+het
+i
+
+.
+Since λAAAhom
+i
+∈ (−1, 1], and λLLLhet
+i
+∈ [0, 2), we have
+LHLCL ≥ −1 − N
+2
+NX
+i=1
+
+αAAAi
+
+2 − (λAAAhom
+i
+− λ ˜AAA
+hom
+i
+)2
+
++ αLLLi
+
+4 − (λLLLhet
+i
+− λ ˜LLL
+het
+i
+)2
+
+.
+20

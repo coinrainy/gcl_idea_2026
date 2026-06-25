@@ -1,0 +1,74 @@
+2026-06-25T13:46:46Z
+Error: HTTP 429: {"message": "Too Many Requests. Please wait and try again or apply for a key for higher rate limits. https://www.semanticscholar.org/product/api#api-key-form", "code": "429"}
+{
+  "mode": "search",
+  "total": 5,
+  "offset": 0,
+  "next_offset": 1,
+  "data": [
+    {
+      "paperId": "b38fcf2aba8b173ba11ada830b7038f496643893",
+      "title": "Large-Scale Representation Learning on Graphs via Bootstrapping",
+      "abstract": null,
+      "year": 2021,
+      "venue": "International Conference on Learning Representations",
+      "publicationVenue": null,
+      "publicationTypes": null,
+      "publicationDate": null,
+      "url": "https://www.semanticscholar.org/paper/b38fcf2aba8b173ba11ada830b7038f496643893",
+      "openAccessPdf": {
+        "url": "",
+        "status": null,
+        "license": null,
+        "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2102.06514, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+      },
+      "authors": [
+        {
+          "authorId": "41037204",
+          "name": "S. Thakoor"
+        },
+        {
+          "authorId": "31803582",
+          "name": "Corentin Tallec"
+        },
+        {
+          "authorId": "37666967",
+          "name": "M. G. Azar"
+        },
+        {
+          "authorId": "2039962468",
+          "name": "Mehdi Azabou"
+        },
+        {
+          "authorId": "1746363",
+          "name": "Eva L. Dyer"
+        },
+        {
+          "authorId": "1708654",
+          "name": "R. Munos"
+        },
+        {
+          "authorId": "1742197495",
+          "name": "Petar Velivckovi'c"
+        },
+        {
+          "authorId": "1806291",
+          "name": "Michal Valko"
+        }
+      ],
+      "externalIds": {
+        "DBLP": "conf/iclr/ThakoorTAADMVV22",
+        "ArXiv": "2102.06514",
+        "CorpusId": 243756979
+      },
+      "citationCount": 324,
+      "referenceCount": null,
+      "fieldsOfStudy": null,
+      "s2FieldsOfStudy": null,
+      "tldr": {
+        "model": "tldr@v2.0.0",
+        "text": "Bootstrapped Graph Latents (BGRL) is introduced - a graph representation learning method that learns by predicting alternative augmentations of the input and is thus scalable by design, achieving state-of-the-art performance and improving over supervised baselines where representations are shaped only through label information."
+      }
+    }
+  ]
+}

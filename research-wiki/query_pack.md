@@ -2,61 +2,63 @@
 
 ## Project Direction
 
-GCL for node classification. Seek a mechanism-level contribution around positive/negative construction, augmentation semantics, negative-free SSL, masked graph modeling, homophily/heterophily, structural noise, semantic consistency, LLM/TAG priors, and strict evaluation integrity.
+GCL for node classification with strict evaluation integrity. Stage 2 may use this pack for gap-driven ideation, but must not start from a final method.
 
-## Top Papers
+## Source Reliability
 
-- GRACE (`paper:zhu2020_deep_graph_contrastive`): classic node-level GCL with stochastic graph/feature augmentation.
-- GCA (`paper:zhu2020_graph_contrastive_learning`): adaptive topology/feature augmentation; high risk for any augmentation claim.
-- ProGCL (`paper:xia2021_progcl_rethinking_hard`): closest false-negative / hard-negative work.
-- BGRL (`paper:thakoor2021_largescale_representation_learning`): negative-free bootstrap GCL.
-- CCA-SSG and Graph Barlow Twins: no-negative/decorrelation baselines.
-- GraphMAE / GraphMAE2 / MaskGAE: masked graph modeling competitors; compare only under identical evaluator.
-- HLCL / CM-GCL / G-Censor: OpenReview high-risk closest works for heterophily, multimodal/imbalanced positives, task-oriented views.
-- LangGSL: LLM/TAG semantic prior risk; must audit leakage.
-- Khan-GCL and SPGCL: recent arXiv preprints on hard negatives / positive samples; treat as parallel work, not established SOTA.
+arXiv/PDF recovery succeeded for high-risk closest works. Semantic Scholar is still rate-limited except BGRL metadata. DeepXiv unavailable because CLI missing. Exa unavailable because `EXA_API_KEY` is empty. OpenReview partly recovered; HLCL and G-Censor acceptance status remain `UNCLEAR`.
 
-## Top Gaps
+## Top Closest Works
 
-- G1 semantic false positives in node-level GCL.
-- G2 false negatives change under homophily/heterophily regimes.
-- G3 masked graph modeling vs GCL under identical frozen evaluator is unresolved.
-- G4 graph-specific collapse diagnostics for negative-free SSL are weak.
-- G5 heterophily-aware GCL lacks boundary-condition analysis.
-- G6 LLM semantic priors need leakage-safe protocol.
-- G7 worst-group robustness is missing from GCL reporting.
-- G8 cross-domain generalization claims are under-specified.
+- GRACE: random edge/feature augmentation + node-level InfoNCE; random 10/10/80 for citation networks; frozen logistic evaluator; 20 runs.
+- GCA: adaptive topology/feature augmentation; Wiki-CS public splits, others 10/10/80; frozen logistic evaluator; 20 runs.
+- ProGCL: probability-aware hard negatives; follows GCA/BGRL-style splits; 20 random splits/initializations for reproduced baselines.
+- BGRL: negative-free bootstrap; WikiCS canonical, Amazon/Coauthor 10/10/80, OGB official, PPI predefined; frozen linear eval.
+- CCA-SSG / Graph Barlow Twins / AFGRL: no-negative/decorrelation/augmentation-free positive discovery.
+- GraphMAE / GraphMAE2 / MaskGAE: masked graph modeling; strong but evaluator/protocol differs from GCL.
+- HLCL: heterophily-aware graph filters; acceptance/protocol details still `UNCLEAR`.
+- CM-GCL: NeurIPS 2022, multimodal imbalanced node classification; 70/10/20, fine-tuning, not frozen evaluator.
+- G-Censor: task-oriented counterfactual views; OpenReview status and protocol still `UNCLEAR`.
+- LangGSL: LLM/TAG semantic prior, robust graph structure learning; split/evaluator/leakage protocol `UNCLEAR`.
+- SPGCL/Khan-GCL: recent arXiv positive/hard-negative preprints; treat as parallel risk, not established SOTA.
 
-## Closest-Work Risks
+## Direct Comparability
 
-- Positive/negative construction: ProGCL, SPGCL, CM-GCL, G-Censor.
-- Augmentation semantics: GCA, RGCL, G-Censor.
-- Negative-free: BGRL, CCA-SSG, Graph Barlow Twins, AFGRL.
-- Masked/predictive: GraphMAE2, MaskGAE.
-- Heterophily: HLCL.
-- LLM/TAG: LangGSL, CM-GCL.
+No published result is directly comparable under `BENCHMARK_PROTOCOL.md`. Even papers using 10/10/80 lack our exact saved split JSON, seed list, and confirmed `test@best validation epoch`.
 
-## Method Transfer Primitives
+## Stage 2 Gap Priorities
 
-Keep only mechanisms directly relevant to GCL node classification:
+Prioritize:
 
-- false-negative probability estimation;
-- alignment-uniformity diagnostics by graph regime;
-- latent prediction instead of raw reconstruction;
-- teacher-student pseudo-targets with confidence audits;
-- balanced prototype assignments;
-- variance/covariance collapse prevention;
-- robust sample selection for noisy positives/edges;
-- invariant/worst-group reporting across graph regimes;
-- leakage-safe LLM/text semantic signals.
+- G1 semantic false positives;
+- G2 false negatives under homophily/heterophily;
+- G3 MGM vs GCL under identical evaluator;
+- G5 heterophily boundary conditions.
 
-## Failed / Non-Goal Directions
+Use as companion diagnostics:
 
-Do not generate simple gate, reweighting, adapter, residual, temperature-only or backbone-swap ideas. Do not mechanically copy visual SSL augmentations. Do not claim SOTA from published tables with unclear split/evaluator/seeds. Do not use LLM pseudo-labels without leakage and contamination audits.
+- G4 collapse/oversmoothing diagnostics;
+- G7 worst-group reporting.
+
+Treat carefully or defer:
+
+- G6 LLM semantic priors because leakage risk is high;
+- G8 cross-domain generalization because scope may expand too far.
+
+## Novelty Boundaries
+
+- Do not claim better augmentation unless separated from GCA/AFGRL/G-Censor.
+- Do not claim false-negative handling unless separated from ProGCL/SPGCL/HLCL.
+- Do not claim negative-free novelty unless separated from BGRL/CCA-SSG/GBT/AFGRL.
+- Do not claim masked SSL novelty unless separated from GraphMAE2/MaskGAE.
+- Do not use LLM/TAG signal without leakage-safe protocol.
+
+## Non-Goal Banlist
+
+No simple gate, reweighting, adapter, residual, temperature schedule, backbone swap, or mechanical vision-SSL transplant. No SOTA claim from published tables with unclear protocol. No final method in Stage 1.5.
 
 ## Open Unknowns
 
-- Exact split/evaluator/seeds/test@best for several core papers remain UNCLEAR.
-- Semantic Scholar, DeepXiv and Exa were unavailable in this environment; coverage is arXiv + Web/OpenReview heavy.
-- Which OpenReview ICLR 2024-2026 / ICML / NeurIPS submissions are accepted vs rejected is not fully resolved for all hits.
-- Stage 2 should start from gaps, not final methods.
+- Exact accepted/rejected status for HLCL and G-Censor.
+- Exact evaluator/seeds/early stopping for Graph Barlow Twins, HLCL, G-Censor, LangGSL, SPGCL.
+- Whether Stage 2 wants a main gap around positives/negatives, MGM comparison, or heterophily boundary conditions.

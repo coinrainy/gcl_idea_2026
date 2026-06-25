@@ -1,0 +1,1416 @@
+
+
+--- PAGE 1 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling
+for Graph Autoencoders
+Jintang Li∗
+Sun Yat-sen University
+lijt55@mail2.sysu.edu.cn
+Ruofan Wu∗
+Ant Group
+ruofan.wrf@antgroup.com
+Wangbin Sun
+Sun Yat-sen University
+sunwb7@mail2.sysu.edu.cn
+Liang Chen
+Sun Yat-sen University
+chenliang6@mail.sysu.edu.cn
+Sheng Tian
+Ant Group
+tiansheng.ts@antgroup.com
+Liang Zhu
+Ant Group
+tailiang.zl@antgroup.com
+Changhua Meng
+Ant Group
+changhua.mch@antgroup.com
+Zibin Zheng
+Sun Yat-sen University
+zhzibin@mail.sysu.edu.cn
+Weiqiang Wang
+Ant Group
+weiqiang.wwq@antgroup.com
+ABSTRACT
+The last years have witnessed the emergence of a promising self-
+supervised learning strategy, referred to as masked autoencoding.
+However, there is a lack of theoretical understanding of how mask-
+ing matters on graph autoencoders (GAEs). In this work, we present
+masked graph autoencoder (MaskGAE), a self-supervised learn-
+ing framework for graph-structured data. Different from standard
+GAEs, MaskGAE adopts masked graph modeling (MGM) as a prin-
+cipled pretext task - masking a portion of edges and attempting
+to reconstruct the missing part with partially visible, unmasked
+graph structure. To understand whether MGM can help GAEs learn
+better representations, we provide both theoretical and empirical
+evidence to comprehensively justify the benefits of this pretext task.
+Theoretically, we establish close connections between GAEs and
+contrastive learning, showing that MGM significantly improves the
+self-supervised learning scheme of GAEs. Empirically, we conduct
+extensive experiments on a variety of graph benchmarks, demon-
+strating the superiority of MaskGAE over several state-of-the-arts
+on both link prediction and node classification tasks.1
+CCS CONCEPTS
+• Computing methodologies→ Learning latent representa-
+tions; Unsupervised learning.
+KEYWORDS
+Graph Neural Networks; Graph Representation learning; Graph
+Self-supervised Learning; Masked Graph Autoencoders
+∗Both authors contributed equally to this research.
+1Code is made publicly available at https://github.com/EdisonLeeeee/MaskGAE
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+© 2023 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ACM ISBN 979-8-4007-0103-0/23/08. . . $15.00
+https://doi.org/10.1145/3580305.3599546
+ACM Reference Format:
+Jintang Li, Ruofan Wu, Wangbin Sun, Liang Chen, Sheng Tian, Liang Zhu,
+Changhua Meng, Zibin Zheng, and Weiqiang Wang. 2023. What’s Behind
+the Mask: Understanding Masked Graph Modeling for Graph Autoencoders.
+In Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery
+and Data Mining (KDD ’23), August 6–10, 2023, Long Beach, CA, USA. ACM,
+New York, NY, USA, 13 pages. https://doi.org/10.1145/3580305.3599546
+1 INTRODUCTION
+Self-supervised learning, which learns broadly useful representa-
+tions from unlabeled data in a task-agnostic way, has emerged as a
+popular and empirically successful learning paradigm for graph neu-
+ral networks (GNNs) [43]. The key insight behind self-supervised
+learning is to obtain supervisory signals from the data itself with dif-
+ferent handcrafted auxiliary tasks (so-called pretext tasks). The past
+few years have witnessed the success of graph self-supervised learn-
+ing in a wide range of graph-related fields [2, 19, 38], particularly
+chemical and biomedical science [27, 51], where label annotation
+can be very costly or even impossible to acquire.
+For years, there are several research efforts in an attempt to
+exploit vast unlabeled data for self-supervised learning. Among
+contemporary approaches, contrast learning [38, 47, 52] is one of
+the most widespread self-supervised learning paradigms on graph
+data. It learns representations that are invariant to different aug-
+mentation views of graphs, achieving remarkable success in various
+graph representation learning tasks [43]. Despite being effective
+and prevalent, graph contrastive methods highly rely on specialized
+and complex pretext tasks for self-supervised learning [10], with
+data augmentation being crucial for contrasting different structural
+views of graphs [18, 46].
+There is another prominent line of research attempts to learn
+representations through generative perspectives, with graph au-
+toencoders as representative examples. Graph autoencoders (GAEs)
+are a family of self-supervised learning models that take the graph
+input itself as self-supervision and learn to reconstruct the graph
+structure [17, 21]. Compared to contrastive methods, GAEs are
+generally very simple to implement and easy to combine with
+existing frameworks, since they naturally leverage graph recon-
+struction as pretext tasks without need of augmentations for view
+arXiv:2205.10053v2  [cs.LG]  29 May 2023
+
+
+--- PAGE 2 ---
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA. Li and Wu, et al.
+Do not go gentle into that 
+good [MASK].
+Do not [MASK] [MASK] into that 
+good night.
+(a) Masked Language Modeling 
+(MLM)
+(b) Masked Image Modeling 
+(MIM)
+(c) Masked Graph Modeling 
+(MGM)
+: masked patch[MASK]: masked token : masked edge
+Mask a word
+Mask a phrase
+Mask patches
+Mask blocks
+Mask edges
+Mask paths
+2018, e.g., BERT 2021, e.g., MAE
+Timeline
+now,  ?
+Figure 1: From left to right: illustrative examples of (a)
+masked language modeling (MLM), (b) masked image model-
+ing (MIM), and (c) masked graph modeling (MGM) paradigms
+with different masking strategies. Similar to MLM and MIM,
+the goal of MGM is to learn representations by predicting
+randomly masked edges based on visible structure.
+generations [43]. However, literature has shown that GAEs fol-
+lowing such a simple graph-reconstruction principle might over-
+emphasize proximity information that is not always beneficial for
+self-supervised learning [10, 38, 52], making it less applicable to
+other challenging tasks beyond link prediction. Therefore, there is
+a need for designing better pretext tasks for GAEs.
+Masked autoencoding, whose goal is to reconstruct masked sig-
+nals from unmasked input under the autoencoder framework, has
+recently advanced the state-of-the-art and provided valuable in-
+sights in both language and vision research. As shown in Figure 1(a)
+and 1(b), masked language modeling (MLM) and masked image
+modeling (MIM) have been widely applied to text and image data,
+with prominent examples including BERT [ 4] and MAE [11], re-
+spectively. Despite the fact that masked autoencoding has shown
+promise in benefiting visual and language representation learning,
+the applicability on graph data has yet to be substantially investi-
+gated in this discipline. Actually, masked autoencoding should also
+be a good fit for graph data, since each edge can easily be masked
+or unmasked as self-supervisions. In light of this, a natural question
+arises: whether masked autoencoding, or masked graph modeling,
+would advance GAEs in self-supervised learning as well?
+Present work. In this work, we seek to continue the success of
+MLM and MIM by introducing masked graph modeling (MGM) as
+a principled pretext task for graph-structured data. As shown in
+Figure 1(c), the core idea behind MGM is to remove a portion of the
+input graph and learn to predict the removed content such as edges.
+Following this philosophy, we propose masked graph autoencoder
+(MaskGAE), a self-supervised learning framework that leverages
+the idea of masking and predicting through the node and edge-
+level reconstruction. Our framework is theoretically grounded by
+explicitly relating GAEs to contrastive learning and demonstrating
+the benefits of MGM in improving the self-supervised learning
+scheme of GAEs. Specifically, we reveal that the learning objective
+of GAEs is equivalent to contrastive learning, in which paired
+subgraphs naturally form two structural views for contrasting. Most
+importantly, masking on an edge can reduce redundancy for two
+contrastive subgraph views in GAEs and thus benefit contrastive
+learning.
+This paper offers the following main contributions:
+• MaskGAE, a simple yet effective self-supervised learning
+framework for graphs.
+• A comprehensive theoretical analysis of the proposed frame-
+work along with guidance on the design of pretext training
+tasks (i.e., MGM) for GAEs.
+• A new form of structured masking strategy to facilitate the
+MGM task, where edges in a contiguous region are masked
+together.
+• An in-depth experimental evaluation of the proposed frame-
+work, demonstrating the effectiveness of MaskGAE on both
+link prediction and node classification tasks.
+We believe that our work is a step forward in the development
+of simple and provably powerful graph self-supervised learning
+frameworks, and hope that it would inspire both theoretical and
+practical future research.
+2 RELATED WORK
+Graph contrastive methods. Contrastive methods follow the prin-
+ciple of mutual information maximization [ 12], which typically
+works to maximize the correspondence between the representa-
+tions of an instance (e.g., node, subgraph, or graph) in its different
+augmentation views. Essentially, good data augmentations and pre-
+text tasks are the prerequisites for contrastive learning. There is a
+vast majority of research on graph contrastive learning [10, 38, 47].
+To our best knowledge, graph contrastive methods are currently
+the most successful approaches to learning useful and expressive
+representations in a self-supervised fashion. However, one limita-
+tion shared by all these successful approaches is that they highly
+rely on the design of pretext tasks and augmentations techniques
+(usually summarized from many trial-and-error) to provide useful
+self-supervision for learning better representations [46].
+Graph autoencoders. GAEs in the form proposed by [ 17] are
+a family of generative models that map (encode) nodes to low-
+dimensional representations and reconstruct (decode) the graph.
+Following the autoencoding philosophy, latest approaches have
+demonstrated their efficacy in modeling node relationships and
+learning robust representations from a graph [21]. Although GAEs
+progressed earlier than graph contrastive approaches, they re-
+mained out of the mainstream for a long time. This is mainly due to
+the known limitations that GAEs suffer from. As revealed in litera-
+ture [10, 38], GAEs tend to over-emphasize proximity information
+at the expense of structural information, leading to relatively poor
+performance on downstream tasks beyond link prediction. Despite
+the capability of GAEs being largely limited by the pretext task,
+there has been little attention paid to a better design of pretext
+tasks for improving the self-supervised learning scheme of GAEs.
+Masked autoencoding. Masked autoencoding is one such learn-
+ing task: masking a portion of input signals and attempting to
+predict the contents that are hidden by the mask [ 11]. Masked
+language modeling (MLM) [4] is the first successful application of
+masked autoencoding in natural language processing. Typically,
+MLM is a fill-in-the-blank self-supervised learning task, where a
+model learns representations by predicting what a masked word
+should be with the context words surrounding the token. Recently,
+
+
+--- PAGE 3 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+masked image modeling (MIM) [ 11, 44] follows a similar princi-
+ple to learn representations by predicting the missing parts at the
+pixel or patch level. MIM is gaining renewed interest from both
+industries and academia, leading to new state-of-the-art perfor-
+mance on broad downstream tasks. In a recent exploration [ 50],
+the authors discovered an implicit connection between MIM and
+contrastive learning. Despite the popularity in language and vision
+research, the techniques of masked autoencoding are relatively less
+explored in the graph domain. Until very recently, there were a few
+trials attempting to bridge this gap. In work concurrent with the
+present paper, MGAE [32] and GraphMAE [13] seek to apply this
+idea directly to graph data as a self-supervised learning paradigm,
+by performing masking strategies on graph structure and node at-
+tributes, respectively. However, they present only empirical results
+with experimental trial-and-error, which lacks further theoretical
+justification for a better understanding of the potential benefits of
+masked graph modeling.
+3 PROBLEM FORMULATION AND
+PRELIMINARIES
+Problem formulation. LetG =(V,E) be an undirected and
+unweighted graph, whereV ={𝑣𝑖} is a set of nodes and E ⊆
+V×V is the corresponding edges. Optionally, each node𝑣∈V is
+associated with a𝑑-dimensional feature vector𝑥𝑣∈ R𝑑. The goal of
+most graph self-supervised learning methods, including ours, is to
+learn a graph encoder𝑓𝜃 , which maps between the space of graph
+G and their low-dimensional latent representations Z ={𝑧𝑖}|V|
+𝑖=1 ,
+such that 𝑓𝜃(G) = Z∈ R|V|× 𝑑ℎ best describes each node in G,
+where𝑑ℎ is the embedding dimension.
+Masked graph modeling (MGM). Following the masked autoen-
+coding principle, we introduce MGM as a pretext task for graph
+self-supervised learning in this paper. Similar to MLM and MIM
+tasks in language and vision research, MGM aims to assist the
+model to learn more useful, transferable, and generalized represen-
+tations from unlabeled graph data through masking and predicting.
+This self-supervised pre-training strategy is particularly scalable
+when applied to GAEs since only the unmasked graph structure is
+processed by the network.
+4 THEORETICAL JUSTIFICATION AND
+MOTIV ATION
+4.1 Revisiting graph autoencoders
+GAEs, which leverage naturally occurring pairs of similar and dis-
+similar nodes in a graph as self-supervised signals, have shown the
+advantage of learning graph structures and node representations.
+GAEs adopt the classic encoder-decoder framework, which aims to
+decode from the low-dimensional representations that encode the
+graph by optimizing the following binary cross-entropy loss:
+L+ = 1
+|E+|
+∑︁
+(𝑢,𝑣)∈E+
+logℎ𝜔(𝑧𝑢,𝑧𝑣),
+L− = 1
+|E−|
+∑︁
+(𝑢′,𝑣′)∈E−
+log(1−ℎ𝜔(𝑧𝑢′,𝑧𝑣′)),
+LGAEs =−  L++L−
+(1)
+where𝑧 is the node representation obtained from an encoder 𝑓𝜃
+(e.g., a GNN);E+ is a set of positive edges while E− is a set of
+negative edges sampled from graph; Typically,E+ =E. We denote
+ℎ𝜔 a decoder with parameters𝜔.
+4.2 Connecting GAEs to contrastive learning
+We now provide some intuition that connects GAEs to contrastive
+learning from the viewpoint of information theory. Our analysis
+will be based on the homophily assumption, i.e., the underlying
+semantics of nodes𝑢 and𝑣 are more likely to be the same if they
+are connected by an edge. We adopt the information-maximization
+(infomax) viewpoint of contrastive learning [34, 35]. Specifically, let
+𝐼(𝑋 ;𝑌) be the mutual information (MI) between random variables
+𝑋 and𝑌 taking values inX andY, respectively. An important al-
+ternative characterization of MI is the following Donsker-Varadhan
+variational representation [25]:
+𝐼(𝑋 ;𝑌) = sup
+𝑐:X×Y↦→ R
+I𝑐(𝑋 ;𝑌),
+I𝑐(𝑋 ;𝑌) = E𝑥,𝑦∼𝑃𝑋𝑌𝑐(𝑥,𝑦)− log E𝑥,𝑦∼𝑃𝑋×𝑃𝑌(𝑒𝑐(𝑥,𝑦)),
+(2)
+with the critic function𝑐 [26] ranging over the set of integrable
+functions taking two arguments. Under the context of GAEs, we
+identify𝑋 and𝑌 with the corresponding𝑘-hop subgraphsG𝑘(𝑢)
+andG𝑘(𝑣) of adjacent nodes𝑢 and𝑣, with randomness over the
+generating distribution of the graph as well as the generating dis-
+tributions of node features.2 Denote the corresponding joint and
+marginal distributions as𝑃𝑈𝑉 ,𝑃𝑈 , and𝑃𝑉 , respectively. Under this
+formulation, we may view Eq.(1) as an empirical approximation of
+the following population-based objective:
+I+
+ℎ(𝑈 ;𝑉) = E𝑢,𝑣∼𝑃𝑈𝑉 logℎ(𝑢,𝑣),
+I−
+ℎ(𝑈 ;𝑉) = E𝑢′∼𝑃𝑈,𝑣′∼𝑃𝑉 log(1−ℎ(𝑢,𝑣)),
+IGAEs
+ℎ (𝑈 ;𝑉) =−
+
+I+
+ℎ(𝑈 ;𝑉)+I −
+ℎ(𝑈 ;𝑉)
+
+.
+(3)
+With slight abuse of notation, we denote𝐼(𝑈 ;𝑉) as the MI between
+G𝑘(𝑈) andG𝑘(𝑉). The following lemma establishes the connection
+between GAE and contrastive learning over graphs:
+Lemma 1. Let ℎ∗ ∈ arg minℎ∈HIGAEs
+ℎ (𝑈 ;𝑉). Then we have
+Iℎ∗(𝑈 ;𝑉) =𝐼(𝑈 ;𝑉).
+Here the domainH stands for the product space of all possible
+pairs of subgraphs. The above lemma is a direct consequence of
+the results in [26, 36]. Lemma 1 states that minimizing the GAE
+objective (1) is in population equivalent to maximizing the mutual
+information between the𝑘-hop subgraphs of adjacent nodes (here
+𝑘 depends on the receptive fields of the encoder). Now suppose
+that the parameterizationℎ𝜔(𝑧𝑢,𝑧𝑣) is sufficiently expressive for
+approximatingℎ(𝑢,𝑣) for anyℎ∈H , it follows from standard re-
+sults in M-estimation theory [37] that the corresponding empirical
+minimizer ofIGAEs converges to the maximizer ofI in probability.
+Further discussions on the expressivity and approximation issues
+can be found in Appendix A.2.
+2The negative sampling process in the objective (1) is biased if negative pairs are
+sampled from disconnected node pairs. Since it does not affect our analysis, we defer
+the discussion to Appendix A.2.
+
+
+--- PAGE 4 ---
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA. Li and Wu, et al.
+Remark 1. In a contemporary work [ 50], the authors also made
+a “contrastive interpretation” of the masking procedure in MIM as
+conducting contrastive learning in an implicit form , in which a
+contrastive-type loss is used to lower bound the reconstruction loss in
+the MIM setting. Our formulation under the MGM setting suggests a
+more direct connection to contrastive learning (in terms of asymptotic
+equivalent solutions) due to the specific form of the GAE objective (1).
+4.3 Task related information & redundancy of
+GAEs
+The (asymptotic) equivalence of learned representations of GAEs
+and contrastive learning does not necessarily imply good perfor-
+mance regarding downstream tasks. Recent progress on information-
+theoretic viewpoints of contrastive learning [34, 35] suggest that
+for contrastive pretraining to succeed in downstream tasks, the
+task irrelevant information shall be reasonably controlled. Formally,
+let𝑈,𝑉 be random variables of the two contrasting views, and𝑇
+denote the target of the downstream task. 3 Denote𝐼(𝑈 ;𝑉|𝑇) as
+the conditional mutual information of𝑈 and𝑉 given𝑇 , we have
+the following simple identity which is a direct consequence of the
+chain rule [25].
+𝐼(𝑈 ;𝑇)
+|  {z  }
+supervised goal
+= 𝐼(𝑈 ;𝑉)
+|  {z  }
+self-supervised goal
++ 𝐼(𝑈 ;𝑇|𝑉)
+|     {z     }
+task relevance
+− 𝐼(𝑈 ;𝑉|𝑇)
+|     {z     }
+task irrelevanc
+. (4)
+The relation(4) implies that, for successful application of contrastively-
+pretrained representations to downstream tasks, we need both
+𝐼(𝑈 ;𝑇|𝑉) and𝐼(𝑈 ;𝑉|𝑇) to be small.4 A small value of𝐼(𝑈 ;𝑇|𝑉) is
+a standard assumption in information-theoretic characterizations of
+self-supervised learning [31, 35]. The term𝐼(𝑈 ;𝑉|𝑇) measures the
+task-irrelevant information contained in the two contrastive views
+𝑈 and𝑉 , regarding the downstream task𝑇 , and cannot be reduced
+via algorithmic designs of encoders and decoders [35]. It is there-
+fore of interest to examine the efficacy of GAEs via assessing the
+task-irrelevant information, or redundancy, of the two contrasting
+views that use𝑘-hop subgraphs of adjacent nodes.
+Intuitively, for certain kinds of downstream task information𝑇 ,
+we might expect𝐼(𝑈 ;𝑉|𝑇) to be large under the GAE formulation,
+since𝑘-hop subgraphs of two adjacent nodes share a (potentially)
+large common subgraph. From a computational point of view, the
+phenomenon of overlapping subgraphs may affect up to𝑘−1 layers
+of GNN message passing and aggregation during the encoding stage
+of both nodes, thereby creating a large correlation between the
+representations, even when the encoder has little relevance with
+the downstream task. To further justify the above reasoning, we
+give a lower bound of𝐼(𝑈 ;𝑉|𝑇) under an independence assumption
+between graph topology and node features:
+Proposition 1. Suppose that the task-related information is com-
+pletely reflected by the topological structure of the underlying sub-
+graph, i.e.,𝑇 is all the topological information of the underlying graph.
+Moreover suppose the node features are generated independently from
+3Technically,𝑇 could be further relaxed to be any sufficient statistic of the underlying
+task, we adopt the more direct formulation for representation clarity
+4When both𝐼(𝑈 ;𝑇|𝑉) and𝐼(𝑈 ;𝑉|𝑇) are large, the equation becomes meaningless
+in that𝑇 and𝑉 should be nearly independent
+the graph topology, with the feature of each node being(coordinate-
+wise) independently sampled from a zero-mean distribution supported
+in[−1, 1] with variance𝛾. Let𝑁𝑘 be an upper bound for the size of 𝑘-
+hop subgraph associated with each node 𝑣, i.e., max𝑣∈V|G𝑘(𝑣)| 0≤
+𝑁𝑘 , we have the following lower bound of 𝐼(𝑈 ;𝑉|𝑇):
+𝐼(𝑈 ;𝑉|𝑇)≥
+
+E[𝑁𝑘𝑢𝑣]
+2
+𝑁𝑘
+𝛾2, (5)
+where 𝑁𝑘𝑢𝑣 is the size of the overlapping subgraph of G𝑘(𝑢) and
+G𝑘(𝑣), and the expectation is taken with respect to the generating
+distribution of the graph and the randomness in choosing 𝑢 and𝑣.
+The proof is deferred to Appendix A. Proposition 1 provides a
+quantitative characterization of task-irrelevant information of GAE.
+We discuss possible relaxations of the independence assumptions
+in Appendix A.
+According to Proposition 1, the redundancy of GAE scales almost
+linearly with the size of overlapping subgraphs. To design better
+self-supervised graph learning methods, we need a principled way
+to reduce the redundancy while keeping task-relevant information
+𝐼(𝑈 ;𝑇|𝑉) almost intact.
+5 PRESENT WORK: MASKGAE
+In this section, we present the MaskGAE framework for the MGM
+pretext task, which is developed by taking inspiration from MLM [4]
+and MIM [11]. As shown in Figure 2, MaskGAE is a simple frame-
+work tailored by its asymmetric design, where an encoder maps the
+partially observed graph to a latent representation, followed by two
+decoders reconstructing the information of the masked structure
+in terms of edge and node levels. We empirically show that such an
+asymmetric encoder-decoder architecture helps GAEs learn gener-
+alizable and transferable representations easily. In what follows, we
+will give the details of the proposed MaskGAE framework from four
+aspects: masking strategy, encoder, decoder, and learning objective.
+5.1 Masking Strategy
+The major difference between MaskGAE and traditional GAEs is
+the tailored MGM task, with masking on the input graph as a
+crucial operation. According to Proposition 1, the redundancy of
+two paired subgraphs could be reduced significantly if we mask a
+certain portion of the edges, thereby avoiding a trivial (large) over-
+lapping subgraph. Furthermore, previous empirical evidence [28]
+suggested that edge-level information is often redundant for down-
+stream tasks like node classification, thus implicitly implying lit-
+tle degradation over the task-relevant information𝐼(𝑈 ;𝑇|𝑉). Let
+Gmask =(V,Emask) denote the graph masked from G andGvis
+the remaining visible graph. Note thatGmask∪G vis =G. Here we
+introduce two masking strategies that facilitate the MGM task.
+5.1.1 Edge-wise random masking ( Tedge). A simple and straightfor-
+ward way to form a masked graph is to sample a subset of edges
+Emask⊆E following a specific distribution, e.g., Bernoulli distribu-
+tion:
+Emask∼ Bernoulli(𝑝), (6)
+where𝑝 < 1 is the masking ratio for the graph. Such an edge mask-
+ing strategy is widely used in literature [33, 47, 52]. We denote the
+edge-wise random masking asTedge such thatGmask =Tedge(G) .
+
+
+--- PAGE 5 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+aed
+bc Encoder
+StructureDecoder
+aed
+bc
+DegreeDecoder
+Path reconstruction
+Degree regression
+Masked graph 𝒢!"#$Node representation2111100Input graph 𝒢%&#(withmasking)
+Masked graph modelingcabda e
+𝒢"#$∪𝒢%&$'=𝒢
+aed
+bc
+abcde
+𝓛𝐆𝐀𝐄𝐬
+𝓛𝐝𝐞𝐠
+aed
+bc cabda e
+①Mask path
+②Mask edgeaed
+bc
+aed
+bc
+abde aed
+bc
+(a)Overallframework (b)MaskingParadigms
+Figure 2: Overview of proposed MaskGAE framework, performing masked graph modeling with an asymmetric encoder-decoder
+design. During the self-supervised learning phase, an input graph Gvis is provided, but some of the paths (a set of adjacent
+edges) are masked. The goal of the model is then to learn to predict the existence of masked edges in the graph Gmask and the
+degree of the associated nodes, respectively.
+5.1.2 Path-wise random masking ( Tpath). We also propose a novel
+structured masking strategy that takes path as a basic processing
+unit during sampling. Informally, a path in a graph is a sequence
+of edges that joins a sequence of adjacent nodes. Compared to
+simple edge-wise masking, path-wise masking breaks the short-
+range connections between nodes, the model must look elsewhere
+for evidence to fit the structure that is masked out. Therefore, it
+can better exploit the structure-dependency patterns and capture
+the high-order proximity for more meaningful MGM tasks. For
+path-wise masking, we sample a set of masked edges as follows:
+Emask∼ RandomWalk(R,𝑙 walk), (7)
+whereR ⊆V is a set of root nodes to start random walks and
+𝑙walk is the walk length. Here we sample a subset of nodes from
+graph as root nodes R following the Bernoulli distribution, i.e.,
+R ∼Bernoulli(𝑞), where 0 < 𝑞 < 1 is the sample ratio for the
+graph. We perform simple random walk [ 24] to sample masked
+edgesEmask, although biased random walk [8] are also applicable.
+We denote path-wise random masking asTpath. To the best of our
+knowledge, our method is the first to use path-wise masking for
+graph self-supervised learning.
+5.1.3 Relation with prior work. Both MaskGAE and some existing
+contrastive methods [33, 47, 52] apply masking on the graph. While
+those contrastive methods use edge masking as an augmentation
+to generate different structural views for contrasting, MaskGAE
+employs edge masking for constructing meaningful supervision
+signals as well as reducing the redundancy between paired subgraph
+views, thus facilitating the self-supervised learning scheme.
+5.2 Encoder
+In this work, our encoder is graph convolutional networks (GCN) [16],
+a well-established GNN architecture widely used in literature [10,
+38]. Our framework allows various choices of encoder architectures,
+such as SAGE [9] and GAT [39], without any constraints. We opt for
+simplicity and adopt the commonly used GCN and discuss different
+alternatives in Section 6.4. Unlike traditional GAEs, our encoder
+only needs to process a small portion of edges during training, since
+it is applied only on a visible, unmasked subgraph. This offers an
+opportunity for designing an efficient and powerful encoder while
+alleviating the scalability problem to pretrain large GNNs.
+5.3 Decoder
+5.3.1 Structure decoder. The structure decoder is a basic design
+of GAEs, which by aggregating pairwise node representations as
+link representations to decode the graph. There are several ways to
+design such a decoder in literature, one can use the inner product
+or a neural network for decoding. We define the structure decoder
+ℎ𝜔 with parameters𝜔 as:
+ℎ𝜔(𝑧𝑢,𝑧𝑣) = Sigmoid(MLP(𝑧𝑢◦𝑧𝑣)), (8)
+where MLP denotes a multilayer perceptron and◦ is the element-
+wise product.
+5.3.2 Degree decoder. We also introduce the degree decoder as an
+auxiliary model to balance the proximity and structure information.
+As the graph structure itself has abundant supervision signals more
+than edge connections, we can force the model to approximate the
+node degree in a masked graph to facilitate the training. We define
+the degree decoder as:
+𝑔𝜙(𝑧𝑣) = MLP(𝑧𝑣), (9)
+with𝜙 parameterizing the degree decoder.
+5.4 Learning objective
+The loss for MaskGAE has two parts: (i) Reconstruction loss .
+The reconstruction loss measures how well the model rebuilds the
+masked graph in terms of edge-reconstruction, which in a form is
+similar to Eq.(1), but replaces the termE+ =Emask. (ii) Regression
+loss. The regression loss measures how closely the prediction of
+node degree matches the original one in the masked graph. We
+compute the mean squared error (MSE) between the approximated
+and original degree in terms of node level:
+Ldeg = 1
+|V|
+∑︁
+𝑣∈V
+||𝑔𝜙(𝑧𝑣)− degmask(𝑣)|| 2
+𝐹, (10)
+where degmask(·) denotes the node degree in the masked graph
+Gmask. Essentially,Ldeg(·) can work as a regularizer for the en-
+coder to learn more generalizable representations. Thus, the overall
+
+
+--- PAGE 6 ---
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA. Li and Wu, et al.
+afe
+bc g
+afedbc
+g
+bga
+c
+f
+d
+80%edge overlapping
+2-hopsubgraphview at b2-hopsubgraphview at a
+afe
+afedbc
+g
+bg
+cd
+0%edge overlapping
+2-hopsubgraphview at b2-hopsubgraphview at a(a) GAE without masking(b) MaskGAE with maskingonab
+a ab b
+≈83% node overlapping 0%node overlappingContrastingContrasting
+2-hop1-hop
+Figure 3: Illustrative examples of the benefits of the masking-
+and-predicting scheme. Masking on the positive edge helps
+the contrastive scheme, as it significantly reduces the redun-
+dancy of two paired subgraph views.
+Table 1: Statistics of subgraph overlapping (%).
+Cora CiteSeer
+w/o mask Tedge Tpath w/o mask Tedge Tpath
+𝑘 = 2 Onode 63.43 31.74 26.97 71.93 33.01 17.05
+Oedge 62.17 29.57 24.90 70.97 30.94 15.66
+𝑘 = 3 Onode 69.11 39.66 33.56 78.90 41.07 22.68
+Oedge 68.68 38.78 32.84 78.61 40.66 22.34
+objective to be minimized is:
+L =LGAEs+𝛼Ldeg, (11)
+where𝛼 is a non-negative hyperparameter trading off two terms.
+The algorithm of MaskGAE is provided in Appendix B.
+5.5 Masking reduces subgraph overlapping
+Illustrative example. We first showcase how the masking par-
+adigm assists the self-supervised learning of GAEs. As shown in
+Figure (3a), we illustrate how vanilla GAE fails to learn better rep-
+resentations. Consider an edge𝑎↔𝑏 to be a positive example, the
+subgraphs centered at𝑎 and𝑏 naturally form two contrastive views
+during message propagation. However, there exists a large over-
+lapping in terms of nodes and edges between the paired subgraph
+views, which might potentially hinder the contrastive learning of
+GAE. In contrast, MaskGAE with masking on the edge𝑎↔𝑏 can
+avoid a trivial (large) overlapping subgraph and thus benefit the
+contrastive scheme of GAEs (see Figure 3(b)).
+Subgraph overlapping w/ and w/o masking. To support our claim,
+we compute the average overlapping of all paired subgraphs in
+terms of node and edge levels, denoting asOnode andOedge, respec-
+tively. The computation of both metrics is as follows:
+Onode = 1
+2|E+|
+∑︁
+(𝑢,𝑣)∈E+
+|V𝑘(𝑢)∩V 𝑘(𝑣)|
+|V𝑘(𝑢)| +|V𝑘(𝑢)∩V 𝑘(𝑣)|
+|V𝑘(𝑣)|
+
+,
+Oedge = 1
+2|E+|
+∑︁
+(𝑢,𝑣)∈E+
+|E𝑘(𝑢)∩E 𝑘(𝑣)|
+|E𝑘(𝑢)| +|E𝑘(𝑢)∩E 𝑘(𝑣)|
+|E𝑘(𝑣)|
+
+,
+(12)
+Table 2: Dataset statistics.
+Dataset #Nodes #Edges #Features #Classes Density
+Cora 2,708 10,556 1,433 7 0.144%
+CiteSeer 3,327 9,104 3,703 6 0.082%
+Pubmed 19,717 88,648 500 3 0.023%
+Photo 7,650 238,162 745 8 0.407%
+Computer 13,752 491,722 767 10 0.260%
+arXiv 16,9343 2,315,598 128 40 0.008%
+MAG 736,389 10,792,672 128 349 0.002%
+Collab 235,868 1,285,465 128 - 0.002%
+whereV𝑘(𝑣) andE𝑘(𝑣) represent the node set and edge set w.r.t.
+the𝑘-hop subgraph at node𝑣, respectively. Here we compute only
+on the positive edges, i.e.,E+ =E (w/o masking) orE+ =Emask
+(w/ masking).
+Empirical results. Table 1 presents the overlapping results on two
+citation graphs (data statistics are listed in Table 2) in terms of dif-
+ferent hops (𝑘) and masking strategies (Tedge andTpath). As shown,
+bothOnode andOedge are significantly reduced with our masking
+strategies. Notably,Tpath exhibits better capability thanTedge in
+reducing the subgraph overlapping, as evidenced by consistently
+lowerOnode andOedge on two datasets. Overall, the result demon-
+strates the benefits of masking on graphs particularly path-wise
+masking, which is consistent with experimental results in Section 6.
+6 EXPERIMENTS
+In this section, we compare MaskGAE with state-of-the-art methods
+on two fundamental task: link prediction and node classification.
+The experimental results are also used to validate our theoretical
+findings presented previously.
+6.1 Experimental setting
+6.1.1 Datasets. We conduct experiments on eight well-known
+benchmark datasets, including three citation networks, i.e., Cora,
+CiteSeer, Pubmed [29], two co-purchase graphs, i.e., Photo, Com-
+puter [30], as well as three large datasets arXiv, MAG and Collab
+from Open Graph Benchmark [14]. The datasets are collected from
+real-world networks belonging to different domains. For link predic-
+tion task, we randomly split the dataset with 85%/5%/10% of edges
+for training/validation/testing except for Collab which uses public
+splits. All the models are trained on the graph with the training
+edges. For the node classification task, we adopt a 1:1:8 train/vali-
+dation/test random splits for Photo and Computer datasets, as they
+do not have public splits. The detailed statistics of all datasets are
+summarized in Table 2.
+6.1.2 MaskGAE setup. According to different masking strategies,
+we have MaskGAE𝑒𝑑𝑔𝑒 and MaskGAE𝑝𝑎𝑡ℎ , denoting MaskGAE
+with edge-wise and path-wise masking strategies, respectively. By
+default, we fix the mask ratio𝑝 to 0.7 forTedge. ForTpath, we ran-
+domly sample 70% of nodes fromV as root nodesR (i.e.,𝑞 = 0.7),
+performing random walk [24] starting fromR with𝑙walk =𝑘+ 1.
+For all datasets except arXiv, two GCN layers are applied for the en-
+coder, and two MLP layers are applied for both structure and degree
+
+
+--- PAGE 7 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+Table 3: Link prediction results (%) on four graph benchmark datasets. In each column, the boldfaced score denotes the best
+result and the underlined score represents the second-best result.
+Cora CiteSeer Pubmed Collab
+AUC AP AUC AP AUC AP Hit@50
+GAE 91.09 ± 0.01 92.83 ± 0.03 90.52 ± 0.04 91.68 ± 0.05 96.40 ± 0.01 96.50 ± 0.02 47.14 ± 1.45
+VGAE 91.40 ± 0.01 92.60 ± 0.01 90.80 ± 0.02 92.00 ± 0.02 94.40 ± 0.02 94.70 ± 0.02 45.53 ± 1.87
+ARGA 92.40 ± 0.00 93.23 ± 0.00 91.94 ± 0.00 93.03 ± 0.00 96.81 ± 0.00 97.11 ± 0.00 28.39 ± 2.51
+ARVGA 92.40 ± 0.00 92.60 ± 0.00 92.40 ± 0.00 93.00 ± 0.00 96.50 ± 0.00 96.80 ± 0.00 27.32 ± 2.93
+SAGE 86.33 ± 1.06 88.24 ± 0.87 85.65 ± 2.56 87.90 ± 2.54 89.22 ± 0.87 89.44 ± 0.82 54.63 ± 1.12
+SEAL 92.22 ± 1.12 93.12 ± 1.01 93.38 ± 0.46 94.27 ± 0.26 92.99 ± 0.99 94.04 ± 0.80 64.74 ± 0.43
+MGAE 95.05 ± 0.76 94.50 ± 0.86 94.85 ± 0.49 94.68 ± 0.34 98.45 ± 0.03 98.22 ± 0.05 54.74 ± 1.06
+GraphMAE 94.88 ± 0.23 93.52 ± 0.51 94.32 ± 0.40 93.54 ± 0.22 96.24 ± 0.36 95.47 ± 0.41 53.97 ± 0.64
+MaskGAE𝑒𝑑𝑔𝑒 96.42± 0.17 95.91± 0.25 98.02± 0.22 98.18 ± 0.21 98.75± 0.04 98.66± 0.06 65.84± 0.47
+MaskGAE𝑝𝑎𝑡ℎ 96.45± 0.18 95.95 ± 0.21 97.87± 0.22 98.09± 0.17 98.84± 0.04 98.78 ± 0.05 65.98 ± 0.39
+decoders. We increase the number of layers to four for arXiv dataset.
+Batch normalization [15] and ELU [3] activation are applied on ev-
+ery hidden layer of encoder. We fix𝑑ℎ = 64 for Cora, CiteSeer, and
+Pubmed,𝑑ℎ = 128 for Photo and Computer,𝑑ℎ = 512 for arXiv and
+MAG. For𝛼, grid search was performed over the following search
+space:{0, 1𝑒−3,..., 1𝑒−2}. In the self-supervised pre-training stage,
+we employ an Adam optimizer with an initial learning rate of 0.01
+and train for 500 epochs except 100 for arXiv and MAG. We also use
+early stopping with the patience of 30, where we stop training if
+there is no further improvement on the validation accuracy during
+30 epochs.
+6.1.3 Evaluation. We consider two fundamental tasks associated
+with graph representation learning: link prediction and node classi-
+fication. For link prediction task, we randomly sample 10% existing
+edges from each dataset as well as the same number of nonexistent
+edges (unconnected node pairs) as testing data. For node classifi-
+cation task, we follow the linear evaluation scheme as introduced
+in [38, 48]: We first train the model in a graph with self-defined
+supervisions and pretext tasks. We then concatenate the output of
+each layer as the node representation. The final evaluation is done
+by fitting a linear classifier (i.e., a logistic regression model) on top
+of the frozen learned embeddings without flowing any gradients
+back to the encoder. Note that we did not compare with the related
+work MGAE [32] in the node classification task as the official code
+is not released and it adopts a rather different experimental setting.
+6.1.4 Software and hardware Specifications. Our framework is built
+upon PyTorch [22] and PyTorch Geometric [5]. All datasets used
+throughout experiments are publicly available in PyTorch Geomet-
+ric library. All experiments are done on a single NVIDIA RTX 2080
+Ti GPU (with 11GB memory).
+6.2 Performance comparison on link prediction
+As GAEs, including our MaskGAE, are initially designed for graph
+reconstruction, the trained model can easily perform link predic-
+tion tasks without additional fine-tuning. For fair comparison, we
+mainly compare MaskGAE with the following methods, including
+(V)GAE [17], AR(V)GA [21], SAGE [9], SEAL [49], and MGAE [32],
+which are trained in an end-to-end fashion to perform link predic-
+tion. Since GraphMAE is not initially designed for link prediction
+tasks, we instead trained an MLP decoder on the learned represen-
+tations for GraphMAE to solve the link prediction task. Following a
+standard manner of learning-based link prediction [17, 49], we con-
+duct experiments on Cora, CiteSeer, Pubmed, and Collab, removing
+5% edges for validation and 10% edges for test. All the models are
+trained on the graph with the remaining 85% existing edges.
+We report AUC score, average precision (AP), and Hits@𝑘 which
+counts the ratio of positive edges ranked at the𝑘-th place or above
+against all the negative edges. The results of baselines are quoted
+from [21, 32, 49]. As shown in Table 3, both variants of MaskGAE
+achieve the leading performance over all compared algorithms
+regarding all evaluation metrics. Specifically, both MaskGAE al-
+ternatives significantly outperform vanilla GAE on three citation
+datasets with an increase in AUC and AP scores by 5% on aver-
+age, demonstrating the effectiveness of the proposed MaskGAE
+framework. In addition, MaskGAE outperforms strong baselines
+and advances new state-of-the-art on the large dataset Collab. We
+believe the result comes from the benefits of the MGM paradigm.
+On one hand, MGM helps self-supervised learning of GAEs by re-
+ducing the redundancy of contrastive views. On the other hand,
+MGM naturally eliminates the discrepancy between pre-training
+and downstream tasks, as the model is required to predict a por-
+tion of edges that are “invisible” given partially visible structure in
+both training and inference stages. In conclusion, MGM is able to
+benefit the performance of GAEs in modeling the graph structure
+and outperforming the leading baselines.
+6.3 Performance comparison on node
+classification
+We also perform node classification under the self-supervised learn-
+ing setting to validate the effectiveness of learned representations.
+The model is trained on a partially observed graph in a self-supervised
+manner, following the same setting as the link prediction task. We
+compare against baselines belonging to the three categories: (i)gen-
+erative learning methods, including (V)GAE [17], AR(V)GA [21],
+and GraphMAE [13]; (ii) contrastive learning methods, includ-
+ing DGI [ 38], GMI [ 23], GRACE [ 52], GCA [ 53], MVGRL [ 10],
+
+
+--- PAGE 8 ---
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA. Li and Wu, et al.
+Table 4: Node classification accuracy (%) on seven benchmark datasets. In each column, the boldfaced score denotes the best
+result and the underlined score represents the second-best result.
+Cora CiteSeer Pubmed Photo Computer arXiv MAG
+MLP 47.90 ± 0.40 49.30 ± 0.30 69.10 ± 0.20 78.50 ± 0.20 73.80 ± 0.10 56.30 ± 0.30 22.10 ± 0.30
+GCN 81.50 ± 0.20 70.30 ± 0.40 79.00 ± 0.50 92.42 ± 0.22 86.51 ± 0.54 70.40 ± 0.30 30.10 ± 0.30
+GAT 83.00 ± 0.70 72.50 ± 0.70 79.00 ± 0.30 92.56 ± 0.35 86.93 ± 0.29 70.60 ± 0.30 30.50 ± 0.30
+GAE 74.90 ± 0.40 65.60 ± 0.50 74.20 ± 0.30 91.00 ± 0.10 85.10 ± 0.40 63.60 ± 0.50 27.10 ± 0.30
+VGAE 76.30 ± 0.20 66.80 ± 0.20 75.80 ± 0.40 91.50 ± 0.20 85.80 ± 0.30 64.80 ± 0.20 27.90 ± 0.20
+ARGA 77.95 ± 0.70 64.44 ± 1.19 80.44 ± 0.74 91.82 ± 0.08 85.86 ± 0.11 67.34 ± 0.09 28.36 ± 0.12
+ARVGA 79.50 ± 1.01 66.03 ± 0.65 81.51 ± 1.00 91.51 ± 0.09 86.02 ± 0.11 67.43 ± 0.08 28.32 ± 0.18
+GraphMAE 84.20 ± 0.40 73.40± 0.40 81.10± 0.40 93.23 ± 0.13 89.51 ± 0.08 71.75± 0.17 32.25± 0.37
+DGI 82.30 ± 0.60 71.80 ± 0.70 76.80 ± 0.60 91.61 ± 0.22 83.95 ± 0.47 65.10 ± 0.40 31.40 ± 0.30
+GMI 83.00 ± 0.30 72.40 ± 0.10 79.90 ± 0.20 90.68 ± 0.17 82.21 ± 0.31 68.20 ± 0.20 29.50 ± 0.10
+GRACE 81.90 ± 0.40 71.20 ± 0.50 80.60 ± 0.40 92.15 ± 0.24 86.25 ± 0.25 68.70 ± 0.40 31.50 ± 0.30
+GCA 81.80 ± 0.20 71.90 ± 0.40 81.00 ± 0.30 92.53 ± 0.16 87.85 ± 0.31 68.20 ± 0.20 31.40 ± 0.30
+MVGRL 82.90 ± 0.30 72.60 ± 0.40 80.10 ± 0.70 91.70 ± 0.10 86.90 ± 0.10 68.10 ± 0.10 31.60 ± 0.40
+BGRL 82.86 ± 0.49 71.41 ± 0.92 82.05 ± 0.85 93.17 ± 0.30 90.34± 0.19 71.64± 0.12 31.11± 0.11
+SUGRL 83.40 ± 0.50 73.00 ± 0.40 81.90 ± 0.30 93.20 ± 0.40 88.90 ± 0.20 69.30 ± 0.20 32.40 ± 0.10
+CCA-SSG 83.59 ± 0.73 73.36 ± 0.72 80.81 ± 0.38 93.14 ± 0.14 88.74 ± 0.28 69.22 ± 0.22 27.57 ± 0.41
+MaskGAE𝑒𝑑𝑔𝑒 83.77± 0.33 72.94 ± 0.20 82.69 ± 0.31 93.30± 0.04 89.44± 0.11 70.97 ± 0.29 32.75 ± 0.43
+MaskGAE𝑝𝑎𝑡ℎ 84.30± 0.39 73.80 ± 0.81 83.58 ± 0.45 93.31 ± 0.13 89.54± 0.06 71.16± 0.33 32.79± 0.32
+BGRL [33], SUGRL [20], and CCA-SSG [48]. (iii) (semi-)supervised
+methods, including MLP, GCN [16] and GAT [39]. Both (i) and (ii)
+are self-supervised methods. We closely follow the linear evalua-
+tion scheme as introduced in [38, 48] and report the classification
+accuracy on all datasets.
+The results are presented in Table 4. For self-supervised ap-
+proaches, we can see that the contrastive methods generally outper-
+form generative methods (GAEs), which verify the effectiveness of
+contrastive learning. This also highlights the fact that the learned
+representations by simple GAEs are not task-agnostic, which can-
+not generalize to other downstream tasks beyond link prediction. In
+contrast, both variants of MaskGAE outperform or match the best
+contrastive approaches across all datasets. In addition, MaskGAE
+also outperforms the state-of-the-art method GraphMAE on six
+out of seven datasets. Even compared with the supervised ones,
+MaskGAE demonstrates superior performance and outperforms all
+the baselines. The results clearly demonstrate the effectiveness of
+the proposed MaskGAE framework and validate our claims.
+It is observed that MaskGAE exhibits good computational scal-
+ing and downstream performance on large datasets arXiv and MAG.
+This may be due to the fact that only a small portion of unmasked
+edges are processed by the encoder during training and thus bene-
+fiting the scalability. Note that CCA-SSG has a poor performance
+on arXiv and MAG since it is essentially a dimension-reduction
+method, where the ideal embedding dimension ought to be smaller
+than input one [48].
+While both masking strategies assist self-supervised learning
+for MaskGAE by recovering the masked edges, they are built on
+different philosophies of structural masking. We also see that both
+variants of MaskGAE using masking strategies achieve the leading
+Figure 4: Effect of 𝑝 forTedge and𝑞 forTpath.
+performance, while MaskGAE𝑝𝑎𝑡ℎ achieves relatively better per-
+formance than MaskGAE𝑒𝑑𝑔𝑒 in most cases. It is probably because
+that path-wise masking enforces a model to predict a set of edges
+that are locally correlated, thus creating a task that cannot be easily
+solved by extrapolation from visible graph structure. In this regard,
+the learned representations are more robust and generalizable, lead-
+ing to better performance on downstream tasks. This implies that
+path-wise masking might be a more promising masking strategy
+for the MGM task.
+6.4 Ablation study
+In this subsection, we perform ablation studies over the key compo-
+nents of MaskGAE to understand their functionalities thoroughly.
+6.4.1 Effect of 𝑝 and𝑞. Given that masking strategies are criti-
+cal for our MGM pretext tasks, we first study how the number of
+masked edges improves or degrades the model performance. Both𝑝
+and𝑞 control the size of masked edges inTedge andTpath in different
+ways. From Figure 4, we can see that both variants of MaskGAE
+show similar trends on two datasets when increasing the number
+
+
+--- PAGE 9 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+Figure 5: Effect of 𝛼.
+of masked edges. The masking strategies indeed yield significant
+performance improvements on the downstream performance. Par-
+ticularly, the performance of MaskGAE is smoothly improved when
+a large mask ratio is adopted, which validates the information redun-
+dancy in graphs and also aligns with our theoretical justifications
+that MGM improves the self-supervised learning scheme. When
+𝑝 or𝑞 reaches a critical value, e.g., 0.7, the best performance is
+achieved. As shown, two parameters that are too large or too small
+can lead to poor performance. In this regard, reasonable values of𝑝
+and𝑞 are required to learn useful representations. The results are
+also in line with previous work [28] where removing a sufficiently
+large portion of edges would facilitate the training of GNNs.
+6.4.2 Effect of 𝛼. We further investigate whetherLdeg improves
+the performance as an auxiliary loss by varying the trade-off hyper-
+parameter𝛼 from 0 to 1𝑒−2. Figure 5 shows the classification accu-
+racy of both MaskGAE variants w.r.t. different𝛼 on Pubmed and
+MAG. We can see that the performance is boosted when𝛼 > 0 par-
+ticularly for MaskGAE𝑝𝑎𝑡ℎ . This indicates thatLdeg is important
+as it contributes to learning good representations for downstream
+tasks. However, the model would potentially overfit the structure
+information with a large𝛼, as evidenced by increasing𝛼 results in
+a poor performance of MaskGAE.
+6.4.3 Effect of embedding size 𝑑ℎ. Figure 6 ablates the effect of
+varying embedding size. Embedding size is important for graph
+representation learning, which reflects the effectiveness of infor-
+mation compression. Compared to contrastive methods [20, 38, 52],
+an interesting finding is that MaskGAE does not benefit signifi-
+cantly from a large embedding dimension and a large range of
+embedding sizes (64-512) performs equally well, particularly for
+MaskGAE𝑒𝑑𝑔𝑒 . Compared to sparse datasets Cora and Pubmed,
+MaskGAE is more stable on dense datasets Photo and Computer.
+In addition, we notice a performance drop for MaskGAE as the em-
+bedding size increases. Notably, a small embedding size (64 in most
+cases) is sufficient for MaskGAE, while other contrastive methods
+generally require much larger dimensions (e.g., 512) to achieve a
+decent performance [ 20, 38]. This indicates that the representa-
+tions learned by MaskGAE are informative and discriminative for
+downstream tasks as a small embedding size is required.
+6.4.4 Effect of encoder architecture. The encoder plays an impor-
+tant role in mapping graphs into low-dimensional representations.
+Typically, a wide range of literature [33, 38, 48, 53] uses GCN as
+the default option to implement the encoder and achieve outstand-
+ing performance on the node classification task. To explore the
+possibility of designing powerful self-supervised methods, we con-
+duct ablation studies on three citation graphs with different GNN
+Figure 6: Effect of embedding size 𝑑ℎ.
+Table 5: Accuracy (%) of MaskGAE with different encoders in
+node classification task.
+Cora CiteSeer Pubmed
+MaskGAE𝑒𝑑𝑔𝑒
+SAGE 81.32 ± 0.18 71.19 ± 0.10 80.17 ± 0.36
+GAT 81.99 ± 0.14 71.95 ± 0.35 81.21 ± 0.12
+GCN 83.77± 0.33 72.94 ± 0.20 82.69 ± 0.31
+MaskGAE𝑝𝑎𝑡ℎ
+SAGE 80.66 ± 0.12 72.49 ± 0.17 79.73 ± 0.28
+GAT 82.18 ± 0.23 72.99 ± 0.30 81.84 ± 0.46
+GCN 84.30± 0.39 73.80 ± 0.81 83.58 ± 0.45
+encoders, including SAGE [ 9], GAT [39], and GCN [ 16]. The re-
+sults are shown in Table 5. We can observe that GCN is the best
+encoder architecture for MaskGAE with both masking strategies.
+MaskGAE with GCN as the encoder exhibits significantly improved
+performances over GAT and SAGE in all cases, indicating that a
+simple encoder with the aid of MGM is sufficient to learn useful
+representations.
+7 CONCLUSION
+In this work, we make a comprehensive investigation on masked
+graph modeling (MGM) and present MaskGAE, a theoretically
+grounded self-supervised learning framework that takes MGM as a
+principled pretext task. Our work is conceptually well-understood
+and theoretically motivated with the following justifications: (i)
+GAEs are essentially contrastive learning models that maximize the
+mutual information between paired subgraph views associated with
+a linked edge, and (ii) MGM can benefit the mutual information
+maximization since masking significantly reduce the overlapping
+(redundancy) between two subgraph views. In particular, we also
+propose a path-wise masking strategy to facilitate the MGM task. In
+our experiments, MaskGAE exhibits significantly improved perfor-
+mances over GAEs and performs on par with or better than strong
+baselines on link prediction and node classification benchmarks.
+
+
+--- PAGE 10 ---
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA. Li and Wu, et al.
+8 ACKNOWLEDGEMENTS
+The research is supported by the Guangdong Basic and Applied
+Basic Research Foundation (2020A1515010831), the Guangzhou
+Basic and Applied Basic Research Foundation (202102020881), and
+CCF-AFSG Research Fund (20210002).
+REFERENCES
+[1] Mohamed Ishmael Belghazi, Aristide Baratin, Sai Rajeshwar, Sherjil Ozair, Yoshua
+Bengio, Aaron Courville, and Devon Hjelm. 2018. Mutual Information Neural
+Estimation. In ICML, Vol. 80. PMLR, 531–540.
+[2] Liang Chen, Jintang Li, Qibiao Peng, Yang Liu, Zibin Zheng, and Carl Yang. 2021.
+Understanding Structural Vulnerability in Graph Convolutional Networks. In
+IJCAI. 2249–2255.
+[3] Djork-Arné Clevert, Thomas Unterthiner, and Sepp Hochreiter. 2016. Fast and
+Accurate Deep Network Learning by Exponential Linear Units (ELUs). In ICLR
+(Poster).
+[4] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. BERT:
+Pre-training of Deep Bidirectional Transformers for Language Understanding. In
+NAACL-HLT (1). Association for Computational Linguistics, 4171–4186.
+[5] Matthias Fey and Jan E. Lenssen. 2019. Fast Graph Representation Learning with
+PyTorch Geometric. In ICLR Workshop on Representation Learning on Graphs and
+Manifolds.
+[6] Vikas Garg, Stefanie Jegelka, and Tommi Jaakkola. 2020. Generalization and
+representational limits of graph neural networks. In ICML. PMLR, 3419–3430.
+[7] Anna Goldenberg, Alice X Zheng, Stephen E Fienberg, Edoardo M Airoldi, et al.
+2010. A survey of statistical network models.Foundations and Trends® in Machine
+Learning 2, 2 (2010), 129–233.
+[8] Aditya Grover and Jure Leskovec. 2016. node2vec: Scalable feature learning for
+networks. In KDD. 855–864.
+[9] Will Hamilton, Zhitao Ying, and Jure Leskovec. 2017. Inductive representation
+learning on large graphs. In NeurIPS. 1024–1034.
+[10] Kaveh Hassani and Amir Hosein Khas Ahmadi. 2020. Contrastive Multi-View
+Representation Learning on Graphs. In ICML, Vol. 119. PMLR, 4116–4126.
+[11] Kaiming He, Xinlei Chen, Saining Xie, Yanghao Li, Piotr Dollár, and Ross B.
+Girshick. 2022. Masked Autoencoders Are Scalable Vision Learners. In CVPR.
+IEEE, 15979–15988.
+[12] R. Devon Hjelm, Alex Fedorov, Samuel Lavoie-Marchildon, Karan Grewal, Philip
+Bachman, Adam Trischler, and Yoshua Bengio. 2019. Learning deep representa-
+tions by mutual information estimation and maximization. In ICLR.
+[13] Zhenyu Hou, Xiao Liu, Yukuo Cen, Yuxiao Dong, Hongxia Yang, Chunjie Wang,
+and Jie Tang. 2022. GraphMAE: Self-Supervised Masked Graph Autoencoders. In
+KDD. ACM, 594–604.
+[14] Weihua Hu, Matthias Fey, Marinka Zitnik, Yuxiao Dong, Hongyu Ren, Bowen
+Liu, Michele Catasta, and Jure Leskovec. 2020. Open Graph Benchmark: Datasets
+for Machine Learning on Graphs. arXiv preprint arXiv:2005.00687 (2020).
+[15] Sergey Ioffe and Christian Szegedy. 2015. Batch Normalization: Accelerating
+Deep Network Training by Reducing Internal Covariate Shift. In ICML (JMLR
+Workshop and Conference Proceedings, Vol. 37). JMLR.org, 448–456.
+[16] Thomas N Kipf and Max Welling. 2016. Semi-supervised classification with graph
+convolutional networks. arXiv preprint arXiv:1609.02907 (2016).
+[17] Thomas N. Kipf and Max Welling. 2016. Variational Graph Auto-Encoders. CoRR
+abs/1611.07308 (2016).
+[18] Namkyeong Lee, Junseok Lee, and Chanyoung Park. 2022. Augmentation-Free
+Self-Supervised Learning on Graphs. (2022).
+[19] Jintang Li, Sheng Tian, Ruofan Wu, Liang Zhu, Welong Zhao, Changhua Meng,
+Liang Chen, Zibin Zheng, and Hongzhi Yin. 2023. Less Can Be More: Unsuper-
+vised Graph Pruning for Large-scale Dynamic Graphs. CoRR abs/2305.10673
+(2023).
+[20] Yujie Mo, Liang Peng, Jie Xu, Xiaoshuang Shi, and Xiaofeng Zhu. 2022. Simple
+Unsupervised Graph Representation Learning. AAAI.
+[21] Shirui Pan, Ruiqi Hu, Guodong Long, Jing Jiang, Lina Yao, and Chengqi Zhang.
+2018. Adversarially Regularized Graph Autoencoder for Graph Embedding. In
+IJCAI. ijcai.org, 2609–2615.
+[22] Adam Paszke, Sam Gross, Francisco Massa, Adam Lerer, James Bradbury, Gregory
+Chanan, Trevor Killeen, Zeming Lin, Natalia Gimelshein, Luca Antiga, Alban
+Desmaison, Andreas Köpf, Edward Z. Yang, Zachary DeVito, Martin Raison,
+Alykhan Tejani, Sasank Chilamkurthy, Benoit Steiner, Lu Fang, Junjie Bai, and
+Soumith Chintala. 2019. PyTorch: An Imperative Style, High-Performance Deep
+Learning Library. In NeurIPS. 8024–8035.
+[23] Zhen Peng, Wenbing Huang, Minnan Luo, Qinghua Zheng, Yu Rong, Tingyang
+Xu, and Junzhou Huang. 2020. Graph Representation Learning via Graphical
+Mutual Information Maximization. In WWW. ACM / IW3C2, 259–270.
+[24] Bryan Perozzi, Rami Al-Rfou, and Steven Skiena. 2014. DeepWalk: online learning
+of social representations. In KDD. ACM, 701–710.
+[25] Yury Polyanskiy and Yihong Wu. 2014. Lecture notes on information theory.
+Lecture Notes for ECE563 (UIUC) and 6, 2012-2016 (2014), 7.
+[26] Ben Poole, Sherjil Ozair, Aaron Van Den Oord, Alex Alemi, and George Tucker.
+2019. On Variational Bounds of Mutual Information. In ICML, Vol. 97. PMLR,
+5171–5180.
+[27] Yu Rong, Yatao Bian, Tingyang Xu, Weiyang Xie, Ying Wei, Wenbing Huang,
+and Junzhou Huang. 2020. Self-supervised graph transformer on large-scale
+molecular data. NeurIPS 33 (2020), 12559–12571.
+[28] Yu Rong, Wenbing Huang, Tingyang Xu, and Junzhou Huang. 2020. DropEdge:
+Towards Deep Graph Convolutional Networks on Node Classification. In ICLR.
+[29] Prithviraj Sen, Galileo Namata, Mustafa Bilgic, Lise Getoor, Brian Galligher, and
+Tina Eliassi-Rad. 2008. Collective classification in network data. AI magazine 29,
+3 (2008), 93–93.
+[30] Oleksandr Shchur, Maximilian Mumme, Aleksandar Bojchevski, and Stephan
+Günnemann. 2018. Pitfalls of Graph Neural Network Evaluation. Relational
+Representation Learning Workshop, NeurIPS (2018).
+[31] Karthik Sridharan and Sham M. Kakade. 2008. An Information Theoretic Frame-
+work for Multi-view Learning. In Conference on Learning Theory . PMLR.
+[32] Qiaoyu Tan, Ninghao Liu, Xiao Huang, Rui Chen, Soo-Hyun Choi, and Xia Hu.
+2022. MGAE: Masked Autoencoders for Self-Supervised Learning on Graphs.
+CoRR abs/2201.02534 (2022).
+[33] Shantanu Thakoor, Corentin Tallec, Mohammad Gheshlaghi Azar, Remi Munos,
+Petar Veličković, and Michal Valko. 2021. Bootstrapped Representation Learning
+on Graphs. In ICLR 2021 Workshop on Geometrical and Topological Representation
+Learning.
+[34] Yonglong Tian, Chen Sun, Ben Poole, Dilip Krishnan, Cordelia Schmid, and Phillip
+Isola. 2020. What Makes for Good Views for Contrastive Learning?. In NeurIPS,
+Vol. 33. 6827–6839.
+[35] Yao-Hung Hubert Tsai, Yue Wu, Ruslan Salakhutdinov, and Louis-Philippe
+Morency. 2021. Self-supervised Learning from a Multi-view Perspective. In
+ICLR.
+[36] Yao-Hung Hubert Tsai, Han Zhao, Makoto Yamada, Louis-Philippe Morency,
+and Russ R Salakhutdinov. 2020. Neural methods for point-wise dependency
+estimation. NeurIPS 33 (2020), 62–72.
+[37] Aad W Van der Vaart. 2000. Asymptotic statistics. Vol. 3. Cambridge university
+press.
+[38] Petar Velickovic, William Fedus, William L Hamilton, Pietro Liò, Yoshua Bengio,
+and R Devon Hjelm. 2019. Deep Graph Infomax. ICLR (Poster) 2, 3 (2019), 4.
+[39] Petar Veličković, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro
+Liò, and Yoshua Bengio. 2018. Graph Attention Networks. In ICLR.
+[40] Martin J Wainwright. 2019. High-dimensional statistics: A non-asymptotic view-
+point. Vol. 48. Cambridge University Press.
+[41] Martin J Wainwright, Michael I Jordan, et al. 2008. Graphical models, exponential
+families, and variational inference. Foundations and Trends® in Machine Learning
+1, 1–2 (2008), 1–305.
+[42] Jianian Wang, Sheng Zhang, Yanghua Xiao, and Rui Song. 2021. A Review
+on Graph Neural Network Methods in Financial Applications. arXiv preprint
+arXiv:2111.15367 (2021).
+[43] Lirong Wu, Haitao Lin, Cheng Tan, Zhangyang Gao, and Stan Z Li. 2021. Self-
+supervised learning on graphs: Contrastive, generative, or predictive. TKDE
+(2021).
+[44] Zhenda Xie, Zheng Zhang, Yue Cao, Yutong Lin, Jianmin Bao, Zhuliang Yao,
+Qi Dai, and Han Hu. 2021. SimMIM: A Simple Framework for Masked Image
+Modeling. CoRR abs/2111.09886 (2021).
+[45] Aolin Xu and Maxim Raginsky. 2017. Information-theoretic analysis of general-
+ization capability of learning algorithms. NeurIPS 30 (2017).
+[46] Yuning You, Tianlong Chen, Yang Shen, and Zhangyang Wang. 2021. Graph
+Contrastive Learning Automated. In ICML, Vol. 139. PMLR, 12121–12132.
+[47] Yuning You, Tianlong Chen, Yongduo Sui, Ting Chen, Zhangyang Wang, and
+Yang Shen. 2020. Graph Contrastive Learning with Augmentations. In NeurIPS.
+[48] Hengrui Zhang, Qitian Wu, Junchi Yan, David Wipf, and Philip S. Yu. 2021. From
+Canonical Correlation Analysis to Self-supervised Graph Neural Networks. In
+NeurIPS.
+[49] Muhan Zhang, Pan Li, Yinglong Xia, Kai Wang, and Long Jin. 2021. Labeling
+Trick: A Theory of Using Graph Neural Networks for Multi-Node Representation
+Learning. In NeurIPS. 9061–9073.
+[50] Qi Zhang, Yifei Wang, and Yisen Wang. 2022. How Mask Matters: Towards
+Theoretical Understandings of Masked Autoencoders. In NeurIPS.
+[51] Chengshuai Zhao, Shuai Liu, Feng Huang, Shichao Liu, and Wen Zhang. 2021.
+CSGNN: Contrastive Self-Supervised Graph Neural Network for Molecular Inter-
+action Prediction. In IJCAI. ijcai.org, 3756–3763.
+[52] Yanqiao Zhu, Yichen Xu, Feng Yu, Qiang Liu, Shu Wu, and Liang Wang. 2020.
+Deep Graph Contrastive Representation Learning. In ICML Workshop on Graph
+Representation Learning and Beyond .
+[53] Yanqiao Zhu, Yichen Xu, Feng Yu, Qiang Liu, Shu Wu, and Liang Wang. 2021.
+Graph Contrastive Learning with Adaptive Augmentation. In WWW. ACM /
+IW3C2, 2069–2080.
+
+
+--- PAGE 11 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+A PROOFS
+The key ingredient of the proof of Proposition 1 is the following
+lemma, which is a conditional version of [45, Lemma 1]:
+Lemma 2. Consider three random variables 𝑋 ,𝑌 and𝑇 . Denote
+𝑃𝑋𝑌|𝑇 as the joint distribution of 𝑋 and𝑌 given𝑇 , and 𝑃𝑋|𝑇 and
+𝑃𝑌|𝑇 as conditional distribution of 𝑋 and𝑌 given𝑇 , respectively. Let
+𝑞 :X×Y×T↦→ R be a function such that for any given 𝑡∈T ,𝑞
+is𝜎-subgaussian in the product of distributions 𝑃𝑋|𝑇 =𝑡×𝑃𝑌|𝑇 =𝑡 , i.e.,
+log E𝑥∼𝑃𝑋|𝑇 =𝑡,𝑦∼𝑃𝑌|𝑇 =𝑡
+h
+𝑒𝜆(𝑞(𝑥,𝑦,𝑡))
+i
+−
+𝜆E𝑥∼𝑃𝑋|𝑇 =𝑡,𝑦∼𝑃𝑌|𝑇 =𝑡[𝑞(𝑥,𝑦,𝑡)]≤ 𝜆2𝜎2
+2 ,∀𝜆.
+(13)
+Then we have the following lower bound on the conditional MI𝐼(𝑋 ;𝑌|𝑇):
+𝜎
+√︁
+2𝐼(𝑋;𝑌|𝑇)≥| E𝑇 E𝑥,𝑦∼𝑃𝑋𝑌|𝑇 =𝑡[𝑞(𝑥,𝑦,𝑡)]
+− E ¯𝑥∼𝑃𝑋|𝑇 =𝑡, ¯𝑦∼𝑃𝑌|𝑇 =𝑡[𝑞( ¯𝑥, ¯𝑦,𝑡)]|.
+(14)
+Proof of Proposition 1. We show the proposition with the fea-
+ture dimension𝑑 = 1, and extending to general finite feature di-
+mensions is straightforward. By the conditional version of data
+processing inequality [25], for any subgraph encoding mapM𝑘
+that maps𝑘-hop subgraphs of any node𝑣 into real vectors, we have:
+𝐼(𝑈 ;𝑉|𝑇)≥ 𝐼(M𝑘(G𝑘(𝑢));M𝑘(G𝑘(𝑣))|𝑇). (15)
+For notational simplicity we let 𝑚𝑘(𝑣) =M𝑘(G𝑘(𝑣)) for∀𝑣 ∈
+V. Now it suffices to bound 𝐼(𝑈 ;𝑉|𝑇) under a certain encoding
+map, which we construct as follows: Conditional on the topological
+information of the underlying graph G with size 𝑁 = |G| , we
+associate each node𝑣 with an index id(𝑣) that corresponds to its
+order in the topological traversal of the graph. Then 𝑚𝑘(𝑣) is a
+sparse vector of length𝑁 , with nonzero positions defined as:
+𝑚𝑘(𝑣)[ id(𝑢)] =𝑥(𝑢),∀𝑢∈G 𝑘(𝑣), (16)
+where we use 𝑥[𝑘] to denote the 𝑘-th element of a vector 𝑥. To
+bound𝐼(𝑚𝑘(𝑈);𝑚𝑘(𝑉)|𝑇) from below, we use lemma 2 via choos-
+ing𝑞 to be the euclidean inner product:
+𝑞(𝑚𝑘(𝑢),𝑚𝑘(𝑣),𝑡) =⟨𝑚𝑘(𝑢),𝑚𝑘(𝑣)⟩
+=
+𝑁∑︁
+𝑖=1
+𝑚𝑘(𝑢)[𝑖]𝑚𝑘(𝑣)[𝑖]
+(17)
+First, we assess the subgaussian property of𝑞. Note that each sum-
+mand in Eq.(17) is a product of two independent zero-mean random
+variables with range[−1, 1], it follows from standard results of sub-
+gaussian random variables [40] that each summand is subgaussian
+with coefficient 1. Since Eq.(17) has at most𝑁𝑘 nonzero summands.
+It follows by the property of subgaussian random variables implies
+that𝑞 is subgaussian with𝜎≤
+√︁
+𝑁𝑘,∀𝑡∈T . Next, we investigate
+the expectation of𝑞 under different distributions. Note that given
+the topological structure, the randomness is only with respect to
+the generating distribution of node features. It follows from the
+independence of node features and the zero-mean assumption, that
+E ¯𝑥∼𝑃𝑋|𝑇 =𝑡, ¯𝑦∼𝑃𝑌|𝑇 =𝑡𝑞( ¯𝑥, ¯𝑦,𝑡) = 0,∀𝑡∈T . (18)
+Similarly, we have
+E𝑥,𝑦∼𝑃𝑋𝑌|𝑇𝑓(𝑥,𝑦,𝑡) =𝛾𝑁𝑘
+𝑢𝑣,∀𝑡∈T , (19)
+since the rest𝑁−𝑁𝑘𝑢𝑣 pairs are orthogonal. Applying lemma 2 we
+get the desired result:
+𝐼(𝑈 ;𝑉|𝑇)≥ 𝐼(𝑚𝑘(𝑈);𝑚𝑘(𝑉)|𝑇)≥
+
+E[𝑁𝑘𝑢𝑣]
+2
+𝑁𝑘
+𝛾2 (20)
+□
+Proof of lemma 2. The proof goes along similar arguments in
+[45], with slight modifications in the conditional case. First by the
+Donsker-Varadhan variational representation of conditional mutual
+information:
+𝐼(𝑋 ;𝑌|𝑇)≥ E𝑇[E𝑥,𝑦∼𝑋𝑌|𝑇 =𝑡𝜆𝑞(𝑥,𝑦,𝑡)
+− log E ¯𝑥∼𝑃𝑋|𝑇 =𝑡, ¯𝑦∼𝑃𝑌|𝑇 =𝑡
+
+𝑒𝜆𝑞( ¯𝑥, ¯𝑦,𝑡)
+
+] (21)
+By the required subgaussian assumption we have
+𝐼(𝑋;𝑌|𝑇)≥ E𝑇[𝜆E𝑥,𝑦∼𝑋𝑌|𝑇 =𝑡𝑞(𝑥,𝑦,𝑡)
+−𝜆E ¯𝑥∼𝑃𝑋|𝑇 =𝑡, ¯𝑦∼𝑃𝑌|𝑇 =𝑡𝑞( ¯𝑥, ¯𝑦,𝑡)]− 𝜆2𝜎2
+2
+(22)
+Viewing the equation (22) as a non-negative parabola and setting
+its discriminant to be nonpositive yield the result. □
+A.1 On Approximating 𝐼(𝑈 ;𝑉)
+Recall that 𝑧𝑣 = 𝑓𝜃(G)[𝑣], for clarification of parameter depen-
+dence, we write𝑧𝑣 := 𝑓𝜃(𝑣) without further understandings. Mini-
+mization of the GAE loss Eq.(1) is therefore stated as:
+𝜔∗,𝜃∗∈ arg min
+𝜔∈Ω,𝜃∈Θ
+LGAEs(𝜔,𝜃) (23)
+First we consider the ideal situation that the parameter spaceΩ× Θ
+is sufficiently large so that there exists 𝜃0∈ Θ and𝜔0∈ Ω such
+that
+ℎ𝜔0
+ 𝑓𝜃0(𝑢),𝑓𝜃0(𝑣) = log 𝑝(𝑢,𝑣)
+𝑝(𝑢)𝑝(𝑣),∀𝑢,𝑣 (24)
+Now we use the fact that the pointwise dependency log 𝑝(𝑢,𝑣)
+𝑝(𝑢)𝑝(𝑣)
+[36] is both the optimizer of the Donsker-Varadhan variational
+objective [25] and the objective Eq. (3) [36]. Standard results on
+M-estimation [37, Theorem 5.7] suggest that, if we are allowed to
+sample from the generating distribution ofG and get an arbitrary
+number of samples (we assume the satisfaction of empirical process
+conditions as in the discussion of [1]), we have𝑤∗ 𝑝
+→𝜔0 and𝜃∗ 𝑝
+→
+𝜃0 with the number of samples goes to infinity. In practice, the actual
+parameterization may not achieve the ideal property (24) using
+GNN as encoders: standard results in the expressivity of locally
+unordered message passing [6] indicates that there exist certain
+pairs of subgraphs that cannot be distinguished by most of the
+off-shelf GNN models. Consequently the condition (24) is violated.
+Nonetheless, we may view the problem (23) as being composed of
+two subproblems:
+𝜔∗ =𝜔∗(𝜃∗)∈ arg min
+𝜔∈Ω
+LGAEs(𝜔,𝜃∗), (25)
+𝜃∗∈ arg min
+𝜃∈Θ
+min
+𝜔∈Ω
+LGAEs(𝜔,𝜃), (26)
+with the inner problem satisfies that for any given𝜃∈ Θ,
+Iℎ∗(𝜃)(𝑓𝜃(𝑈);𝑓𝜃(𝑉)) =𝐼(𝑓𝜃(𝑈);𝑓𝜃(𝑉)). (27)
+
+
+--- PAGE 12 ---
+KDD ’23, August 6–10, 2023, Long Beach, CA, USA. Li and Wu, et al.
+Here the function approximation is possible if𝜔 is parameterized
+as an MLP with sufficient capacity.
+A.2 Discussions on Proposition 1
+There appear some issues regarding the statement of Proposition 1:
+On the downstream target𝑇 . In the original statement,𝑇 is
+set to be the topological information of the underlying graph. This
+appears to be somewhat necessary since graph learning shall exploit
+topological structure. A possible relaxation could be to let𝑇 be local
+topological information considering onlyG𝑘(𝑣) for any 𝑣 ∈ V.
+Such relaxation does not affect the result of Proposition 1 much
+since we just need to restrict the analysis to certain subgraphs. The
+situation becomes more complicated if we allow𝑇 to be a hybrid of
+feature and topological information, i.e., there is some additional
+randomness not captured by𝑇 regarding both feature and topology.
+We left corresponding explorations to future research.
+On the independence between 𝑋 and𝑇 . The independence
+assumption might not be appropriate for certain types of generating
+mechanisms. For example, in many popular probabilistic models
+of graph-like random graph models [7] and Markov random fields
+[41], if we treat node features as random samples from such graph
+models, conditional on the graph structure, node features are cor-
+related according to whether a path exists between the underlying
+nodes. Incorporating dependence in proposition 1 will result in triv-
+ial bounds in the worst case: via investigating the proof, since sums
+of correlated subgaussian random variables are subgaussian with a
+potentially much larger coefficient (𝑁𝑘 instead of
+√︁
+𝑁𝑘), resulting
+in a lower bound no greater than the variance of a single node. This
+trivial lower bound, however, cannot be improved under general
+dependence of node features. Consider the following extreme case
+where the underlying graph is complete, and adjacent nodes are
+perfectly correlated, i.e., all node features are the same with proba-
+bility one. In this extreme case, the randomness of the entire graph
+boils down to the randomness of any single node in the graph, and
+the mutual information of any two subgraphs will thus not exceeds
+the entropy of a single node, with is proportional to the variance
+of the node if the node feature is a zero-mean random variable. A
+more careful examination of𝐼(𝑈 ;𝑉|𝑇) under some specified depen-
+dence structure between nodes is therefore valuable, and we left it
+to future studies.
+On the negative edge sampling procedure. To strictly adhere
+to the infomax paradigm, we need the negative sample pairs to
+be independently drawn from the marginals. The original GAE
+objective Eq.(1) is therefore a biased estimate of the population
+objective Eq.(3) since the negative samples are drawn from uncon-
+nected node pairs. However, the estimation bias does not affect the
+analysis: denote the true negative sampling distributions as𝑃−
+𝑈𝑉 ,
+then following the procedure in [36], we can show the following
+optimizer:
+eℎ∗∈ arg min
+ℎ∈H
+[−E𝑢,𝑣∼𝑃𝑈𝑉 logℎ(𝑢,𝑣)
+− E𝑢′,𝑣′∼𝑃−
+𝑈𝑉 log(1−ℎ(𝑢,𝑣))]
+(28)
+satisfies that
+𝐷KL(𝑃𝑈𝑉||𝑃−
+𝑈𝑉) = E𝑢,𝑣∼𝑃𝑈𝑉
+eℎ∗(𝑢,𝑣)
+− log E𝑢,𝑣∼𝑃−
+𝑈𝑉(𝑒eℎ∗(𝑢,𝑣)).
+(29)
+Since the Kullback-Leibler divergence enjoys the chain rule [25],
+our discussion on GAE follows the modeling paradigm under the
+true negative sampling process as well, with some modification
+over the definition of MI.
+B ALGORITHM
+To help better understand the proposed framework, we provide
+the detailed algorithm and PyTorch-style pseudocode for training
+MaskGAE in Algorithm 1 and Algorithm 2, respectively.
+Algorithm 1 Masked Graph Autoencoder (MaskGAE)
+Input: GraphG =(V,E), encoder𝑓𝜃(·), structure decoderℎ𝜔(·),
+degree decoder𝑔𝜙(·), masking strategyT∈{T edge,Tpath}, hy-
+perparameter𝛼;
+Output: Learned encoder𝑓𝜃(·);
+1: while not converged do;
+2: Gmask←T(G) ;
+3: Gvis←G−G mask;
+4: Z← 𝑓(Gvis);
+5: CalculateLGAEs overGmask according to Eq.(1);
+6: CalculateLdeg overGmask according to Eq.(10);
+7: Calculate loss functionL←L GAEs+𝛼Ldeg;
+8: Update𝜃,𝜔,𝜙 by gradient descent;
+9: end while;
+10: return𝑓𝜃(·);
+Algorithm 2 PyTorch-style pseudocode for training MaskGAE
+# f: encoder network
+# h: structure decoder network
+# g: degree decoder network
+# alpha: trade-off
+# edge_index: visible edges of input graph
+# x: node features
+masked_edges, vis_edges = masking(edge_index)
+num_edges = masked_edges.size(1)
+z = f(x, vis_edges) # In vanilla GAE, z = f(x,
+edge_index)
+neg_edges = negative_sampling(num_samples=num_edges)
+# Calculate reconstruction loss
+loss_pos = F.crossentropy(h(z, masked_edges),
+torch.ones(num_edges))
+loss_neg = F.crossentropy(h(z, neg_edges),
+torch.zeros(num_edges))
+loss_gaes = loss_pos + loss_neg
+# Calculate regression loss as a regularizer
+loss_deg = F.mse_loss(g(z), degree(masked_edges))
+# Total loss for optimization
+loss = loss_gaes + alpha * loss_deg
+# Backward propagation
+loss.backward()
+
+
+--- PAGE 13 ---
+What’s Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders KDD ’23, August 6–10, 2023, Long Beach, CA, USA.
+Table 6: Comparison of MaskGAE and GraphMAE.
+Method Reconstruct feature Reconstruct edge Reconstruct degree Theoretical contribution
+GraphMAE [13] ✓ ✗ ✗ ✗
+MaskGAE (ours) ✗ ✓ ✓ ✓
+C FURTHER DISCUSSIONS
+MaskGAE versus GraphMAE. GraphMAE and MaskGAE share
+similar intuitions on the self-supervised learning scheme. Both of
+them are generative methods and adopt the masking strategy on
+GAE to improve its performance. However, they are technically
+different in some aspects (see also Table 6): (i) GraphMAE focuses
+on feature reconstruction while MaskGAE focuses onstructure recon-
+struction, including edge and degree reconstructions. (ii) GraphMAE
+only presents empirical results, without in-depth analysis or the-
+oretical justification on the benefits of the masked autoencoding
+scheme on graphs. By contrast, our work digs into the hidden rea-
+soning behind graph autoencoders and graph contrastive learning,
+and offers insights on why masking could benefit GAEs . The theo-
+retical analysis between GAEs and contrastive learning is our main
+contribution and is non-trivial.
+Limitations of the work. Despite the theoretical grounds and the
+promising experimental justifications, our work might potentially
+suffer from some limitations: (i) As like existing augmentation-
+based contrastive methods, performing masking (a kind of augmen-
+tation) on the graph structure would hurt the semantic meaning of
+some graphs, such as biochemical molecules [27, 51]. (ii) MaskGAE
+is mainly based on the homophily assumption, a basic assumption
+in the literature of graph-based representation learning. However,
+such an assumption may not always hold in heterophilic graphs,
+where the labels of linked nodes are likely to differ.
+Potential negative societal impact. Self-supervised learning on
+graphs is an important technique to make use of rich unlabeled data
+and can be applied to many fields such as financial networks [42]
+and molecular biology [27, 51]. Our work presents a self-supervised
+framework for learning effective and generalizable node represen-
+tations. These representations enable learning robust classifiers
+with limited data and thus facilitate applications in many domains
+where annotations are expensive or difficult to collect. Just like
+any machine learning algorithm can be used for good it can also
+be used for harm. For example, an immediate application of this
+work is to conveniently construct a pretrained dataset by randomly
+crawling data from elsewhere. This is economic and beneficial for
+research purposes, but would potentially risk privacy and license
+issues in many security-sensitive situations. This would be the
+potential concerns and negative societal impact of our work. The
+line of self-supervised learning works, including this paper, are not
+immune to such misuse. Currently, we have no solution for such a
+general problem but we are aware that this needs to be addressed
+in future work.

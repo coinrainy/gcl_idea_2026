@@ -1,0 +1,1118 @@
+
+
+--- PAGE 1 ---
+Augmentation-Free Self-Supervised Learning on Graphs
+Namkyeong Lee1, Junseok Lee 1, Chanyoung Park1,2*
+1 Dept. of Industrial and Systems Engineering, KAIST, Daejeon, Republic of Korea
+2 Graduate School of Artiﬁcial Intelligence, KAIST, Daejeon, Republic of Korea
+namkyeong96@kaist.ac.kr, junseoklee@kaist.ac.kr, cy.park@kaist.ac.kr
+Abstract
+Inspired by the recent success of self-supervised methods
+applied on images, self-supervised learning on graph struc-
+tured data has seen rapid growth especially centered on
+augmentation-based contrastive methods. However, we ar-
+gue that without carefully designed augmentation techniques,
+augmentations on graphs may behave arbitrarily in that the
+underlying semantics of graphs can drastically change. As
+a consequence, the performance of existing augmentation-
+based methods is highly dependent on the choice of augmen-
+tation scheme, i.e., hyperparameters associated with augmen-
+tations. In this paper, we propose a novel augmentation-free
+self-supervised learning framework for graphs, named AF-
+GRL. Speciﬁcally, we generate an alternative view of a graph
+by discovering nodes that share the local structural informa-
+tion and the global semantics with the graph. Extensive ex-
+periments towards various node-level tasks, i.e., node clas-
+siﬁcation, clustering, and similarity search on various real-
+world datasets demonstrate the superiority of AFGRL. The
+source code for AFGRL is available at https://github.com/
+Namkyeong/AFGRL.
+1 Introduction
+Recently, self-supervised learning paradigm (Liu et al.
+2021), which learns representation from supervision sig-
+nals derived from the data itself without relying on
+human-provided labels, achieved great success in many do-
+mains including computer vision (Gidaris, Singh, and Ko-
+modakis 2018; Noroozi and Favaro 2016), signal process-
+ing (Banville et al. 2021, 2019), and natural language pro-
+cessing (Devlin et al. 2018; Brown et al. 2020). Speciﬁ-
+cally, contrastive methods, which are at the core of self-
+supervised learning paradigm, aim to build effective repre-
+sentation by pulling semantically similar (positive) pairs to-
+gether and pushing dissimilar (negative) pairs apart (Hjelm
+et al. 2018; Oord, Li, and Vinyals 2018), where two aug-
+mented versions of an image are considered as positives, and
+the remaining images are considered as negatives. Inspired
+by the success of the contrastive methods in computer vi-
+sion applied on images, these methods have been recently
+adopted to graphs (Xie et al. 2021).
+*Corresponding author.
+Copyright © 2022, Association for the Advancement of Artiﬁcial
+Intelligence (www.aaai.org). All rights reserved.
+Random Cropping
+ Color Distortion
+O
+O
+OHO O
+O
+OH
+O O
+O O
+O
+Drop Node
+O
+O
+OH
+O
+Perturb Edge
+aspirin alkene aspirin 𝜸𝜸 - lactone
+Drop Edge
+(a) Image
+(b) Molecular Graph
+(c) Social Graph
+Community 1
+Community 2
+Community 3
+Bob
+Alice
+Figure 1: Augmentations on images ((a)) keep the under-
+lying semantics, whereas augmentations on graphs ((b),(c))
+may unexpectedly change the semantics.
+Although self-supervised contrastive methods have been
+shown to be effective on various graph-related tasks, they
+pay little attention to the inherent distinction between im-
+ages and graphs: while augmentation is well deﬁned on im-
+ages, it may behave arbitrarily on graphs. For example, in
+the case of images, even after randomly cropping and ro-
+tating them, or distorting their color, their underlying se-
+mantic is hardly changed (Figure 1 (a)), and even if the se-
+mantic changes, humans can readily recognize the change
+visually, and choose an alternative augmentation approach
+that preserves the semantic. On the other hand, when we
+perturb (drop or add) edges/nodes, and their features of a
+graph, we cannot ascertain whether the augmented graph
+would be positively related to the original graph, and what
+is worse, it is non-trivial to verify the validity of the aug-
+mented graph since graphs are hard to visualize. For exam-
+ple, in molecular graphs, dropping a carbon atom from the
+phenyl ring of aspirin breaks the aromatic system and re-
+sults in a alkene chain (Figure 1(b)). Moreover, perturbing
+the connection of aspirin might introduce a molecule of to-
+tally different property, namely, ﬁve-membered lactone (Sun
+et al. 2021a). Likewise, in social graphs, randomly dropping
+edges might also lead to semantic changes, especially when
+these edges are related to hub nodes. For example, as shown
+in Figure 1(c), if the edge between Bob and Alice is dropped,
+it would take much longer distance for Bob to reach Com-
+munity 3 (i.e., from 2-hops to 5-hops), which also alters the
+relationship between Community 1 and Community 3. We
+argue that this is mainly because graphs contain not only the
+semantic but also the structural information.
+arXiv:2112.02472v2  [cs.LG]  7 Dec 2021
+
+
+--- PAGE 2 ---
+Due to the aforementioned arbitrary behavior of augmen-
+tation on graphs, the quality of the learned graph represen-
+tations of previous augmentation-based contrastive meth-
+ods (Hassani and Khasahmadi 2020; Zhu et al. 2020, 2021;
+Thakoor et al. 2021; Sun et al. 2021a; Veliˇckovi´c et al. 2018)
+is highly dependent on the choice of the augmentation
+scheme. More precisely, in order to augment graphs, these
+methods perform various augmentation techniques such as
+node/edge perturbation and node feature masking, and the
+amount by which the graphs are augmented is controlled by
+a set of hyperparameters. However, these hyperparameters
+should be carefully tuned according to which datasets, and
+which downstream tasks are used for the model evaluation,
+otherwise the model performance would vary greatly (You
+et al. 2021). Moreover, it is also shown that the performance
+on downstream tasks highly resort to which combinations
+of the augmentation techniques (You et al. 2020; Sun et al.
+2021a) are used.
+Furthermore, even after discovering the best hyperparam-
+eters for augmentations, another limitation arises due to the
+inherent philosophy of contrastive learning. More precisely,
+inheriting the principle of instance discrimination (Wu et al.
+2018), contrastive methods treat two samples as a positive
+pair as long as they are two augmented versions of the same
+instance, and all other pairs are treated as negatives. Al-
+though this approach is effective for learning representations
+of images (Chen et al. 2020; He et al. 2020), simply adopt-
+ing it to graphs by treating all other nodes apart from
+the node itself as negatives overlooks the structural in-
+formation of graphs, and thus cannot beneﬁt from the rela-
+tional inductive bias of graph-structured data (Battaglia et al.
+2018). Lastly, due to the nature of contrastive methods, a
+large amount of negative samples is required for improv-
+ing the performance on the downstream tasks, requiring high
+computational and memory costs, which is impractical in re-
+ality (Thakoor et al. 2021).
+Contribution. We propose a self-supervised learning
+framework for graphs, called Augmentation-Free Graph
+Representation Learning (AFGRL), which requires neither
+augmentation techniques nor negative samples for learning
+representations of graphs. Precisely, instead of creating two
+arbitrarily augmented views of a graph and expecting them
+to preserve the semantics of the original graph, we use the
+original graph per se as one view, and generate another view
+by discovering, for each node in the original graph, nodes
+that can serve as positive samples via k-nearest-neighbor
+(k-NN) search in the representation space. Then, given the
+two semantically related views, we aim to predict, for each
+node in the ﬁrst view, the latent representations of its pos-
+itive nodes in the second view. However, naively selecting
+positive samples based onk-NN search to generate an alter-
+native view can still alter the semantics of the original graph.
+Hence, we introduce a mechanism to ﬁlter out false posi-
+tives from the samples discovered byk-NN search. In a nut-
+shell, we consider a sample to be positive only if either 1)
+it is a neighboring node of the target node in the adjacency
+matrix (local perspective), capturing the relational inductive
+bias inherent in the graph-structured data, or 2) it belongs
+to the same cluster as the target node (global perspective).
+Moreover, by adopting BYOL (Grill et al. 2020) as the back-
+bone of our model, negative samples are not required for the
+model training, thereby avoiding the “sampling bias” (Lin
+et al. 2021), i.e. the negative samples may have the same
+semantics with the query node, which would result in less
+effective representation (Saunshi et al. 2019).
+Our extensive experiments demonstrate that AFGRL out-
+performs a wide range of state-of-the-art methods in terms of
+node classiﬁcation, clustering and similarity search. We also
+demonstrate that compared with existing methods that heav-
+ily depend on the choice of hyperparameters,AFGRL is sta-
+ble over hyperparameters. To the best of our knowledge,AF-
+GRL is the ﬁrst work that learns representations of graphs
+without relying on manual augmentation techniques and
+negative samples.
+2 Related Work
+Contrastive Methods on Graphs. Recently, motivated by
+the great success of self-supervised methods on images, con-
+trastive methods have been increasingly adopted to graphs.
+DGI (Veliˇckovi´c et al. 2018), a pioneering work highly in-
+spired by Deep InfoMax (Hjelm et al. 2018), aims to learn
+node representations by maximizing the mutual information
+between the local patch of a graph. i.e., node, and the global
+summary of the graph, thereby capturing the global informa-
+tion of the graph that is overlooked by vanilla graph convolu-
+tional networks (GCNs) (Kipf and Welling 2016; Veliˇckovi´c
+et al. 2017). DGI is further improved by taking into account
+the mutual information regarding the edges (Peng et al.
+2020) and node attributes (Jing, Park, and Tong 2021). In-
+spired by SimCLR (Chen et al. 2020), GRACE (Zhu et al.
+2020) ﬁrst creates two augmented views of a graph by ran-
+domly perturbing nodes/edges and their features. Then, it
+learns node representations by pulling together the repre-
+sentation of the same node in the two augmented graphs,
+while pushing apart representations of every other node.
+This principle (Wu et al. 2018) has also been adopted for
+learning graph-level representations of graphs that can be
+used for graph classiﬁcation, (Sun et al. 2019; You et al.
+2020; Hassani and Khasahmadi 2020). Despite the success
+of contrastive methods on graphs, they are criticized for the
+problem raised by the “sampling bias” (Bielak, Kajdanow-
+icz, and Chawla 2021). Moreover, these methods require a
+large amount of negative samples for the model training,
+which incurs high computational and memory costs (Grill
+et al. 2020).
+To address the sampling bias issue, BGRL (Thakoor et al.
+2021) learns node representations without using negative
+samples. It learns node representations by encoding two aug-
+mented versions of a graph using two separate encoders:
+one is trained through minimizing the cosine loss between
+the representations generated by the two encoders, while the
+other encoder is updated by an exponential moving average
+of the ﬁrst encoder. Although the sampling bias has been
+addressed in this way, BGRL still requires augmentations
+on the original graph, which may lead to semantic drift (Sun
+et al. 2021a) as illustrated in Figure 1. On the other hand,
+our proposed method learns node representations without
+any use of negative samples or augmentations of graphs.
+
+
+--- PAGE 3 ---
+Augmentations on Graphs. Most recently, various aug-
+mentation techniques for graphs have been introduced. e.g.,
+node dropping (You et al. 2020), edge modiﬁcation (Jin et al.
+2021; Qiu et al. 2020; Zhao et al. 2020), subgraph extrac-
+tion (Jiao et al. 2020; Sun et al. 2021b), attribute masking
+(Zhu et al. 2020, 2021) and others (Hassani and Khasahmadi
+2020; Kefato and Girdzijauskas 2021; Suresh et al. 2021).
+GRACE (Zhu et al. 2020) randomly drops edges and masks
+node features to generate two augmented views of a graph.
+GCA (Zhu et al. 2021) further improves GRACE by intro-
+ducing advanced adaptive augmentation techniques that take
+into account both structural and attribute information. How-
+ever, due to the complex nature of graphs, the performance
+on downstream tasks is highly dependent on the selection
+of the augmentation scheme, as will be shown later in our
+experiments (Table 1). Moreover, previous work (You et al.
+2020; Sun et al. 2021a) have shown that there is no univer-
+sally outperforming data augmentation scheme for graphs.
+Lastly, Sun et al. (2021a) demonstrates that infusing do-
+main knowledge is helpful in ﬁnding proper augmentations,
+which preserves biological assumption in molecular graph.
+However, domain knowledge is not always available in real-
+ity. In this work, we propose a general framework for gen-
+erating an alternative view of the original graph without re-
+lying on existing augmentation techniques that may either
+1) change the semantics of the original graph or 2) require
+domain knowledge.
+3 Problem Statement
+Notations. LetG = (V,E) denote a graph, where V =
+{v1,...,v N} represents the set of nodes, and E ⊆V×V
+represents the set of edges. G is associated with a feature
+matrix X∈ RN×F , and an adjacency matrix A∈ RN×N
+where Aij = 1 iff (vi,vj)∈E and Aij = 0 otherwise.
+Task: Unsupervised Graph Representation Learning.
+Given a graphG along with X and A, we aim to learn a en-
+coderf(·) that produces node embeddings H =f(X, A)∈
+RN×D, where D << F. In particular, our goal is to learn
+node embeddings that generalize well to various down-
+stream tasks without using any class information.
+4 Preliminary: Bootstrap Y our Own Latent
+Before explaining details of our proposed method, we begin
+by introducing BYOL (Grill et al. 2020), which is the back-
+bone of our proposed framework. The core idea of BYOL
+is to learn representations of images without using nega-
+tive samples (Grill et al. 2020). Given two augmented views
+of an image, BYOL trains two separate encoders, i.e., on-
+line encoder fθ and target encoder fξ, and learns represen-
+tations of images by maximizing the similarity of the two
+representations produced by each encoder. More formally,
+BYOL generates two views x1 ∼ t(x), and x2 ∼ t′(x)
+of an image x given a set of transformations t ∼ T and
+t′ ∼ T, and these two generated views of an image are
+fed into the online and target encoders. Precisely, the online
+encoder fθ produces online representation h1 = fθ(x1),
+while the target encoder fξ produces target representation
+h2 = fξ(x2). Then, both online and target representations
+are projected to smaller representations z1 = gθ(h1) and
+z2 = gξ(h2) using projectors gθ and gξ, respectively. Fi-
+nally, an additional predictor qθ is applied on top of the
+projected online representation, i.e., z1, to make the ar-
+chitecture asymmetric. The objective function is deﬁned as
+Lθ,ξ = ∥¯qθ(z1)− ¯z2∥2, where ¯qθ(z1) and ¯z2 denote l2-
+normalized form ofqθ(z1) and z2, respectively. A symmet-
+ric loss ˜Lθ,ξ is obtained by feeding x2 into the online en-
+coder and x1 into the target encoder, and the ﬁnal objective
+is to minimizeLBYOL
+θ,ξ =Lθ,ξ +˜Lθ,ξ. At each training itera-
+tion, a stochastic optimization step is performed to minimize
+LBYOL
+θ,ξ with respect to θ only, whileξ is updated using the
+exponential moving average (EMA) of θ, which is empiri-
+cally shown to prevent the collapsing problem (Chen and He
+2021). More formally, the parameters of BYOL are updated
+asθ← optimizer
+(
+θ,∇θLBYOL
+θ,ξ ,η
+)
+, ξ←τξ + (1−τ)θ,
+whereη is learning rate for online network, andτ∈ [0, 1] is
+the decay rate that controls how closeξ remains toθ.
+5 Proposed Method
+We ﬁrst introduce how BYOL has been previously employed
+on graphs (Thakoor et al. 2021), and discuss about the sev-
+eral limitations of augmentation-based methods for graphs.
+Finally, we present our proposed method, called AFGRL.
+Generating Alternative Views via Augmentation.
+BGRL (Thakoor et al. 2021) is a recently proposed fully
+non-contrastive method for learning node representations
+that does not leverage negative samples beneﬁting from
+the framework of BYOL (Grill et al. 2020). Precisely,
+BGRL generates two different views of a graph via manual
+augmentations, i.e., node feature masking and edge masking
+as done by previous methods (Zhu et al. 2020, 2021),
+and the amount by which the graphs are augmented is
+controlled by a set of hyperparameters. Then, two encoders,
+i.e., online and target encoders, generate embeddings given
+the augmented views of a graph as inputs, and the two
+generated embeddings are learned to be close to each other.
+To prevent the representations from collapsing to trivial
+solutions, BGRL introduces a symmetry-breaking technique
+(refer to Section 4 for more detailed explanation). It is also
+worth noting that BGRL intentionally considers simple
+augmentation techniques to validate the beneﬁt of fully
+non-contrastive scheme applied on graphs.
+Limitation of Augmentation-based Methods on Graphs.
+Although BGRL has been shown to be effective in a fully
+non-contrastive manner, i.e., without using negative sam-
+ples, we observe that the quality of the learned node repre-
+sentations relies on the choice of the augmentation scheme .
+In other words, performance on various downstream tasks
+evaluated based on the representations learned by BGRL
+varies greatly according to the choice of hyperparameters
+associated with augmentations, and the best hyperparame-
+ters are different for different datasets. This phenomenon
+becomes even clearer when stronger augmentations, such
+as diffusion (Hassani and Khasahmadi 2020), adaptive tech-
+niques (Zhu et al. 2021) and the infusion of domain knowl-
+edge (Sun et al. 2021a) are applied. Table 1 shows how
+
+
+--- PAGE 4 ---
+EMA
+𝑓𝑓𝜃𝜃
+𝑓𝑓𝜉𝜉
+(𝑿𝑿, 𝑨𝑨)
+(𝑯𝑯𝜃𝜃, 𝑨𝑨)
+(𝑯𝑯𝜉𝜉 , 𝑨𝑨)
+(𝒁𝒁𝜃𝜃, 𝑨𝑨)
+𝑞𝑞𝜃𝜃
+𝑘𝑘-NN(𝑩𝑩𝑖𝑖 )
+K-means (𝑪𝑪𝑖𝑖 )
+(𝑵𝑵𝑖𝑖)Adj.
+𝑷𝑷𝑖𝑖𝐱𝐱𝑖𝑖
+𝒛𝒛𝑖𝑖
+𝜃𝜃𝐡𝐡𝑖𝑖
+𝜃𝜃
+𝐡𝐡𝑖𝑖
+ξ
+𝐡𝐡𝑗𝑗
+ξ
+Local (𝑵𝑵𝑖𝑖 ∩ 𝑩𝑩𝑖𝑖 )
+Global (𝑩𝑩𝑖𝑖 ∩ 𝑪𝑪𝑖𝑖)
+Stop-Gradient
+− 1
+𝑁𝑁 �
+𝑖𝑖 = 1
+𝑁𝑁
+�
+𝑗𝑗 ∈ 𝐏𝐏𝑖𝑖
+𝐳𝐳i
+𝜃𝜃𝐡𝐡𝑗𝑗
+ξ⊤
+� �𝐳𝐳i
+𝜃𝜃 � �𝐳𝐳i
+𝜃𝜃𝐡𝐡𝑗𝑗
+ξ
+Figure 2: The overall architecture of AFGRL. Given a graph,fθ andfξ generate node embeddings Hθ and Hξ both of which
+are used to obtaink-NNs for nodevi, i.e., Bi. Combining it with Ni, we obtain local positives, i.e., Bi∩ Ni. To obtain global
+positives for nodevi,K-means clustering is performed on Hξ, and the result Ci is combined with Bi, i.e., Bi∩ Ci. Finally, we
+combine local and global positives to obtain real positives, i.e.,Pi. A predictorqθ projects Hθ to Zθ, which is used to compute
+the ﬁnal loss along with Hξ. Note thatfθ is updated via gradient descent of the loss, whereasfξ is updated via EMA offθ.
+Comp. Photo CS Physics
+Node
+Classi.
+BGRL -4.00% -1.06% -0.20% -0.69%
+GCA -19.18% -5.48% -0.27% OOM
+Node
+Clust.
+BGRL -11.57% -13.30% -0.78% -6.46%
+GCA -26.28% -23.27% -1.64% OOM
+Table 1: Performance sensitivity according to the hyperpa-
+rameters for augmentations (i.e., edge drop and node fea-
+ture masking) on node classiﬁcation and clustering. Each
+value indicates the relative performance difference between
+the best vs. worst performing cases, i.e.− (best−worst)
+best × 100.
+The hyperparameters (i.e., probability of edge drop and node
+feature masking) are chosen within the range from 0.0 to 0.5
+to prevent a signiﬁcant distortion of graphs.
+the performance of augmentation-based methods varies ac-
+cording to the hyperparameters associated with augmenta-
+tions. More precisely, we report the relative performance of
+the best performing case compared to the worst performing
+case, i.e., -4.00% indicates that the worst case performs 4%
+worse than the best case. We observe that the performance
+in both tasks is sensitive to the hyperparameters, and that it
+aggravates when a stronger augmentation technique is em-
+ployed, i.e., GCA, in which case the role of augmentation
+becomes even more important. Thus, we need a more stable
+and general framework for generating an alternative view
+of the original graph without relying on augmentation tech-
+niques introduced in existing works.
+5.1 Augmentation-Free GRL ( AFGRL)
+We propose a simple yet effective self-supervised learning
+framework for generating an alternative view of the origi-
+nal graph taking into account the relational inductive bias of
+graph-structured data, and the global semantics of graphs.
+For each node vi∈V in graphG, we discover nodes that
+can serve as positive samples based on the node representa-
+tions learned by the two encoders. i.e., online encoder fθ(·)
+and target encoder fξ(·)1. More precisely, these encoders
+1AFGRL adopts the architecture of BGRL (Thakoor et al.
+2021), which is slightly modiﬁed from BYOL (Grill et al. 2020). In
+initially receive the adjacency matrix A and the feature ma-
+trix X of the original graph as inputs, and compute the on-
+line and target representations. i.e., Hθ = fθ(X, A) and
+Hξ =fξ(X, A) whosei-th rows, hθ
+i and hξ
+i , are representa-
+tions for nodevi∈V . Then, for a given query nodevi∈V ,
+we compute the cosine similarity between all other nodes in
+the graph as follows:
+sim(vi,vj) =
+hθ
+i· hξ
+j
+∥hθ
+i∥∥hξ
+j∥
+,∀vj∈V (1)
+where the similarity is computed between the online and the
+target representations. Given the similarity information, we
+search fork-nearest-neighbors for each nodevi, and denote
+them by a set Bi, which can serve as positive samples for
+nodevi. Essentially, we expect the nearest neighbors in the
+representation space to belong to the same semantic class as
+the query node, i.e., vi in this case. Although Bi can serve
+as a reasonable set of positive candidates for node vi, 1) it
+is inherently noisy as we do not leverage any label infor-
+mation, i.e., Bi contains samples that are not semantically
+related to the query nodevi. Moreover, only resorting to the
+nearest neighbors in the representation space may not only
+overlook 2) the structural information inherent in the graph,
+i.e., relational inductive bias, but also 3) the global seman-
+tics of the graph. To address these limitations, we introduce
+a mechanism to ﬁlter out false positives from the samples
+discovered by k-NN search, while also capturing the local
+structural information and the global semantics of graphs.
+Capturing Local Structural Information. Recall that we
+expected the nearest neighbors found by k-NN search, i.e.,
+Bi, to share the same class label as the query node vi. To
+verify whether our expectation holds, we perform analy-
+sis on two datasets, i.e., Amazon Computers and WikiCS
+datasets as shown in Figure 3. First, we obtain node embed-
+dings from a randomly initialized 2-layer GCN (Kipf and
+Welling 2016), i.e., HRand-GCN = Rand-GCN(X, A), and
+performk-NN search for each node given the node embed-
+dings HRand-GCN. Then, for each node, we compute the ratio
+particular, projection networks, i.e.,gθ(·) andgξ(·) are not used.
+
+
+--- PAGE 5 ---
+Figure 3: Analysis on the ratio of its neighboring nodes be-
+ing the same label as the query node across differentks.
+of its neighboring nodes being the same label as the query
+node. In Figure 3, we observe that although the ratio is high
+when considering only a small number of neighbors, e.g.,
+k = 4, the ratio decreases as k gets larger in both datasets.
+This implies that although our expectation holds to some ex-
+tent, there still exists noise.
+Hence, to ﬁlter out false positives from the nearest neigh-
+bors found by k-NN search, i.e., Bi for each node vi, we
+leverage the local structural information among nodes given
+in the form of an adjacency matrix. i.e., relational induc-
+tive bias. More precisely, for a node vi, its adjacent nodes
+Ni tend to share the same label as the query node vi,
+i.e., smoothness assumption (Zhu, Ghahramani, and Lafferty
+2003). In Figure 3, we indeed observe that the ratio of the ad-
+jacent nodes being the same label as the query node (“Adj”)
+is about 70% in both datasets, which demonstrates the valid-
+ity of the smoothness assumption. Therefore, to capture the
+relational inductive bias reﬂected in the smoothness assump-
+tion, while ﬁltering out false positives from noisy nearest
+neighbors, we compute the intersection between the nearest
+neighbors and adjacent nodes, i.e., Bi∩ Ni. We denote the
+set of these intersecting nodes as local positives of vi. In-
+deed, Figure 3 shows that the local positives (“ Rand. GCN
++ Adj”) consistently maintain high correct ratio even when
+k increases.
+Capturing Global Semantics. To capture the semantics of
+nodes in a global perspective, we leverage clustering tech-
+niques. The intuition is to discover non-adjacent nodes that
+share the global semantic information with the query node.
+For example, in an academic collaboration network whose
+nodes denote authors and edges denote collaboration be-
+tween authors, even though two authors work on the same
+research topic (i.e., same label), they may not be connected
+in the graph since they neither collaborated in the past nor
+share any collaborators. We argue that such semantically
+similar entities that do not share an edge can be discov-
+ered via clustering in a global perspective. In this regard,
+we applyK-means clustering algorithm on the target repre-
+sentation Hξ to cluster nodes into a set of K clusters, i.e.
+G = {G1,G 2,...,G K}, and c(hξ
+i ) ∈ {1,...,K} denotes
+the cluster assignment of hξ
+i , i.e., vi ∈ Gc(hξ
+i ). Then, we
+consider the set of nodes that belong to the same cluster as
+vi, i.e., Ci ={vj|vj ∈ Gc(hξ
+i )}, as its semantically sim-
+ilar nodes in the global perspective. Finally, we obtain the
+intersection between the nearest neighbors and the semanti-
+cally similar nodes in the global perspective, i.e., Bi∩ Ci,
+and we denote the set of these intersecting nodes as global
+positives of vi. In other words, nodes that are among the
+Cluster 1
+Adjacency (𝑵!)Nearest Neighbors (𝑩!)
+Cluster 2
+Cluster 3
+QueryNode (𝑣!)
+𝑣$ Node (\𝑣!)
+Local Positive (𝑩!∩𝑵!)Global Positive (𝑩!∩𝑪!)Real Positive (𝑷!)
+Sameclusteras𝑣!(𝑪!)
+𝑪$ 𝑩$
+Figure 4: An overview of obtaining real positives of nodevi.
+nearest neighbors of vi and at the same time belong to the
+same cluster asvi are considered as globally positive neigh-
+bors. It is important to note that as K-means clustering al-
+gorithm is sensitive to the cluster centroid initialization, we
+perform multiple runs to ensure robustness of the cluster-
+ing results. Speciﬁcally, we performK-means clusteringM
+times and obtain M sets of clusters, i.e.,{G(j)}M
+j=1, where
+G(j) =
+{
+G(j)
+1 ,G (j)
+2 ,...,G (j)
+K
+}
+is the result of j-th run of
+the clustering. Then, we deﬁne Ci =⋃M
+j=1G(j)
+c(j)(hξ
+i ), where
+c(j)(hξ
+i )∈{ 1,...,K} denotes the cluster assignment of hξ
+i
+in thej-th run of clustering.
+Objective Function. In order to consider both the local and
+global information, we deﬁne the set of real positives for
+nodevi as follows:
+Pi = (Bi∩ Ni)∪ (Bi∩ Ci) (2)
+Our objective function aims to minimize the cosine distance
+between the query nodevi and its real positives Pi:
+Lθ,ξ =− 1
+N
+N∑
+i=1
+∑
+vj∈Pi
+zθ
+i hξ⊤
+j
+zθ
+i
+
+hξ
+j
+
+, (3)
+where zθ
+i = qθ(hθ
+i ) ∈ RD is the prediction of the on-
+line embedding hθ
+i ∈ RD, and qθ(·) is the predictor net-
+work. Following BYOL, AFGRL’s online network is up-
+dated based on the gradient of its parameters with respect
+to the loss function (Equation 3), while the target network
+is updated by smoothing the online network. We also sym-
+metrize the loss function. In the end, the online embeddings,
+i.e., Hθ∈ RN×D are used for downstream tasks. Figure 4
+illustrates the overview of obtaining real positives of node
+vi.
+In summary, 1) AFGRL does not rely on arbitrary aug-
+mentation techniques for the model training, thereby achiev-
+ing stable performance. 2) AFGRL ﬁlters out false posi-
+tives from the samples discovered by k-NN search, while
+also capturing the local structural information, i.e., relational
+inductive bias, and the global semantics of graphs. 3) AF-
+GRL does not require negative samples for the model train-
+ing, thereby avoiding sampling bias and alleviating com-
+putational/memory costs suffered by previous contrastive
+methods.
+
+
+--- PAGE 6 ---
+WikiCS Computers Photo Co.CS Co.Physics
+Sup. GCN 77.19± 0.12 86.51± 0.54 92.42± 0.22 93.03± 0.31 95.65± 0.16
+Raw feats. 71.98± 0.00 73.81± 0.00 78.53± 0.00 90.37± 0.00 93.58± 0.00
+node2vec 71.79± 0.05 84.39± 0.08 89.67± 0.12 85.08± 0.03 91.19± 0.04
+DeepWalk 74.35± 0.06 85.68± 0.06 89.44± 0.11 84.61± 0.22 91.77± 0.15
+DW + feats. 77.21± 0.03 86.28± 0.07 90.05± 0.08 87.70± 0.04 94.90± 0.09
+DGI 75.35± 0.14 83.95± 0.47 91.61± 0.22 92.15± 0.63 94.51± 0.52
+GMI 74.85± 0.08 82.21± 0.31 90.68± 0.17 OOM OOM
+MVGRL 77.52± 0.08 87.52± 0.11 91.74± 0.07 92.11± 0.12 95.33± 0.03
+GRACE 77.97± 0.63 86.50± 0.33 92.46± 0.18 92.17± 0.04 OOM
+GCA 77.94± 0.67 87.32± 0.50 92.39± 0.33 92.84± 0.15 OOM
+BGRL 76.86± 0.74 89.69± 0.37 93.07± 0.38 92.59± 0.14 95.48± 0.08
+AFGRL 77.62± 0.49 89.88± 0.33 93.22± 0.28 93.27± 0.17 95.69± 0.10
+Table 2: Performance on node classiﬁcation (OOM: Out of memory on 24GB RTX3090).
+ Figure 5: Sensitivity analysis.
+6 Experiments
+6.1 Experimental Setup
+Datasets. To evaluate AFGRL, we conduct experiments
+on ﬁve widely used datasets, including WikiCS, Amazon-
+Computers (Computers), Amazon-Photo (Photo), Coauthor-
+CS (Co.CS), and Coauthor-Physics (Co.Physics).
+Methods Compared. We primarily compare AF-
+GRL against GRACE (Zhu et al. 2020), BGRL (Thakoor
+et al. 2021) and GCA (Zhu et al. 2021), which are the
+current state-of-the-art self-supervised methods for learning
+representations of nodes in a graph. For all baselines but
+BGRL, we use the ofﬁcial code published by the authors. As
+the ofﬁcial code for BGRL is not available, we implement
+it by ourselves, and try our best to reﬂect the details pro-
+vided in the original paper (Thakoor et al. 2021). We also
+report previously published results of other representative
+methods, such as DeepWalk (Perozzi, Al-Rfou, and Skiena
+2014), DGI (Veliˇckovi´c et al. 2018), GMI (Peng et al. 2020),
+and MVGRL (Hassani and Khasahmadi 2020), as done in
+(Thakoor et al. 2021; Zhu et al. 2021).
+Evaluation protocol. We evaluateAFGRL on three node-
+level tasks, i.e., node classiﬁcation, node clustering and node
+similarity search. We ﬁrst train all models in an unsupervised
+manner. For node classiﬁcation, we use the learned embed-
+dings to train and test a simple logistic regression classi-
+ﬁer (Veliˇckovi´c et al. 2018). We report the test performance
+when the performance on validation data gives the best re-
+sult. For node clustering and similarity search, we perform
+evaluations on the learned embeddings at every epoch and
+report the best performance.
+Implementation details. We use a GCN (Kipf and
+Welling 2016) model as the encoders, i.e., fθ(·) and fξ(·).
+More formally, the encoder architecture is deﬁned as:
+H(l) = GCN(l)(X, A) =σ( ˆD−1/2 ˆA ˆD−1/2XW(l)), (4)
+where H(l) is the node embedding matrix of thel-th layer for
+l∈ [1,...,L ], ˆA = A + I is the adjacency matrix with self-
+loops, ˆD =∑
+i ˆAi is the degree matrix, σ(·) is a nonlinear
+activation function such as ReLU, and W(l) is the trainable
+weight matrix for the l-th layer. We perform grid-search on
+several hyperparameters, such as learning rate η, decay rate
+τ, node embedding dimension size D, number of layers of
+GCN encoderL, for fair comparisons.
+GRACE GCA BGRL AFGRL
+WikiCS NMI 0.4282 0.3373 0.3969 0.4132
+Hom. 0.4423 0.3525 0.4156 0.4307
+Computers NMI 0.4793 0.5278 0.5364 0.5520
+Hom. 0.5222 0.5816 0.5869 0.6040
+Photo NMI 0.6513 0.6443 0.6841 0.6563
+Hom. 0.6657 0.6575 0.7004 0.6743
+Co.CS NMI 0.7562 0.7620 0.7732 0.7859
+Hom. 0.7909 0.7965 0.8041 0.8161
+Co.Physics NMI OOM OOM 0.5568 0.7289
+Hom. OOM OOM 0.6018 0.7354
+Table 3: Performance on node clustering in terms of NMI
+and homogeneity.
+GRACE GCA BGRL AFGRL
+WikiCS Sim@5 0.7754 0.7786 0.7739 0.7811
+Sim@10 0.7645 0.7673 0.7617 0.7660
+Computers Sim@5 0.8738 0.8826 0.8947 0.8966
+Sim@10 0.8643 0.8742 0.8855 0.8890
+Photo Sim@5 0.9155 0.9112 0.9245 0.9236
+Sim@10 0.9106 0.9052 0.9195 0.9173
+Co.CS Sim@5 0.9104 0.9126 0.9112 0.9180
+Sim@10 0.9059 0.9100 0.9086 0.9142
+Co.Physics Sim@5 OOM OOM 0.9504 0.9525
+Sim@10 OOM OOM 0.9464 0.9486
+Table 4: Performance on similarity search. (Sim@ n: Aver-
+age ratio amongn nearest neighbors sharing the same label
+as the query node.)
+6.2 Performance Analysis
+Overall evaluation. Table 2 shows the node classiﬁcation
+performance of various methods. We have the following
+observations: 1) Our augmentation-free AFGRL generally
+performs well on all datasets compared with augmentation-
+based methods, i.e., GRACE, GCA and BGRL, whose re-
+ported results are obtained by carefully tuning the augmen-
+tation hyperparameters. Recall that in Table 1 we demon-
+strated that their performance is highly sensitive to the
+choice of augmentation hyperparameters. This veriﬁes the
+beneﬁt of our augmentation-free approach. 2) We also eval-
+uate AFGRL on node clustering (Table 3) and similar-
+ity search (Table 4). Note that the best hyperparameters
+for node classiﬁcation task were adopted. Table 3 shows
+that AFGRL generally outperforms other methods in node
+clustering task. We argue that this is mainly because AF-
+GRL also considers global semantic information unlike the
+compared methods. 3) It is worth noting that methods built
+upon instance discrimination principle (Wu et al. 2018), i.e.,
+GRACE and GCA, are not only memory consuming (OOM
+on large datasets), but also generally perform worse than
+
+
+--- PAGE 7 ---
+their counterparts on various tasks (especially on cluster-
+ing). This indicates that instance discrimination, which treats
+all other nodes except itself as negatives without consider-
+ing the graph structural information, is not appropriate for
+graph-structured data, especially for clustering in which the
+global structural information is crucial. 4) AFGRL gener-
+ally performs well on node similarity search (Table 4). This
+is expected because AFGRL aims to make nearest neigh-
+bors of each node share the same label with the query node
+by discovering the local and the global positives.
+(Global)(Local) (Global)(Local)(Local+Global) (Local+Global)
+Figure 6: Ablation study on AFGRL.
+Ablation Studies. To verify the beneﬁt of each compo-
+nent of AFGRL, we conduct ablation studies on two datasets
+that exhibit distinct characteristics, i.e., Amazon Computers
+(E-commerce network) and WikiCS (Reference network).
+In Figure 6, we observe that considering both local struc-
+tural and global semantic information shows the best perfor-
+mance. Moreover, we observe that the global semantic in-
+formation is more beneﬁcial than the local structural infor-
+mation. This can be explained by the performance of “k-NN
+only” variant, which performs on par with “ k-NN + Adj ”
+variant. That is, we conjecture that performing k-NN on
+the node representations learned by our framework can cap-
+ture sufﬁcient local structural information contained in the
+adjacency matrix. Based on the ablation studies, we argue
+that AFGRL still gives competitive performance even when
+the adjacency matrix is sparse, which shows the practicality
+of our proposed framework. Finally, the low performance of
+“Clus-only” variant implies the importance of considering
+the local structural information in graph-structured data.
+Figure 7: Effect of embedding dimension size (D).
+Hyperparameter Analysis. Figure 5 shows the sensitivity
+analysis on the hyperparameters k and M of AFGRL. We
+observe thatk = 4 andM >1 generally give the best per-
+formance, while the performance is rather stable over vari-
+ous Ms. This veriﬁes that our augmentation-free approach
+can be easily trained compared with other augmentation-
+based methods, i.e., stable over hyperparameters, while out-
+performing them in most cases. Moreover, in Figure 7, we
+conduct experiments across various sizes of node embed-
+ding dimension D. We observe that AFGRL beneﬁts from
+high-dimensional embeddings, while other methods rapidly
+saturate when the dimension of embeddings increase. Note
+that Zbontar et al. (2021) recently showed similar results in-
+dicating that methods based on instance discrimination (Wu
+et al. 2018) is prone to the curse of dimensionality.
+Sampled Sampled
+(a) GCA (b) AFGRL
+Figure 8: t-SNE embeddings of nodes in Photo dataset.
+Visualization of embeddings. To provide a more intuitive
+understanding of the learned node embeddings, we visualize
+node embeddings of GCA (Figure 8(a)) and AFGRL (Fig-
+ure 8(b)) by using t-SNE (Van der Maaten and Hinton 2008).
+Each point represents a node, and the color represents the
+node label. We observe that node embeddings generated by
+both methods are grouped together according to their cor-
+responding node labels. However, the major difference is
+that AFGRL captures more ﬁne-grained class information
+compared with GCA. That is, for AFGRL, there tend to be
+small clusters within each label group. To emphasize this,
+we sample the same set of nodes from each label, and com-
+pare their embeddings (Figure 8 bottom). We clearly observe
+that nodes are more tightly grouped in AFGRL compared
+with GCA, which implies that AFGRL captures more ﬁne-
+grained class information.
+7 Conclusion
+In this paper, we propose a self-supervised learning frame-
+work for graphs, which requires neither augmentation tech-
+niques nor negative samples for learning representations of
+graphs. Instead of creating two arbitrarily augmented views
+of a graph and expecting them to preserve the semantics of
+the original graph, AFGRL discovers nodes that can serve
+as positive samples by considering the local structural in-
+formation and the global semantics of graphs. The major
+beneﬁt of AFGRL over other self-supervised methods on
+graphs is its stability over hyperparameters while maintain-
+ing competitive performance even without using negative
+samples for the model training, which makes AFGRL prac-
+tical. Through experiments on multiple graphs on various
+downstream tasks, we empirically show that AFGRL is su-
+perior to the state-of-the-art methods that are sensitive to
+augmentation hyperparameters.
+
+
+--- PAGE 8 ---
+8 Acknowledgement
+This work was supported by the NRF grant funded by
+the MSIT (No.2021R1C1C1009081), and the IITP grant
+funded by the MSIT (No.2019-0-00075, Artiﬁcial Intelli-
+gence Graduate School Program(KAIST)).
+References
+Banville, H.; Albuquerque, I.; Hyv ¨arinen, A.; Moffat, G.; Enge-
+mann, D.-A.; and Gramfort, A. 2019. Self-supervised representa-
+tion learning from electroencephalography signals. In MLSP, 1–6.
+IEEE.
+Banville, H.; Chehab, O.; Hyv ¨arinen, A.; Engemann, D.-A.; and
+Gramfort, A. 2021. Uncovering the structure of clinical EEG sig-
+nals with self-supervised learning. Journal of Neural Engineering,
+18(4): 046020.
+Battaglia, P. W.; Hamrick, J. B.; Bapst, V .; Sanchez-Gonzalez, A.;
+Zambaldi, V .; Malinowski, M.; Tacchetti, A.; Raposo, D.; Santoro,
+A.; Faulkner, R.; et al. 2018. Relational inductive biases, deep
+learning, and graph networks. arXiv preprint arXiv:1806.01261.
+Bielak, P.; Kajdanowicz, T.; and Chawla, N. V . 2021. Graph Bar-
+low Twins: A self-supervised representation learning framework
+for graphs. arXiv preprint arXiv:2106.02466.
+Brown, T. B.; Mann, B.; Ryder, N.; Subbiah, M.; Kaplan, J.; Dhari-
+wal, P.; Neelakantan, A.; Shyam, P.; Sastry, G.; Askell, A.; et al.
+2020. Language models are few-shot learners. arXiv preprint
+arXiv:2005.14165.
+Chen, T.; Kornblith, S.; Norouzi, M.; and Hinton, G. 2020. A sim-
+ple framework for contrastive learning of visual representations. In
+ICML, 1597–1607. PMLR.
+Chen, X.; and He, K. 2021. Exploring simple siamese representa-
+tion learning. In CVPR, 15750–15758.
+Devlin, J.; Chang, M.-W.; Lee, K.; and Toutanova, K. 2018. Bert:
+Pre-training of deep bidirectional transformers for language under-
+standing. arXiv preprint arXiv:1810.04805.
+Gidaris, S.; Singh, P.; and Komodakis, N. 2018. Unsupervised rep-
+resentation learning by predicting image rotations. arXiv preprint
+arXiv:1803.07728.
+Grill, J.-B.; Strub, F.; Altch ´e, F.; Tallec, C.; Richemond, P. H.;
+Buchatskaya, E.; Doersch, C.; Pires, B. A.; Guo, Z. D.; Azar, M. G.;
+et al. 2020. Bootstrap your own latent: A new approach to self-
+supervised learning. arXiv preprint arXiv:2006.07733.
+Hassani, K.; and Khasahmadi, A. H. 2020. Contrastive multi-view
+representation learning on graphs. In ICML, 4116–4126. PMLR.
+He, K.; Fan, H.; Wu, Y .; Xie, S.; and Girshick, R. 2020. Momentum
+contrast for unsupervised visual representation learning. In CVPR,
+9729–9738.
+Hjelm, R. D.; Fedorov, A.; Lavoie-Marchildon, S.; Grewal, K.;
+Bachman, P.; Trischler, A.; and Bengio, Y . 2018. Learning deep
+representations by mutual information estimation and maximiza-
+tion. arXiv preprint arXiv:1808.06670.
+Jiao, Y .; Xiong, Y .; Zhang, J.; Zhang, Y .; Zhang, T.; and Zhu, Y .
+2020. Sub-graph contrast for scalable self-supervised graph repre-
+sentation learning. In ICDM, 222–231. IEEE.
+Jin, M.; Zheng, Y .; Li, Y .-F.; Gong, C.; Zhou, C.; and Pan, S. 2021.
+Multi-Scale Contrastive Siamese Networks for Self-Supervised
+Graph Representation Learning. arXiv preprint arXiv:2105.05682.
+Jing, B.; Park, C.; and Tong, H. 2021. Hdmi: High-order deep
+multiplex infomax. In WWW, 2414–2424.
+Kefato, Z. T.; and Girdzijauskas, S. 2021. Self-supervised Graph
+Neural Networks without explicit negative sampling. arXiv
+preprint arXiv:2103.14958.
+Kipf, T. N.; and Welling, M. 2016. Semi-supervised clas-
+siﬁcation with graph convolutional networks. arXiv preprint
+arXiv:1609.02907.
+Lin, S.; Zhou, P.; Hu, Z.-Y .; Wang, S.; Zhao, R.; Zheng, Y .; Lin,
+L.; Xing, E.; and Liang, X. 2021. Prototypical Graph Contrastive
+Learning. arXiv preprint arXiv:2106.09645.
+Liu, X.; Zhang, F.; Hou, Z.; Mian, L.; Wang, Z.; Zhang, J.; and
+Tang, J. 2021. Self-supervised learning: Generative or contrastive.
+IEEE Transactions on Knowledge and Data Engineering.
+McAuley, J.; Targett, C.; Shi, Q.; and Van Den Hengel, A. 2015.
+Image-based recommendations on styles and substitutes. InSIGIR,
+43–52.
+Mernyei, P.; and Cangea, C. 2020. Wiki-cs: A wikipedia-
+based benchmark for graph neural networks. arXiv preprint
+arXiv:2007.02901.
+Noroozi, M.; and Favaro, P. 2016. Unsupervised learning of visual
+representations by solving jigsaw puzzles. In European conference
+on computer vision, 69–84. Springer.
+Oord, A. v. d.; Li, Y .; and Vinyals, O. 2018. Representa-
+tion learning with contrastive predictive coding. arXiv preprint
+arXiv:1807.03748.
+Peng, Z.; Huang, W.; Luo, M.; Zheng, Q.; Rong, Y .; Xu, T.; and
+Huang, J. 2020. Graph representation learning via graphical mutual
+information maximization. In WWW, 259–270.
+Pennington, J.; Socher, R.; and Manning, C. D. 2014. Glove:
+Global vectors for word representation. In EMNLP, 1532–1543.
+Perozzi, B.; Al-Rfou, R.; and Skiena, S. 2014. Deepwalk: Online
+learning of social representations. In KDD, 701–710.
+Qiu, J.; Chen, Q.; Dong, Y .; Zhang, J.; Yang, H.; Ding, M.; Wang,
+K.; and Tang, J. 2020. Gcc: Graph contrastive coding for graph
+neural network pre-training. In KDD, 1150–1160.
+Saunshi, N.; Plevrakis, O.; Arora, S.; Khodak, M.; and Khande-
+parkar, H. 2019. A theoretical analysis of contrastive unsupervised
+representation learning. In ICML, 5628–5637. PMLR.
+Sinha, A.; Shen, Z.; Song, Y .; Ma, H.; Eide, D.; Hsu, B.-J.; and
+Wang, K. 2015. An overview of microsoft academic service (mas)
+and applications. In WWW, 243–246.
+Sun, F.-Y .; Hoffmann, J.; Verma, V .; and Tang, J. 2019. Info-
+graph: Unsupervised and semi-supervised graph-level representa-
+tion learning via mutual information maximization. arXiv preprint
+arXiv:1908.01000.
+Sun, M.; Xing, J.; Wang, H.; Chen, B.; and Zhou, J. 2021a. MoCL:
+Contrastive Learning on Molecular Graphs with Multi-level Do-
+main Knowledge. arXiv preprint arXiv:2106.04509.
+Sun, Q.; Li, J.; Peng, H.; Wu, J.; Ning, Y .; Yu, P. S.; and He, L.
+2021b. SUGAR: Subgraph neural network with reinforcement
+pooling and self-supervised mutual information mechanism. In
+WWW, 2081–2091.
+Suresh, S.; Li, P.; Hao, C.; and Neville, J. 2021. Adversarial Graph
+Augmentation to Improve Graph Contrastive Learning. arXiv
+preprint arXiv:2106.05819.
+Thakoor, S.; Tallec, C.; Azar, M. G.; Munos, R.; Veliˇckovi´c, P.; and
+Valko, M. 2021. Bootstrapped representation learning on graphs.
+arXiv preprint arXiv:2102.06514.
+Van der Maaten, L.; and Hinton, G. 2008. Visualizing data using
+t-SNE. Journal of machine learning research, 9(11).
+
+
+--- PAGE 9 ---
+Veliˇckovi´c, P.; Cucurull, G.; Casanova, A.; Romero, A.; Lio, P.;
+and Bengio, Y . 2017. Graph attention networks. arXiv preprint
+arXiv:1710.10903.
+Veliˇckovi´c, P.; Fedus, W.; Hamilton, W. L.; Li `o, P.; Bengio, Y .;
+and Hjelm, R. D. 2018. Deep graph infomax. arXiv preprint
+arXiv:1809.10341.
+Wu, Z.; Xiong, Y .; Yu, S. X.; and Lin, D. 2018. Unsupervised fea-
+ture learning via non-parametric instance discrimination. InCVPR,
+3733–3742.
+Xie, Y .; Xu, Z.; Zhang, J.; Wang, Z.; and Ji, S. 2021. Self-
+supervised learning of graph neural networks: A uniﬁed review.
+arXiv preprint arXiv:2102.10757.
+You, Y .; Chen, T.; Shen, Y .; and Wang, Z. 2021. Graph Contrastive
+Learning Automated. arXiv preprint arXiv:2106.07594.
+You, Y .; Chen, T.; Sui, Y .; Chen, T.; Wang, Z.; and Shen, Y .
+2020. Graph contrastive learning with augmentations. NeurIPS,
+33: 5812–5823.
+Zbontar, J.; Jing, L.; Misra, I.; LeCun, Y .; and Deny, S. 2021.
+Barlow twins: Self-supervised learning via redundancy reduction.
+arXiv preprint arXiv:2103.03230.
+Zhao, T.; Liu, Y .; Neves, L.; Woodford, O.; Jiang, M.; and Shah, N.
+2020. Data augmentation for graph neural networks.arXiv preprint
+arXiv:2006.06830.
+Zhu, X.; Ghahramani, Z.; and Lafferty, J. D. 2003. Semi-
+supervised learning using gaussian ﬁelds and harmonic functions.
+In ICML, 912–919.
+Zhu, Y .; Xu, Y .; Yu, F.; Liu, Q.; Wu, S.; and Wang, L. 2020.
+Deep graph contrastive representation learning. arXiv preprint
+arXiv:2006.04131.
+Zhu, Y .; Xu, Y .; Yu, F.; Liu, Q.; Wu, S.; and Wang, L. 2021. Graph
+contrastive learning with adaptive augmentation. In WWW, 2069–
+2080.
+
+
+--- PAGE 10 ---
+9 Appendix
+9.1 Datasets
+We evaluated the performance ofAFGRL on node-level tasks, i.e.,
+node classiﬁcation, node clustering, and node similarity search.
+We conduct experiments on ﬁve widely used datasets, including
+Wiki-CS, Amazon-Computers, Amazon-Photo, Coauthor-CS, and
+Coauthor-Physics. The detailed statistics are summarized in Ta-
+ble 5.
+• WikiCS (Mernyei and Cangea 2020) is reference network
+constructed from Wikipedia references. Nodes denote articles
+about computer science, and edges denote hyperlinks between
+the articles. Articles are labeled with 10 related subﬁelds, and
+their features are average of Glove (Pennington, Socher, and
+Manning 2014) embeddings of all words in the article.
+• Amazon-Computers and Amazon-Photo (McAuley et al.
+2015) are two networks of co-purchase relationships con-
+structed from Amazon. Nodes denote products, and edges exist
+between nodes if the products are frequently co-purchased. In
+each dataset, products are labeled with 10 and 8 classes, re-
+spectively, based on product category, and the node feature is a
+bag-of-words representation of words in the product review.
+• Coauthor-CS and Coauthor-Physics (Sinha et al. 2015) are
+two academic networks containing co-authorship relationship
+based on Microsoft Academic Graph. Nodes in these graphs
+denote authors, and edges denote co-authored relationship. In
+each dataset, authors are classiﬁed into 15 and 5 classes, re-
+spectively, based on the author’s research ﬁeld, and the node
+feature is a bag-of-words representation of the paper keywords.
+For WikiCS dataset, which provides 20 canonical train/valid/test
+splits, we directly used the given splits. For Amazon and Coau-
+thor datasets, we randomly split nodes 20 times into train/valid/test
+(10/10/80) as these datasets do not provide standard splits.
+# Nodes # Edges # Feat. # Cls.
+WikiCS 11,701 216,123 300 10
+Amazon-Computers 13,752 245,861 767 10
+Amazon-Photo 7,650 119,081 745 8
+Coauthor-CS 18,333 81,894 6,805 15
+Coauthor-Physics 34,493 247,962 8,415 5
+Table 5: Statistics for datasets used in this paper.
+9.2 Compared methods
+In this section, we explain methods that are compared with AF-
+GRL in the experiments, and we summarize their properties in Ta-
+ble 6.
+• DGI (Veliˇckovi´c et al. 2018): A pioneering work for self-
+supervised graph representation learning, which is motivated
+by Deep InfoMax (Hjelm et al. 2018). DGI aims to learn node
+representations by maximizing the mutual information between
+the node and global summary vector of the graph.
+• GMI (Peng et al. 2020): An advanced version of DGI that
+learns node representations by leveraging more ﬁne-grained in-
+formation, i.e. subgraph. Speciﬁcally, GMI proposes to directly
+measure the mutual information between input and node/edge
+representations within one-hop neighbor, without explicit data
+augmentation.
+• MVGRL (Hassani and Khasahmadi 2020): It constructs views
+of a graph with diffusion kernel and subgraph sampling. Then,
+it learns to contrast node representations with global summary
+vector across the two views.
+• GRACE (Zhu et al. 2020). Inspired by SimCLR (Chen et al.
+2020), it ﬁrst creates two augmented views of a graph by ran-
+domly perturbing nodes/edges and their features. Then, follow-
+ing the principle of instance discrimination, it learns node rep-
+resentations by contrasting it with all other nodes in the two
+augmented graphs, while matching with the same node from
+the two augmented graphs.
+• GCA (Zhu et al. 2021): An advanced version of GRACE, which
+proposes multiple augmentation schemes regarding the impor-
+tance of nodes, edges and their features. The main idea is to
+selectively augment a graph by keeping important parts of the
+graph intact, while augmenting unimportant parts.
+• BGRL (Thakoor et al. 2021): Inspired by BYOL (Grill et al.
+2020), it learns node representations without using negative
+samples. As conventional contrastive methods, BGRL lever-
+ages siamese structured network with augmentation scheme.
+However, even without relying on negative samples, BGRL pre-
+vents a trivial solution through asymmetric model architecture
+and stop gradient operations.
+No Augmentation No Negative Sampling
+DGI  
+GMI  
+MVGRL  
+GRACE  
+GCA  
+BGRL  
+AFGRL  
+Table 6: Properties of methods that are compared.
+9.3 Implementation details
+As described in Section 6.1 of the submitted manuscript, we use
+GCN (Kipf and Welling 2016) encoders. The base encoder of AF-
+GRL is a GCN model followed by batch normalization and non-
+linearity. Following BGRL (Thakoor et al. 2021), the predictor qθ
+of AFGRL is deﬁned as a multi-layer perceptron (MLP) with batch
+normalization. Note that since a single-layer GCN (i.e., GCN with
+L = 1 ) works the best for AFGRL, the hidden size of fθ is not
+deﬁned. i.e., there is no hidden layer. For GCA and BGRL, we
+adopt the best hyperparameter speciﬁcations that are reported in
+their original paper, that is, Table 5 of (Zhu et al. 2021) for GCA,
+and Table 5 of (Thakoor et al. 2021) for BGRL. For GRACE, since
+the original paper (Zhu et al. 2020) did not evaluate on the datasets
+used in our experiments, we follow the best hyperparameter speci-
+ﬁcations that are reported in the GCA paper (Zhu et al. 2021), since
+GRACE is equivalent to the GCA-T-A ablation of GCA, which is
+also proposed by the same authors. Refer to Table 7 for more de-
+tailed hyperparameter speciﬁcations of AFGRL.
+It is important to note that AFGRL does not have hyperparam-
+eters associated with graph augmentation, whose best performing
+combinations is non-trivial to ﬁnd 2. Instead, AFGRL newly intro-
+duced several hyperparameters, i.e., k, K, and M. However, we
+observe that the model performance is stable over these hyperpa-
+rameters as shown in Figure 5 of the submitted manuscript and
+Figure 2 of this supplementaty material. Hence, we ﬁxedK to 100,
+M to 5, and selectedk∈{ 4, 8}. This demonstrates the practicality
+of AFGRL.
+2The values of the best performing hyperparameters (i.e., pf,1,
+pf,2,pe,1, andpe,2) vary greatly in range from 0.1 to 0.5. Refer to
+Table 5 of (Zhu et al. 2021; Thakoor et al. 2021)
+
+
+--- PAGE 11 ---
+Embedding
+size (D)
+qθ hidden
+size
+Learning
+rate (η)
+Training
+epochs Activation τ L k K M
+WikiCS 1024 2048 0.001 1500 PReLU 0.9 1 8 100 5
+Amazon Computers 512 1024 0.001 4000 PReLU 0.9 1 4 100 5
+Amazon Photo 512 1024 0.001 3000 PReLU 0.9 1 4 100 5
+Coauthor CS 1024 2048 0.001 1000 PReLU 0.9 1 4 100 5
+Coauthor Physics 256 512 0.01 1000 PReLU 0.9 1 8 100 5
+Table 7: Hyperparameter speciﬁcations for AFGRL. The three right-most columns denote the hyperparameters that are newly
+introduced in AFGRL. In contrast to GRACE, GCA and BGRL,AFGRL does not have hyperparameters associated with graph
+augmentation.
+9.4 Reproducibility
+Methods Source code
+GRACE https://github.com/CRIPAC-DIG/GRACE
+GCA https://github.com/CRIPAC-DIG/GCA
+BGRL https://github.com/Namkyeong/BGRL Pytorch
+AFGRL https://github.com/Namkyeong/AFGRL
+Table 8: Source code links of the baseline methods.
+Table 8 shows the github links to the source codes we used for
+evaluation. All the compared methods but BGRL were publicly
+available, and thus we implemented BGRL using PyTorch on our
+framework.

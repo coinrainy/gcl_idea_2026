@@ -1,0 +1,1587 @@
+
+
+--- PAGE 1 ---
+Bridging Large Language Models and Graph Structure Learning
+Models for Robust Representation Learning
+Guangxin Su
+The University of New South Wales
+Sydney, Australia
+guangxin.su@unsw.edu.au
+Yifan Zhu
+The University of New South Wales
+Sydney, Australia
+yifan.zhu4@student.unsw.edu.au
+Wenjie Zhang∗
+The University of New South Wales
+Sydney, Australia
+wenjie.zhang@unsw.edu.au
+Hanchen Wang
+The University of New South Wales
+Sydney, Australia
+hanchen.wang@unsw.edu.au
+Ying Zhang
+Zhejiang Gongshang University
+Hangzhou, China
+ying.zhang@zjgsu.edu.cn
+ABSTRACT
+Graph representation learning, involving both node features and
+graph structures, is crucial for real-world applications but often
+encounters pervasive noise. State-of-the-art methods typically ad-
+dress noise by focusing separately on node features with large
+language models (LLMs) and on graph structures with graph struc-
+ture learning models (GSLMs). In this paper, we introduce LangGSL,
+a robust framework that integrates the complementary strengths
+of pre-trained language models and GSLMs to jointly enhance both
+node feature and graph structure learning. In LangGSL, we first
+leverage LLMs to filter noise in the raw data and extract valuable
+cleaned information as features, enhancing the synergy of down-
+stream models. During the mutual learning phase in LangGSL, the
+core idea is to leverage the relatively small language model (LM)
+to process local attributes and generate reliable pseudo-labels and
+informative node embeddings, which are then integrated into the
+GSLM’s prediction phase. This approach enriches the global context
+and enhances overall performance. Meanwhile, GSLM refines the
+evolving graph structure constructed from the LM’s output, offering
+updated labels back to the LM as additional guidance, thus facilitat-
+ing a more effective mutual learning process. The LM and GSLM
+work synergistically, complementing each other’s strengths and
+offsetting weaknesses within a variational information-maximizing
+framework, resulting in enhanced node features and a more robust
+graph structure. Extensive experiments on diverse graph datasets
+of varying scales and across different task scenarios demonstrate
+the scalability and effectiveness of the proposed approach.
+∗Corresponding author.
+The code will be available after the review process. For early access, you may request
+it from the first author or the corresponding author with a reasonable justification,
+thank you for your understanding.
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+Conference’17, July 2017, Washington, DC, USA
+© 2024 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ACM ISBN 978-x-xxxx-xxxx-x/YY/MM
+https://doi.org/10.1145/nnnnnnn.nnnnnnn
+KEYWORDS
+Graph structure learning, Graph representation learning, Large
+language models, Graph neural networks
+ACM Reference Format:
+Guangxin Su, Yifan Zhu, Wenjie Zhang∗, Hanchen Wang, and Ying Zhang.
+2024. Bridging Large Language Models and Graph Structure Learning Mod-
+els for Robust Representation Learning. In . ACM, New York, NY, USA,
+16 pages. https://doi.org/10.1145/nnnnnnn.nnnnnnn
+1 INTRODUCTION
+Graph Neural Networks (GNNs) [16, 26, 45, 50, 55] have emerged as
+the de facto method for modeling graph-structured data, which is
+increasingly prevalent and essential in numerous real-world appli-
+cations. Mainstream GNN methods implicitly propagate, aggregate,
+and preserve both node features and the graph structure, whose
+mutual influence is crucial for achieving optimal performance. How-
+ever, the noise and shallowness of node features, along with fre-
+quently suboptimal node connections, both stemming from the
+complexity of graph formation, present significant challenges to
+achieving accurate and robust graph modeling. These challenges
+become particularly notable in various real-world applications. For
+instance, in social networks and citation networks [ 39, 47], the
+graph structure is often noisy or incomplete due to the presence of
+spurious connections, missing links, or dynamic changes in graph
+structures over time. In some cases, such as biological interaction
+networks [43, 54, 57], the graph structure may even be entirely
+unobserved, necessitating its inference from data. Furthermore,
+the node embeddings derived from native data are often noisy
+[35, 58, 67], suffering from issues such as unstructured formatting,
+and variations across different platforms.
+Recent efforts have increasingly focused on enhancing graph rep-
+resentation learning by leveraging large language models (LLMs),
+particularly when dealing with diverse modalities of data associated
+with graph nodes [3, 31, 41, 44, 61]. In this work, we primarily focus
+on graph representation learning on text-attributed graphs (TAGs)
+[51], where nodes are associated with text entities.
+Motivation 1: Combining deep text embeddings generated
+by LLMs with GNNs. Building on the foundations of LLMs, ex-
+isting works on TAGs [ 6, 19, 23, 24, 62] have demonstrated the
+effectiveness in node classification task. On the one hand, LLMs
+(𝑒.𝑔., GPT-4 [1]) possess advanced language processing capabilities,
+including complex reasoning and zero-shot learning. Several works
+arXiv:2410.12096v1  [cs.LG]  15 Oct 2024
+
+
+--- PAGE 2 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+[4, 19, 23] utilize the explanations of LLMs as distilled features for
+a downstream GNN based on task-relevant prompts, resulting in
+a significant performance improvement. On the other hand, lan-
+guage models (LMs1) can be effectively fine-tuned with a limited
+amount of labeled data to generate informative node embeddings
+for downstream tasks [7, 24, 31]. The common idea behind these
+works is to leverage the strengths of pre-trained language models to
+enhance node representations and achieve improved performance;
+however, they still face inherent limitations. Limitation 1: Existing
+LLM-based methods primarily rely on well-structured raw data (𝑒.𝑔.,
+titles and abstracts serve as node attributes in citation networks).
+However, it remains unclear whether LLMs have the capability
+to effectively clean noisy node attributes. Limitation 2: LLM-based
+graph representation learning methods typically depend on a fixed
+graph structure that remains static during training, making them in-
+capable of updating noisy structures and handling scenarios where
+the graph structure is absent.
+Motivation 2: Drawing insights from existing graph structure
+learning methods. The exploration of learning robust graph struc-
+tures using vanilla GNNs has yielded extensive insights. Specifically,
+graph structure learning models (GSLMs) are crucial in addressing
+the challenges of modeling real-world graphs, which are often re-
+dundant, biased, noisy, incomplete, or even unavailable. An ideal
+approach should flexibly integrate these methods within a modular
+framework, enabling adjustments to varying scenarios and graph
+characteristics. However, several critical limitations still need to
+be addressed to fully realize this potential. Limitation 3: The model
+may encounter significant scalability issues when applied to large
+graphs. GSLMs [12, 15, 25, 32, 46] necessitate evaluating all poten-
+tial node pair relationships, resulting in a proportional increase in
+both computational demands and memory requirements for the
+graph structure optimization, particularly in large-scale graphs.
+Additionally, these memory costs will be unaffordable in real-world
+TAGs where nodes are densely connected. Limitation 4: The initial
+node features in existing GSLMs [5, 28, 48, 49] are often shallow
+and noisy, usually derived from noisy native data using simplistic
+embedding techniques like Bag-of-Words [17] for text data, which
+limits performance from the outset.
+Motivation 3: Enabling mutual learning between language
+models and GSLMs. To leverage the strengths and address the
+limitations of pre-trained language models and GSLMs, we propose
+a Language model-enhanced Graph Structure Learning framework,
+named LangGSL. In LangGSL, the LLM (𝑒.𝑔., GPT-3.5-turbo [38])
+is first applied to extract relevant prior knowledge and organize the
+noisy raw texts into a more structured format using task-related
+prompts (Figure 2a), making the generated text attributes digestible
+and informative for training smaller models. During the mutual
+training phase, we iteratively train both the LM to enrich local
+textual features and the GSLM part to refine global graph struc-
+ture information (Figure 2b). The LM and GSLM primarily interact
+by exchanging pseudo labels, facilitating the alignment of local
+and global label distributions, and are jointly optimized within an
+1The comparison between LMs and LLMs reveals a trade-off in capability and flexi-
+bility. LLMs, with their significantly larger parameter sizes, demonstrate enhanced
+capabilities and a vast repository of knowledge. However, this increased power often
+comes at the expense of flexibility. In contrast, LMs, though less capable, are more
+compact and thus can be fine-tuned more efficiently for specific tasks. [6, 19]
+Advanced Semantic Understanding
+LM
+GSLM
+LLM LangGSL
+Figure 1: Key advantages of modules in the LangGSL.
+evidence lower bound framework for improved performance. In
+addition, the LM takes the cleaned text attributes generated by LLM
+as input and updates the node embeddings through a fine-tuning
+process. Both the enhanced node embeddings and the initial graph
+structure, derived from these embeddings, are then transferred
+to the GSLM module for further processing. The GSLM module
+consists of two flexible components: a vanilla GNN and a graph
+structure refinement module, both of which can be adapted and
+utilized as needed. The graph structure refinement module aims to
+identify an implicit graph structure that enhances the initial one.
+This refined structure is then passed to the vanilla GNN, allow-
+ing both components in GSLM to be jointly optimized for graph
+structure learning. Notably, as evidenced by experiments, based
+on the cleaned and enhanced node embeddings, the GSLM module
+using only a vanilla GNN demonstrates performance comparable
+to baseline methods while being more efficient.
+Contributions:
+• We present LangGSL, a comprehensive framework that seam-
+lessly integrates node feature learning and graph structure
+refinement, advancing the state-of-the-art in graph repre-
+sentation learning.
+• We develop a flexible mechanism that allows language mod-
+els and GSLMs to mutually enhance performance by ag-
+gregating their respective advantages (Figure 1), through
+minimizing a variational task-specific loss and incorporating
+a graph refinement loss.
+• We conduct comprehensive experimental evaluations, and
+the results demonstrate the superior performance of our
+approach across diverse task scenarios, including noisy or
+attacked graph structures, cases where the graph structure
+is absent, and other challenging conditions.
+2 RELATED WORKS
+2.1 Graph Structure Learning
+The problem of graph structure learning has been widely studied
+in the context of GNN from different perspectives. The majority
+
+
+--- PAGE 3 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+LLM
+Frozen
+ Tuned
+Prompt 
+LM 
+Graph structure
+OR
+Graph Structure Refinementi
+Message passing of node i
+GNN
+a.
+b.
+Embedding 
+Pseudo label 
+Pseudo label 
+Raw text Cleaned text 
+GSLM 
+Figure 2: The pipeline of LangGSL: (a), LLM filters out ir-
+relevant or noisy information from raw text and provides
+task-related text attributes using designed prompts. (b), An
+iterative optimization process occurs between the LM and
+the graph structure learning model (GSLM), where the LM
+generates graph structures, embeddings, and pseudo labels
+based on cleaned text attributes provided by the LLM. In turn,
+the GSLM refines the graph structure and provides updated
+pseudo labels back to the LM. Three interaction mechanisms
+are introduced between the vanilla GNN and graph structure
+refinement component in GSLM.
+of the graph structure learning methods still adopt a co-training
+approach [5, 10, 12, 25, 49, 53, 59], where the graph structure is op-
+timized jointly with the entire neural network. For instance, IDGL
+[5] jointly and iteratively learns the graph structure and graph em-
+beddings, using the associated learning metric as the optimization
+objective. RCL [59] first extracts latent node embeddings using a
+GNN model based on the current training structure, then jointly
+learns the node prediction labels and reconstructs the input struc-
+ture through a decoder. An alternative approach to graph structure
+learning involves using a dedicated module to refine the graph
+structure, which is subsequently passed to downstream GNNs for
+further processing [32, 46, 68]. Within the category, SEGSL [ 68]
+introduces graph structural entropy, optimizing the structure using
+an one-dimensional entropy maximization strategy, constructing an
+encoding tree to capture hierarchical information, and subsequently
+reconstructing the graph from this tree, which is then incorporated
+into a GNN. Iterative methods [42, 46] train the two components
+in cycles, learning the graph structure from predictions or repre-
+sentations produced by an optimized GNN, which is then used to
+train a new GNN model in the next iteration. While existing graph
+structure learning methods have shown promise, they rely heav-
+ily on explicit graph structural information as supervisory signals,
+leaving them susceptible to issues like data noise and sparsity.
+2.2 Large Language Models for Graphs
+Leveraging the extensive knowledge of large language models
+(LLMs) for graph data enhancement has been a focus of recent
+studies, with several exploring the integration of LLMs and Graph
+Neural Networks (GNNs). One category (LLMs as enhancers) uti-
+lizes LLMs for node feature augmentation [ 14, 19, 22, 31] while
+relying on the standard GNN mechanisms to update node features,
+incorporating the underlying graph topological information for
+better performance. As an example, GIANT [ 7] integrates graph
+topology information into language models (LMs) through the
+XR-Transformer [56], and the enhanced node embeddings can be
+further used in various downstream tasks. Alternatively, efforts
+to represent graphs linguistically and treat LLMs as predictors
+[4, 23, 52, 64] risk losing structural information, as these methods
+may struggle to effectively translate graph structures into natu-
+ral language. To harness the complementary strengths of LLMs
+and GNNs, GNN-LLM alignment approaches [24, 63] utilize cross-
+training between the two models, with alignment strategies de-
+signed to ensure both effectively capture graph topology and en-
+hance node embeddings. In contrast to LangGSL, methods like
+GLEM [63], a representative alignment approach, focus solely on
+optimizing the model with noisy node embeddings, neglecting ex-
+plicit graph structure learning, thereby limiting the potential perfor-
+mance and scope of downstream tasks. Considering graph structure
+learning, GraphEdit [15] leverages an large language model (LLM)
+to model node relationships based on paired node text attributes.
+However, compared to LLM-based methods focused on single-node
+feature augmentation, GraphEdit exhibits increased computational
+complexity as the number of nodes grows, with only marginal gains
+in performance. LLM4RGNN [60] employs LLMs to defend against
+adversarial attacks, but this strategy incurs a trade-off, leading to
+a slight reduction in overall accuracy. In contrast, LangGSL deliv-
+ers superior performance across kinds of downstream tasks, while
+simultaneously maintaining a robust graph structure.
+3 METHOD
+In this section, we outline the pipeline of LangGSL, as illustrated
+in Figure 2, specifically tailored for the node classification task,
+detailing each stage from data cleaning to models’ mutual learning.
+3.1 Preliminaries
+Task definition. Formally, a text-attributed graph (TAG) can be
+represented asG =(V, 𝑨,{𝒔𝑛}𝑛∈V), whereV is a set of𝑛 nodes,
+nodes are initially connected via adjacent matrix 𝑨∈ R𝑛×𝑛, and
+𝒔𝑛∈D 𝐿𝑛 is a sequential text associated with node𝑛∈V , withD
+as the words or tokens dictionary, and𝐿𝑛 as the sequence length.
+Given a noisy graph inputG, or in the case that only node tokens
+𝒔𝑛∈D 𝐿𝑛 are provided, where the initialization of 𝑨 will depend
+on the chosen strategy (𝑒.𝑔., kNN [11]), the deep graph learning
+problem addressed in this paper is to produce an optimized graph:
+G∗ :(𝑨∗, 𝑿∗) =𝜓(G), (1)
+
+
+--- PAGE 4 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+where the learned graphG∗ may contain learnable parameters (𝑖.𝑒. ,
+tunable edges or node features) within its adjacency matrix 𝑨∗ or
+feature matrix 𝑿 ∗.𝜓(·) denotes the designed learning framework
+that optimizes both initial node features and the underlying graph
+structures. The candidate space for refined𝑨∗ is denoted asA, while
+the candidate space for the optimized node feature matrix 𝑿∗∈
+R𝑛×𝐹 is represented as X, with respect to some (semi-)supervised
+downstream tasks on TAGs.
+Evidence Lower Bound. Based on the obtained graph G :=
+(𝑨,{𝒔𝑛}𝑛∈V), we aim to search for the optimal 𝑨∗ and 𝑿∗ within
+their respective candidate spaces A and X that maximize the likeli-
+hood of correctly predicting the observed labels 𝒚𝐿 using proposed
+framework𝜓(·) named LangGSL. The process can be expressed as:
+max
+𝑨∗∈A,𝑿∗∈X
+𝑃𝜓(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨). (2)
+Notably, in node classification tasks, the label of a node is not
+independent but influenced by the labels of its neighboring nodes.
+This means that the observed labels 𝒚𝐿 are statistically dependent
+on the unobserved labels𝒚𝑈 . To utilize this dependence relationship,
+we introduce a variational distribution𝑞(𝒚𝑈| 𝒔𝑈) to approximate
+the true posterior distribution𝑝(𝒚𝑈|{ 𝒔𝑛}𝑛∈V, 𝑨, 𝒚𝐿). Following
+this idea, we derive the Evidence Lower Bound (ELBO) as:
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨)≥ E𝑞(𝒚𝑈|𝒔𝑈)
+
+log𝑝(𝒚𝐿, 𝒚𝑈 |{ 𝒔𝑛}𝑛∈V, 𝑨)
+𝑞(𝒚𝑈 | 𝒔𝑈)
+
+=E𝑞(𝒚𝑈|𝒔𝑈)
+
+log𝑝(𝒚𝐿, 𝒚𝑈 |{ 𝒔𝑛}𝑛∈V, 𝑨)
+
+−E𝑞(𝒚𝑈|𝒔𝑈)[log𝑞(𝒚𝑈 | 𝒔𝑈)].
+(3)
+This ELBO provides a tractable lower bound for the original
+log-likelihood, enabling efficient optimization. By maximizing the
+ELBO with respect to both the variational distribution and the
+model parameters, we indirectly maximize the true log-likelihood
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨). The complete derivation of the ELBO is
+included in the Appendix A for further reference.
+3.2 Data Cleaning based on LLMs
+Given the substantial cost of obtaining human-annotated texts,
+most approaches [ 7, 24, 63] rely on raw text data scraped from
+the web in TAGs learning, which is frequently contaminated with
+noise, including unstructured formatting, multilingual content, task-
+irrelevant information, and non-standardized formats, all of which
+can hinder downstream tasks and model performance. Despite
+employing simple prediction and explanation-based filters [19, 23,
+31], noise remains prevalent in the texts.
+To effectively mitigate the impact of noise in raw text data and
+extract concise, task-specific inputs for downstream LM, we design
+prompts that balance generality and specificity: broad enough to
+capture essential task-relevant indicators while being sufficiently
+targeted to filter out irrelevant or noisy information (Figure 2a).
+Unlike prior work, our method first instructs the LLM to summarize
+input text, including symbols like emojis, before performing classi-
+fication and explanation tasks. This preprocessing step enables the
+LLM to handle discrete and symbolic language elements more effec-
+tively. Furthermore, we observed that LLMs tend to struggle with
+borderline classification cases, where the raw text is ambiguous. To
+address this issue, we provide key factors as additional instructions
+within the prompt, helping to guide the LLM towards more accurate
+and reliable predictions. Our approach interacts exclusively via API
+access to an LLM, using text-based inputs and outputs, without
+requiring fine-tuning or direct access to model embeddings or logits.
+These outputs from the LLM serve as supplementary text attributes
+for the downstream LMs and GSLMs.
+Additional prompt samples, output comparisons between differ-
+ent LLMs, experimental validation of data cleaning effectiveness,
+and further discussions can be found in Appendix B.
+3.3 Mutual Learning between LM and GSLM
+To leverage the complementary strengths of LM and GSLM, we
+jointly optimize the ELBO (Equation (3)) and graph regularization
+through their interaction, enhancing both feature representation
+and structural learning (Figure 2b). Specifically, the mutual learning
+involves two phases: (1) initializing the graph structure and opti-
+mizing variational distribution𝑞 by LM, and (2) refining the graph
+structure within GSLM and optimizing the posterior distribution𝑝
+by GSLM, with GNN as the default backbone.
+3.3.1 LM Learning Phase . Leveraging the complex linguistic
+capabilities of LLMs and task-specific prompts, we obtain cleaned
+and task-relevant textual output 𝒔𝑛 for node 𝑛∈V . These text
+entities are then processed by a pre-trained LM, denoted as 𝑞𝜃
+(𝑒.𝑔., Sent-BERT [40]), which serves as an expert to refine the text
+attributes 𝒔𝑛, generating and providing informative embeddings
+for GSLM. The resulting text embeddings are obtained as follows:
+𝒉𝑛 =𝑞𝜃(𝒔𝑛)∈ R𝑑. (4)
+Initial graph structure formation. Based on the inferred em-
+beddings, the likelihood of a link between any two nodes can be
+quantified using a similarity measure function𝑆𝑖𝑚(·) (𝑒.𝑔., cosine
+similarity) between their respective embeddings 𝒉𝑖 and 𝒉𝑣, which
+is as follows:
+𝑓𝑎𝑑𝑗(𝒉𝑖, 𝒉𝑣) =𝑆𝑖𝑚(𝒉𝑖, 𝒉𝑣). (5)
+Specifically, in each iteration, the graph structure is updated dy-
+namically based on 𝑆𝑖𝑚(·) as the node embeddings are refined.
+Alternatively, a cross-attention layer before the classification head
+can be employed to explicitly model the interactions between nodes,
+where attention weights serve as an adaptive mechanism to capture
+the strength and relevance of relationships in a learnable way.
+Optimization of distribution 𝑞. Given the informative embed-
+dings 𝒉𝑛, and the learned initial adjacency matrix 𝑨 based on the
+function𝑆𝑖𝑚(·) (in cases where the initial graph structure 𝑨 is
+not available), the true posterior distribution can be represented as
+𝑝𝜙(𝒚𝑈|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿).
+In the LM learning phase of LangGSL, we will update the param-
+eters of the LM𝑞𝜃 , while keeping the GSLM parameters 𝜙 fixed.
+Based on Equation (3), the goal of LangGSL is to refine the varia-
+tional distribution𝑞𝜃(𝒚𝑈| 𝒔𝑈) so that it better approximates the
+true posterior distribution𝑝𝜙(𝒚𝑈|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿) via minimiz-
+ing the Kullback-Leibler (KL) divergence between𝑞𝜃 and𝑝𝜙 . By
+doing so, we enable the LM to capture global semantic correlations
+distilled from the GSLM.
+However, directly minimizing the KL divergence between𝑞𝜃 and
+the true posterior is intractable due to the complexity of computing
+the entropy of the variational distribution. Inspired by the “wake-
+sleep” algorithm [20], we instead opt to minimize the reverse KL
+
+
+--- PAGE 5 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+divergence, which simplifies the optimization process. Specifically,
+the optimization problem in the LM learning phase becomes:
+min
+𝜃
+KL
+
+𝑝𝜙(𝒚𝑈|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿),𝑞𝜃(𝒚𝑈| 𝒉𝑈)
+
+= max
+𝜃
+E𝑝𝜙(𝒚𝑈|{ 𝒉𝑛}𝑛∈V,𝑨,𝒚𝐿)[log𝑞𝜃(𝒚𝑈| 𝒉𝑈)]. (6)
+as minimizing the KL divergence is equivalent to maximizing the
+expected log-likelihood of the LM under the posterior distribu-
+tion estimated by the GSLM. In the LM, we assume that the labels
+of different nodes are determined solely by their respective text
+attributes, using a mean-field approximation [13] to capture this
+independence. This assumption leads to the following factorization,
+where the expectation is expressed as a sum over the unlabeled
+nodes:
+max
+𝜃
+∑︁
+𝑚∈𝑈
+E𝑝𝜙(𝒚𝑚|{ 𝒉𝑛}𝑛∈V,𝑨,𝒚𝐿)[log𝑞𝜃(𝒚𝑚| 𝒉𝑚)]. (7)
+Here, directly computing the posterior distribution 𝑝𝜙(𝒚𝑚 |
+{𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿), conditioning solely on observed node labels𝒚𝐿 is
+insufficient, as unobserved labels from neighboring nodes are criti-
+cal for capturing the full graph structure in GSLM. To approximate
+this distribution, we utilize the current LM to generate pseudo-
+labels for the unlabeled nodes𝑈\{𝑚}, and we can approximate
+the posterior distribution as:
+𝑝𝜙
+
+𝒚𝑚|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿, ˆ𝒚𝑈\{𝑚}
+
+, (8)
+where ˆ𝒚𝑈\{𝑚} ={ ˆ𝒚𝑚′}𝑚′∈𝑈\{𝑚} and each ˆ𝒚𝑚′ is sampled from
+𝑞𝜃(𝒚𝑚′| 𝒉𝑚′).
+Including the labeled nodes in the training process, the overall
+objective function for updating the LM becomes:
+LLM =𝛼
+∑︁
+𝑚∈𝑈
+E𝑝𝜙(𝒚𝑚|{ 𝒉𝑛}𝑛∈V,𝑨,𝒚𝐿, ˆ𝒚𝑈\{𝑚})[log𝑞𝜃(𝒚𝑚| 𝒉𝑚)]
++( 1−𝛼)
+∑︁
+𝑚∈𝐿
+log𝑞𝜃(𝒚𝑚| 𝒉𝑚), (9)
+where𝛼∈[ 0, 1] is a hyperparameter that balances the two terms.
+The first term represents knowledge distillation from the GSLM to
+the LM, encouraging the LM to align its predictions with the global
+structural information captured by the GSLM. The second term
+is a supervised learning objective based on the labeled nodes. By
+optimizing this objective, the LM learns to produce label predictions
+that are consistent with both the textual content of each node
+and the structural patterns. Moreover, the graph structure inferred
+using Equation (5) exhibits greater robustness as evidenced by
+experiments.
+3.3.2 GSLM Learning Phase. During the graph structure learn-
+ing phase, our objectives are twofold: (1) to maximize the expected
+log joint likelihood of the observed and unobserved labels under
+the variational distribution𝑞(𝒚𝑈 | 𝒔𝑈) introduced in Equation (3),
+while keeping the parameters of the language model𝑞𝜃 fixed, and
+(2) to refine the input graph structure.
+We have leveraged the LM to generate node representationsℎ𝑛
+for each node𝑛 in the graph. These embeddings capture rich seman-
+tic information, forming the input features for GSLM. In the task-
+specific prediction phase, inspired by [ 2], the pseudo-likelihood
+framework E𝑞(𝑦𝑈|𝑠𝑈)[log𝑝(𝑦𝐿,𝑦𝑈|{ 𝒔𝑛}𝑛∈V,𝐴)], which we aim
+to optimize, can be approximated as:
+max
+𝜙
+E𝑞(𝑦𝑈|𝑠𝑈)
+" ∑︁
+𝑚∈V
+log𝑝(𝑦𝑚|{ 𝒔𝑛}𝑛∈V,𝐴,𝑦V\𝑚)
+#
+, (10)
+the expectation over the variational distribution 𝑞𝜃 depends on
+the unobserved labels of the unlabeled nodes. To approximate
+this expectation, we generate pseudo-labels ˆ𝒚𝑈 by sampling from
+𝑞𝜃(𝒚𝑈 | 𝒔𝑈). For each unlabeled node 𝑚∈ 𝑈 , the pseudo-label
+ˆ𝒚𝑚 is drawn directly from the language model𝑞𝜃 , facilitating effi-
+cient integration of semantic information into the graph learning
+process.
+With the node representations 𝒉𝑛 and pseudo-labels ˆ𝒚𝑈 , the
+pseudo-likelihood can be approximated, leading to the following
+objective function for optimizing the parameters𝜙:
+L(𝜙) =𝛽
+∑︁
+𝑚∈𝑈
+log𝑝𝜙
+
+ˆ𝒚𝑚|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿, ˆ𝒚𝑈\𝑚
+
++( 1−𝛽)
+∑︁
+𝑚∈𝐿
+log𝑝𝜙
+
+𝒚𝑚|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿\𝑚, ˆ𝒚𝑈
+
+, (11)
+where𝛽∈[ 0, 1] is a hyperparameter balancing the two terms.
+ˆ𝒚𝑈\𝑚 denotes the pseudo-labels of all unlabeled nodes except node
+𝑚.𝑝𝜙(𝒚𝑚 |·) represents the GSLM’s predictive distribution for
+node𝑚.
+Graph structure refinement. With the initial adjacent matrix 𝑨,
+we propose two strategies to refine the graph structure, depending
+on the specific needs of the task.
+Strategy 1: Since LangGSL operates within an iterative frame-
+work, LM and GSLM mutually improve each other’s performance
+through maximizing the ELBO. Additionally, the graph structure
+used in the GSLM can be iteratively updated during the LM phase,
+leading to continuous refinement of both components. In the first
+category of graph structure refinement, the focus remains on op-
+timizing𝑝𝜙 , where graph structure modifications are captured by
+implicit adjustments to the node features, ultimately influencing
+the final graph representations. A similar idea is presented by Fang
+et al. [ 9], who theoretically demonstrate that it is always possi-
+ble to learn appropriate node features to perform any graph-level
+transformation, such as “changing node features” or “adding or
+removing edges/subgraphs, ” through a learnable projection head.
+Strategy 2: In the second category of graph refinement methods,
+we extend our approach by incorporating a graph structure opti-
+mization objective. Specifically, we propose a joint optimization
+method to learn both the graph structure and GSLM parameters by
+minimizing a hybrid loss function, which combines task-specific
+loss with graph refinement loss in the GSLM learning phase, de-
+noted asLGSLM =L(𝜙)+L G. Given the extensive success of
+existing graph structure learning works based on GNNs and the
+flexibility of LangGSL, we can seamlessly adapt the GSLM backbone
+as needed (𝑒.𝑔., IDGL [5]). The specific graph refinement lossLG
+utilized in LangGSL varies depending on the choice of the GSLM
+backbone architecture. Incorporating the general loss function that
+jointly optimizes both GNN parameters and the underlying graph
+structures of the chosen GSLM backbone, the final loss function for
+LangGSL during the graph structure learning phase is formalized
+
+
+--- PAGE 6 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+Table 1: Accuracy ± STD comparison (%) under the standard setting of transductive node classification task in the Topology
+Refinement (TR) scenario, which means the original graph structure is available for each method. The highest results are
+highlighted with bold, while the second highest results are marked with underline. "OOM" denotes out of memory. "-" denotes
+that related prompts are not provided by the method.
+Cora Instagram Pubmed ogbn-arxiv
+Edge Hom. 0.81 0.10 0.80 0.65
+GCN 87.36± 1.60 63 .79± 0.08 78 .98± 0.35 71 .82± 0.27
+ProGNN 85.79± 0.37 61 .55± 0.09 OOM OOM
+IDGL 88.63± 0.44 64 .67± 0.32 82 .78± 0.44 OOM
+GEN 86.53± 0.63 64 .55± 0.44 78 .91± 0.69 OOM
+LDS 87.71± 0.13 OOM OOM OOM
+GRCN 84.13± 0.37 63 .81± 0.37 78 .92± 0.39 OOM
+CoGSL 82.07± 0.51 63 .93± 0.36 OOM OOM
+SUBLIME 85.04± 0.37 60 .33± 0.90 80 .90± 0.94 71 .75± 0.36
+STABLE 88.75± 0.35 63 .56± 0.03 81 .46± 0.78 OOM
+NodeFormer 88.56± 1.01 64 .73± 1.00 81 .51± 0.40 55 .40± 0.23
+GraphEdit 89.32± 0.21 - 85.38± 0.07 -
+SEGSL 87.31± 0.24 63 .53± 0.08 79 .26± 0.67 OOM
+RCL 86.20± 1.00 64 .98± 0.31 78 .66± 0.26 74 .08± 0.33
+LLM4RGNN - - 86.21± 0.13 -
+LangGSL 90.70± 0.43 67 .23± 0.09 92 .14± 1.31 76 .87± 0.62
+as follows:
+LGSLM =L(𝜙)+L G
+=𝛽
+∑︁
+𝑚∈𝑈
+log𝑝𝜙
+
+ˆ𝒚𝑚|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿, ˆ𝒚𝑈\𝑚
+
++( 1−𝛽)
+∑︁
+𝑚∈𝐿
+log𝑝𝜙
+
+𝒚𝑚|{ 𝒉𝑛}𝑛∈V, 𝑨, 𝒚𝐿\𝑚, ˆ𝒚𝑈
+
++LG. (12)
+As demonstrated by the experimental results, the second category
+of graph structure refinement methods shows slightly better per-
+formance due to the additional consideration of the structure re-
+finement loss. However, the first category methods provide a good
+balance between computational complexity and performance, mak-
+ing them suitable for scenarios where resource constraints are a
+concern. Further details are provided in Section 4.
+4 EXPERIMENT
+In this section, we conduct experiments to evaluate the proposed
+LangGSL framework across various task scenarios, aiming to ad-
+dress several key research questions:
+RQ1: How does LangGSL perform compared to existing GSLMs in
+the transductive learning setting, utilizing the default graph
+structure?
+RQ2: How robustness is LangGSL in the absence of graph structure
+or when facing graph topology attacks?
+RQ3: How does LangGSL compare to GraphLLM models in node
+classification tasks on TAGs?
+RQ4: How adaptable and flexible is LangGSL across different set-
+tings of backbones?
+4.1 Experimental Setup
+Datasets. Four graph node classification benchmark datasets are
+included in our experiment, including ogbn-arxiv [21], Instagram
+[23], Pubmed, and Cora [36].
+Baselines. We evaluate the performance of our LangGSL model
+against a comprehensive set of the state-of-the-art baselines, span-
+ning four key categories:
+• Graph Structure Learning Models (GSLMs): The baseline
+GSLMs considered include: LDS [12], GRCN [53], ProGNN
+[25], IDGL [5], GEN [46], CoGSL [32], SUBLIME [34], SEGSL
+[68], STABLE [28], NodeFormer [49], RCL [59], GraphEdit
+[15], LLM4RGNN [60], SLAPS [10], HES-GSL [48], and HANG-
+quad [65].
+• Large Language Models for Graphs (GraphLLM):GraphLLM
+focuses on leveraging the vast knowledge of LLMs to en-
+hance graph learning: LLM-as-enhancer (TAPE [19], GIANT
+[7], OFA [31]), LLM-as-predictor (GraphAdapter [23], LLaGA
+[4], GraphText [64], InstructGLM [52]), and LLM-as-aligner
+(GLEM [63], PATTON [24]).
+• Pre-trained Language Models (PLMs): The evaluation
+based on a diverse set of models, including BERT [ 8], De-
+BERTa [18], RoBERTa [33], Sent-BERT [40].
+• Graph Neural Networks (GNNs): The baselines include
+GCN [26], GAT [45], GraphSAGE [16], and RevGAT [27].
+Notably, we consider the transductive node classification task in
+both the Topology Refinement (TR) scenario and the Topology
+Inference (TI) scenario, where the original graph structure is avail-
+able for each method in TR but not in TI, with TR as the default
+setting, if there is no special instructions. Further experimental and
+training details, including introductions and statistics of the TAG
+
+
+--- PAGE 7 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+Ptb Rate 0% Ptb Rate 5% Ptb Rate 10% Ptb Rate 20%
+ 
+40
+50
+60
+70
+80
+90Accuracy
+ GCN STABLE HANG-quad GraphEdit LLM4RGNN LangGSL-GSLM LangGSL-LM
+Figure 3: Node classification accuracy (%) on Pubmed under adversarial attack at various perturbation rates (Ptb Rate).
+datasets, additional results, and implementation specifics can be
+found in Appendix C, B, D, and E respectively.
+4.2 Overall Performance Comparison (RQ1)
+Table 1 presents the accuracy and standard deviation comparison
+under the transductive node classification task in the TR scenario,
+where the original graph structure is available for each method.
+Based on the results, we have several observations: Observation 1:
+LangGSL demonstrates significant improvements over state-
+of-the-art GSLMs across datasets. LangGSL consistently sur-
+passes all baseline models, achieving an average improvement of
+3.1% compared to the second-best performance across all datasets.
+Notably, on Pubmed, LangGSL exhibits a substantial near 15% im-
+provement over the vanilla GCN, outperforming other methods
+by an even greater margin. These results validate LangGSL’s ef-
+fectiveness across both heterophilous and homophilous graphs,
+as well as its ability to handle graph structures of varying scales.
+Observation 2: Leveraging abundant unlabeled data is essential
+for improving GSLM performance. As mentioned in the recent
+literature [10, 30], optimizing graph structures solely based on la-
+bel information is insufficient. Leveraging a large and abundant
+amount of unlabeled information can enhance the performance of
+GSLM (𝑒.𝑔., STABLE). This confirms the effectiveness of the mutual
+learning mechanism in LangGSL, as validated by the results, which
+leverages the exchange of pseudo labels for unlabeled nodes to op-
+timize LM and GSLM objectives and enhance learning performance.
+Observation 3: Leveraging language models enhance the over-
+all performance. It is evident that methods leveraging language
+models (GraphEdit, LLM4RGNN, and LangGSL) significantly out-
+perform traditional approaches primarily based on vanilla GNNs,
+leading to notable performance improvements. What is more, as
+demonstrated in Appendix Figure 5, LLM in LangGSL enhances
+performance by effectively cleaning raw texts, leading to improved
+outcomes for downstream models.
+4.3 Robustness Analysis (RQ2)
+To investigate the robustness of the LangGSL algorithm, we primar-
+ily focus on the TI scenario where no graph structure is provided,
+and adversarial attack settings involving perturbed graph topology.
+Table 2 presents the results of the transductive node classifica-
+tion task under the TI scenario. Since certain GSLMs, such as IDGL
+[5], are originally designed for theTR scenario, we usekNN graphs
+as a substitute for their original graph structure. It is evident that
+our proposed method, LangGSL, significantly outperforms other
+algorithms through all datasets. Notably, LangGSL (LM) achieves
+an improvement of 16.37% on Pubmed and 17.16% on ogbn-arxiv
+over the second-best method, validating the ability of the LM com-
+ponent to predict reliable labels and provide a solid initial graph
+structure for the GSLM. In turn, LangGSL (GSLM) demonstrates
+that the graph refinement process further boosts performance, with
+improvements of 16.21% on Pubmed and 4.02% on ogbn-arxiv com-
+pared to the next best result. Specifically, the Pubmed result even
+surpasses the performance in the TR setting, highlighting the ro-
+bustness of LangGSL in scenarios where the original graph structure
+is not available. In contrast, traditional methods such as GCNkNN
+and GSLMs like IDGL kNN display relatively lower accuracy, em-
+phasizing the benefits of the mutual enhancement mechanism.
+In the adversarial attack setting, we consider the state-of-the-
+art non-targeted attack method, Mettack [69], where the attacker
+has full access to node attributes, graph structure, and training
+labels. This allows the attacker to disrupt the entire graph topology
+and degrade the performance of graph structure learning mod-
+els on the test set. Referring to Figure 3, as the perturbation rate
+increases, the performance of all methods generally declines, indi-
+cating the adverse effect of noise on graph structure. However, both
+LangGSL-GSLM and LangGSL-LM demonstrate a remarkable level
+of robustness across all perturbation rates, outperforming existing
+robust GNN frameworks like LLM4RGNN, which is specifically de-
+signed to improve adversarial robustness in GNNs using LLMs. This
+further validates LangGSL’s effectiveness in adversarial settings.
+4.4 Comparison with Large Language Models
+for Graphs (RQ3)
+We compare LangGSL with GraphLLM and methods that utilize
+only GNNs or LLMs on TAGs, as presented in Table 3. To ensure a
+fair comparison and minimize the influence of different backbone
+models used in various GraphLLM methods, we followed the latest
+work [29] and implemented all methods using the same GNN (GCN
+
+
+--- PAGE 8 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+Table 2: Accuracy± STD comparison (%) under the standard
+setting of the transductive node classification task in the
+Topology Inference (TI) scenario, which means the original
+graph structure is not available for each method. "OOM"
+denotes out of memory.
+Pubmed ogbn-arxiv Instagram
+MLP 73.00± 0.30 55 .21± 0.11 63 .41± 0.40
+GCN𝑘𝑛𝑛 69.23± 0.49 55 .21± 0.22 63 .71± 0.30
+GRCN𝑘𝑛𝑛 68.96± 0.85 OOM 63.59± 0.12
+GPRGNN𝑘𝑛𝑛 68.19± 0.19 OOM 57.75± 0.16
+IDGL𝑘𝑛𝑛 74.01± 0.64 OOM 63.93± 0.20
+SLAPS𝑘𝑛𝑛 74.50± 1.47 55 .19± 0.21 63 .43± 0.21
+GEN𝑘𝑛𝑛 69.76± 1.53 OOM 63.56± 0.11
+CoGSL𝑘𝑛𝑛 OOM OOM 64.03± 0.10
+ProGNN𝑘𝑛𝑛 OOM OOM 57.47± 0.23
+SUBLIME 75.08± 0.55 55 .57± 0.18 57 .52± 0.40
+NodeFormer 59.83± 6.50 55 .37± 0.23 64 .34± 0.39
+HES-GSL 77.08± 0.78 56 .46± 0.27 64 .58± 0.45
+LangGSL (GSLM) 93.21± 0.12 59 .21± 0.38 66 .27± 0.18
+LangGSL (LM) 93.37± 0.15 73 .62± 0.26 65 .96± 0.26
+[26]) and LM (Sent-BERT [40]) backbones in our experiments. Lang-
+GSL consistently ranks at or near the top across all three datasets
+compared with state-of-the-art methods with enhanced features
+provided by LLMs. This reinforces the necessity of jointly consider-
+ing both structure learning and node feature learning, as seamlessly
+integrated within LangGSL. In the category of LLM-as-aligner, we
+observe that five out of the six top-performing results, including
+both the best and second-best, are achieved within this category.
+This further reflects the effectiveness of the mutual learning be-
+tween the two models in LangGSL.
+4.5 Flexible Study (RQ4)
+The GSLM component in LangGSL is designed to be flexible, al-
+lowing the choice of backbone to be adapted as needed. In this
+section, we compare the performance of LangGSL using various
+backbones, grouped by training procedure [66]: co-training (IDGL
+and NodeFormer), pre-training (STABLE), and iter-training (GEN),
+with GCN as the default baseline. Notably, as the backbone changes,
+the graph structure refinement loss is also adapted to align with
+the selected backbone, ensuring that the model remains optimized
+for the specific architecture. As illustrated in Figure 4, when inte-
+grated with LangGSL’s mutual learning mechanism, GEN, STABLE,
+NodeFormer, and IDGL all further improve significantly upon their
+standalone performance. Additionally, we observe a general trend
+where the more complex GSLMs, such as IDGL, achieve higher
+accuracy compared to the simpler GCN model. Furthermore, the
+overall performance remains positively correlated with the inher-
+ent strength of the GSLMs. Considering time and space constraints,
+reducing relatively small performance improvements for greater
+efficiency with GCN is a practical strategy, especially in resource-
+limited settings, where a trade-off between accuracy and computa-
+tional cost is necessary.
+Table 4 presents the experimental results on the Instagram dataset,
+showcasing performance across different GNN backbones and LLM
+Table 3: Accuracy results (%) under supervised learning set-
+ting. The best and second-best results are highlighted with
+distinct background colors.
+Instagram Pubmed ogbn-arxiv
+GCN 63.79 78.98 71.82
+GAT 63.74 76.93 71.85
+GraphSAGE 63.75 76.79 71.88
+Sent-BERT (22M) 63.07 65.93 72.82
+BERT (110M) 63.75 63.69 72.29
+RoBERTa (355M) 63.57 71.25 72.94
+GIANT 66.01 76.89 72.04
+TAPE 65.85 79.87 72.99
+OFA 60.85 75.61 73.23
+InstructGLM 57.94 71.26 39.09
+GraphText 62.64 74.64 49.47
+GraphAdapter 67.40 72.75 74.45
+LLaGA 62.94 52.46 72.78
+GLEMGNN 66.10 81.72 76.43
+GLEMLLM 65.00 79.18 74.03
+PATTON 64.27 84.28 70.74
+LangGSL 67.23 92.14 76.87
+GCN STABLE GEN Nodeformer IDGL
+ 
+60
+65
+70
+75
+80
+85
+90
+95
+100Accuracy
+ 
+78.98
+81.46
+78.91
+81.51 82.78
+91.12 91.41 91.05
+92.58 93.04
+66.97 66.97 66.97 66.97 66.97
+92.14 92.82 92.95 92.36 93.11
+ 
+Graph Structure Learning Model
+LangGSL-GSLM
+Language Model
+LangGSL-LM
+Figure 4: Experiments on Pubmed with different kinds of
+Graph Structure Learning backbone under LangGSL frame-
+work.
+scales. Overall, the differences in the effects of combining different
+GNN and LM backbones are not substantial. In terms of LLM scal-
+ing, consistent with recent studies [6, 29], there are no definitive
+scaling laws for current approaches integrating LLMs with GNNs.
+Sent-BERT stands out as an efficient and effective baseline, offering
+an optimal balance between performance and computational cost.
+5 CONCLUSION
+In this paper, we present LangGSL, a novel framework that inte-
+grates language models and GSLMs to address the key challenges in
+graph representation learning. By leveraging LLMs for processing
+noisy node attributes, and harnessing the complementary strengths
+of LMs for generating task-related informative node embeddings,
+reliable graph structures, and pseudo labels, alongside GSLMs for
+refining graph structures and providing updated pseudo labels,
+
+
+--- PAGE 9 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+Table 4: Experiments on Instagram with different scales of
+LM and kinds of GNN backbone.
+Backbone Instagram
+Acc F1
+Sent-BERT (22M) GCN 67.23± 0.09 57 .03± 0.72
+RevGAT 66.52± 0.41 54 .89± 1.73
+GraphSAGE 66.59± 0.16 55 .97± 1.25
+GCN Sent-BERT (22M) 67.23± 0.09 57 .03± 0.72
+DeBERTa (139M) 66.64± 0.31 55 .98± 1.25
+RoBERTa (335M) 66.87± 0.35 59 .26± 0.46
+LangGSL effectively considers both local and global graph informa-
+tion, achieving substantial improvements in node feature learning
+and structural optimization. Through comprehensive experimental
+evaluations across diverse datasets, LangGSL consistently outper-
+forms state-of-the-art methods, demonstrating its robustness in
+handling raw, noisy, incomplete, absent, and adversarial graphs.
+REFERENCES
+[1] Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Floren-
+cia Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal
+Anadkat, et al. 2023. Gpt-4 technical report. arXiv preprint arXiv:2303.08774
+(2023).
+[2] Julian Besag. 1975. Statistical analysis of non-lattice data. Journal of the Royal
+Statistical Society Series D: The Statistician 24, 3 (1975), 179–195.
+[3] Chaoqi Chen, Yushuang Wu, Qiyuan Dai, Hong-Yu Zhou, Mutian Xu, Sibei Yang,
+Xiaoguang Han, and Yizhou Yu. 2024. A survey on graph neural networks
+and graph transformers in computer vision: A task-oriented perspective. IEEE
+Transactions on Pattern Analysis and Machine Intelligence (2024).
+[4] Runjin Chen, Tong Zhao, Ajay Jaiswal, Neil Shah, and Zhangyang Wang. 2024.
+Llaga: Large language and graph assistant.arXiv preprint arXiv:2402.08170 (2024).
+[5] Yu Chen, Lingfei Wu, and Mohammed Zaki. 2020. Iterative deep graph learning
+for graph neural networks: Better and robust node embeddings. Advances in
+neural information processing systems 33 (2020), 19314–19326.
+[6] Zhikai Chen, Haitao Mao, Hang Li, Wei Jin, Hongzhi Wen, Xiaochi Wei,
+Shuaiqiang Wang, Dawei Yin, Wenqi Fan, Hui Liu, et al . 2024. Exploring the
+potential of large language models (llms) in learning on graphs. ACM SIGKDD
+Explorations Newsletter 25, 2 (2024), 42–61.
+[7] Eli Chien, Wei-Cheng Chang, Cho-Jui Hsieh, Hsiang-Fu Yu, Jiong Zhang, Ol-
+gica Milenkovic, and Inderjit S Dhillon. 2021. Node feature extraction by self-
+supervised multi-scale neighborhood prediction. arXiv preprint arXiv:2111.00064
+(2021).
+[8] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2018. Bert:
+Pre-training of deep bidirectional transformers for language understanding.arXiv
+preprint arXiv:1810.04805 (2018).
+[9] Taoran Fang, Yunchao Zhang, Yang Yang, Chunping Wang, and Lei Chen. 2024.
+Universal prompt tuning for graph neural networks. Advances in Neural Infor-
+mation Processing Systems 36 (2024).
+[10] Bahare Fatemi, Layla El Asri, and Seyed Mehran Kazemi. 2021. Slaps: Self-
+supervision improves structure learning for graph neural networks. Advances in
+Neural Information Processing Systems 34 (2021), 22667–22681.
+[11] Evelyn Fix. 1985. Discriminatory analysis: nonparametric discrimination, consis-
+tency properties. Vol. 1. USAF school of Aviation Medicine.
+[12] Luca Franceschi, Mathias Niepert, Massimiliano Pontil, and Xiao He. 2019. Learn-
+ing discrete structures for graph neural networks. In International conference on
+machine learning. PMLR, 1972–1982.
+[13] Marylou Gabrié. 2020. Mean-field inference methods for neural networks.Journal
+of Physics A: Mathematical and Theoretical 53, 22 (2020), 223002.
+[14] Jiayan Guo, Lun Du, Hengyu Liu, Mengyu Zhou, Xinyi He, and Shi Han. 2023.
+Gpt4graph: Can large language models understand graph structured data? an
+empirical evaluation and benchmarking. arXiv preprint arXiv:2305.15066 (2023).
+[15] Zirui Guo, Lianghao Xia, Yanhua Yu, Yuling Wang, Zixuan Yang, Wei Wei, Liang
+Pang, Tat-Seng Chua, and Chao Huang. 2024. Graphedit: Large language models
+for graph structure learning. arXiv preprint arXiv:2402.15183 (2024).
+[16] Will Hamilton, Zhitao Ying, and Jure Leskovec. 2017. Inductive representation
+learning on large graphs. Advances in neural information processing systems 30
+(2017).
+[17] Zellig S Harris. 1954. Distributional structure. Word 10, 2-3 (1954), 146–162.
+[18] Pengcheng He, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen. 2020. De-
+berta: Decoding-enhanced bert with disentangled attention. arXiv preprint
+arXiv:2006.03654 (2020).
+[19] Xiaoxin He, Xavier Bresson, Thomas Laurent, Adam Perold, Yann LeCun, and
+Bryan Hooi. 2023. Harnessing explanations: Llm-to-lm interpreter for enhanced
+text-attributed graph representation learning. In The Twelfth International Con-
+ference on Learning Representations .
+[20] Geoffrey E Hinton, Peter Dayan, Brendan J Frey, and Radford M Neal. 1995. The"
+wake-sleep" algorithm for unsupervised neural networks.Science 268, 5214 (1995),
+1158–1161.
+[21] Weihua Hu, Matthias Fey, Marinka Zitnik, Yuxiao Dong, Hongyu Ren, Bowen Liu,
+Michele Catasta, and Jure Leskovec. 2020. Open graph benchmark: Datasets for
+machine learning on graphs. Advances in neural information processing systems
+33 (2020), 22118–22133.
+[22] Jin Huang, Xingjian Zhang, Qiaozhu Mei, and Jiaqi Ma. 2023. Can llms effec-
+tively leverage graph structural information: when and why. arXiv preprint
+arXiv:2309.16595 (2023).
+[23] Xuanwen Huang, Kaiqiao Han, Yang Yang, Dezheng Bao, Quanjin Tao, Ziwei
+Chai, and Qi Zhu. 2024. Can GNN be Good Adapter for LLMs?. In Proceedings of
+the ACM on Web Conference 2024 . 893–904.
+[24] Bowen Jin, Wentao Zhang, Yu Zhang, Yu Meng, Xinyang Zhang, Qi Zhu, and
+Jiawei Han. 2023. Patton: Language model pretraining on text-rich networks.
+arXiv preprint arXiv:2305.12268 (2023).
+[25] Wei Jin, Yao Ma, Xiaorui Liu, Xianfeng Tang, Suhang Wang, and Jiliang Tang.
+2020. Graph structure learning for robust graph neural networks. In Proceedings
+of the 26th ACM SIGKDD international conference on knowledge discovery & data
+mining. 66–74.
+[26] Thomas N Kipf and Max Welling. 2016. Semi-supervised classification with graph
+convolutional networks. arXiv preprint arXiv:1609.02907 (2016).
+[27] Guohao Li, Matthias Müller, Bernard Ghanem, and Vladlen Koltun. 2021. Training
+graph neural networks with 1000 layers. In International conference on machine
+learning. PMLR, 6437–6449.
+[28] Kuan Li, Yang Liu, Xiang Ao, Jianfeng Chi, Jinghua Feng, Hao Yang, and Qing He.
+2022. Reliable representations make a stronger defender: Unsupervised structure
+refinement for robust gnn. In Proceedings of the 28th ACM SIGKDD conference on
+knowledge discovery and data mining . 925–935.
+[29] Yuhan Li, Peisong Wang, Xiao Zhu, Aochuan Chen, Haiyun Jiang, Deng Cai,
+Victor Wai Kin Chan, and Jia Li. 2024. GLBench: A Comprehensive Benchmark
+for Graph with Large Language Models. arXiv preprint arXiv:2407.07457 (2024).
+[30] Zhixun Li, Xin Sun, Yifan Luo, Yanqiao Zhu, Dingshuo Chen, Yingtao Luo, Xi-
+angxin Zhou, Qiang Liu, Shu Wu, Liang Wang, et al . 2024. GSLB: the graph
+structure learning benchmark. Advances in Neural Information Processing Systems
+36 (2024).
+[31] Hao Liu, Jiarui Feng, Lecheng Kong, Ningyue Liang, Dacheng Tao, Yixin Chen,
+and Muhan Zhang. 2023. One for all: Towards training one graph model for all
+classification tasks. arXiv preprint arXiv:2310.00149 (2023).
+[32] Nian Liu, Xiao Wang, Lingfei Wu, Yu Chen, Xiaojie Guo, and Chuan Shi. 2022.
+Compact graph structure learning via mutual information compression. In Pro-
+ceedings of the ACM web conference 2022 . 1601–1610.
+[33] Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer
+Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov. 2019. Roberta: A
+robustly optimized bert pretraining approach. arXiv preprint arXiv:1907.11692
+(2019).
+[34] Yixin Liu, Yu Zheng, Daokun Zhang, Hongxu Chen, Hao Peng, and Shirui Pan.
+2022. Towards unsupervised deep graph structure learning. In Proceedings of the
+ACM Web Conference 2022. 1392–1403.
+[35] Sitao Luan, Chenqing Hua, Minkai Xu, Qincheng Lu, Jiaqi Zhu, Xiao-Wen Chang,
+Jie Fu, Jure Leskovec, and Doina Precup. 2024. When do graph neural networks
+help with node classification? investigating the homophily principle on node
+distinguishability. Advances in Neural Information Processing Systems 36 (2024).
+[36] Andrew Kachites McCallum, Kamal Nigam, Jason Rennie, and Kristie Seymore.
+2000. Automating the construction of internet portals with machine learning.
+Information Retrieval 3 (2000), 127–163.
+[37] Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg S Corrado, and Jeff Dean. 2013.
+Distributed representations of words and phrases and their compositionality.
+Advances in neural information processing systems 26 (2013).
+[38] Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela
+Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et al. 2022.
+Training language models to follow instructions with human feedback. Advances
+in neural information processing systems 35 (2022), 27730–27744.
+[39] Yuhan Quan, Jingtao Ding, Chen Gao, Lingling Yi, Depeng Jin, and Yong Li. 2023.
+Robust preference-guided denoising for graph based social recommendation. In
+Proceedings of the ACM Web Conference 2023 . 1097–1108.
+[40] N Reimers. 2019. Sentence-BERT: Sentence Embeddings using Siamese BERT-
+Networks. arXiv preprint arXiv:1908.10084 (2019).
+[41] Philipp Sven Lars Schäfer, Daniel Dimitrov, Eduardo J Villablanca, and Julio
+Saez-Rodriguez. 2024. Integrating single-cell multi-omics and prior biological
+knowledge for a functional characterization of the immune system. Nature
+Immunology 25, 3 (2024), 405–417.
+[42] Zixing Song, Yifei Zhang, and Irwin King. 2022. Towards an optimal asymmetric
+graph structure for robust semi-supervised node classification. In Proceedings
+
+
+--- PAGE 10 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+of the 28th ACM SIGKDD conference on knowledge discovery and data mining .
+1656–1665.
+[43] Guangxin Su, Hanchen Wang, Ying Zhang, Adelle CF Coster, Marc Wilkins,
+Pablo F Canete, Di Yu, Yang Yang, and wenjie zhang. 2024. Inferring gene
+regulatory networks by hypergraph variational autoencoder. bioRxiv (2024),
+2024–04.
+[44] Christina V Theodoris, Ling Xiao, Anant Chopra, Mark D Chaffin, Zeina R
+Al Sayed, Matthew C Hill, Helene Mantineo, Elizabeth M Brydon, Zexian Zeng,
+X Shirley Liu, et al . 2023. Transfer learning enables predictions in network
+biology. Nature 618, 7965 (2023), 616–624.
+[45] Petar Veličković, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro
+Lio, and Yoshua Bengio. 2017. Graph attention networks. arXiv preprint
+arXiv:1710.10903 (2017).
+[46] Ruijia Wang, Shuai Mou, Xiao Wang, Wanpeng Xiao, Qi Ju, Chuan Shi, and Xing
+Xie. 2021. Graph structure estimation neural networks. In Proceedings of the web
+conference 2021. 342–353.
+[47] Jiaying Wu and Bryan Hooi. 2023. Decor: Degree-corrected social graph refine-
+ment for fake news detection. In Proceedings of the 29th ACM SIGKDD Conference
+on Knowledge Discovery and Data Mining . 2582–2593.
+[48] Lirong Wu, Haitao Lin, Zihan Liu, Zicheng Liu, Yufei Huang, and Stan Z Li. 2023.
+Homophily-enhanced self-supervision for graph structure learning: Insights and
+directions. IEEE Transactions on Neural Networks and Learning Systems (2023).
+[49] Qitian Wu, Wentao Zhao, Zenan Li, David P Wipf, and Junchi Yan. 2022. Node-
+former: A scalable graph structure learning transformer for node classification.
+Advances in Neural Information Processing Systems 35 (2022), 27387–27401.
+[50] Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka. 2018. How powerful
+are graph neural networks? arXiv preprint arXiv:1810.00826 (2018).
+[51] Junhan Yang, Zheng Liu, Shitao Xiao, Chaozhuo Li, Defu Lian, Sanjay Agrawal,
+Amit Singh, Guangzhong Sun, and Xing Xie. 2021. Graphformers: Gnn-nested
+transformers for representation learning on textual graph. Advances in Neural
+Information Processing Systems 34 (2021), 28798–28810.
+[52] Ruosong Ye, Caiqi Zhang, Runhui Wang, Shuyuan Xu, and Yongfeng Zhang. 2023.
+Natural language is all a graph needs. arXiv preprint arXiv:2308.07134 (2023).
+[53] Donghan Yu, Ruohong Zhang, Zhengbao Jiang, Yuexin Wu, and Yiming Yang.
+2021. Graph-revised convolutional network. In Machine Learning and Knowledge
+Discovery in Databases: European Conference, ECML PKDD 2020, Ghent, Belgium,
+September 14–18, 2020, Proceedings, Part III . Springer, 378–393.
+[54] Qiuyue Yuan and Zhana Duren. 2024. Inferring gene regulatory networks from
+single-cell multiome data using atlas-scale external data. Nature Biotechnology
+(2024), 1–11.
+[55] Seongjun Yun, Minbyul Jeong, Raehyun Kim, Jaewoo Kang, and Hyunwoo J Kim.
+2019. Graph transformer networks. Advances in neural information processing
+systems 32 (2019).
+[56] Jiong Zhang, Wei-cheng Chang, Hsiang-fu Yu, and Inderjit S. Dhillon. 2024. Fast
+multi-resolution transformer fine-tuning for extreme multi-label text classifica-
+tion. In Proceedings of the 35th International Conference on Neural Information
+Processing Systems (NIPS ’21). Curran Associates Inc., Red Hook, NY, USA, Article
+556, 14 pages.
+[57] Tianyu Zhang, Liwei Zhang, Philip RO Payne, and Fuhai Li. 2021. Synergistic
+drug combination prediction by integrating multiomics data in deep learning
+models. Translational bioinformatics for therapeutic development (2021), 223–238.
+[58] Yiran Zhang, John P Thomas, Tamas Korcsmaros, and Lejla Gul. 2024. Integrating
+multi-omics to unravel host-microbiome interactions in inflammatory bowel
+disease. Cell Reports Medicine 5, 9 (2024).
+[59] Zheng Zhang, Junxiang Wang, and Liang Zhao. 2024. Curriculum learning for
+graph neural networks: Which edges should we learn first. Advances in Neural
+Information Processing Systems 36 (2024).
+[60] Zhongjian Zhang, Xiao Wang, Huichi Zhou, Yue Yu, Mengmei Zhang, Cheng
+Yang, and Chuan Shi. 2024. Can Large Language Models Improve the Adversarial
+Robustness of Graph Neural Networks? arXiv preprint arXiv:2408.08685 (2024).
+[61] Zuobai Zhang, Minghao Xu, Arian Jamasb, Vijil Chenthamarakshan, Aurelie
+Lozano, Payel Das, and Jian Tang. 2022. Protein representation learning by
+geometric structure pretraining. arXiv preprint arXiv:2203.06125 (2022).
+[62] Haihong Zhao, Aochuan Chen, Xiangguo Sun, Hong Cheng, and Jia Li. 2024. All
+in one and one for all: A simple yet effective method towards cross-domain graph
+pretraining. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge
+Discovery and Data Mining . 4443–4454.
+[63] Jianan Zhao, Meng Qu, Chaozhuo Li, Hao Yan, Qian Liu, Rui Li, Xing Xie, and
+Jian Tang. 2022. Learning on large-scale text-attributed graphs via variational
+inference. arXiv preprint arXiv:2210.14709 (2022).
+[64] Jianan Zhao, Le Zhuo, Yikang Shen, Meng Qu, Kai Liu, Michael Bronstein,
+Zhaocheng Zhu, and Jian Tang. 2023. Graphtext: Graph reasoning in text space.
+arXiv preprint arXiv:2310.01089 (2023).
+[65] Kai Zhao, Qiyu Kang, Yang Song, Rui She, Sijie Wang, and Wee Peng Tay. 2024.
+Adversarial robustness in graph neural networks: A Hamiltonian approach. Ad-
+vances in Neural Information Processing Systems 36 (2024).
+[66] Zhou Zhiyao, Sheng Zhou, Bochao Mao, Xuanyi Zhou, Jiawei Chen, Qiaoyu
+Tan, Daochen Zha, Yan Feng, Chun Chen, and Can Wang. 2024. Opengsl: A
+comprehensive benchmark for graph structure learning. Advances in Neural
+Information Processing Systems 36 (2024).
+[67] Yonghua Zhu, Lei Feng, Zhenyun Deng, Yang Chen, Robert Amor, and Michael
+Witbrock. 2024. Robust Node Classification on Graph Data with Graph and Label
+Noise. In Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 38.
+17220–17227.
+[68] Dongcheng Zou, Hao Peng, Xiang Huang, Renyu Yang, Jianxin Li, Jia Wu, Chun-
+yang Liu, and Philip S Yu. 2023. Se-gsl: A general and effective graph structure
+learning framework through structural entropy optimization. In Proceedings of
+the ACM Web Conference 2023. 499–510.
+[69] Daniel Zügner and Stephan Günnemann. 2019. Adversarial Attacks on Graph Neu-
+ral Networks via Meta Learning. CoRR abs/1902.08412 (2019). arXiv:1902.08412
+http://arxiv.org/abs/1902.08412
+
+
+--- PAGE 11 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+A DERIVING THE EVIDENCE LOWER BOUND
+(ELBO)
+The primary objective in this work is to compute or maximize the
+log-likelihood of the observed labels given the node texts and graph
+structure:
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨), (13)
+where 𝒚𝐿 represents the observed labels, 𝒔𝑉 denotes the node texts,
+and 𝑨 is the graph structure. Here, directly computing this quantity
+is challenging due to the dependence on the unobserved labels 𝒚𝑈 .
+To address this challenge, we introduce a variational distribution
+𝑞(𝒚𝑈 | 𝒔𝑈) to approximate the true posterior distribution𝑝(𝒚𝑈 |
+{𝒔𝑛}𝑛∈V, 𝑨, 𝒚𝐿), thereby making the computation tractable.
+Starting from the marginal likelihood, we seek to express the
+log-likelihood of the observed labels 𝒚𝐿 as:
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨) = log
+∫
+𝑝(𝒚𝐿, 𝒚𝑈 |{ 𝒔𝑛}𝑛∈V, 𝑨) d𝒚𝑈. (14)
+Since direct evaluation of this integral is intractable, we introduce
+the variational distribution 𝑞(𝒚𝑈 | 𝒔𝑈) to approximate the true
+posterior. By multiplying and dividing the integrand by𝑞(𝒚𝑈| 𝒔𝑈),
+we obtain:
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨) = log
+∫
+𝑞(𝒚𝑈 | 𝒔𝑈)𝑝(𝒚𝐿, 𝒚𝑈 |{ 𝒔𝑛}𝑛∈V, 𝑨)
+𝑞(𝒚𝑈 | 𝒔𝑈) d𝒚𝑈. (15)
+Applying Jensen’s inequality, which exploits the concavity of the
+logarithmic function, gives:
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨)≥
+∫
+𝑞(𝒚𝑈 | 𝒔𝑈) log
+𝑝(𝒚𝐿, 𝒚𝑈 |{ 𝒔𝑛}𝑛∈V, 𝑨)
+𝑞(𝒚𝑈 | 𝒔𝑈)
+
+d𝒚𝑈, (16)
+which simplifies to:
+log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨)≥ E𝑞(𝒚𝑈|𝒔𝑈)[log𝑝(𝒚𝐿, 𝒚𝑈|{ 𝒔𝑛}𝑛∈V, 𝑨)]
+− E𝑞(𝒚𝑈|𝒔𝑈)[log𝑞(𝒚𝑈| 𝒔𝑈)].
+(17)
+The right-hand side of this inequality is the Evidence Lower
+Bound (ELBO), which provides a tractable lower bound on the
+log-likelihood:
+ELBO = E𝑞(𝒚𝑈|𝒔𝑈)[log𝑝(𝒚𝐿, 𝒚𝑈|{ 𝒔𝑛}𝑛∈V, 𝑨)]
+− E𝑞(𝒚𝑈|𝒔𝑈)[log𝑞(𝒚𝑈| 𝒔𝑈)]. (18)
+Maximizing the ELBO with respect to both the variational distri-
+bution𝑞(𝒚𝑈| 𝒔𝑈) and the model parameters allows us to indirectly
+maximize the marginal log-likelihood log𝑝(𝒚𝐿|{ 𝒔𝑛}𝑛∈V, 𝑨).
+B PROMPT DESIGN
+Data cleaning verification. Figure 5 compares the test accuracy of
+LangGSL using raw texts versus cleaned texts across three datasets:
+Instagram, Pubmed, and Cora. The results clearly indicate that
+LangGSL consistently performs better when using cleaned texts,
+demonstrating the importance of data cleaning in text-attributed
+graphs (TAGs). For instance, on the Pubmed dataset, LangGSL-
+GSLM achieves an accuracy improvement of approximately 10.4%
+when transitioning from raw to cleaned texts (81.72% to 92.14%).
+Similarly, LangGSL-LM shows a significant gain on Pubmed, in-
+creasing accuracy from 79.18% to 91.49%. Improvements on Insta-
+gram and Cora are also observed, though less pronounced. These
+findings validate the effectiveness of cleaning noisy raw texts in
+enhancing the overall model performance in downstream tasks.
+Prompt sample. Building on the idea introduced in the Method
+section, we present a general example of a node𝑛∈V from the
+Instagram dataset [23], including the prompt and the corresponding
+LLM (GPT-3.5-turbo [38]) response:
+Profile: 🎨 @colourluxesalon\n 🗓  W-2-F \n 💋 @modernbeigesalon\n
+🚫 Books Closed ATT\n 🍎 @bellamihairpro \n   \u200d 🏫 Premier
+Educator\n 🎨 Aveda Artist\n 🐶 #haircolormutt\n 👠 Fashion Lover
+Instruction: The input is a user introduction on Instagram and belongs
+to one of two types of users: 'Normal Users' or 'Commercial Users'.
+Focus on key details relevant to identifying these 2 types:
+- "Normal Users" refers to individuals who share personal experiences,
+daily life, hobbies, interests, creative expressions, family moments,
+travel adventures and so on.
+- "Commercial Users" refers to individuals who demonstrate a clear
+intent to engage in sales and services for commercial purposes.
+Return a dictionary with three key-value pairs:
+- "Summary" should be a paragraph that provide a coherent self-
+introduction that conveys all the user's information in English,
+translating any emojis and special symbols appropriately.
+- "Class" should be either "Normal Users" or "Commercial Users" based
+on the summary.
+- "Explanation" should explain why the user was classified into that
+category in English.
+Output format: {"Summary": "...", "Class": "...", "Explanation": "..."}
+Summary: I am a premier educator and Aveda artist at Colour Luxe
+Salon and Modern Beige Salon. My books are currently closed, but you
+can check out my work on Bellami Hair Pro. I am a fashion lover and use
+the hashtag #haircolormutt.
+Class: Commercial Users.
+Explanation: The user was classified as a 'Commercial User' based on
+the clear intent to engage in sales and services through their roles as a
+premier educator and Aveda artist at Colour Luxe Salon and Modern
+Beige Salon, as well as promoting their work on Bellami Hair Pro.
+Prompt type and LLM choice. Figure 6 showcases the test perfor-
+mance of LangGSL on the Instagram dataset using different prompt
+types and LLM settings, comparing both test Accuracy (Acc) and
+F1 Score (F1) for GSLM and LM components. The models utilize
+summary-based (Sum.) and explanation-based (Expl.) outputs from
+GPT-4 and GPT-3.5. Notably, GPT-4 with summary-based prompts
+consistently achieves the highest accuracy and F1 scores across
+both GSLM and LM settings. This highlights the effectiveness of
+summary-based prompts in generating informative node represen-
+tations and underscores the impact of prompt and model selection
+in enhancing performance.
+
+
+--- PAGE 12 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+Table 5: Statistics of all datasets, including the number of nodes and edges, the average node degree, the average number of
+tokens in the textual descriptions associated with nodes, the number of classes, the training ratio in the supervised setting, the
+node text, the domains and tasks they belong to.
+Dataset # Nodes # Edges Avg. # Deg Avg. # Tok # Classes # Train Node Text Domain Group
+Instagram 11,339 144,010 25.40 59.25 2 10.00% User’s profile Social heterophilious
+Pubmed 19,717 44,338 4.50 468.56 3 0.30% Paper content Citation homophilous
+ogbn-arxiv 169,343 1,166,243 13.77 243.19 40 53.70% Paper content Citation homophilous
+Cora 2,708 5,429 4.01 186.53 7 60.00% Paper content Citation homophilous
+Instagram Pubmed Cora
+ 
+60
+65
+70
+75
+80
+85
+90
+95
+100Accuracy
+66.10
+81.72
+89.13
+67.23
+91.12 90.70
+65.00
+79.18
+82.71
+66.23
+92.14
+88.52
+ 
+ 
+LangGSL-GSLM w raw data
+LangGSL-GSLM w clean data
+LangGSL-LM w raw data
+LangGSL-LM w clean data
+Figure 5: Comparison of test accuracy of LangGSL on Raw Texts vs. Cleaned Texts.
+60.0 40.0 20.0 0.0 20.0 40.0 60.0
+ 
+GPT-3.5 Expl.
+GPT-4 Expl.
+GPT-3.5 Sum.
+GPT-4 Sum.
+GSLM
+T est Accuracy T est F1 Score
+60.0 40.0 20.0 0.0 20.0 40.0 60.0
+ 
+LM
+T est Accuracy T est F1 Score
+Figure 6: Test performance of LangGSL on the Instagram dataset using different prompts and LLMs settings. Results include
+test Accuracy (Acc) and F1 Score (F1). Each value is presented as mean ± standard deviation. Sum. means Summary, and Expl.
+means Explanation.
+Profile: 台中人 · 偶爾外縣市  （草莓乾熱銷中） \n 美食 · 情侶 · 景點 · 日
+常 · 寫真 · 住宿 · 保養 \n 有任何問題歡迎小盒子 💕🐑 \n# 戳戳吃什麼  #
+羊羊吃 __\n 抖音  yang0928\nTikTok yang928\n 👣  🇹🇭🇲🇾🇯🇵🇭🇰🇨🇳
+Summary: The user mentions that strawberry dried fruits are selling
+well, indicating a commercial intent. Additionally, the user includes
+hashtags related to food, accommodation, and skincare, suggesting
+engagement in sales and services for commercial purposes.
+Class: Normal Users
+Explanation: The user's profile focuses on personal hobbies and interests
+such as food, travel, and photography, indicating a personal and casual
+tone.\n- Contact Information: The user provides a casual invitation to
+contact them with emojis, suggesting a personal approach rather than a
+professional one.
+C DATASET
+We select four public and real-world datasets used for evaluation.
+Table 5 shows detailed statistics of these datasets. And the details
+of text preprocessing and feature extraction methods used for TAG
+datasets can be found in Table 6. The datasets used in this work
+include Instagram, Pubmed, ogbn-arxiv, and Cora, each with dis-
+tinct characteristics. Instagram is a social network dataset with
+heterophilous graph structures, consisting of user profile descrip-
+tions and two classes. Pubmed, ogbn-arxiv, and Cora are citation
+
+
+--- PAGE 13 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+networks with homophilous graph structures, where nodes repre-
+sent paper content. Below are the details of these datasets:
+Pubmed. The Pubmed dataset is a citation network comprising
+research papers and their citation relationships within the biomedi-
+cal domain. The raw text data for the PubMed dataset was obtained
+from the GitHub repository provided by Chen et al. [ 6]. In this
+dataset, each node represents a research paper, and each edge de-
+notes a citation relationship between two papers.
+ogbn-arxiv. The ogbn-arxiv dataset is a citation network consisting
+of research papers and their citation relationships, collected from
+the arXiv platform. The raw text data for the Ogbn-arxiv dataset
+was obtained from the GitHub repository provided by OFA [ 31],
+with the original raw texts available here 2. In this dataset, each
+node represents a research paper, and each edge signifies a citation
+relationship.
+Instagram. The Instagram dataset is a social network where nodes
+represent users and edges represent following relationships. The
+raw text data for the Instagram dataset was collected from the
+GraphAdapter [23]. The raw text associated with each node includes
+the user’s personal introduction. Each node is labeled to indicate
+whether the user is classified as commercial or normal.
+Cora. The Cora dataset is a citation network comprising research
+papers and their citation relationships within the computer science
+domain. The raw text data for the Cora dataset was sourced from
+the GitHub repository provided by Chen et al. [6]. In this dataset,
+each node represents a research paper, and the raw text feature
+associated with each node includes the title and abstract of the
+respective paper. An edge in the Cora dataset signifies a citation
+relationship between two papers. The label assigned to each node
+corresponds to the category of the paper.
+Table 6: Details of feature extraction methods used for TAG
+datasets.
+Dataset Methods # Features
+Instagram TF-IDF 500
+Pubmed TF-IDF 500
+ogbn-arxiv skip-gram [37] 128
+Cora Bag-of-Words [17] 1433
+D ADDITIONAL RESULTS
+Parameter study. In the ELBO (Equation 3) optimization phase,
+we iteratively train LM and GSLM based on our derived equations:
+Equation 9 and Equation 12. To adjust the relative influence of
+pseudo-labels in the learning process, we introduce two coefficients,
+𝛼 and𝛽, denoted as LM-PL-Weight and GSLM-PL-Weight respec-
+tively. We then systematically analyze these two hyperparameters
+by examining how the performance varies with different values of
+𝛼 and𝛽 on Pubmed dataset.
+The parameter study of LangGSL demonstrates that both LangGSL-
+GSLM and LangGSL-LM maintain robust performance across differ-
+ent values of LM-PL-weight (𝛼) and GSLM-PL-weight (𝛽). LangGSL-
+LM shows greater sensitivity to changes in these weights, with
+2https://snap.stanford.edu/ogb/data/misc/ogbn_arxivs
+optimal performance achieved around the intermediate range of
+0.3-0.5, while LangGSL-GSLM remains more stable. These findings
+highlight the importance of balanced pseudo-label contributions
+for maximizing the model’s effectiveness.
+Detailed results of LangGSL through the paper.Table 7 presents
+a comprehensive comparison of node classification accuracy (mean
+± std%) for LangGSL across all related downstream tasks, in compar-
+ison to baseline GNN- and LM-based methods. We include both shal-
+low GNN baselines (𝐺𝑁𝑁 shallow) and LangGSL’s graph structure
+learning model (LangGSL-GSLM), alongside different LM-based
+methods, such as LLaMA2-7b (LLM), fine-tuned Sent-BERT (de-
+noted as LMfinetune), and LangGSL-LM. The experiments are con-
+ducted across a variety of datasets, including Cora, Pubmed, Insta-
+gram, and ogbn-arxiv, under both standard and adversarial settings
+(with varying perturbation rates). The results consistently demon-
+strate that LangGSL outperforms the baselines in both GNN and
+LM categories, confirming its effectiveness and robustness across
+different graph structures, scales, and task scenarios.
+E IMPLEMENTATION
+We perform comprehensive hyperparameter tuning to ensure a
+thorough and unbiased evaluation of both graph structure learn-
+ing methods and LLM-based graph learning approaches. To en-
+sure the generality of the experimental results, all experiments
+were randomly run five times/seeds.The hyperparameter search
+spaces of all methods are presented in Table 8 and Table 9.
+We acknowledge and appreciate the comprehensive benchmarks
+provided by recent works [29, 30, 66], which have greatly informed
+and guided our work.
+The configuration used in LangGSL: We conducted all experi-
+ments on an Nvidia A5000, using GPT-4 [1] for prompt engineering,
+GCN [26] as the default GSLM backbone and Sent-BERT [ 40] as
+the default language model backbone unless otherwise specified.
+The default GCN architecture consists of 2 hidden layers with 128
+hidden units, a dropout rate of 0.5, a learning rate of 0.01, and a
+weight decay of 5e-4.
+The experiments across different datasets share following hyper-
+parameter ranges:
+• GSLM lr = 0.005, 0.01, 0.02, layers = 2, 3, hidden units = 64,
+128, 256, dropout = 0.2, 0.5, 0.6, GSLM-pl-ratio = 0.2, 0.3, 0.5,
+0.7, 0.8, 1.0, GSLM-pl-weight = 0.2, 0.3, 0.5, 0.7, 0.8, 1.0.
+• LM lr = 1e-5, 2e-5, 5e-5, dropout = 0.1, 0.3, cla-dropout = 0.1,
+0.4, LM-pl-ratio = 0.2, 0.3, 0.5, 0.7, 0.8, 1.0, LM-pl-weight =
+0.2, 0.3, 0.5, 0.7, 0.8, 1.0.
+• Iteration inf-n-epochs = 1, 2, 3.
+These settings were used consistently across experiments to
+ensure the comparability of results.
+Received 20 February 2007; revised 12 March 2009; accepted 5 June 2009
+
+
+--- PAGE 14 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+0.0 0.2 0.4 0.6 0.8 1.0
+LM-PL-weight 
+88
+89
+90
+91
+92
+93
+94
+95
+Accuracy
+ 
+LangGSL-GSLM
+LangGSL-LM
+0.0 0.2 0.4 0.6 0.8 1.0
+GSLM-PL-Weight 
+88
+89
+90
+91
+92
+93
+94
+95
+ 
+ 
+LangGSL-GSLM
+LangGSL-LM
+ 
+Figure 7: Parameter study of LangGSL.
+Table 7: Node classification accuracy (mean ± std%) of LangGSL across all related downstream tasks discussed in this paper,
+compared with the node classification accuracy (mean ± std%) of baseline GNN- and LM-based methods. Fine-tuning Sent-BERT
+on labeled nodes, denoted as LM finetune. Using embeddings generated by LLaMA2-7b denoted as LLM. Using shallow features
+on GNN denoted as 𝐺𝑁𝑁 shallow.
+Datasets GSLM 𝐺𝑁𝑁 LM
+𝐺𝑁𝑁 shallow LangGSL-GSLM LLM LM finetune LangGSL-LM
+Table 1
+Cora GCN 87.36± 1.60 90 .70± 0.43 52 .88± 1.96 76 .07± 3.78 88 .52± 1.26
+Pubmed GCN 78.98± 0.35 91 .12± 0.44 66 .07± 0.56 66 .97± 0.21 92 .14± 1.31
+Instagram GCN 63.79± 0.08 67 .23± 0.09 62 .47± 0.98 63 .12± 0.21 66 .23± 0.38
+ogbn-arxiv GCN 71.82± 0.27 76 .87± 0.62 72 .98± 0.64 72 .80± 0.13 76 .22± 0.41
+Table 2
+Pubmed GCN 93.21± 0.12 93 .37± 0.15
+ogbn-arxiv GCN 59.21± 0.38 73 .62± 0.26
+Instagram GCN 66.27± 0.18 65 .97± 0.26
+Figure 3
+Pubmed (ptb 0.00) GCN 91.12± 0.44 92 .14± 1.31
+Pubmed (ptb 0.05) GCN 89.22± 0.34 93 .03± 0.37
+Pubmed (ptb 0.10) GCN 87.56± 0.79 91 .89± 1.48
+Pubmed (ptb 0.20) GCN 86.00± 0.68 91 .04± 1.05
+Table 3
+Pubmed GCN 91.12± 0.44 92 .14± 1.31
+Instagram GCN 67.23± 0.09 66 .23± 0.38
+ogbn-arxiv GCN 76.87± 0.62 76 .22± 0.41
+Figure 4
+Pubmed
+GCN 91.12± 0.44 92 .14± 1.31
+STABLE 91.41± 0.60 92 .82± 0.94
+GEN 91.05± 0.77 92 .95± 0.27
+Nodeformer 92.58± 0.69 92 .36± 0.93
+IDGL 93.04± 0.32 93 .11± 0.46
+
+
+--- PAGE 15 ---
+Bridging Large Language Models and Graph Structure Learning Models for Robust Representation Learning Conference’17, July 2017, Washington, DC, USA
+Table 8: Hyper-parameter search space of all implemented graph structure learning methods.
+Algorithm Hyper-parameter Search Space
+General Settings learning rate 1e-2, 1e-3, 1e-4
+weight decay 5e-3, 5e-4, 5e-5, 0
+GCN [26] number of layers 2, 3, 4
+hidden size 16, 32, 64, 128
+dropout 0, 0.2, 0.5, 0.8
+GRCN [53] 𝐾 for nearest neighbors 1, 5, 50, 100, 200
+learning rate for graph 1e-1, 1e-2, 1e-3, 1e-4
+SLAPS [10] learning rate of DAE 1e-2, 1e-3
+dropout_adj1 0.25, 0.5
+dropout_adj2 0.25, 0.5
+𝑘 for nearest neighbors 10, 15, 20
+𝜆 0.1, 1, 10, 100, 500
+ratio 1, 5, 10
+nr 1, 5
+CoGSL [32] ve_lr 1e-1, 1e-2, 1e-3, 1e-4
+ve_dropout 0, 0.2, 0.5, 0.8
+𝜏 0, 0.2, 0.5, 0.8
+𝜖 0.1, 1
+𝜆 0, 0.2, 0.5, 0.8, 1
+Nodeformer [49] number of layers 2, 3, 4
+hidden size 32, 64, 128
+number of heads 1, 2, 4
+dropout 0, 0.2, 0.5, 0.8
+number of samples for gumbel softmax sampling 5, 10, 20
+weight for edge reg loss 1, 0.1, 0.01
+GEN [46] 𝑘 for nearest neighbors 8, 9, 10
+tolerance for EM 1e-2, 1e-3
+threshold for adding edges 0.5, 0.6, 0.7
+SEGSL [68] 𝐾 2, 3
+𝑠𝑒 2, 3
+LDS [12] 𝜏 5, 10, 15
+ProGNN [25] learning rate for adj 1e-1, 1e-2, 1e-3, 1e-4
+IDGL [5] number of anchors 300, 500, 700
+number of heads in structure learning 2, 4, 6, 8
+𝜆1 for interpolation 0.7, 0.8, 0.9
+𝜆2 for interpolation 0.1, 0.2, 0.3
+SUBLIME [34] dropout rate for edge 0, 0.25, 0.5
+𝜏 for bootstrapping 0.99, 0.999, 0.9999
+STABLE [28] threshold for cosine similarity 0.1, 0.2, 0.3
+𝑘 for nearest neighbors 1, 3, 5
+RCL [59] number of layers 2, 3
+hidden size 64, 128, 256
+𝜆 1, 2, 3, 4, 5
+start𝜆 5e-4, 1e-3, 2e-3
+node mask 0, 1
+𝛽 0.95, 0.98, 1.00
+HES-GSL [48] hidden size𝑓 64, 128, 256
+hidden size𝐹 256, 512, 1024
+pretrain epoch 0, 200, 400
+loss weight 1, 3, 5, 8, 10
+neighbor number 3, 5, 10, 20, 30
+iteration step 1, 3, 5, 8, 10
+noise weight 5, 10, 20, 100
+
+
+--- PAGE 16 ---
+Conference’17, July 2017, Washington, DC, USA Su et al.
+Table 9: Hyper-parameter search space of all implemented LLM-based graph learning approaches.
+Algorithm Hyper-parameter Search Space
+DeBERTa [18] number of layers 2, 3, 4
+hidden size 64, 128 ,256
+dropout 0.3, 0.5, 0.6
+RoBERTa [33] number of layers 2, 3, 4
+hidden size 64, 128 ,256
+dropout 0.3, 0.5, 0.6
+Sent-BERT [40] number of layers 2, 3, 4
+hidden size 64, 128 ,256
+dropout 0.3, 0.5, 0.6
+TAPE [19] number of layers 2, 3, 4
+hidden size 64, 128 ,256
+dropout 0.3, 0.5, 0.6
+GIANT [7] hidden size 64, 128 ,256
+dropout 0.3, 0.5, 0.6
+OFA Supervised [31] learning rate 1e-4
+𝐽𝐾 none
+number of layers 6
+hidden size 768
+dropout 0.15
+GraphAdapter [23] learning rate 5e-4
+number of layers 5
+max length 2048
+hidden size 64, 128
+LLaGA [4] learning rate 2e-3
+warmup ratio 0.03
+use hop 2
+sample neighbour size 10
+batch size 16
+lr scheduler type cosine
+max length 4096
+GraphText [64] learning rate 5e-5
+dropout 0.5
+subgraph size 3
+max length 1024
+InstructGLM [52] learning rate 8e-5
+warmup ratio 0.05
+dropout 0.1
+clip grad norm 1
+GLEM [63] number of layers 2, 3, 4
+hidden size 64, 128, 256
+dropout 0.3, 0.5, 0.6
+PATTON [24] learning rate 1e-5
+warmup ratio 0.1
+dropout 0.1
+batch size 64
+max length 256

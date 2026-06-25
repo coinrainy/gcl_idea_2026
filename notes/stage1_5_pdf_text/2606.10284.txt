@@ -1,0 +1,2268 @@
+
+
+--- PAGE 1 ---
+Revisiting Positive Samples in Graph Contrastive Learning:
+From the Perspective of Message Passing
+Lianze Shan †1 Ningchong Wang †2 Jitao Zhao †1 Di Jin 1 Dongxiao He * 1
+Abstract
+Graph Contrastive Learning (GCL), which trains
+graph encoders by maximizing similarity between
+positive samples and minimizing it between neg-
+ative ones, has emerged as a mainstream graph
+pre-training paradigm. It is widely recognized
+that positive samples are essential in GCLs. Ide-
+ally, maximizing the similarity of positive sam-
+ples enables graph encoders to capture intrinsic
+semantics and patterns of graph data. However,
+we discover an interesting phenomenon:GCLs
+can achieve competitive performance even with-
+out positive samples.This motivates us to revisit
+the fundamental mechanism of positive samples
+in GCLs. From the perspective of Dirichlet en-
+ergy, we theoretically find that message passing,
+a key mechanism in graph encoders, trivializes
+the maximization of positive samples, prevent-
+ing GCLs from effectively learning from positive
+samples. To address this, we propose SPGCL to
+mitigate the trivialization caused by message pass-
+ing and restore the learning efficacy of positive
+samples. Specifically, we find that high Dirich-
+let energy features help positive samples provide
+effective learning signals while low Dirichlet en-
+ergy features contribute little to positive learning
+signal but is useful for positive sampling. Based
+on this, SPGCL introduces an energy-aware prop-
+agation mechanism that selectively propagates
+features based on their Dirichlet energy, prevent-
+ing low-energy features from dominating simi-
+larity. Furthermore, we construct a positive sam-
+pling matrix based on Dirichlet energy to exclude
+misleading positive samples and focus on node
+pairs with higher discrimination. Extensive exper-
+iments demonstrate the effectiveness of SPGCL.
+†Equal contribution. *Corresponding author. 1School of Com-
+puter Science and Technology, Tianjin University, Tianjin, China
+2School of Future Technology, Tianjin University, Tianjin, China.
+Correspondence to: Dongxiao He<hedongxiao@tju.edu.cn>.
+Proceedings of the 43 rd International Conference on Machine
+Learning, Seoul, South Korea. PMLR 306, 2026. Copyright 2026
+by the author(s).
+Cora CiteSeer PubMed
+0.60
+0.70
+0.80
+0.90
+Random Init.
+GCL(InfoNCE)
+w/o Pos.
+(a)Impact of positive alignment.
+Cora CiteSeer PubMed0.40
+0.50
+0.60
+0.70
+0.80
+Before MP
+After MP (b)Pos. similarity.
+Figure 1.Motivation experiments (Acc.). In (a), Random Init.
+means a GCN encoder with randomly initialized parameters with-
+out any training; GCL (InfoNCE) means a standard graph con-
+trastive learning model trained with the InfoNCE loss; w/o Pos.
+means a GCL variant where the positive alignment term is removed
+from the InfoNCE loss. In (b), Before MP means the average co-
+sine similarity of positive samples before message passing; After
+MP means the average cosine similarity after message passing.
+1. Introduction
+Graph Contrastive Learning (GCL), which trains Graph Neu-
+ral Network (GNN) encoders by aligning positive samples
+while distinguishing them from negative ones, has emerged
+as a mainstream self-supervised pre-training paradigm for
+learning graph representations without labels (Wu et al.,
+2021a). It has been extensively deployed across diverse
+real-world scenarios and achieved great success, including
+e-commerce recommendation systems (He et al., 2020), so-
+cial network analysis (Yanardag & Vishwanathan, 2015),
+and molecular property prediction (Li et al., 2022).
+In GCLs, positive samples are widely regarded as a key com-
+ponent (Thakoor et al., 2021; Liu et al., 2022a; Lee et al.,
+2022; Li et al., 2023). GCLs typically construct positive
+samples by augmentation-based sampling (Zhu et al., 2020;
+Velickovic et al., 2019; Zhu et al., 2021) or neighborhood-
+based sampling (Zhang et al., 2022a; He et al., 2023). Ide-
+ally, aligning positive pairs enables graph encoders to learn
+invariant representations that encode intrinsic semantic and
+structural patterns of graph data (Zhu et al., 2021). A broad
+consensus holds that the efficacy of GCLs critically de-
+pends on the quality of learning from this alignment process.
+Therefore, many recent works focus on designing various
+augmentation and sampling strategies to enhance the ef-
+1
+arXiv:2606.10284v1  [cs.LG]  9 Jun 2026
+
+
+--- PAGE 2 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+fectiveness of learning from positive samples. For exam-
+ple, GCA (Zhu et al., 2021), SpCo (Liu et al., 2022a), and
+CSGCL (Chen et al., 2023) design effective augmentation
+strategies to improve the construction of positive samples.
+LocalGCL (Zhang et al., 2022a), AFGRL (Lee et al., 2022),
+and NeCo (He et al., 2023) improve positive samples by
+adopting carefully designed neighbor sampling.
+However, we find a counterintuitive phenomenon:the posi-
+tive samples, which are widely considered essential in GCLs,
+have surprisingly limited impact on performance.Here,
+we begin with a motivation experiment and the results are
+presented in Figure 1 (a). We show the results of three
+models: a randomly initialized Graph Convolutional Net-
+work (GCN) (Kipf & Welling, 2017), a GCL model trained
+with the InfoNCE loss (Zhu et al., 2020), and a GCL vari-
+ant without positive samples. It can be observed that re-
+moving positive samples achieves competitive performance,
+closely matching the standard GCL and outperforming the
+randomly initialized GCN. This suggests that the benefit of
+positive alignment is limited, prompting us to ask:Why
+do positive samples fail to provide significant performance
+gains?Whatconstrains learning from positive samples?
+Howto learn more effectively from positive samples? Es-
+sentially, the effectiveness of positive samples stems from
+learning invariant semantics under substantial perturbations;
+i.e., positive samples should exhibit significant diversity
+while preserving core semantics. However, as shown in
+Figure 1(b), we observe a marked increase in the average
+representation similarity of positive samples after message
+passing. This motivates us to theoretically investigate the
+impact of message passing on positive samples learning.
+Consistent with our empirical observation, we theoretically
+find that message passing increases the expected similar-
+ity between positive samples. This reduces the diversity
+between positive samples before contrastive optimization,
+which we refer to as a pre-alignment effect, weakening the
+learning signal carried by positive samples.
+We present a detailed theoretical analysis in Section 3.
+Specifically, we first analyze how GNN message passing
+affects positive samples under two widely used positive con-
+struction strategies, including augmentation-based positive
+samples and neighborhood–based positive samples. We
+theoretically prove that GNN message passing inherently
+increases the expected similarity between positive samples,
+implying that positive samples can become overly similar
+before contrastive optimization. Consequently, similarity in-
+crease alone can not distinguish effective positive alignment
+from trivial similarity induced by message passing, and thus
+is insufficient to reflect how much useful information GCL
+can learn from positive samples. We further introduce a met-
+ric to measure the effectiveness of positive sample learning
+and define it as the mutual information between the ground
+truth sample distribution and the embedding similarity dis-
+tribution. We then prove that this effectiveness is strictly
+upper bounded by the Dirichlet energy of each feature, i.e.,
+low-energy features dominate the similarity score but offer
+negligible signals for positive samples learning. This not
+only explains why GCLs maintain competitive performance
+without positive samples, but also provides a principled
+guideline for optimizing positive samples learning in GCLs.
+Based on the above findings and theoretical analysis, we
+proposeSeparatePropagationGraphContrastiveLearning
+(SPGCL) 1 to reduce the pre-alignment effect of message
+passing and better exploit positive samples. Specifically,
+SPGCL introduces an Energy Aware Propagation (EAP)
+mechanism. For each feature dimension, we estimate its
+Dirichlet energy and separate its propagation accordingly.
+Low-energy features are excluded from message passing
+to eliminate their contribution to redundant pre-alignment
+effect, while high-energy features are propagated to pre-
+serve informative diversity. As a result, contrastive objective
+is forced to capture invariant representations from feature
+components that provide effective positive learning signals.
+Furthermore, we design an Energy-guided Positive Sam-
+pling (EPS) mechanism to construct more reliable positive
+samples. Existing GCL methods typically rely on heuris-
+tic data augmentations (Zhu et al., 2020; Velickovic et al.,
+2019; Thakoor et al., 2021) or local neighborhood–based
+sampling (Zhang et al., 2022a; Lee et al., 2022) to define
+positive samples. These strategies inevitably introduce mis-
+leading positive samples, as stochastic perturbations may
+destroy core semantics while local neighbors lack semantic
+consistency in heterophilic graphs. Therefore, we lever-
+age low-energy features to construct a probabilistic positive
+sampling matrix. Since low-energy features capture stable
+signals that are less sensitive to perturbations and neighbor-
+hood noise, using them for positive sampling helps filter out
+misleading positives while retaining semantically reliable
+relations. Our contributions can be summarized as follows:
+• We find a phenomenon in GCLs, termed pre-alignment
+effect, where message passing makes positive samples
+similar before optimization, weakening the effective
+learning from positive samples.
+• We propose SPGCL, which restores informative posi-
+tive learning by separating feature propagation based
+on Dirichlet energy and using low-energy features to
+guide positive sampling.
+• We conducted extensive experiments on 12 graph
+benchmarks, including node classification and clus-
+tering tasks. The results demonstrate that SPGCL out-
+performs state-of-the-art GCLs.
+1Code is publicly available at https://github.com/
+hedongxiao-tju/SPGCL.
+2
+
+
+--- PAGE 3 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+2. Preliminary
+In this section, we introduce the basic concepts and notations
+used in this paper, including graph-structured data, graph
+neural networks, and graph contrastive learning. Unless
+otherwise specified, we use calligraphic symbols to denote
+sets, bold uppercase letters for matrices, bold lowercase
+letters for vectors, and lowercase letters for scalars.
+Graph-structured data.A graph is denoted as G= (V,T) ,
+where V={v 1, . . . , vN } is the set ofN nodes and T ⊆ V×
+V is the set of edges. Each node vi ∈ Vis associated with
+a feature vector xi ∈R F , and all node features are stacked
+into a feature matrix X∈R N×F . The graph structure is
+represented by an adjacency matrix A∈ {0,1}N×N , where
+Aij = 1if(v i, vj)∈ Tand0otherwise.
+Graph Neural Network.Graph Neural Networks (GNNs)
+aim to learn node representations by iteratively aggregating
+information from local neighbors (Wu et al., 2021b; Zhou
+et al., 2020). Most GNNs follow the message passing frame-
+work, where the representation of each node is updated by
+combining its own features with its neighbors. Formally, let
+H(0) =X denote the input node features, at the l-th layer,
+a GNN encoder updates node representations as:
+H(l+1) =σ
+
+PH(l)W(l)
+
+,(1)
+where W(l) is a learnable weight matrix, σ(·) is a nonlinear
+activation function, and P is a propagation operator derived
+from the graph structure. A representative example of GNNs
+is Graph Convolutional Network (GCN) (Kipf & Welling,
+2017), which employs the normalized adjacency matrix with
+self-loops for propagation:
+P= ˜D− 1
+2 ˜A ˜D− 1
+2 , ˜A=A+I,(2)
+where ˜D is the corresponding degree matrix. This prop-
+agation can be viewed as a form of Laplacian smoothing
+that encourages neighboring nodes to have similar repre-
+sentations. This smoothing effect can be measured by the
+Dirichlet energy. Given a graph signal f∈R N , its Dirichlet
+energy is defined as:
+E(f) =f ⊤Lf= 1
+2
+X
+(vi,vj )∈T
+Aij(fi −f j)2,(3)
+where L=D−A is the graph Laplacian. Low-energy
+features correspond to smoother signals across the graph,
+while high-energy features preserve greater variation among
+neighboring nodes.
+Graph Contrastive Learning.Graph Contrastive Learning
+(GCL) aims to train GNN encoders based on mutual infor-
+mation maximization (Velickovic et al., 2019). However,
+directly maximizing mutual information is intractable in
+practice. Instead, most GCL methods adopt contrastive ob-
+jectives that provide a lower bound on mutual information.
+A commonly used formulation is the InfoNCE loss (Oord
+et al., 2018), defined as:
+LInfoNCE(hi) =−log(P
+p∈Pi
+exp(sim(hi,h p)/τ)
+P
+p∈Pi
+exp(sim(hi,h p)/τ) + P
+n∈Ni
+exp(sim(hi,h n)/τ) ),
+(4)
+where Pi and Ni denote the sets of positive and negative
+representations for anchor hi, respectively, sim(·,·) denotes
+a similarity function, τ is a temperature parameter, and
+exp(·)denotes the exponential function.
+3. Theoretical Analysis
+In this section, we theoretically investigate how GNN mes-
+sage passing affects positive samples learning in graph con-
+trastive learning. We first show that, under common positive
+samples construction rules, message passing inherently in-
+creases the expected similarity between positive samples,
+leading to a pre-alignment effect. This observation indicates
+that increased similarity alone is insufficient to characterize
+how much information GCL actually learns from positive
+alignment. To address this, we introduce an information-
+theoretic metric to quantify positive learning effectiveness,
+defined as the mutual information between the ground truth
+sample distribution and the embedding similarity encoded
+by GNN. Based on this, we further derive a feature-wise
+upper bound, showing that the contribution of each feature
+dimension to positive learning effectiveness is limited by its
+Dirichlet energy. These results reveal that low-energy fea-
+tures dominate similarity increase while providing limited
+learning signal, which motivates separating their propaga-
+tion to better exploit informative positive alignment.
+We now analyze the effect of message passing on positive
+samples under common positive construction rules and give
+the following lemma:
+Lemma 3.1(Pre-alignment effect of Message Passing).
+Let P be a symmetric propagation operator and denote
+H(l+1) ≜P (l)H(l). For a node pair (vi, vj), let R(l)
+ij ≜
+ϕ
+
+H(l)
+i,: ,H (l)
+j,:
+
+, where ϕ is an inner product or cosine simi-
+larity with normalized features. Then, under common posi-
+tive construction rules, for∀l≥0we have:
+E
+h
+R(l+1)
+ij |(v i, vj)∈ P
+i
+≥E
+h
+R(l)
+ij |(v i, vj)∈ P
+i
+.
+(5)
+This effect holds under two commonly used positive con-
+struction rules in GCLs: augmentation-based positive sam-
+ples and neighborhood-based positive samples. We provide
+3
+
+
+--- PAGE 4 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+detailed proofs in Appendix E.1. Lemma 3.1 shows that
+message passing increases the expected similarity of posi-
+tive samples. Consequently, the increase of similarity itself
+can not distinguish informative positive alignment from triv-
+ial similarity induced by message passing, and is therefore
+insufficient to characterize how much information GCL can
+learn from positive samples. To quantify this, we introduce
+the following definition:
+Definition 3.2(Positive Samples Learning Effectiveness).
+Let Sij ∈ {0,1}be a binary random variable indicating
+whether a node pair (vi, vj) is generated by the positive
+samples construction rule, where Sij = 1 denotes a positive
+sample and Sij = 0 denotes a random sample. Let Rij
+denote the embedding similarity score produced by a GNN
+encoder for the pair (vi, vj). Thepositive samples learning
+effectivenessis defined as:
+I≜I(S ij;R ij),(6)
+whereI(·;·)denotes mutual information.
+Definition 3.2 provides an information-theoretic criterion for
+analyzing the effectiveness of positive alignment in GCLs.
+It quantifies how much information the similarity score Rij
+carries about whether a node pair is a true positive sample.
+Intuitively, it indicates whether positive alignment allows
+the encoder to distinguish true positive pairs from randomly
+sampled pairs based on their similarity.
+Based on Lemma 3.1 and Definition 3.2, we next analyze
+how GNN message passing affects positive learning effec-
+tiveness. We establish this connection through Dirichlet
+energy. As shown in Eq. 3, the Dirichlet energy of feature
+mat propagation layerslis defined as:
+E (l)
+m ≜
+
+H(l)
+:,m
+⊤
+LH (l)
+:,m.(7)
+Noting that the similarity score aggregates contributions
+from all feature dimensions, it remains unclear which fea-
+tures provide informative learning signals and which merely
+inflate similarity. We therefore decompose the similarity
+score into feature-wise components and analyze the contri-
+bution of each dimension separately:
+R(l)
+ij,m ≜ϕ m
+
+x(l)
+i,m, x(l)
+j,m
+
+, R (l)
+ij =
+dX
+m=1
+R(l)
+ij,m.(8)
+And the feature-wise positive learning effectiveness at prop-
+agation layerslcan be defined as follows:
+I (l)
+m ≜I
+
+Sij;R (l)
+ij,m
+
+.(9)
+We now give the following theorem:
+Theorem 3.3.Let ϕ be an inner product or cosine similarity
+with normalized features. Then there exists a constant C >
+0such that for each dimensionmand deptht,
+I
+
+Sij;R (t)
+ij,m
+
+≤CE (t)
+m .(10)
+The proof can be found in Appendix E.3. Notably, under
+Gaussian smoothing with variance σ2, one may take C=
+B2
+σ2λgap
+, where B is a bound on the absolute value of each
+feature (e.g., |x(t)
+i,m| ≤B), and λgap denotes the spectral gap
+of the propagation operator. Theorem 3.3 shows that the
+contribution of each feature dimension to positive learning
+effectiveness is upper bounded by its Dirichlet energy, with
+tighter bounds for lower-energy features. We further show
+which feature dominate positive learning effectiveness after
+similarity aggregation and give the following theorem:
+Theorem 3.4.Let R(l)
+ij ≜
+ 
+R(l)
+ij,1, . . . , R(l)
+ij,d
+
+be the vector
+of feature-wise similarity components at layer l, and let
+H and L denote the sets of high- and low-energy dimen-
+sions, respectively. Assume that P
+m∈L E (l)
+m ≤ε . Then the
+following inequalities hold:
+I
+
+Sij;R (l)
+ij,H
+
+≤I
+
+Sij;R (l)
+ij
+
+≤I
+
+Sij;R (l)
+ij,H
+
++C ε,
+(11)
+and
+I
+
+Sij;R (l)
+ij
+
+≤I
+
+Sij;R (l)
+ij
+
+,(12)
+whereCis the constant in Theorem 3.3.
+Theorem 3.4 shows that aggregating similarity across all
+feature dimensions, low-energy dimensions can contribute
+at most a bounded amount of information to positive learn-
+ing effectiveness, while the dominant informative signal
+is determined by high-energy dimensions. The proof and
+further implications are provided in Appendix E.4.
+4. Methodology
+Based on the theoretical analysis in Section 3, we pro-
+poseSeparatePropagationGraphContrastiveLearning
+(SPGCL), a novel method designed to restore the learning
+efficacy of positive samples in graph contrastive learning. In
+this section, we present the overall methodology of SPGCL.
+An overview of the framework is shown in Figure 2. We
+first describe how SPGCL modifies the message passing
+process to prevent trivial similarity inflation and preserve
+learning signals that are essential for positive alignment
+(in Section 4.1). We then introduce a principled strategy
+for constructing positive samples that emphasizes stable se-
+mantic relations while reducing the influence of unreliable
+positives (in Section 4.2). Finally, we present the training
+objective that integrates these designs into a unified con-
+trastive learning framework. Throughout this section, we
+useZto denote the resulting node representations.
+4.1. Energy Aware Propagation (EAP)
+Given the input feature matrix X, our goal is to identify fea-
+ture dimensions that are informative for positive alignment.
+4
+
+
+--- PAGE 5 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Dirichlet
+Energy
+Estimation
+High-Energy
+Features
+Low-Energy
+Features
+Representation
+Representation
+Fusion
+Contrastive Learning Objective
+Positive Sampling
+Similarity Matrix
+Computation
+Probabilistic
+(Bernoulli) Sampling
+Positive
+Samples
+Low-Energy Path
+Hign-Energy Path
+Final Node
+Representation
+Features 
+Structure 
+Input data
+Figure 2.Overview of the proposed SPGCL. Given an input graph G= (A,X) with adjacency matrix A and node features X, SPGCL
+first estimates the Dirichlet energy of each feature dimension and partitions X into high-energy features XH and low-energy features
+XL. High-energy features are propagated through a GCN encoder to produce ZH = GCN(A,XH), while low-energy features are
+transformed independently by a MLP, yielding ZL = MLP(XL). The two components are then combined via element-wise addition to
+obtain the final node representation Z=Z H +Z L. In parallel, low-energy features are used to compute a similarity matrix. Finally, the
+resulting representationsZand the positive samples are used to optimize Eq.4.
+As shown in Section 3, the contribution of each feature di-
+mension to positive learning effectiveness is upper bounded
+by its Dirichlet energy. This motivates us to explicitly quan-
+tify the Dirichlet energy of individual feature dimensions
+and use it to guide feature partition. Following the defini-
+tion in Section 2, the Dirichlet energy of the m-th feature
+dimensionX :,m ∈R N can be estimated as:
+Em = 1
+2
+X
+(vi,vj )∈T
+Aij
+ 
+xi,m −x j,m
+2
+,(13)
+which measures the total variation of them-th feature across
+graph edges. A larger value of Em indicates that this feature
+exhibits stronger local variation and is therefore less affected
+by excessive smoothing induced by message passing. In
+practice, explicitly computing Eq. (13) for all feature dimen-
+sions incurs a significant computational cost. To improve
+efficiency, we can estimate the Dirichlet energy as follows:
+bEm ∝E (vi,vj )∼T
+h 
+xi,m −x j,m
+2i
+,(14)
+where (vi, vj)∼ T denotes uniformly sampling an edge
+from the edge set. Since SPGCL only relies on the relative
+ordering of feature energies, this approximation is sufficient
+for guiding feature partition. Based on the estimated en-
+ergies, we partition the feature dimensions into high- and
+low-energy subsets by selecting the TopK dimensions with
+the largest Dirichlet energies:
+H= TopK
+ 
+{ bEm}F
+m=1
+
+,L={1, . . . , F} \ H,(15)
+where F denotes the total number of feature dimensions,
+His the set of high-energy dimensions, andLcontains the
+remaining low-energy ones. This partition is computed once
+before training and remains fixed throughout optimization.
+Following the feature partition, we separate message pass-
+ing for high and low energy features to explicitly mitigate
+the pre-alignment effect caused by message passing. As
+shown in Section 3, propagating low Dirichlet energy fea-
+tures through message passing mainly amplifies similarity
+without providing effective learning signals. We aim to
+prevent such redundant similarity accumulation while pre-
+serving informative variations. Let XH and XL denote the
+feature matrices restricted to the high-energy dimension set
+H and the low-energy dimension set L, respectively. High-
+energy features are propagated through a standard message
+passing GCN encoder:
+ZH = GCN(A,X H) =σ(P X H WH),(16)
+where GCN(·) follows the message passing formulation in
+Eq. 2. In contrast, low-energy features are not propagated
+across the graph. Instead, they are transformed indepen-
+dently using a feature-wise mapping:
+ZL = MLP(XL) =σ(X L WL),(17)
+where MLP(·) applies a node-wise transformation indepen-
+dently to each node, without involving any graph propa-
+gation. This prevents low-energy features from dominat-
+ing representation similarity through excessive smoothing,
+thereby alleviating the pre-alignment effect identified in our
+theoretical analysis. We then obtain the final node represen-
+tation by combining the two components via element-wise
+addition as follows:
+Z=Z H +Z L,(18)
+5
+
+
+--- PAGE 6 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+where the addition is performed along the feature dimension.
+This representation serves as the final node embedding for
+training and testing.
+4.2. Energy-guided Positive Sampling (EPS)
+While low-energy features contribute little to effective posi-
+tive alignment, the theoretical analysis in Section 3 shows
+that they encode smooth and stable signals over the graph.
+Such features are less sensitive to perturbations, making
+them suitable for identifying reliable semantic relations. We
+therefore use low-energy features to guide positive samples
+construction. Specifically, given the low-energy feature ma-
+trix XL, we first perform row-wise ℓ2 normalization and
+compute a pairwise similarity matrix:
+Sij =
+x⊤
+i,Lxj,L
+∥xi,L∥2 ∥xj,L∥2
+,(19)
+where xi,L denotes the low-energy feature vector of node
+vi. The similarity score Sij ∈[0,1] reflects the consistency
+of node pairs under smooth feature components. Based on
+S, we define a probabilistic positive sampling rule. For each
+edge(v i, vj)∈ T, a binary random variable is sampled as
+Mij ∼Bernoulli(p ij), pij = min
+ 
+α Sij,1
+
+(20)
+where α >0 is a scaling hyper-parameter controlling the
+overall retention rate. A node pair (vi, vj) is selected as a
+positive pair if Mij = 1. This sampling strategy biases posi-
+tive selection toward node pairs that exhibit stable similarity
+under low-energy features. Such an effect is particularly
+beneficial on heterophilic graphs, where local neighbor-
+hoods often fail to reflect semantic consistency. The selected
+positive pairs are directly used in the contrastive objective.
+Finally, SPGCL optimizes the standard InfoNCE loss in
+Eq. (4). The key difference from existing GCL methods
+lies in how we construct the positive set P. SPGCL does
+not introduce any additional loss terms. The effectiveness
+of SPGCL stems from the energy-aware design of feature
+propagation and positive sampling, which directly follows
+from the theoretical analysis in Section 3.
+5. Experiments
+In this section, we comprehensively evaluate the effective-
+ness of the proposed SPGCL by comparing it with multiple
+baselines on node-level tasks, including node classification
+and node clustering. Specifically, in Section 5.1, we describe
+the experimental settings, including datasets, baselines, and
+implementation details. In Section 5.2, we analyze the per-
+formance of SPGCL on node classification tasks under both
+homophilic and heterophilic graph settings, as well as on
+node clustering tasks. In Section 5.3, we further conduct
+hyper-parameter sensitivity analysis and ablation studies to
+quantify the contribution of each module in SPGCL.
+5.1. Experimental Settings
+Datasets.We evaluate SPGCL on 12 widely used datasets
+covering both homophilic and heterophilic graphs. For ho-
+mophilic graphs, we use Cora, CiteSeer, PubMed (Sen et al.,
+2008; Yang et al., 2016), Photo, Computers (McAuley et al.,
+2015), and CS (Sinha et al., 2015). For heterophilic graphs,
+we use Chameleon, Cornell, Texas, Wisconsin, Crocodile
+and Actor (Pei et al., 2020b; Rozemberczki et al., 2021b).
+For detailed statistics and descriptions on these datasets,
+please refer to Appendix B.1.
+Baselines.We compare SPGCL with a standard semi-
+supervised learning method: GCN (Kipf & Welling, 2017),
+and the recent state-of-the-art graph self-supervised learn-
+ing methods: GRACE (Zhu et al., 2020), DGI (Velickovic
+et al., 2019), BGRL (Thakoor et al., 2021), SCE (Zhang
+et al., 2020), GCA (Zhu et al., 2021), LocalGCL (Zhang
+et al., 2022a), ProGCL (Xia et al., 2022), AFGRL (Lee
+et al., 2022), SGRL (He et al., 2024a), E2Neg (Huang et al.,
+2025), StrGCL (He et al., 2025), CSGCL (Chen et al., 2023),
+SIGNA (Sun et al., 2025), HGRL (Chen et al., 2022), DSSL
+(Xiao et al., 2022), GraphACL (Xiao et al., 2023). The de-
+scriptions and implementation details of baselines are given
+in Appendix B.2.
+Setups.All graph self-supervised learning methods are pre-
+trained with a standard GCN backbone, where the number of
+layers follows the optimal setting reported in the original pa-
+pers and their released code. We randomly initialize model
+parameters and train the encoder with the Adam optimizer
+(Kingma & Ba, 2014). Each experiment is repeated ten
+times, and the average results and standard deviations are
+reported. For node classification, we adopt a standard linear
+evaluation protocol. On homophilic graphs, the classifier
+setting follows (Thakoor et al., 2021), while on heterophilic
+graphs, we follow the evaluation protocol of (Xiao et al.,
+2023). In all cases, a linear classifier is trained on top of the
+frozen representations, and test accuracy is reported. For
+node clustering, we follow (He et al., 2024a). More detailed
+settings can be found in Appendix B.3.
+5.2. Performance Analysis
+Node classification on homophilic graphs.As shown
+in Table 1, SPGCL achieves the best accuracy on all six
+homophilic datasets. The gain mainly comes from sepa-
+rate propagation, which removes the trivial positive simi-
+larity introduced by message passing and makes positive
+pairs provide non-trivial learning signals. First, compared
+with methods that learn only use positive samples, such as
+BGRL and AFGRL, SPGCL outperforms them significantly.
+Although these methods avoid explicit negative sampling
+through bootstrap-style training strategy, they still operate
+on representations produced by standard GCN propagation,
+where message passing induces a pre-alignment effect that
+6
+
+
+--- PAGE 7 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Table 1.Node classification results on homophilic graphs. Best results are in bold, and second-best are underlined. Methods with ∗ report
+results from original papers. X, A, and Y denote node features, adjacency matrix, and node labels. GCN is drawn from (He et al., 2024b).
+Method Training Data Cora CiteSeer PubMed Photo CS Computers
+GCNX, A, Y82.80±0.00 72.00±0.00 84.80±0.00 93.03±0.00 93.03±0.00 86.51±0.00
+GRACEX, A84.23±0.37 70.77±0.50 86.02±0.19 92.57±0.34 93.05±0.10 88.78±0.15
+DGIX, A83.72±0.55 70.52±0.64 86.12±0.22 92.94±0.04 93.17±0.11 87.89±0.45
+BGRLX, A83.25±0.82 70.32±0.77 85.57±0.34 93.26±0.16 93.41±0.11 89.41±0.09
+SCEX, A84.72±0.70 72.67±0.70 85.03±0.25 92.67±0.13 93.06±0.20 89.45±0.27
+GCAX, A85.08±0.47 71.22±0.49 86.46±0.22 92.84±0.26 93.48±0.09 89.95±0.02
+LocalGCLX, A84.82±0.79 69.48±0.35 86.53±0.25 93.56±0.17 92.52±0.13 89.59±0.13
+ProGCLX, A84.91±0.85 71.73±0.26 86.97±0.18 93.09±0.24 93.36±0.09 88.09±0.11
+AFGRL*X, A- - - 93.22±0.28 93.27±0.17 89.88±0.33
+SGRLX, A83.93±0.30 70.41±0.62 86.02±0.25 93.95±0.01 94.08±0.08 90.03±0.05
+E2NegX, A84.20±0.36 70.30±0.61 87.08±0.12 93.10±0.26 92.99±0.06 89.02±0.36
+StrGCLX, A84.86±0.54 72.49±0.11 86.52±0.19 93.94±0.12 94.06±0.03 90.32±0.05
+CSGCLX, A82.66±0.43 69.91±0.47 86.48±0.24 93.21±0.07 93.63±0.13 90.67±0.21
+SIGNAX, A82.19±0.35 69.41±0.47 84.23±0.09 93.57±0.05 93.12±0.05 90.90±0.09
+SPGCL(Ours) X, A 85.44±0.13 73.49±0.26 87.19±0.13 94.83±0.07 95.03±0.03 91.04±0.09
+Table 2.Node clustering performance evaluated by NMI and Ho-
+mogeneity. Best results are in bold and second-best are underlined.
+GRACE DGI BGRL SGRLSPGCL
+ComputersNMI 0.4793 0.4630 0.5364 0.5380 0.5626
+Hom. 0.5222 0.4836 0.5869 0.57050.6132
+Photo NMI 0.6513 0.5487 0.6841 0.67880.7135
+Hom. 0.6657 0.5557 0.7004 0.67860.7251
+CS NMI 0.7562 0.7162 0.7732 0.7961 0.8046
+Hom. 0.7909 0.7428 0.8041 0.8216 0.8345
+trivializes positive similarity. As a result, the learning sig-
+nal extracted from positive pairs remains limited, whereas
+SPGCL explicitly mitigates this issue through energy-aware
+feature propagation. Moreover, SPGCL outperforms meth-
+ods that improve data augmentation or positive sampling
+strategies, including GCA, LocalGCL, and CSGCL. These
+methods strengthen positive construction through improved
+perturbations or sampling rules, but they still build positives
+on embeddings that have already been partly aligned by mes-
+sage passing. This limits the effective learning signals from
+positive samples. Finally, methods that focus on negative
+sample optimization, such as ProGCL and SGRL, achieve
+competitive but consistently inferior performance compared
+to SPGCL. This suggests that refining negative samples
+alone is insufficient to exploit the full potential of contrastive
+learning, and that effectively restoring informative positive
+learning plays a more critical role in representation quality.
+Node classification on heterophilic datasets.To fur-
+ther verify the effectiveness of SPGCL, we evaluate it
+on six widely used heterophilic graphs, and the results
+are reported in Table 3. Compared with methods de-
+signed for homophilic graphs, including GRACE, DGI,
+BGRL, GCA, and LocalGCL, SPGCL achieves signifi-
+cant performance improvements across all datasets. This
+gap mainly arises from the positive sampling strategies
+(augmentation-based or neighbor-based) adopted by these
+methods. Augmentation-based methods construct positive
+samples by perturbing node features or graph structures,
+which destroy core semantic information in heterophilic
+graphs, leading to unreliable positives. Neighbor-based
+positive sampling, which works well under the homophily
+assumption, becomes ineffective in heterophilic settings, as
+adjacent nodes often belong to different classes and enforc-
+ing their alignment introduces misleading signals. Moreover,
+SPGCL also outperforms methods designed for heterophilic
+graphs. Although these methods introduce different designs
+to handle heterophily, such as modeling higher-order depen-
+dencies (Chen et al., 2022), latent semantics (Xiao et al.,
+2022), or asymmetric neighborhoods (Xiao et al., 2023),
+they all operate on representations where all feature dimen-
+sions are uniformly propagated through the graph. As a
+result, positive samples are aligned without distinguishing
+which feature dimensions contribute to their similarity. In
+contrast, SPGCL explicitly separates feature propagation
+based on Dirichlet energy, which introduces feature-level
+control over how positive similarity is constructed.
+Node clustering.We follow the evaluation protocol and
+report the results from (He et al., 2024a). As shown in Ta-
+ble 2, SPGCL outperforms all baselines. Notably, SPGCL
+shows a pronounced improvement on Photo, surpassing the
+second-best method by 2.94% in NMI and 2.47% in Ho-
+mogeneity, indicating substantially better cluster separation.
+These results indicate that SPGCL produces representations
+where nodes with the same labels are more likely to be
+grouped into the same clusters. This stems from more effec-
+7
+
+
+--- PAGE 8 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Table 3.Node classification results on heterophilic graphs. Best results are in bold, and second-best are underlined. Methods with ∗ report
+results from (Xiao et al., 2023).X,A, andYdenote node features, adjacency matrix, and node labels.
+Method Training Data Chameleon Cornell Texas Wisconsin Crocodile Actor
+GCNX, A, Y62.15±2.47 43.51±8.87 58.73±4.77 56.86±7.95 64.31±0.71 26.43±1.21
+MLPX, Y49.06±1.86 50.91±8.99 58.92±4.56 65.49±4.55 64.41±0.53 29.88±1.12
+GRACEX, A64.58±1.84 42.70±7.62 60.27±5.10 58.04±7.05 71.32±0.33 29.93±0.91
+DGIX, A64.91±1.86 50.00±6.65 63.78±4.45 56.86±6.98 71.26±0.59 29.28±1.11
+BGRLX, A63.86±2.89 43.70±5.81 59.19±6.91 52.16±6.21 54.35±0.89 24.83±0.99
+GCAX, A60.35±2.69 47.57±6.88 63.24±4.80 57.84±8.48 68.87±0.88 29.70±1.04
+LocalGCLX, A61.86±1.77 37.30±9.08 52.70±5.73 46.47±5.47 63.04±0.48 25.37±0.49
+HGRL*X, A65.82±0.61 51.78±1.03 61.83±0.71 63.90±0.58 61.87±0.45 27.95±0.30
+DSSL*X, A66.15±0.32 53.15±1.28 62.11±1.53 62.25±0.55 62.98±0.51 28.15±0.31
+GraphACLX, A69.12±2.11 60.54±3.86 71.62±7.12 70.20±5.61 66.09±1.00 29.95±0.93
+SPGCL(Ours) X, A 72.26±1.66 75.41±6.43 80.81±6.30 83.53±4.26 77.43±0.67 37.23±1.19
+Table 4.Ablation study on node classification task.
+Variant Cora Photo CS Cornell Texas Actor
+SPGCL 85.44±0.13 94.83±0.07 95.03±0.03 75.41±6.43 80.81±6.30 37.23±1.19
+w/o EAP 84.10±0.21 93.21±0.12 92.99±0.15 50.27±5.87 68.91±8.76 24.86±1.20
+w/o EPS 84.91±0.38 93.99±0.11 94.67±0.01 66.76±5.41 78.65±7.48 35.00±1.03
+w/o EAP & EPS 83.70±0.24 93.73±0.08 93.67±0.04 50.08±7.48 66.76±7.76 23.33±1.27
+/uni00000015/uni00000017/uni0000001b/uni00000014/uni00000019/uni00000016/uni00000015/uni00000019/uni00000017/uni00000014/uni00000015/uni0000001b/uni00000015/uni00000018/uni00000019/uni00000018/uni00000014/uni00000015
+/uni00000037/uni00000052/uni00000053/uni0000002e/uni00000003/uni00000047/uni0000004c/uni00000050/uni00000048/uni00000051/uni00000056/uni0000004c/uni00000052/uni00000051/uni00000003/uni00000052/uni00000051/uni00000003/uni0000004b/uni00000052/uni00000050/uni00000052/uni00000053/uni0000004b/uni0000004c/uni0000004f/uni0000004c/uni00000046/uni00000003/uni0000004a/uni00000055/uni00000044/uni00000053/uni0000004b/uni00000056
+/uni00000013/uni00000011/uni00000018
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001a
+/uni00000013/uni00000011/uni0000001b
+/uni00000013/uni00000011/uni0000001c
+/uni00000014/uni00000011/uni00000013/uni00000024/uni00000046/uni00000046/uni00000058/uni00000055/uni00000044/uni00000046/uni0000005c
+/uni00000026/uni00000052/uni00000055/uni00000044
+/uni00000026/uni0000004c/uni00000057/uni00000048/uni00000036/uni00000048/uni00000048/uni00000055
+/uni00000033/uni00000058/uni00000045/uni00000030/uni00000048/uni00000047
+/uni00000033/uni0000004b/uni00000052/uni00000057/uni00000052
+/uni00000026/uni00000052/uni00000050/uni00000053/uni00000058/uni00000057/uni00000048/uni00000055/uni00000056
+/uni00000026/uni00000036
+/uni00000015/uni00000017/uni0000001b/uni00000014/uni00000019/uni00000016/uni00000015/uni00000019/uni00000017/uni00000014/uni00000015/uni0000001b/uni00000015/uni00000018/uni00000019/uni00000018/uni00000014/uni00000015
+/uni00000037/uni00000052/uni00000053/uni0000002e/uni00000003/uni00000047/uni0000004c/uni00000050/uni00000048/uni00000051/uni00000056/uni0000004c/uni00000052/uni00000051/uni00000003/uni00000052/uni00000051/uni00000003/uni0000004b/uni00000048/uni00000057/uni00000048/uni00000055/uni00000052/uni00000053/uni0000004b/uni0000004c/uni0000004f/uni0000004c/uni00000046/uni00000003/uni0000004a/uni00000055/uni00000044/uni00000053/uni0000004b/uni00000056
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b
+/uni00000014/uni00000011/uni00000013
+/uni00000024/uni00000046/uni00000057/uni00000052/uni00000055
+/uni00000037/uni00000048/uni0000005b/uni00000044/uni00000056
+/uni0000003a/uni0000004c/uni00000056/uni00000046/uni00000052/uni00000051/uni00000056/uni0000004c/uni00000051
+/uni00000026/uni0000004b/uni00000044/uni00000050/uni00000048/uni0000004f/uni00000048/uni00000052/uni00000051
+/uni00000026/uni00000052/uni00000055/uni00000051/uni00000048/uni0000004f/uni0000004f
+Figure 3.Hyper-parameter analysis of SPGCL with respect to the
+TopK threshold. We report the classification performance on both
+homophilic (left) and heterophilic (right) graphs.
+tive positive learning in SPGCL, leading to higher-quality
+representations. We further visualize the learned embed-
+dings using t-SNE, and present the results in the Appendix.
+5.3. Model Analysis
+Table 4 reports the ablation results on homophilic and het-
+erophilic datasets. Removing either Energy-Aware Propaga-
+tion (EAP) or Energy-guided Positive Sampling (EPS) con-
+sistently degrades performance, and the drop is particularly
+significant when EAP is removed. This confirms that sepa-
+rating feature propagation based on Dirichlet energy is the
+core factor for restoring effective positive learning. We also
+conduct hyper-parameter experiments. Figure 3 analyzes
+the impact of the TopK used to select high-energy feature
+dimensions. On homophilic graphs, performance remains
+relatively stable as TopK increases, with a slight downward
+trend. This reflects a trade-off between two effects: expand-
+ing the high-energy subset weakens the selectivity of feature
+propagation for positive alignment, while simultaneously
+enlarging the low-energy subset used for positive sampling,
+which yields more stable positive pairs. These two effects
+partially offset each other, resulting in overall stable per-
+formance. In contrast, on heterophilic graphs, performance
+exhibits a clear decreasing trend as TopK increases. In this
+setting, propagating a broader set of features amplifies the
+mixing of semantically dissimilar neighbors, causing pos-
+itive pairs from different classes to become overly similar.
+Although low-energy features can still identify relatively
+reliable positives, the degradation of positive learning sig-
+nals induced by propagation dominates, leading to a more
+pronounced performance drop.
+6. Conclusion
+In this paper, we reveal that positive sampling may not work
+in GCL as be widely recognized. Empirically, we observe
+that existing GCL methods can achieve competitive perfor-
+mance without positive samples. Theoretically we attribute
+this phenomenon to the pre-alignment effect, where the mes-
+sage passing of graph neural network increases the similarity
+between positive samples before contrastive optimization.
+We further show that the learning effectiveness of positive
+samples is upper bounded by feature-wise Dirichlet energy.
+Pre-alignment reduces the Dirichlet energy, thus weakens
+8
+
+
+--- PAGE 9 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+learning from positive samples. To address this, we propose
+SPGCL, which separates feature propagation according to
+Dirichlet energy: high-energy features are propagated to
+preserve informative variation for positive learning, while
+low-energy features are exploited to guide reliable positive
+sampling. Extensive experiments demonstrate that SPGCL
+can effectively learn from positive samples and outperforms
+existing GCL methods.
+Acknowledgments
+This work was supported by the National Natural Science
+Foundation of China (No. 62276187, No. 62422210,
+No.92370111, and No. 62272340).
+Impact Statement
+This paper aims to contribute to the theoretical understand-
+ing of graph contrastive learning within the broader field
+of machine learning. By analyzing how message passing
+influences learning from positive samples, our work offers a
+perspective on contrastive pre-training paradigms, which is
+widely used in graph representation learning. We hope that
+this study may help clarify certain aspects of positive sample
+utilization and support future investigations into contrastive
+objectives for graph models.
+This work is primarily theoretical in nature and does not
+introduce new datasets, deployable systems, or models in-
+tended for real-world use. As such, we do not anticipate
+any direct or indirect negative societal impacts or ethical
+concerns arising from this study. The proposed analysis
+does not involve sensitive or personal data, human subjects,
+or crowdsourcing, nor does it introduce methods that could
+be readily misused for harmful purposes. To the best of our
+knowledge, this research does not raise ethical issues.
+References
+Chen, F., Wang, Y .-C., Wang, B., and Kuo, C.-C. J. Graph
+representation learning: a survey.APSIPA Transactions
+on Signal and Information Processing, 9:e15, 2020.
+Chen, H., Zhao, Z., Li, Y ., Zou, Y ., Li, R., and Zhang, R.
+Csgcl: community-strength-enhanced graph contrastive
+learning.arXiv preprint arXiv:2305.04658, 2023.
+Chen, J., Zhu, G., Qi, Y ., Yuan, C., and Huang, Y . Towards
+self-supervised learning on graphs with heterophily. In
+Proceedings of the 31st ACM International Conference
+on Information & Knowledge Management, pp. 201–211,
+2022.
+Fetterman, A. and Albrecht, J. Understanding self-
+supervised and contrastive learning with bootstrap your
+own latent (byol).Untitled AI, August, 2020.
+Fey, M. and Lenssen, J. E. Fast graph representation learning
+with pytorch geometric.arXiv preprint arXiv:1903.02428,
+2019.
+Hamilton, W. L., Ying, Z., and Leskovec, J. Inductive
+representation learning on large graphs. InAdvances
+in Neural Information Processing Systems 30: Annual
+Conference on Neural Information Processing Systems,
+Long Beach, CA, USA, pp. 1024–1034, 2017.
+He, D., Zhao, J., Guo, R., Feng, Z., Jin, D., Huang, Y ., Wang,
+Z., and Zhang, W. Contrastive learning meets homophily:
+Two birds with one stone. In Krause, A., Brunskill, E.,
+Cho, K., Engelhardt, B., Sabato, S., and Scarlett, J. (eds.),
+Proceedings of the 40th International Conference on Ma-
+chine Learning, volume 202 ofProceedings of Machine
+Learning Research, pp. 12775–12789. PMLR, 23–29 Jul
+2023.
+He, D., Shan, L., Zhao, J., Zhang, H., Wang, Z., and Zhang,
+W. Exploitation of a latent mechanism in graph con-
+trastive learning: Representation scattering.Advances
+in Neural Information Processing Systems, 37:115351–
+115376, 2024a.
+He, D., Zhao, J., Huo, C., Huang, Y ., Huang, Y ., and Feng,
+Z. A new mechanism for eliminating implicit conflict
+in graph contrastive learning. In Wooldridge, M. J., Dy,
+J. G., and Natarajan, S. (eds.),Thirty-Eighth AAAI Con-
+ference on Artificial Intelligence, AAAI 2024, Thirty-Sixth
+Conference on Innovative Applications of Artificial Intelli-
+gence, IAAI 2024, Fourteenth Symposium on Educational
+Advances in Artificial Intelligence, EAAI 2014, Febru-
+ary 20-27, 2024, Vancouver, Canada, pp. 12340–12348.
+AAAI Press, 2024b. doi: 10.1609/AAAI.V38I11.29125.
+He, D., Huang, Y ., Zhao, J., Wang, X., and Wang, Z. Str-
+gcl: Structural commonsense driven graph contrastive
+learning. InProceedings of the ACM on Web Conference
+2025, pp. 1129–1141, 2025.
+He, X., Deng, K., Wang, X., Li, Y ., Zhang, Y ., and Wang, M.
+Lightgcn: Simplifying and powering graph convolution
+network for recommendation. In Huang, J. X., Chang, Y .,
+Cheng, X., Kamps, J., Murdock, V ., Wen, J., and Liu, Y .
+(eds.),Proceedings of the 43rd International ACM SIGIR
+conference on research and development in Information
+Retrieval, SIGIR 2020, Virtual Event, China, July 25-30,
+2020, pp. 639–648. ACM, 2020. doi: 10.1145/3397271.
+3401063.
+Huang, Y ., Zhao, J., He, D., Jin, D., Huang, Y ., and Wang,
+Z. Does gcl need a large number of negative samples? en-
+hancing graph contrastive learning with effective and effi-
+cient negative sampling. InProceedings of the AAAI Con-
+ference on Artificial Intelligence, volume 39, pp. 17511–
+17518, 2025.
+9
+
+
+--- PAGE 10 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Kingma, D. and Ba, J. Adam: A method for stochastic
+optimization.Computer Science, 2014.
+Kipf, T. N. and Welling, M. Semi-supervised classification
+with graph convolutional networks. In5th International
+Conference on Learning Representations, ICLR 2017,
+Toulon, France, April 24-26, 2017, Conference Track
+Proceedings. OpenReview.net, 2017.
+Lawler, G. F. and Limic, V .Random walk: a modern in-
+troduction, volume 123. Cambridge University Press,
+2010.
+Lee, N., Lee, J., and Park, C. Augmentation-free self-
+supervised learning on graphs. InThirty-Sixth AAAI
+Conference on Artificial Intelligence, AAAI 2022, Thirty-
+Fourth Conference on Innovative Applications of Artifi-
+cial Intelligence, IAAI 2022, The Twelveth Symposium
+on Educational Advances in Artificial Intelligence, EAAI
+2022 Virtual Event, February 22 - March 1, 2022, pp.
+7372–7380. AAAI Press, 2022. doi: 10.1609/aaai.v36i7.
+20700.
+Li, S., Zhou, J., Xu, T., Dou, D., and Xiong, H. Geomgcl:
+Geometric graph contrastive learning for molecular prop-
+erty prediction. InProceedings of the AAAI conference on
+artificial intelligence, volume 36, pp. 4541–4549, 2022.
+Li, W.-Z., Wang, C.-D., Xiong, H., and Lai, J.-H. Homogcl:
+Rethinking homophily in graph contrastive learning. In
+Proceedings of the 29th ACM SIGKDD conference on
+knowledge discovery and data mining, pp. 1341–1352,
+2023.
+Liu, N., Wang, X., Bo, D., Shi, C., and Pei, J. Revisiting
+graph contrastive learning from the perspective of graph
+spectrum. InNeurIPS, 2022a.
+Liu, Y ., Jin, M., Pan, S., Zhou, C., Zheng, Y ., Xia, F., and
+Philip, S. Y . Graph self-supervised learning: A survey.
+IEEE Transactions on Knowledge and Data Engineering,
+35(6):5879–5900, 2022b.
+McAuley, J., Targett, C., Shi, Q., and Van Den Hengel, A.
+Image-based recommendations on styles and substitutes.
+InProceedings of the 38th international ACM SIGIR
+conference on research and development in information
+retrieval, pp. 43–52, 2015.
+McQueen, J. B. Some methods of classification and analysis
+of multivariate observations. InProc. of 5th Berkeley
+Symposium on Math. Stat. and Prob., pp. 281–297, 1967.
+Oord, A. v. d., Li, Y ., and Vinyals, O. Representation learn-
+ing with contrastive predictive coding.arXiv preprint
+arXiv:1807.03748, 2018.
+Pei, H., Wei, B., Chang, K. C.-C., Lei, Y ., and Yang, B.
+Geom-gcn: Geometric graph convolutional networks.
+arXiv preprint arXiv:2002.05287, 2020a.
+Pei, H., Wei, B., Chang, K. C.-C., Lei, Y ., and Yang, B.
+Geom-gcn: Geometric graph convolutional networks.
+arXiv preprint arXiv:2002.05287, 2020b.
+Ribeiro, L. F., Saverese, P. H., and Figueiredo, D. R.
+struc2vec: Learning node representations from structural
+identity. InProceedings of the 23rd ACM SIGKDD in-
+ternational conference on knowledge discovery and data
+mining, pp. 385–394, 2017.
+Rozemberczki, B., Allen, C., and Sarkar, R. Multi-scale at-
+tributed node embedding.Journal of Complex Networks,
+9(2):cnab014, 2021a.
+Rozemberczki, B., Allen, C., and Sarkar, R. Multi-scale at-
+tributed node embedding.Journal of Complex Networks,
+9(2):cnab014, 2021b.
+Sen, P., Namata, G., Bilgic, M., Getoor, L., Galligher, B.,
+and Eliassi-Rad, T. Collective classification in network
+data.AI magazine, 29(3):93–93, 2008.
+Sinha, A., Shen, Z., Song, Y ., Ma, H., Eide, D., Hsu, B.-
+J., and Wang, K. An overview of microsoft academic
+service (mas) and applications. InProceedings of the
+24th international conference on world wide web, pp.
+243–246, 2015.
+Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I.,
+and Salakhutdinov, R. Dropout: a simple way to prevent
+neural networks from overfitting.The journal of machine
+learning research, 15(1):1929–1958, 2014.
+Sun, Q., Chen, C., Qiao, Z., Zheng, X., and Wang, K. Single-
+view graph contrastive learning with soft neighborhood
+awareness. InProceedings of the AAAI Conference on Ar-
+tificial Intelligence, volume 39, pp. 20708–20716, 2025.
+Suresh, S., Li, P., Hao, C., and Neville, J. Adversarial graph
+augmentation to improve graph contrastive learning. In
+Ranzato, M., Beygelzimer, A., Dauphin, Y . N., Liang,
+P., and Vaughan, J. W. (eds.),Advances in Neural Infor-
+mation Processing Systems 34: Annual Conference on
+Neural Information Processing Systems 2021, NeurIPS
+2021, December 6-14, 2021, virtual, pp. 15920–15933,
+2021.
+Tang, J., Sun, J., Wang, C., and Yang, Z. Social influence
+analysis in large-scale networks. InProceedings of the
+15th ACM SIGKDD international conference on Knowl-
+edge discovery and data mining, pp. 807–816, 2009.
+Thakoor, S., Tallec, C., Azar, M. G., Munos, R., Veliˇckovi´c,
+P., and Valko, M. Bootstrapped representation learning
+10
+
+
+--- PAGE 11 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+on graphs. InICLR 2021 Workshop on Geometrical and
+Topological Representation Learning, 2021.
+Van der Maaten, L. and Hinton, G. Visualizing data using
+t-sne.Journal of machine learning research, 9(11), 2008.
+Velickovic, P., Cucurull, G., Casanova, A., Romero, A.,
+Li`o, P., and Bengio, Y . Graph attention networks. In6th
+International Conference on Learning Representations,
+ICLR 2018, Vancouver, BC, Canada, April 30 - May 3,
+2018, Conference Track Proceedings. OpenReview.net,
+2018.
+Velickovic, P., Fedus, W., Hamilton, W. L., Li`o, P., Bengio,
+Y ., and Hjelm, R. D. Deep graph infomax. In7th Inter-
+national Conference on Learning Representations, ICLR
+2019, New Orleans, LA, USA, May 6-9, 2019. OpenRe-
+view.net, 2019.
+Wang, R., Wang, X., Shi, C., and Song, L. Uncovering
+the structural fairness in graph contrastive learning.Ad-
+vances in neural information processing systems, 35:
+32465–32473, 2022.
+Wu, L., Lin, H., Tan, C., Gao, Z., and Li, S. Z. Self-
+supervised learning on graphs: Contrastive, generative, or
+predictive.IEEE Transactions on Knowledge and Data
+Engineering, 35(4):4216–4235, 2021a.
+Wu, Z., Pan, S., Chen, F., Long, G., Zhang, C., and Philip,
+S. Y . A comprehensive survey on graph neural networks.
+IEEE Trans. Neural Networks Learn. Syst., 32(1):4–24,
+2021b.
+Xia, J., Wu, L., Wang, G., Chen, J., and Li, S. Z. Progcl: Re-
+thinking hard negative mining in graph contrastive learn-
+ing. In Chaudhuri, K., Jegelka, S., Song, L., Szepesv ´ari,
+C., Niu, G., and Sabato, S. (eds.),International Confer-
+ence on Machine Learning, ICML 2022, 17-23 July 2022,
+Baltimore, Maryland, USA, volume 162 ofProceedings
+of Machine Learning Research, pp. 24332–24346. PMLR,
+2022.
+Xiao, T., Chen, Z., Guo, Z., Zhuang, Z., and Wang, S.
+Decoupled self-supervised learning for graphs.Advances
+in Neural Information Processing Systems, 35:620–634,
+2022.
+Xiao, T., Zhu, H., Chen, Z., and Wang, S. Simple and asym-
+metric graph contrastive learning without augmentations.
+Advances in neural information processing systems, 36:
+16129–16152, 2023.
+Yanardag, P. and Vishwanathan, S. Deep graph kernels.
+InProceedings of the 21th ACM SIGKDD international
+conference on knowledge discovery and data mining, pp.
+1365–1374, 2015.
+Yang, Z., Cohen, W., and Salakhudinov, R. Revisiting
+semi-supervised learning with graph embeddings. In
+International conference on machine learning, pp. 40–48.
+PMLR, 2016.
+Zhang, H., Wu, Q., Wang, Y ., Zhang, S., Yan, J., and Yu,
+P. S. Localized contrastive learning on graphs.arXiv
+preprint arXiv:2212.04604, 2022a.
+Zhang, S., Huang, Z., Zhou, H., and Zhou, Z. Sce: Scal-
+able network embedding from sparsest cut. InProceed-
+ings of the 26th ACM SIGKDD International Conference
+on Knowledge Discovery & Data Mining, pp. 257–265,
+2020.
+Zhang, Y . An introduction to matrix factorization and factor-
+ization machines in recommendation system, and beyond.
+arXiv preprint arXiv:2203.11026, 2022.
+Zhang, Y ., Zhu, H., Song, Z., Koniusz, P., and King, I.
+Costa: covariance-preserving feature augmentation for
+graph contrastive learning. InProceedings of the 28th
+ACM SIGKDD conference on knowledge discovery and
+data mining, pp. 2524–2534, 2022b.
+Zhou, J., Cui, G., Hu, S., Zhang, Z., Yang, C., Liu, Z., Wang,
+L., Li, C., and Sun, M. Graph neural networks: A review
+of methods and applications.AI open, 1:57–81, 2020.
+Zhu, Y ., Xu, Y ., Yu, F., Liu, Q., Wu, S., and Wang, L.
+Deep graph contrastive representation learning.CoRR,
+abs/2006.04131, 2020.
+Zhu, Y ., Xu, Y ., Yu, F., Liu, Q., Wu, S., and Wang, L.
+Graph contrastive learning with adaptive augmentation.
+InWWW ’21: The Web Conference 2021, Virtual Event /
+Ljubljana, Slovenia, April 19-23, 2021, pp. 2069–2080.
+ACM / IW3C2, 2021.
+Zhuo, J., Lu, Y ., Ning, H., Fu, K., Niu, B., He, D., Wang,
+C., Guo, Y ., Wang, Z., Cao, X., and Yang, L. Unified
+graph augmentations for generalized contrastive learning
+on graphs. InNeurIPS, 2024a.
+Zhuo, J., Qin, F., Cui, C., Fu, K., Niu, B., Wang, M., Guo,
+Y ., Wang, C., Wang, Z., Cao, X., and Yang, L. Improving
+graph contrastive learning via adaptive positive sampling.
+InCVPR, pp. 23179–23187, 2024b.
+11
+
+
+--- PAGE 12 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+A. Related Work
+Graph Representation Learning.Graph Representation Learning (GRL) aims to embed high-dimensional, sparse, and
+non-Euclidean graph-structured data into low-dimensional representations for various downstream tasks, such as node
+classification, clustering, and link prediction (Chen et al., 2020). Early GRL methods primarily rely on matrix factorization
+(Zhang, 2022) or random walk–based techniques (Lawler & Limic, 2010), which focus on either graph structure or node
+attributes and thus struggle to jointly model both (Ribeiro et al., 2017). With the emergence of Graph Neural Networks
+(GNNs), such as GCN (Kipf & Welling, 2017), GAT (Velickovic et al., 2018), and GraphSAGE (Hamilton et al., 2017),
+message passing and aggregation mechanism makes it possible to jointly embed graph structure and node attributes in
+representations. Despite their success, GNNs typically require large amounts of labeled data for supervision, which is
+often expensive and impractical in real-world (Liu et al., 2022b). To address this limitation, Graph Contrastive Learning
+(GCL) has emerged as a mainstream self-supervised pre-training paradigm, which trains graph encoders by maximizing the
+similarity between positive samples and minimizing it between negative samples without labels.
+Graph Contrastive Learning.In GCLs, it is a consensus that positive samples play a key role, as contrastive objectives rely
+on aligning semantically consistent views of the same node or subgraph to learn invariant representations (Zhu et al., 2020;
+Velickovic et al., 2019; Thakoor et al., 2021; Liu et al., 2022a; Zhuo et al., 2024a). GCLs typically construct positive samples
+in two ways: (i) the same anchor node across multiple views generated by data augmentations, and (ii) its local neighbors
+sampled from graphs. Consequently, many existing methods focus on refining positive samples through improved data
+augmentation and neighborhood-based positive sampling. Early GCLs adopt random feature masking and edge dropping to
+generate positive views (Zhu et al., 2020; Velickovic et al., 2019; Thakoor et al., 2021; Zhuo et al., 2024b). However, such
+random perturbations may destroy critical structural and semantic information, leading to misleading positive pairs. To
+address this, some methods design augmentation strategies based on graph properties. GCA (Zhu et al., 2021) and GRADE
+(Wang et al., 2022) improve data augmentation according to node centrality or degree, reducing the risk that positive
+samples become semantically inconsistent due to excessive structural corruption. CSGCL (Chen et al., 2023) incorporates
+community structure into augmentation design, encouraging positive samples to preserve consistent community-level
+semantics. COSTA (Zhang et al., 2022b) constrains feature perturbations by preserving feature covariance, so that positive
+samples constructed from different views retain consistent attribute semantics. Moreover, some methods improve data
+augmentation from a spectral perspective to enhance the quality of positive samples. SpCo (Liu et al., 2022a) reveals that
+effective augmentations should preserve low-frequency components while perturbing high-frequency ones. It perturbs edges
+with high-frequency while retaining low-frequency edges during augmentations. However, these methods rely on manually
+designed rules, which limits their adaptability across diverse graphs. To address this, AD-GCL (Suresh et al., 2021) trains
+a neural network to generate diverse views by minimizing mutual information between original and augmented graphs,
+improving the construction of informative positive samples without predefined heuristics augmentation. Notably, BGRL
+(Thakoor et al., 2021) and AFGRL (Lee et al., 2022) adopt a bootstrap framework that trains models without negative
+samples. They employ two asymmetric graph encoders and learn representations by aligning positive pairs across different
+views. These methods represent an early attempt to exploit positive samples learning in GCLs. However, recent studies show
+that the effectiveness of such bootstrap frameworks is highly sensitive to batch normalization, which implicitly introduces
+negative sample information (Fetterman & Albrecht, 2020; He et al., 2024a). Consequently, the utilization of positive
+samples in these methods remains limited.
+In contrast to prior work that mainly focuses on constructing better positive samples, we revisit how positive samples
+are actually utilized in GCLs. We show that message passing induces a pre-alignment effect, which increases positive
+similarity before contrastive optimization and consequently weakens the effective learning signal from positive samples. This
+perspective departs from existing augmentation and sampling strategies and motivates a novel design to restore informative
+positive learning in GCLs.
+B. Experimental Settings
+B.1. Datasets
+In this subsection, we describe the datasets used for experimental evaluation in detail. We evaluate SPGCL on diverse graph
+datasets with substantially different structural characteristics, providing a comprehensive assessment on node-level tasks.
+Detailed statistics of each dataset are summarized in Table 5.
+Citation networks.Cora, CiteSeer, and PubMed are widely used citation datasets from Planetoid (Sen et al., 2008; Yang
+12
+
+
+--- PAGE 13 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+et al., 2016). Each node denotes a paper and each edge denotes a citation relation. Node attributes come from sparse
+bag-of-words representations of paper text (e.g., titles and abstracts). The class labels indicate the research area of paper,
+such as machine learning or neural networks.
+Co-purchase networks.Photo and Computers (McAuley et al., 2015) describe co-purchasing relations in e-commerce.
+Nodes are products in their respective catalogs. Edges link items that are often purchased together. Each node uses sparse
+text features extracted from user reviews. Labels mark high-level product types..
+Co-author networks.The Co.CS dataset is built from the Microsoft Academic Graph (MAG) (Sinha et al., 2015). Nodes
+represent authors, and edges indicate co-authored papers. Node features use keyword-based statistics from an author’s
+publications. Labels reflect the author’s main research area inferred from their publication records.
+WebKB.WebKB 2 contains web pages from computer science departments at several universities, originally collected at
+Carnegie Mellon University. Cornell, Texas, and Wisconsin are used in our experiments. Nodes correspond to pages and
+edges correspond to hyperlinks. Each page is represented with sparse word features extracted from its content. Labels are
+human-annotated into five classes: student, project, course, staff, and faculty.
+Actor co-occurrence network.This graph comes from an actor-only subgraph of a larger film-related network (Tang et al.,
+2009). Each node denotes an actor. An edge indicates that two actors appear together on the same Wikipedia page. Node
+attributes are sparse keyword features extracted from the page text. Actors are grouped into five classes based on the content
+of their Wikipedia pages.
+Wikipedia network.Chameleon and Squirrel are page graphs built from Wikipedia (Rozemberczki et al., 2021a). Nodes
+correspond to pages, and edges indicate links between pages. Each page uses sparse keyword features extracted from its text.
+Labels form five classes based on the page’s average monthly traffic.
+We obtain these datasets from the public PyTorch Geometric (PyG) repository (Fey & Lenssen, 2019). All datasets can be
+accessed through URLs listed below:
+• Cora, CiteSeer, PubMed:https://github.com/kimiyoung/planetoid/raw/master/data.
+• Photo, Computers, CS:https://github.com/shchur/gnn-benchmark/raw/master/data/npz.
+• Crocodile:https://graphmining.ai/datasets/ptg/wiki.
+• Chameleon, Actor, Cornell, Texas, Wisconsin: https://github.com/bingzhewei/geom-gcn/tree/
+master/splits.
+Table 5.Dataset statistics.
+Datasets Cora CiteSeer PubMed Photo Computers CS Actor Chameleon Crocodile Cornell Texas Wisconsin
+Nodes2,708 3,327 19,717 7,650 13,752 18,333 7,600 2,277 11,631 183 183 251
+Edges4,732 5,429 44,338 119,081 245,861 81,894 33,544 36,101 170,918 295 309 499
+Features1,433 3,703 500 745 767 6,805 932 2,325 128 1,703 1,703 1,703
+Classes7 6 3 8 10 15 5 5 7 5 5 5
+B.2. Introductions of Baselines.
+GCN(Kipf & Welling, 2017): This method performs layer-wise feature propagation using a first-order approximation of
+spectral graph convolutions, enabling nodes to aggregate information from their neighbors through normalized adjacency
+and node features for semi-supervised node classification.
+GRACE(Zhu et al., 2020): This method generates two augmented views by applying random perturbations to node features
+and edges, and trains graph encoders with the InfoNCE loss by maximizing the similarity between positive samples while
+minimizing the similarity to negative samples.
+DGI(Velickovic et al., 2019): This method generates a corrupted graph by randomly shuffling node features and trains a
+mutual-information discriminator to distinguish node embeddings from the original graph against those from the corrupted
+2http://www.cs.cmu.edu/afs/cs.cmu.edu/project/theo-11/www/wwkb
+13
+
+
+--- PAGE 14 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+one. The objective maximizes the mutual information between node representations learned on the original graph and a
+global summary vector of the same graph, enabling effective representation learning without labels.
+BGRL(Thakoor et al., 2021): This method adopts a bootstrap framework to train a graph encoder without negative samples.
+Similar to GRACE, two augmented views are generated through stochastic perturbations of node features and graph structure,
+and the training objective enforces consistency between the representations of corresponding nodes across these views. The
+architecture includes an online encoder with a predictor and a momentum-updated target network.
+GCA(Zhu et al., 2021): GCA: This method retains GRACE-style node-level contrastive learning, while replacing random
+augmentations with adaptive edge dropping and feature masking guided by node centrality. The augmentation preserves
+structurally important components more conservatively and applies stronger corruption to less informative regions, balancing
+structure preservation with effective perturbations for representation learning.
+LocalGCL(Zhang et al., 2022a): This method performs node-level contrastive learning without graph augmentations and
+defines one-hop neighbors as positive samples. The contrastive objective takes a kernelized form, and random Fourier
+features approximate the kernel to enable scalable loss computation.
+ProGCL(Xia et al., 2022): This method provides a hard-negative mining framework for node-level graph contrastive
+learning, with explicit exploiting “false hard negatives” in GCLs. It models each negative sample with a beta mixture model
+to estimate the probability of being a true negative, and incorporates this estimate into negative reweighting or negative
+mixing to strengthen the contrastive learning.
+AFGRL(Lee et al., 2022): This method also adopts bootstrap framework. It is an augmentation-free graph contrastive
+learning method that constructs positive samples through k-NN retrieval in the embedding space and refines them with both
+local adjacency constraints and global clustering signals. It aligns the online encoder with a momentum target encoder on
+the selected positives, where the online network predicts the target representations.
+SGRL(He et al., 2024a): This method proposes representation scattering mechanism to train graph encoders. It learns
+embeddings with an explicit center-away scattering loss and a topology-based constraint to keep structure-aware diversity
+without manual negatives.
+CSGCL(Chen et al., 2023): This method incorporates community strength into both view generation and model training. It
+introduces strength-aware attribute voting and community-guided edge dropping to construct informative augmented views.
+Training follows a two-stage Team-up objective that progressively injects community-strength bias into InfoNCE-based
+similarity estimation, enabling more structure-aware contrastive learning.
+SIGNA(Sun et al., 2025): This method is a single-view graph contrastive learning method that introduces dropout noise in
+embeddings and applies stochastic neighbor masking to select only a subset of neighbors as positive samples. It optimizes a
+normalized Jensen–Shannon divergence objective, providing a soft, neighborhood-aware training signal without cross-view
+augmentations.
+HGRL(Chen et al., 2022): This method is a self-supervised framework designed for heterophilic graphs. It learns node
+representations through two mutual-information-based pretext tasks: one preserves original node features, and the other
+captures informative signals from distant neighbors. These objectives are integrated within a multi-view learning setup to
+model heterophily-aware dependencies.
+DSSL(Xiao et al., 2022): This method is a variational latent-variable self-supervised framework that decouples heteroge-
+neous neighborhood semantics through a mixture-based neighbor generation model. The latent mixture components capture
+diverse neighbor relations, supporting augmentation-free representation learning on heterophilic graphs.
+GraphACL(Xiao et al., 2023): This method designs an augmentation-free asymmetric framework. An online encoder with
+a predictor is trained against an EMA teacher to predict one-hop neighbor context, capturing one-hop contextual signals and
+inducing two-hop “monophily” effects that benefit representation learning on heterophilic graphs.
+We implement GCN via the PyTorch Geometric (PyG) library. For self-supervised baselines, we employ an official
+implementation publicly released by the original papers. The corresponding sources are listed as follows:
+• GCN:https:
+//github.com/pyg-team/pytorch_geometric/tree/master/torch_geometric/nn/conv.
+• GRACE:https://github.com/CRIPAC-DIG/GRACE.
+14
+
+
+--- PAGE 15 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+• DGI:https://github.com/PetarV-/DGI.
+• BGRL:https://github.com/nerdslab/bgrl.
+• GCA:https://github.com/CRIPAC-DIG/GCA/.
+• LocalGCL:
+https://openreview.net/attachment?id=dSYkYNNZkV&name=supplementary_material.
+• ProGCL:https://github.com/junxia97/ProGCL.
+• AFGRL:https://github.com/Namkyeong/AFGRL.
+• SGRL:https://github.com/hedongxiao-tju/SGRL.
+• CSGCL:https://github.com/HanChen-HUST/CSGCL.
+• SIGNA:https://github.com/sunisfighting/SIGNA.
+• HGRL:https://github.com/yifanQi98/HGRL.
+• DSSL:https://papers.nips.cc/paper_files/paper/2022/file/
+040c816286b3844fd78f2124eec75f2e-Supplemental-Conference.zip.
+• GraphACL:https://github.com/tengxiao1/GraphACL.
+B.3. Experimental Details.
+Dataset splitting.For the homophilic datasets (Cora, CiteSeer, PubMed, Photo, Coauthor-CS, and Computers), we randomly
+split the nodes into training, validation and test sets with a ratio of 1:1:8. For the heterophilic datasets (Texas, Wisconsin,
+Cornell, Chameleon, Crocodile, and Actor), we follow Geom-GCN (Pei et al., 2020a) and use the provided raw data with
+the standard fixed 10-fold splits.
+Experiment Setup.All graph self-supervised learning baselines are pre-trained with a GCN backbone encoder, using one or
+two layers following the settings reported in the original papers when available. For methods that do not specify the number
+of layers, we evaluate both one-layer and two-layer GCNs and report the best results. After pre-training, the learned node
+embeddings are used for downstream evaluation, including node classification and node clustering. For classification, we
+follow the standard linear evaluation protocol of BGRL (Thakoor et al., 2021). We train an ℓ2-regularized logistic regression
+classifier on top of the frozen embeddings. We report the mean and standard deviation of the F1 score. For node clustering,
+obtained representations are fed into a randomly initialized K-Means (McQueen, 1967) predictor.We set the cluster number
+to the ground-truth class count and report the best Normalized Mutual Information (NMI) and Homogeneity Score (Hom).
+Environment.All experiments were run on two Linux servers, as summarized in Table 6.
+Table 6.Experimental environment servers.
+Server 1 Server 2
+OS Linux 6.8.0-87-generic Linux 6.14.0-33-generic
+CPU Intel(R) Xeon(R) Silver 4410Y Intel(R) Core(TM) i5-12400 CPU @ 3.00GHz
+GPU Nvidia GeForce RTX 5090 Nvidia GeForce RTX 3090
+15
+
+
+--- PAGE 16 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Table 7.Hyper-parameters of SPGCL on node classification task.
+αTopKτHidden dim. Projection dim. Learning rate Epochs Dropout Num layers
+Cora 0.8 256 0.8 256 512 0.0005 1000 0.3 2
+CiteSeer 0.8 768 0.8 1024 256 0.0001 300 0.4 2
+PubMed 0.8 256 0.5 1024 256 0.001 1000 0.2 1
+Photo 0.2 256 0.5 1024 256 0.001 1000 0.1 2
+CS 0.8 32 0.5 512 256 0.0001 1000 0.4 1
+Computers 0.8 512 0.5 1024 512 0.0005 1000 0.4 2
+Actor 0.4 8 1 4096 1024 0.001 50 0.1 1
+Texas 0.2 16 0.75 2048 1024 0.005 40 0.06 1
+Wisconsin 0.4 4 0.5 2048 1024 0.005 50 0.04 1
+Cornell 0.8 2 0.5 2048 1024 0.005 50 0.08 1
+Crocodile 0.4 1024 0.5 4096 1024 0.0005 60 0.1 1
+Table 8.Hyper-parameters of SPGCL on node clustering task.
+αTopKτHidden dim Proj dim Learning rate Epochs Dropout Num layers
+Photo 0.1 256 0.5 256 1024 0.0005 1000 0.3 2
+CS 0.8 128 0.5 256 256 0.0001 1000 0.4 1
+Computers 0.8 256 0.5 512 1024 0.0005 1000 0.4 2
+C. Algorithm Description.
+Algorithm 1SPGCL
+Input:GraphG= (V,T), hyper-parametersTopKandα
+Output:Node representationsZ
+formin 1 toFdo
+Compute Dirichlet energies bEm as in Equation (13);
+end for
+Select theTopKdimensionsHwith{ bEm}F
+m=1;
+Compute pairwise similarity matrixSas in Equation (19);
+Construct positive-pair sampling matrixMwithSandαas in Equation (20);
+Construct positive pair setPwithM;
+Construct negative pair setN i with other nodes;
+whilenot convergeddo
+Obtain embeddingsZ H ←GCN(X H,A)andZ L ←MLP(X L);
+ComputeL ← LInfoNCE via Equation (4);
+Do backpropagation withL;
+end while
+returnZ=Z H +Z L;
+D. Hyper-parameter Settings
+In hyper-parameter search, we adjust the value of α and TopK in SPGCL, as well as other hyper-parameters, including
+temperature parameter τ, hidden dimension, projection dim, learning rate and number of layers. We apply the grid search
+strategy to choose the optimal hyper-parameters. Specifically, we search TopK in {2,4,8,16,32,64,128,256,512,1024} ,
+α in {0.2,0.4,0.6,0.8} , hidden dim and proj dim in{256,512,1024} , learning rate in {0.0001,0.0005,0.001,0.005,0.01} ,
+number of layers in {1,2} . Additionally, to mitigate overfitting during training, we follow (Sun et al., 2025) and apply
+Dropout (Srivastava et al., 2014) to the GCN encoder. The dropout is selected from {0.1,0.2,0.3,0.4,0.5} . Tables 7 and 8
+provide the hyper-parameter settings for SPGCL on node classification and clustering tasks.
+16
+
+
+--- PAGE 17 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+E. Theoretical analysis
+E.1. Proof for Lemma 3.1
+We provide proofs of Lemma 3.1 under two commonly used positive construction rules in graph contrastive learning: (i)
+augmentation-based positive samples constructed from two augmented views of the same anchor node, and (ii) neighborhood-
+based positive samples constructed by sampling one-hop neighbors. We consider cosine similarity with ℓ2-normalized node
+representations, i.e.,R (l)
+ij =
+D
+¯H(l)
+i,: , ¯H(l)
+j,:
+E
+, where ¯H(l)
+i,: ≜H (l)
+i,: /∥H(l)
+i,: ∥2.
+Augmentation-based positive samples.We consider two augmented views of the same graph, indexed by (a) and (b).
+Each view applies stochastic perturbations to both node features and edges, producing (X(a),A (a)) and (X(b),A (b)). Let
+P(a) and P(b) be the corresponding propagation operators constructed from A(a) and A(b). The message passing in view
+µ∈ {a, b}is:
+H(0,µ) =X (µ),H (l+1,µ) =P (µ)H(l,µ).
+A positive pair is constructed by taking the same anchor node vi from the two views. We assume the two perturbations
+are independent and unbiased: E[X(a)] =E[X (b)] =X , and similarly for edge perturbations. Define the layer-l positive
+similarity
+R(l)
+i,i ≜
+D
+¯H(l,a)
+i,: , ¯H(l,b)
+i,:
+E
+.
+Proof.For unit-norm vectors, cosine similarity can be equivalently written in terms of squared Euclidean distance:
+⟨u,v⟩= 1− 1
+2 ∥u−v∥ 2
+2,∥u∥ 2 =∥v∥ 2 = 1.
+Therefore, proving E[R(l+1)
+i,i ]≥E[R (l)
+i,i ] is equivalent to showing that the expected squared distance between the normalized
+representations of the two views does not increase with depth, i.e.,
+E
+h
+∥ ¯H(l+1,a)
+i,: − ¯H(l+1,b)
+i,: ∥2
+2
+i
+≤E
+h
+∥ ¯H(l,a)
+i,: − ¯H(l,b)
+i,: ∥2
+2
+i
+.(21)
+We first relate distances between normalized representations to distances between the corresponding unnormalized ones.
+Since row-wise normalization is Lipschitz continuous on the set{z:∥z∥ 2 ≥c}, we have
+
+u
+∥u∥2
+− v
+∥v∥2
+
+2
+≤ 1
+c ∥u−v∥ 2.
+Applying this inequality tou=H (l,a)
+i,: andv=H (l,b)
+i,: yields
+∥ ¯H(l,a)
+i,: − ¯H(l,b)
+i,: ∥2
+2 ≤ 1
+c2 ∥H(l,a)
+i,: −H (l,b)
+i,: ∥2
+2.
+Thus, it suffices to show that the expected unnormalized difference between the two views contracts with message passing.
+To this end, define the difference matrix at layerlas∆ (l) ≜H (l,a) −H (l,b), we obtain
+∆(l+1) =P (a)H(l,a) −P (b)H(l,b) =P (a)∆(l) + (P(a) −P (b))H(l,b).
+Taking expectation over the independent stochastic perturbations of the two views, the second term vanishes due to
+unbiasedness, i.e., E[P(a)−P(b)] =0 . Moreover, since P(a) is independent of∆(l) in expectation and satisfies∥P(a)∥2 ≤1 ,
+we have
+E∥∆(l+1)∥2
+F ≤E∥P (a)∆(l)∥2
+F ≤E∥∆ (l)∥2
+F .
+Finally, when the anchor nodeiis sampled uniformly,
+EiE∥∆(l)
+i,: ∥2
+2 = 1
+N E∥∆(l)∥2
+F .
+Combining the above inequalities shows that
+E
+h
+∥ ¯H(l+1,a)
+i,: − ¯H(l+1,b)
+i,: ∥2
+2
+i
+≤E
+h
+∥ ¯H(l,a)
+i,: − ¯H(l,b)
+i,: ∥2
+2
+i
+,
+which establishes (21) and thusE[R (l+1)
+i,i ]≥E[R (l)
+i,i ].
+17
+
+
+--- PAGE 18 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Neighborhood-based positive samples.In this case, we assume that positive samples are sampled uniformly from one-hop
+neighbors, i.e., (vi, vj)∼Uniform(T) . We consider a single propagation operator P and H(l+1) =PH (l). Define
+R(l)
+ij =
+D
+¯H(l)
+i,: , ¯H(l)
+j,:
+E
+.
+Proof. Similarly, we suffice to show that the expected normalized distance of a random edge decreases with l. For unit
+vectors,R (l)
+ij = 1− 1
+2 ∥ ¯H(l)
+i,: − ¯H(l)
+j,: ∥2
+2. By the same normalization Lipschitz argument,
+∥ ¯H(l)
+i,: − ¯H(l)
+j,: ∥2
+2 ≤ 1
+c2 ∥H(l)
+i,: −H (l)
+j,: ∥2
+2.
+Thus it is sufficient to prove the following edge-average contraction:
+E(vi,vj )∼T
+
+∥H(l+1)
+i,: −H (l+1)
+j,: ∥2
+2
+
+≤E (vi,vj )∼T
+
+∥H(l)
+i,: −H (l)
+j,: ∥2
+2
+
+.(22)
+Leth (l)
+:,k be thek-th feature dimension ofH (l). Using the definition of Dirichlet energy,
+X
+(vi,vj )∈T
+∥H(l)
+i,: −H (l)
+j,: ∥2
+2 = 2
+DX
+k=1
+ 
+h(l)
+:,k
+⊤
+L h(l)
+:,k.
+BecauseH (l+1) =PH (l) and∥P∥ 2 ≤1, the Dirichlet energy is non-increasing under propagation, i.e.,
+ 
+Ph(l)
+:,k
+⊤
+L(Ph (l)
+:,k)≤
+ 
+h(l)
+:,k
+⊤
+L h(l)
+:,k,∀k.
+Summing overkyields X
+(vi,vj )∈T
+∥H(l+1)
+i,: −H (l+1)
+j,: ∥2
+2 ≤
+X
+(vi,vj )∈T
+∥H(l)
+i,: −H (l)
+j,: ∥2
+2.
+Dividing by|T |gives (22), and thereforeE(vi,vj )∼T [R(l+1)
+ij ]≥E (vi,vj )∼T [R(l)
+ij ].
+E.2. Gradient view of the pre-alignment effect
+We analyze how pre-alignment effect affects the learning signal of positive alignment under the InfoNCE objective in Eq.(4).
+For analytical clarity, we assume negative similarities unchanged, so as to isolate the effect of positive pre-alignment on the
+InfoNCE optimization.
+Theorem E.1.Consider the InfoNCE loss in Eq. (4), for any positive sample p∈ Pi, define sip ≜sim(h i,h p), and
+sin ≜sim(h i,h n). Then the gradient magnitude w.r.t. the positive similarity satisfies:
+
+∂LInfoNCE(hi)
+∂sip
+ = 1
+τ · exp(sip/τ)P
+p′∈Pi
+exp(sip′/τ)
+| {z }
+positive weight
+·
+P
+n∈Ni
+exp(sin/τ)
+P
+p′∈Pi
+exp(sip′/τ) + P
+n∈Ni
+exp(sin/τ)
+| {z }
+negative dominance factor
+.(23)
+Assume a pre-alignment effect that increases all positive similarities by the same amount ∆≥0 , i.e., s′
+ip =s ip + ∆ for all
+p∈ Pi, ifN i ̸=∅, then for everyp∈ P i, we have:
+
+∂L′
+InfoNCE(hi)
+∂s′
+ip
+ ≤e −∆/τ
+
+∂LInfoNCE(hi)
+∂sip
+ .(24)
+Consequently, when message passing repeatedly increases positive similarity across layers (i.e.,∆ = ∆t >0 ), the gradient
+signal provided by positive alignment diminishes rapidly as propagation depth grows.
+Proof. Define A≜ P
+p∈Pi exp(sip/τ) and B≜ P
+n∈Ni exp(sin/τ). Then LInfoNCE(hi) =−logA+ log(A+B) . For
+anyp∈ Pi,
+∂LInfoNCE(hi)
+∂sip
+=− 1
+A · 1
+τ exp(sip/τ) + 1
+A+B · 1
+τ exp(sip/τ) =− 1
+τ
+exp(sip/τ)B
+A(A+B) .
+18
+
+
+--- PAGE 19 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Taking absolute values and rewriting gives Eq. (23).
+For the pre-alignment effect s′
+ip =s ip + ∆ for all positives, we have A′ = P
+p exp((sip + ∆)/τ) =e ∆/τ A and B′ =B .
+Also, the positive weight term in Eq. (23) is unchanged:
+exp((sip + ∆)/τ)P
+p′ exp((sip′ + ∆)/τ) = e∆/τ exp(sip/τ)
+e∆/τ P
+p′ exp(sip′/τ) = exp(sip/τ)P
+p′ exp(sip′/τ) .
+Therefore the ratio of gradient magnitudes reduces to the ratio of the “negative dominance factor”:
+∂L′
+InfoNCE/∂s′
+ip
+
+|∂LInfoNCE/∂sip| = B/(A′ +B)
+B/(A+B) = A+B
+e∆/τ A+B .
+Since∆≥0impliese ∆/τ A+B≥e ∆/τ (A+B), we have
+A+B
+e∆/τ A+B ≤ A+B
+e∆/τ (A+B) =e −∆/τ ,
+which proves Eq. (24).
+E.3. Proof of Theorem 3.3
+We first derive the bound under the commonly used local neighborhood-based positive sampling rules in graph contrastive
+learning, where positive samples correspond to neighboring nodes and negative samples are sampled independently from the
+marginal node distribution. We further discuss how the same proof strategy extends to the augmentation-based positive
+sampling at the end of the proof. For clarity, we introduce the setup used throughout the proof as follows:
+Fix a propagation depth l and a feature dimension m. Let f∈R n denote the m-th feature across all nodes, where fi ≜x (l)
+i,m.
+Let T be a lazy random-walk transition matrix, defined as T= 1
+2 I+ 1
+2 D−1A, where A is the adjacency matrix and D
+is the degree matrix. The laziness (i.e., staying at the current node with probability 1/2) ensures that the random walk is
+aperiodic, which guarantees a strictly positive spectral gap. Let π denote the stationary distribution of T, and let λgap >0
+be its spectral gap. We define the random-walk Laplacian asL rw ≜I−T,and define the Dirichlet energy of featurefas
+E (l)
+m ≜f ⊤Lrwf= 1
+2
+X
+i,j
+πi Tij (fi −f j)2,(25)
+which measures the variation of the feature along edges of the graph under the random-walk distribution. We assume f is
+centered with respect toπ, i.e., P
+i πifi = 0.
+We consider a binary random variable S∈ {0,1} indicating whether a node pair is a positive or a negative sample.
+Specifically, we sample(i, j)as
+(i, j)∼
+(
+P+ :i∼π, j∼T(i,·), S= 1,
+P− :i∼π, j∼πindependently, S= 0, (26)
+which corresponds to local neighborhood–based positives and randomly sampled negatives. For the m-th feature dimension,
+we define the similarity score as R(l)
+ij,m =ϕ m(fi, fj), where ϕm(a, b) =abcorresponds to the inner product, and the same
+form applies to cosine similarity after ℓ2 normalization. In both cases, we assume |fi| ≤Bfor all i, which implies the
+Lipschitz condition: ϕm(fi, fj)−ϕ m(fi, fj′)
+ ≤B|f j −f j′|.(27)
+Finally, to avoid imposing regularity assumptions on the score distribution, we apply a standard Gaussian smoothing. Define
+the observed score:
+eR(l)
+ij,m ≜R (l)
+ij,m +ξ, ξ∼ N(0, σ 2),(28)
+whereξis independent of(S, i, j). Since eR(l)
+ij,m is obtained fromR (l)
+ij,m by post-processing, we have:
+I
+
+S;R (l)
+ij,m
+
+≤I
+
+S; eR(l)
+ij,m
+
+.(29)
+Therefore, it suffices to upper boundI
+
+S; eR(l)
+ij,m
+
+in terms ofE (l)
+m .
+19
+
+
+--- PAGE 20 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Proof. Let Q1 and Q0 denote the conditional distributions of the similarity scoreR(l)
+ij,m given S= 1 and S= 0 , respectively.
+To compare these two distributions, we bound their Wasserstein-1 distanceW1(Q1, Q0) by explicitly constructing a coupling.
+We first sample an anchor node i∼π . Conditioned on i, we draw j+ ∼T(i,·) and j− ∼π independently, corresponding
+to a positive and a negative sample. We then define the coupled random variables
+R+ ≜ϕ m(fi, fj+ ), R − ≜ϕ m(fi, fj− ),(30)
+whereR + andR − follow the distributionsQ 1 andQ 0, respectively. We can get the following:
+W1(Q1, Q0)≤E[|R + −R −|].(31)
+We now bound the right side. Using the Lipschitz property in (27) and the Cauchy–Schwarz inequality, we obtain
+E[|R+ −R −|]≤BE
+
+|fj+ −f j− |
+
+≤B
+q
+E
+
+(fj+ −f j− )2
+.(32)
+Since T has stationary distribution π and i∼π , both j+ and j− are marginally distributed according to π, and they are
+independent. Using the centering assumption P
+i πifi = 0, we have
+E
+
+(fj+ −f j− )2
+= 2 Varπ(f).(33)
+Combining the above inequalities yields
+W1(Q1, Q0)≤B
+p
+2 Varπ(f).(34)
+Recall that T defines a lazy random-walk transition matrix. The laziness admits a strictly positive spectral gap λgap >0 .
+And we can use the Poincar´e inequality to relate the variance of a function under the stationary distribution to its Dirichlet
+energy. Specifically, we have
+Varπ(f)≤ 1
+λgap
+f ⊤Lf= 1
+λgap
+E (t)
+m .(35)
+Combining (34) and (35),
+W1(Q1, Q0)≤B
+s
+2
+λgap
+E (t)
+m .(36)
+Since eR(l)
+ij,m =R (l)
+ij,m +ξ is obtained by adding independent Gaussian noise ξ∼ N(0, σ2). This smoothing ensures that
+the conditional distributions eQ1 and eQ0 of eR(l)
+ij,m given S= 1 and S= 0 are absolutely continuous, allowing their KL
+divergence to be controlled.
+DKL( eQ1∥ eQ0)≤ 1
+2σ2 W 2
+2 (Q1, Q0)≤ 1
+2σ2 W 2
+1 (Q1, Q0),(37)
+where we usedW 2 ≤W 1 for 1D distributions. Plugging (36) into (37) yields
+DKL( eQ1∥ eQ0)≤ 1
+2σ2 ·B 2 · 2
+λgap
+E (t)
+m = B2
+σ2λgap
+E (t)
+m .(38)
+The same bound holds forD KL( eQ0∥ eQ1)by symmetry.
+For binaryS, we have:
+I(S; eR) =
+X
+s∈{0,1}
+P(S=s)D KL( eQs∥ eQ), eQ=
+X
+s
+P(S=s) eQs.(39)
+I(S; eR)≤P(S= 1)D KL( eQ1∥ eQ0) +P(S= 0)D KL( eQ0∥ eQ1)≤max
+n
+DKL( eQ1∥ eQ0), DKL( eQ0∥ eQ1)
+o
+.(40)
+20
+
+
+--- PAGE 21 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Combining with (38) gives
+I(S; eR(t)
+ij,m)≤ B2
+σ2λgap
+E (t)
+m .
+Finally, by (29),
+I(S;R (t)
+ij,m)≤I(S; eR(t)
+ij,m)≤ B2
+σ2λgap
+E (t)
+m .
+SettingC≜ B2
+σ2λgap
+proves (10).
+Remark (Augmentation-based positive sampling).The above analysis also applies to the augmentation-based positive
+sampling rules. In this case, we define S= 1 to indicate that (i, j)corresponds to the same node under two augmented
+views, and S= 0 to indicate two independent random nodes. The key observation is that the similarity score R(l)
+ij,m remains
+a scalar function of the propagated features, and the randomness induced by view sampling only affects its conditional
+distribution. Consequently, the coupling construction in Step 1 and all subsequent bounds remain valid under the same
+boundedness and Lipschitz assumptions, yielding the same dependence on the Dirichlet energyE (l)
+m .
+E.4. Proof of Theorem 3.4
+Proof. Let R(l)
+ij =
+ 
+R(l)
+ij,1, . . . , R(l)
+ij,d
+
+and denote RH ≜R (l)
+ij,H and RL ≜R (l)
+ij,L. We first prove (11). By the chain rule of
+mutual information,
+I
+
+Sij;R (l)
+ij
+
+=I(S ij;R H) +I(S ij;R L |R H).(41)
+Since conditional mutual information is nonnegative, we immediately have
+I(S ij;R H)≤I
+
+Sij;R (l)
+ij
+
+,(42)
+which proves the left inequality in (11).
+To prove the right inequality, it suffices to upper bound the incrementI(S ij;R L |R H). We adopt the following upper-bound
+condition: the incremental mutual information carried by the low-energy, conditioned on the high-energy, is bounded by the
+sum of the feature-wise mutual informations, i.e.,
+I(S ij;R L |R H)≤
+X
+m∈L
+I
+
+Sij;R (l)
+ij,m
+
+.(43)
+Applying Theorem 3.3 to eachm∈ Lgives
+X
+m∈L
+I
+
+Sij;R (l)
+ij,m
+
+≤
+X
+m∈L
+CE (l)
+m =C
+X
+m∈L
+E (l)
+m ≤C ε,(44)
+where we used the assumption P
+m∈L E (l)
+m ≤εin the last step. Combining (41), (43), and (44), we obtain
+I
+
+Sij;R (l)
+ij
+
+≤I(S ij;R H) +C ε,(45)
+which proves the right inequality in (11).
+We now prove (12). Note that the scalar similarity R(l)
+ij = Pd
+m=1 R(l)
+ij,m is a deterministic function of R(l)
+ij . By the data
+processing inequality, applying any deterministic mapping cannot increase mutual information, hence
+I
+
+Sij;R (l)
+ij
+
+≤I
+
+Sij;R (l)
+ij
+
+.(46)
+This completes the proof.
+21
+
+
+--- PAGE 22 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Table 9.Node classification results on heterophilic graphs with MLP as base encoder (except SPGCL). Best results are in bold, and
+second-best are underlined.X,A, andYdenote node features, adjacency matrix, and node labels.
+Method Training Data Chameleon Cornell Texas Wisconsin Crocodile Actor
+MLPX, Y49.06±1.86 50.91±8.99 58.92±4.56 65.49±4.55 64.41±0.53 29.88±1.12
+GRACEX, A48.92±2.41 64.59±6.30 68.38±6.38 80.00±2.41 65.03±1.18 36.14±1.11
+DGIX, A42.74±1.80 55.41±8.48 60.27±5.70 70.00±5.70 63.62±0.96 35.57±0.99
+BGRLX, A33.84±1.98 45.95±4.77 63.24±9.21 49.80±8.02 51.27±1.40 28.47±1.40
+GCAX, A45.22±1.94 50.00±7.00 58.92±4.56 52.16±5.16 64.69±0.65 35.03±0.91
+LocalGCLX, A59.39±1.56 30.81±8.66 38.11±8.59 41.18±7.34 64.02±0.69 29.47±0.78
+GraphACLX, A48.51±2.18 69.19±4.63 72.70±5.32 77.65±2.95 65.96±1.02 36.09±1.38
+SPGCL(Ours) X, A 72.26±1.66 75.41±6.43 80.81±6.30 83.53±4.26 77.43±0.67 37.23±1.19
+Cora CiteSeer PubMed0.20
+0.40
+0.60
+0.80
+1.00
+Similarity.
+Raw. SPGCL GCN
+Photo CS Computers
+0.40
+0.60
+0.80
+1.00
+Actor Texas Wisconsin0.20
+0.40
+0.60
+0.80
+1.00
+Chameleon Cornell Crocodile0
+0.20
+0.40
+0.60
+0.80
+1.00
+Figure 4.Average 1-hop neighbor similarity before contrastive optimization. Raw. means original node featureX.
+Raw. GRACE DGI BGRL SGRL SPGCL
+Figure 5.t-SNE embeddings of nodes on three datasets. From top to bottom: Photo, CS, and Computers.
+F. Additional Experiment Results.
+F.1. Visualization.
+To better understand the quality of the learned representations, we visualize node embeddings with t-SNE (Van der Maaten
+& Hinton, 2008). Each point corresponds to a node, and various colors denote ground-truth classes. Figure 5 reports results
+on Photo, CS, and Computers. Compared with baselines, SPGCL yields more compact clusters within the same class. Class
+regions overlap less in many cases. The decision boundaries between classes also appear clearer. These patterns suggest that
+SPGCL learns embeddings with stronger class discrimination and better similar semantic grouping.
+22
+
+
+--- PAGE 23 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+/uni00000013/uni00000011/uni00000013/uni00000014/uni00000013/uni00000011/uni00000013/uni00000013/uni00000018/uni00000013/uni00000011/uni00000013/uni00000013/uni00000014/uni00000013/uni00000011/uni00000013/uni00000013/uni00000013/uni00000018/uni00000013/uni00000011/uni00000013/uni00000013/uni00000013/uni00000014
+/uni0000002f/uni00000048/uni00000044/uni00000055/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni00000044/uni00000057/uni00000048/uni00000011
+/uni0000001b/uni00000017/uni00000011/uni00000013/uni00000013
+/uni0000001b/uni00000018/uni00000011/uni00000013/uni00000013
+/uni0000001b/uni00000019/uni00000011/uni00000013/uni00000013
+/uni00000024/uni00000046/uni00000046/uni00000058/uni00000055/uni00000044/uni00000046/uni0000005c/uni00000011
+/uni00000026/uni00000052/uni00000055/uni00000044
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+86.50
+87.00
+87.50
+Accuracy.
+PubMed
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+71.00
+72.00
+Accuracy.
+Chameleon
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+50.00
+60.00
+70.00
+80.00
+Accuracy.
+Cornell
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+40.00
+60.00
+80.00
+Accuracy.
+CiteSeer
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+93.50
+94.50
+95.50
+Accuracy.
+CS
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+76.50
+77.00
+77.50
+Accuracy.
+Crocodile
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+25.00
+30.00
+35.00
+40.00
+Accuracy.
+Actor
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+30.00
+60.00
+90.00
+Accuracy.
+Photo
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+40.00
+60.00
+80.00
+100.00
+Accuracy.
+Computers
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+65.00
+70.00
+75.00
+80.00
+Accuracy.
+Texas
+0.01 0.005 0.001 0.0005 0.0001
+Learning rate.
+65.00
+75.00
+85.00
+Accuracy.
+Wisconsin
+128 256 512 1024
+Hidden dim.
+84.50
+85.00
+85.50
+86.00
+Accuracy.
+Cora
+128 256 512 1024
+Hidden dim.
+85.00
+86.00
+87.00
+88.00
+Accuracy.
+PubMed
+128 256 512 1024 2048 4096
+Hidden dim.
+60.00
+65.00
+70.00
+75.00
+Accuracy.
+Chameleon
+128 256 512 1024 2048 4096
+Hidden dim.
+45.00
+55.00
+65.00
+75.00
+Accuracy.
+Cornell
+128 256 512 1024
+Hidden dim.
+72.00
+72.50
+73.00
+73.50
+Accuracy.
+CiteSeer
+128 256 512 1024
+Hidden dim.
+95.00
+95.10
+95.20
+Accuracy.
+CS
+128 256 512 1024 2048 4096
+Hidden dim.
+60.00
+70.00
+80.00
+Accuracy.
+Crocodile
+128 256 512 1024 2048 4096
+Hidden dim.
+30.00
+32.00
+34.00
+36.00
+38.00
+Accuracy.
+Actor
+128 256 512 1024
+Hidden dim.
+93.50
+94.00
+94.50
+95.00
+Accuracy.
+Photo
+128 256 512 1024
+Hidden dim.
+90.00
+90.50
+91.00
+91.50
+Accuracy.
+Computers
+128 256 512 1024 2048 4096
+Hidden dim.
+60.00
+70.00
+80.00
+Accuracy.
+Texas
+128 256 512 1024 2048 4096
+Hidden dim.
+60.00
+70.00
+80.00
+Accuracy.
+Wisconsin
+Figure 6.Hyper-parameter analysis of SPGCL with respect to the learning rate (blue) and the hidden dimension (orange). The left two
+columns correspond to homophilic graphs, while the right two columns correspond to heterophilic graphs.
+F.2. Empirical Analysis of the Pre-alignment Effect.
+To empirically verify the pre-alignment effect induced by message passing, we further analyze the average similarity
+between each node and its one-hop neighbors. As shown in Figure 4, representations produced by a standard GCN exhibit a
+substantially higher neighbor similarity than the raw input features across all datasets, indicating that message passing alone
+can strongly increase the similarity of positive pairs even before contrastive optimization. In contrast, SPGCL consistently
+yields lower neighbor similarity than GCN. This confirms that SPGCL effectively mitigates the excessive pre-alignment
+caused by indiscriminate feature propagation, preserving sufficient diversity among positive pairs for contrastive learning.
+F.3. Impact of the base encoder choice.
+To further validate the competitive performance of SPGCL, we replace the GNN encoder with MLP as the base encoder,
+given that nodes in heterophilic graphs are likely to belong to different classes despite being connected. As shown in Table
+9, SPGCL still outperforms all baselines by a significant margin across all datasets. This highlights SPGCL’s ability to
+effectively learn from positive samples.
+23
+
+
+--- PAGE 24 ---
+Revisiting Positive Samples in Graph Contrastive Learning: From the Perspective of Message Passing
+Table 10.Performance comparison of dynamic and fixed partitions.
+Partition Cora CiteSeer PubMed Photo CS Computers
+Dynamic85.97±0.82 73.77±0.15 87.36±0.34 94.81±0.13 94.78±0.05 91.08±0.20
+Fixed85.44±0.13 73.49±0.26 87.19±0.13 94.83±0.07 95.03±0.03 91.04±0.09
+Table 11.Training time per epoch in seconds compared with InfoNCE-based methods.
+Method Cora CiteSeer PubMed Computers Photo
+SPGCL (Ours)0.0038 0.0043 0.0813 0.0774 0.0291
+GRACE0.0066 0.0071 0.1008 0.1068 0.0410
+GCA0.0062 0.0070 0.1311 0.1726 0.0638
+F.4. Learning rate and hidden dimension.
+Figure 6 presents the node classification accuracy of SPGCL with different learning rate and hidden dimension on 12
+datasets. For the learning rate, we observe a consistent unimodal pattern across most datasets. On homophilic graphs,
+performance improves as the learning rate increases and reaches its peak, after which it slightly degrades. Whereas on
+heterophilic graphs, performance is generally more sensitive to the learning rate, reflecting the noise induced by heterophilic
+neighbor mixing. For the hidden dimension, performance generally improves as the representation capacity increases. We
+notice that excessively large hidden dimensions may limit further gains, such as Texas, Cornell and Wisconsin.
+F.5. Effect of Dynamic Top-KPartition.
+In SPGCL, we adopt a fixed Top-K feature partition before training, where feature dimensions are separated according to
+their Dirichlet energies computed from the input features. To examine whether dynamically updating the partition during
+training can further improve performance, we additionally compare the fixed partition with a dynamic Top-K partition that
+recomputes the selected feature dimensions during training.
+As shown in Table 10, the dynamic partition achieves comparable performance to the fixed one. It brings slight improvements
+on Cora, CiteSeer, PubMed, and Computers, while the fixed partition performs marginally better on CS and Photo. Overall,
+the performance difference between the two strategies is small. This suggests that the initial feature-energy-based partition
+already captures the main distinction between low-energy and high-energy feature dimensions. Since dynamic partitioning
+introduces extra computation at each training epoch, we use the fixed partition in SPGCL as it provides a better trade-off
+between effectiveness and efficiency.
+F.6. Efficiency Compared with InfoNCE-based Methods.
+We compare the training time of SPGCL with representative InfoNCE-based methods, including GRACE and GCA. Unlike
+these methods that generate two augmented views and encode both views with GNNs, SPGCL follows a single-view
+contrastive design. The Dirichlet energy estimation is conducted only once before training, and the model uses one GCN
+branch with a lightweight MLP branch. As shown in Table 11, SPGCL consistently requires less training time per epoch
+than GRACE and GCA across all datasets. This demonstrates that SPGCL achieves a more efficient training process by
+avoiding the extra cost of dual-view augmentation and dual-view GNN encoding.
+24

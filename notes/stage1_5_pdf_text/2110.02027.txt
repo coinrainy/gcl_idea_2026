@@ -1,0 +1,1365 @@
+
+
+--- PAGE 1 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+Jun Xia 1 2 Lirong Wu 1 2 Ge Wang 1 2 Jintao Chen 3 Stan Z. Li 1 2
+Abstract
+Contrastive Learning (CL) has emerged as a dom-
+inant technique for unsupervised representation
+learning which embeds augmented versions of
+the anchor close to each other (positive samples)
+and pushes the embeddings of other samples (neg-
+atives) apart. As revealed in recent studies, CL
+can beneﬁt from hard negatives (negatives that
+are most similar to the anchor). However, we
+observe limited beneﬁts when we adopt existing
+hard negative mining techniques of other domains
+in Graph Contrastive Learning (GCL). We per-
+form both experimental and theoretical analysis
+on this phenomenon and ﬁnd it can be attributed
+to the message passing of Graph Neural Networks
+(GNNs). Unlike CL in other domains, most hard
+negatives are potentially false negatives (nega-
+tives that share the same class with the anchor)
+if they are selected merely according to the sim-
+ilarities between anchor and themselves, which
+will undesirably push away the samples of the
+same class. To remedy this deﬁciency, we pro-
+pose an effective method, dubbed ProGCL, to
+estimate the probability of a negative being true
+one, which constitutes a more suitable measure for
+negatives’ hardness together with similarity. Ad-
+ditionally, we devise two schemes (i.e., ProGCL-
+weight and ProGCL-mix) to boost the perfor-
+mance of GCL. Extensive experiments demon-
+strate that ProGCL brings notable and consis-
+tent improvements over base GCL methods and
+yields multiple state-of-the-art results on several
+unsupervised benchmarks or even exceeds the
+performance of supervised ones. Also, ProGCL
+is readily pluggable into various negatives-based
+GCL methods for performance improvement. We
+release the code at https://github.com/
+junxia97/ProGCL.
+1Westlake University 2Westlake Institute for Advanced Study
+3School of Computer Science, Zhejiang University. Correspon-
+dence to: Jun Xia<xiajun@westlake.edu.cn>.
+Proceedings of the 39 th International Conference on Machine
+Learning, Baltimore, Maryland, USA, PMLR 162, 2022. Copy-
+right 2022 by the author(s).
+(a) CIFAR-10 (Image)
+ (b) Coauthor-CS (Graph)
+Figure 1. Similarity (cosine similarity between normalized embed-
+dings of anchor and negatives) histograms of negatives. We adopt
+SimCLR (Chen et al., 2020) and GCA (Zhu et al., 2021c) for
+CIFAR-10 and Coauthor-CS respectively. False (or true) negatives
+denote the samples that are (or not) from the same class with the
+anchor. Unlike CL, most negatives with larger similarities to the
+anchor are false ones in GCL. More examples are in the appendix.
+1. Introduction
+Recently, Contrastive Learning (CL) has demonstrated un-
+precedented unsupervised performance in computer vision
+(He et al., 2020; Chen et al., 2020), natural language pro-
+cessing (Gao et al., 2021; Zheng et al., 2022) and graph
+representation learning (Velickovic et al., 2019; Xia et al.,
+2022b; Zhu et al., 2021c). As with metric learning (Kaya &
+Bilge, 2019), existing works both theoretically and practi-
+cally validate that hard negatives contribute more to CL. For
+example, HCL (Robinson et al., 2021) develops a family of
+unsupervised sampling methods for selecting hard negatives
+and MoCHi (Kalantidis et al., 2020) mixes the hard nega-
+tives to synthesize more hard negative ones. However, we
+observe minor improvement or even signiﬁcant performance
+drop when we adopt these negative mining techniques in
+GCL (the results can be seen in Table 5). Concurrent to
+our work, Zhu et al. (2021b) also observe that existing hard
+negative mining techniques that work well in other domains
+bring limited beneﬁts to GCL. Unfortunately, they didn’t
+provide any solution to tackle this issue.
+To explain these phenomena, we ﬁrst plot the negatives’
+distributions over similarity of various datasets in Figure 1.
+Note that we do not observe signiﬁcant changes of nega-
+tives’ distribution (keep unimodal as shown in Figure 1(a))
+during the training process of SimCLR (Chen et al., 2020)
+on CIFAR-10 and other image datasets. However, for the
+arXiv:2110.02027v3  [cs.AI]  14 Jun 2022
+
+
+--- PAGE 2 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+ﬁrst stage of GCL, the negatives’ distribution is bimodal for
+a long period as Figure 1(b) and then progressively transit to
+unimodal distribution as CL at the second stage. Similar phe-
+nomena for more datasets can be found in the appendix. The
+difference of negatives’ distribution between CL and GCL
+can be attributed to the unique message passing of Graph
+Neural Networks, which we further discuss in section 3.2.
+These provide explanations for the poor performance of ex-
+isting negative mining techniques in GCL. Speciﬁcally, they
+regard the negatives that are most similar to anchor points
+as hard ones across all the training process. However, as
+shown in Figure 1(b), most selected “hard” negatives in this
+way are false negatives for GCL indeed, which will undesir-
+ably push away the semantically similar samples and thus
+degrade the performance. The existence of false negatives is
+termed as sampling bias in DCL (Chuang et al., 2020). How-
+ever, as reported in Table 5 and Zhu et al. (2021b), DCL
+brings performance drop for GCL because the sampling
+bias is severer in GCL. Now, we are naturally motivated
+to ask following questions: Are there better alternatives to
+measure negatives’ hardness considering the issue of false
+negatives in GCL? Can we devise more suitable methods to
+eliminate severer bias in GCL?
+To answer these questions, we argue that true and false
+negatives can be distinguished by ﬁtting a two-component
+(true-false) beta mixture model (BMM) on the similarity.
+The posterior probability of a negative being true one under
+BMM can constitute a more suitable measure for negatives’
+hardness accompanied with similarity. With the novel mea-
+sure, we devise two schemes (ProGCL-weight and ProGCL-
+mix) for further improvement of negatives-based GCL meth-
+ods. To the best of our knowledge, our work makes one of
+the pioneering attempts to study hard negative mining in
+node-level GCL. We highlight the following contributions:
+• We demonstrate the difference of negatives’ distribu-
+tion between GCL and CL and explain why existing
+hard negative mining techniques can not work well in
+GCL with both theoretical and experimental analysis.
+• We propose to utilize BMM to estimate the probability
+of a negative being true one relative to a speciﬁc an-
+chor. Combined with the similarity, we obtain a more
+suitable measure for negatives’ hardness.
+• We devise two schemes (i.e., ProGCL-weight and
+ProGCL-mix) that are more suitable for hard negative
+mining in GCL.
+• ProGCL brings notable and consistent improvements
+over base GCL methods and yields multiple state-of-
+the-art results on several unsupervised benchmarks or
+even exceeds the performance of supervised ones. Also,
+it can boost various negatives-based GCL methods for
+further improvements.
+2. Related Work
+2.1. Graph Contrastive Learning (GCL)
+Recently, GCL has gained popularity in unsupervised graph
+representation learning, which can get rid of the resource-
+intensive annotations (Xia et al., 2021; Tan et al., 2021; Xia
+et al., 2022a). Initially, DGI (Velickovic et al., 2019) and
+InfoGraph (Sun et al., 2020) are proposed to obtain expres-
+sive representations for graphs or nodes via maximizing the
+mutual information between graph-level representations and
+substructure-level representations of different granularity.
+Similarly, GMI (Peng et al., 2020) adopts two discrimina-
+tors to directly measure mutual information between input
+and representations of both nodes and edges. Additionally,
+MVGRL (Hassani & Khasahmadi, 2020) proposes to learn
+both node-level and graph-level representation by perform-
+ing node diffusion and contrasting node representation to
+augmented graph representation. Different from our work,
+GraphCL (You et al., 2020) and its variants (Suresh et al.,
+2021; Xu et al., 2021; You et al., 2021; 2022; Li et al., 2021)
+adopt SimCLR framework and design various augmenta-
+tions for graph-level representation learning. For node-level
+representations, GRACE (Zhu et al., 2020) and its vari-
+ants (Zhu et al., 2021c; Tong et al., 2021) maximize the
+agreement of node embeddings across two corrupted views
+of the graph. More recently, SimGRACE (Xia et al., 2022b),
+BGRL (Thakoor et al., 2021) and CCA-SSG (Zhang et al.,
+2021) try to simplify graph contrastive learning via discard-
+ing the negatives, parameterized mutual information estima-
+tor or even data augmentations. In this paper, we consider
+hard negatives mining to further boost GCL on node-level
+representation learning, which is still under-explored. For
+the limited space, we recommend readers refer to a recent
+review (Xia et al., 2022d) for more relevant literatures.
+2.2. Hard Negative Mining in Contrastive Learning
+For contrastive learning, HCL (Robinson et al., 2021) and
+MoCHi (Kalantidis et al., 2020) are proposed to emphasize
+or synthetize hard negatives. Additionally, Ring (Wu et al.,
+2021) introduces a family of mutual information estimators
+that sample negatives in a “ring” around each positive. How-
+ever, as shown in Table 5, these techniques which emphasize
+hard negatives don’t work well in GCL. For GCL, Zhao et
+al. (Zhao et al., 2021) utilize the clustering pseudo labels
+to alleviate false negative issue, which suffers from heavy
+computational overhead and will degrade the performance
+when confronted with multi-class datasets. CuCo (Chu et al.,
+2021) sorts the negatives from easy to hard with similarity
+for graph-level contrastive learning and proposes to auto-
+matically select and train negative samples with curriculum
+learning. Instead, we study node-level GCL with message
+passing among instances. Additionally, Zhu et al. (Zhu et al.,
+2022) propose a structure-enhanced negative mining scheme
+
+
+--- PAGE 3 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+which discovers hard negatives in each metapath-induced
+view in heterogeneous graph. However, it is not suitable for
+homogeneous graphs without metapath.
+3. Methodology
+Positive pairs
+Negative pairs (intra-view)
+Negative pairs (inter-view)
+Data augmentation
+Anchor
+Figure 2. Schematic diagram of node-level GCL framework.
+3.1. Preliminaries and Notations
+Let G = (V,E) be the graph, where V =
+{v1,v 2,··· ,vN},E ⊆ V × Vdenote the node set
+and edge set respectively. Additionally, X∈ RN×F and
+A∈{ 0, 1}N×N are the feature matrix and the adjacency
+matrix. fi ∈ RF is the feature of vi, and Aij = 1 iff
+(vi,vj) ∈ E. Our objective is to learn a GNN encoder
+f(X, A)∈ RN×F ′
+to embed nodes in low dimensional
+space without label information. These low dimensional
+representations can be used in downstream tasks including
+node classiﬁcation. As shown in Figure 2, we sample two
+augmentation functionst∼T andt′∼T , hereT is the set
+of all augmentation functions. We can then obtain two views
+forG, ˜G1 = t(G) and ˜G2 = t′(G). Given ˜G1 = (˜X 1,˜A1)
+and ˜G2 = (˜X 2,˜A2), we denote node embeddings in the
+two views as U = f(˜X 1,˜A1) and V = f(˜X 2,˜A2). For
+any nodevi, its embedding in one view vi is regarded as the
+anchor. The embedding ui in the other view is the positive
+sample and the embeddings of other nodes in both views
+are negatives. Similar to the InfoNCE (Oord et al., 2018),
+the training objective for each positive pair (ui, vi) is,
+ℓ (ui, vi) =
+log eθ(ui,vi)/τ
+eθ(ui,vi)/τ
+  
+positive pair
++
+∑
+k̸=i
+eθ(ui,vk)/τ
+  
+inter-view negative pairs
++
+∑
+k̸=i
+eθ(ui,uk)/τ
+  
+intra-view negative pairs
+,
+(1)
+where the critic θ(u, v) = s(g(u),g (v)). Here s(·,·) is
+the cos similarity and g(·) is linear projection (two-layer
+perceptron model) to enhance the expression power of the
+critic function (Chen et al., 2020). With the symmetry of the
+two views, we can then deﬁne the overall loss as the average
+of all the positive pairs,
+J =− 1
+2N
+N∑
+i=1
+[ℓ (ui, vi) +ℓ (vi, ui)]. (2)
+Many GCL methods are built on this framework (Zhu et al.,
+2021b; Qiu et al., 2020; Zhu et al., 2021c; Jin et al., 2021),
+which motivates us to study hard negative mining on it.
+3.2. Experimental and Theoretical Analysis
+(a) GCN
+ (b) MLP
+Figure 3. Similarity (after Min-Max normalization) histograms of
+GCA (Zhu et al., 2021c) with GCN (with message passing) or
+MLP (without message passing) as encoder on Amazon-Photo.
+In Figure 3, we study the message passing’s role in GCL
+via replacing 2-layer GCN (Kipf & Welling, 2016a) that
+is composed of message passing and multi-layer percep-
+tron (MLP) with a 2-layer MLP encoder only. As can be
+observed, the similarity histograms of GCL will be similar
+to that of CL without message passing, which veriﬁes that
+message passing of GNN encoder is the key factor for the
+difference of negatives’ distribution between CL and GCL.
+More speciﬁcally, for the ﬁrst bimodal stage of GCL, the
+message passing in GCL enlarges the similarities between
+neighbour nodes which often share the same class. For the
+second unimodal stage, instance discrimination of GCL oc-
+cupies a position of prominence and pushes away all the
+other samples regardless of their semantic class. Theoreti-
+cally, for embeddings of any nodes pair in the graphG, we
+can compare their distance before and after message pass-
+ing and show that the distance will be decreased with the
+process, as formally induced in Theorem 3.1.
+Theorem 3.1. G is a non-bipartile and connected graph
+withN nodesV ={v1,...,v N}, and X (τ )
+i is the embed-
+ding of nodevi afterτ times message passing (X (0)
+i = fi).
+For large enoughτ,||X (τ )
+i − X (τ )
+j ||2≤|| X (0)
+i − X (0)
+j ||2.
+Proof. Given the message passing is,
+X (t+1) = ˆD
+− 1
+2 ˆA ˆD
+− 1
+2
+X (t),
+
+
+--- PAGE 4 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+where ˆA = A + I and ˆDi =∑
+j ˆAij. We can then rewrite
+the message passing as,
+X (t+1) = (I− Lsym)X (t),
+where Lsym = ˆD
+− 1
+2 ˆL ˆD
+− 1
+2
+, ˆL = ˆD − ˆA. Let
+(λ1,...,λ N) and (e1,..., eN) denote the eigenvalue and
+eigenvector of matrix I−Lsym, respectively. With the prop-
+erty of symmetric Laplacian matrix for non-bipartile and
+connected graph,
+−1<λ 1 <λ 2 <··· <λ N = 1, eN = ˆD
+− 1
+2
+[1, 1,..., 1]T,
+we can rewrite X (τ )
+i − X (τ )
+j as
+X (τ )
+i − X (τ )
+j = [(I− Lsym)τ X]i− [(I− Lsym)τ X]j
+= [λτ
+1(e(i)
+1 − e(j)
+1 ),...,λ τ
+n−1(e(i)
+N−1− e(j)
+N−1), 0] ˆX
+e(i)
+k is the ith element of eigenvector ek, ˆX is the coor-
+dinate matrix of X in the space spanned by eigenvectors
+(e1,..., eN). Thus,
+||X (τ )
+i − X (τ )
+j ||2 =
+√
+N∑
+m=1
+[
+N−1∑
+k=1
+λτ
+k(e(i)
+k − e(j)
+k ) ˆXkm]2
+Because 1<λ 1 <λ 2 <··· <λ N−1 < 1, thus for a large
+τ,||X (τ )
+i − X (τ )
+j ||2≤|| X (0)
+i − X (0)
+j ||2.
+3.3. ProGCL
+We aim to estimate the probability of a negative being true
+one. As can be observed in Figure 4, there is a signiﬁcant
+difference between the false negatives and true negatives’
+distributions in GCL, allowing the two types of negatives
+can be distinguished from the similarity distribution. Here
+we propose to utilize mixture model to estimate the proba-
+bility. Gaussian Mixture Model (GMM) is the most popular
+mixture model (Lindsay, 1995). However, in Figure 4, the
+distribution of false negatives is skew and thus symmetric
+Gaussian distribution can not ﬁt this well. To circumvent
+this issue, we resort to beta distribution (Gupta & Nadarajah,
+2004; Ji et al., 2005) which is ﬂexible enough to model vari-
+ous distributions (symmetric, skewed, arched distributions
+and so on) over [0, 1]. As can be observed in Figure 4, Beta
+Mixture Model (BMM) can ﬁt the empirical distribution
+better than GMM. Also, we compare the performance of
+ProGCL with BMM and GMM in Table 4 and ﬁnd that
+BMM consistently outperforms GMM. The probability den-
+sity function (pdf) of beta distribution is,
+p(s|α,β ) = Γ(α +β)
+Γ(α)Γ(β)sα−1(1−s)β−1, (3)
+whereα,β >0 are the parameters of beta distribution and
+Γ(·) is gamma function. The pdf of beta mixture model of
+(a) Amazon-Photo
+ (b) Coauthor-CS
+Figure 4. Empirical distribution and estimated GMM and BMM
+on Amazon-Photo and Coauthor-CS datasets. The BMM ﬁts the
+distributions better. HereC1,C2 denote the estimated distributions
+of two components respectively. Note that BMM is deﬁned on the
+interval [0, 1] while GMM is deﬁned over [−∞, +∞].
+C components ons (Min-Max normalized cosine similarity
+between normalized embeddings of anchors and negatives)
+can be deﬁned as:
+p(s) =
+C∑
+c=1
+λcp(s|αc,βc), (4)
+whereλc are the mixture coefﬁcients. Here we can ﬁt a two-
+component BMM (i.e.,C = 2) to model the distribution of
+true and false negatives. We then utilize Expectation Maxi-
+mization (EM) algorithm to ﬁt BMM to the observed distri-
+bution. In E-step, we ﬁx the parameters of BMM (λc,αc,βc)
+and updatep(c|s) with Bayes rule,
+p(c|s) = λcp (s|αc,βc)∑C
+j=1λjp (s|αj,βj)
+. (5)
+In practice, ﬁtting BMM with all the similarities will incur
+high computational cost. Instead, we can ﬁt BMM well by
+only samplingM (M≪N 2) similarities for simpliﬁcation.
+LargerM bring limited beneﬁts, which we will discuss in
+the appendix. We can then obtain the weighted average ¯sc
+and variancev2
+c overM similarities,
+¯sc =
+∑M
+i=1p(c|si)si
+∑M
+i=1p(c|si)
+, v 2
+c =
+∑M
+i=1p(c|si) (si− ¯sc)2
+∑M
+i=1p(c|si)
+.
+(6)
+For M-step, the component model parametersαc,βc can be
+estimated using the method of moments in statistics,
+αc = ¯sc
+( ¯sc (1− ¯sc)
+v2c
+− 1
+)
+, β c = αc (1− ¯sc)
+¯sc
+, (7)
+and coefﬁcientsλc for mixing can be calculated as,
+λc = 1
+M
+M∑
+i=1
+p(c|si). (8)
+The above E and M-steps are iterated until convergence
+or the maximum of iterations I are reached. In our exper-
+iments, we set I = 10 and we study the inﬂuence of I in
+
+
+--- PAGE 5 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+the appendix. Finally, we can obtain the probability of a
+negative being true or negative one relative to the anchor
+with the their similaritys,
+p (c|s) = λcp (s|αc,βc)
+p (s) . (9)
+Note that we can regard the ﬁtted distribution with largerλc
+as true negatives’ distribution because there are more true
+negatives than false ones relative to each anchor in multi-
+class datasets. Also, we can regard the ﬁtted distribution
+with smaller mean as true negatives’ distribution because
+the anchor and false negatives share the same class and
+they are more similar to each other in general. With the
+posterior probabilities, we devise two schemes to boost the
+performance of existing GCL as we elaborate below.
+3.4. Scheme 1: ProGCL-weight
+As revealed above, GCL suffers from severe sampling bias
+which will undermine the performance. To tackle this prob-
+lem, we propose a novel measure for negatives’ hardness
+considering the hardness and the probability of a negative
+being true one simultaneously,
+w(i,k ) = p (ct|sik)sik
+1
+N−1
+∑
+j̸=i[p (ct|sij)sij], (10)
+wheresik is the similarity between anchor ui and its inter-
+view negative sample vk andp (ct|sij) denotes the proba-
+bility of vj being true negative relative to anchor ui. Note
+w(i,k ) can be utilized to weight both inter-view (ui, vk)
+and intra-view (ui, uk) negative pair,
+ℓw (ui, vi) =
+log e
+θ(ui,vi)
+τ
+e
+θ(ui,vi)
+τ
+  
+positive pair
++
+∑
+k̸=i
+w(i,k )e
+θ(ui,vk)
+τ
+  
+inter-view negative pairs
++
+∑
+k̸=i
+w(i,k )e
+θ(ui,uk)
+τ
+  
+intra-view negative pairs
+,
+(11)
+we can then deﬁne the new overall loss as the average of all
+the positive pairs,
+Jw =− 1
+2N
+N∑
+i=1
+[ℓw (ui, vi) +ℓw (vi, ui)]. (12)
+3.5. Scheme 2: ProGCL-mix
+Recently, MoCHi (Kalantidis et al., 2020) proposes to syn-
+thesize more negatives with “hard” negatives selected only
+with similarity. However, as analysed above, many synthe-
+sized hard negatives in GCL are positive samples indeed,
+which will undermine the performance. To remedy this deﬁ-
+ciency, we propose ProGCL-mix which synthesizes more
+hard negatives considering the probability of a negative be-
+ing true one. The comparison between MoCHi and ProGCL-
+mix can be seen in Figure 5. More speciﬁcally, for each
+Anchor Selected hard negativesSynthetic negatives
+(a) MoCHi (b) ProGCL-mix
+Figure 5. Comparison between MoCHi and ProGCL-mix. Gray
+dotted lines denote mixing and the classes are distinguished by the
+color of samples. ProGCL-mix synthesizes more true negatives.
+anchor point ui, we synthesize m hard negatives by con-
+vex linear combinations of pairs of its “hardest” existing
+negatives. Here, “hardest” existing negatives refers toN′
+negatives that are selected with the measure in Eq. (10).
+Instead of mixingN′ samples randomly, we mix them by
+emphasizing samples that are more likely to be true neg-
+ative. Formally, for each anchor ui, a synthetic point ˜uk
+(k∈ [1,m ]) would be given by,
+˜uk =αkvp + (1−αk) vq, (13)
+where vp, vq are selected from N′ “hardest” existing negatives
+measured by Eq (10) andαk can be calculated as,
+αk = p (ct|sip)
+p (ct|sip) +p (ct|siq), (14)
+we can then deﬁne the training objective for each positive pair
+(ui, vi) with the synthetic negatives,
+ℓm (ui, vi) =
+log e
+θ(ui,vi)
+τ
+e
+θ(ui,vi)
+τ
+  
+positive pair
++
+∑
+k̸=i
+e
+θ(ui,vk)
+τ
+  
+inter-view negative pairs
++
+∑
+k̸=i
+e
+θ(ui,uk)
+τ
+  
+intra-view negative pairs
++
+m∑
+k=1
+e
+θ(ui, ˜uk)
+τ
+  
+synthetic negative pairs
+.
+(15)
+Note that we synthesize new samples only with inter-view
+hard negatives. Finally, we can deﬁne the new overall loss,
+Jm =− 1
+2N
+N∑
+i=1
+[ℓm (ui, vi) +ℓm (vi, ui)]. (16)
+3.6. Time Complexity Analysis
+It is noteworthy that the estimation of the posterior prob-
+abilities introduces light computational overhead over the
+base model. Firstly, we only have to ﬁt BMM once during
+the training process instead of once per epoch. Secondly,
+we can ﬁt BMM well withM (M≪N 2) similarities and
+
+
+--- PAGE 6 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+the time complexity of EM algorithm for ﬁtting in ProGCL
+isO(IM ).I is the the maximum of iterations. Thirdly, we
+only have to ﬁt BMM with similarities from single view
+because both inter-view and intra-view include all nega-
+tive pairs. In our experiments, we only utilize similarities
+from inter-view to ﬁt BMM. The training algorithms of both
+ProGCL-weight and ProGCL-mix for transductive tasks are
+summarized in Algorithm 1. The algorithm for inductive
+tasks can be found in the appendix.
+Algorithm 1 ProGCL-weight & -mix (Transductive)
+Input: T,G,f,g,N, normalized cosine similarity s,
+epoch for ﬁtting BMME,mode (‘weight’ or ‘mix’).
+forepoch = 0, 1, 2,... do
+Draw two augmentation functionst∼T ,t′∼T
+˜G1 =t(G), ˜G2 =t′(G);
+U =f(˜G1),V =f(˜G2);
+for ui∈U and vi∈V do
+sij =s(g(ui),g (vi))
+ifepoch =E then
+Computep (ct|sij) with Eq. (4) to Eq. (9).
+end if
+end for
+ifepoch≥E then
+ifmode = ‘weight’then
+ComputeJw with Eq. (10) to Eq. (12).
+Update the parameters off,g withJw;
+end if
+ifmode = ‘mix’then
+ComputeJm with Eq. (13) to Eq. (16).
+Update the parameters off,g withJm.
+end if
+else
+ComputeJ with Eq. (1) to Eq. (2).
+Update the parameters off,g withJ .
+end if
+end for
+Output:f,g .
+4. Experiments
+4.1. Experimental Setup & Baselines
+Following previous work (Velickovic et al., 2019), we train
+the model in an unsupervised manner. The resulting embed-
+dings are utilized to train and test a simple ℓ2-regularized
+logistic classiﬁer. We train the classiﬁer for 20 runs. Ad-
+ditionally, we adopt GRACE as base model and measure
+performance using micro-averaged F1-score on inductive
+tasks. For transductive tasks, we adopt GCA as base model
+and report the test accuracy.
+Transductive learning. We adopt a two-layer GCN (Kipf
+& Welling, 2016a) as the encoder for transductive learn-
+ing following previous works (Velickovic et al., 2019;
+Zhu et al., 2020). We consider our ProGCL with multi-
+ple baselines including DeepWalk (Perozzi et al., 2014) and
+node2vec (Grover & Leskovec, 2016). Additionally, we also
+consider recent methods including Graph AutoEncoders
+(GAE, VGAE) (Kipf & Welling, 2016b), DGI, GMI, MV-
+GRL, MERIT, BGRL and GCA as introduced in the related
+work. We report the best performance of three variants of
+GCA. We also compare ProGCL with supervised counter-
+parts including GCN (Kipf & Welling, 2016a) and Graph
+Attention Networks (GAT) (Veliˇckovi´c et al., 2017).
+Inductive learning on large graphs. Considering the large
+scale of some graph datasets, we adopt a three-layer
+GraphSAGE-GCN with residual connections as the en-
+coder following DGI. We adopt the sub-sampling strategy
+in GraphSAGE where we ﬁrst select a mini-batch of nodes
+and then a subgraph centered around each selected node
+is obtained by sampling node neighbors with replacement.
+More speciﬁcally, we sample 10, 10 and 25 neighbors at
+the ﬁrst, second and third level respectively as DGI. The
+batchsize of our experiments is 256. Also, we estimate the
+posterior with pairwise similarities among each mini-batch
+instead of total training set, which we elaborate on in the
+appendix. We set traditional methods DeepWalk and deep
+learning based methods unsupervised GraphSAGE, DGI, a
+recent block-contrastive method COLES (Zhu et al., 2021a)
+and GMI as baselines. To compare ProGCL with supervised
+counterparts, we report the performance of two supervised
+methods FastGCN (Chen et al., 2018) and GraphSAGE.
+More details can be seen in the appendix.
+4.2. Datasets
+We conduct experiments on seven widely-used datasets
+including Amazon-Photo, Amazon-Computers, Wiki-CS,
+Coauthor-CS, Reddit, Flickr and ogbn-arXiv. To keep fair,
+for transductive tasks , we split Amazon-Photo, Amazon-
+Computers, Wiki-CS and Coauthor-CS for the training, vali-
+dation and testing following (Zhu et al., 2021c). For induc-
+tive task, we split Reddit and Flickr following (Velickovic
+et al., 2019; Zeng et al., 2019). The experimental setting
+of ogbn-arXiv is the same as BGRL (Thakoor et al., 2021).
+More information of the datasets is in the appendix.
+4.3. Comparison with State-of-the-art Results
+For transductive classiﬁcation, as can be observed in Ta-
+ble 1, ProGCL consistently performs better than previous
+unsupervised baselines or even the supervised baselines,
+which validates the superiority of our ProGCL. We provide
+more observations as following. Firstly, traditional methods
+node2vec and DeepWalk only using adjacency matrix out-
+perform the simple logistic regression classiﬁer that only
+uses raw features (“Raw features”) on Amazon datasets.
+
+
+--- PAGE 7 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+Table 1. Summary of the accuracies (± std) on transductive node classiﬁcation. The ‘Available Data’ refers to data we can obtain for
+training, where X, A and Y denotes feature matrix, adjacency matrix and label matrix respectively. ‘OOM’: out of memory on a 32GB
+GPU. We highlight the performance of ProGCL with gray background. The highest performance of unsupervised models is highlighted
+in boldface; the highest performance of supervised models is underlined. The baselines marked with ’*’ are reproduced with the same
+experimental settings (20 random dataset splits and model initializations). The other results are taken from previously published reports.
+Method Available Data Amazon-Photo Amazon-Computers Coauthor-CS Wiki-CS
+Raw features X 78.53± 0.00 73.81 ± 0.00 90.37 ± 0.00 71.98 ± 0.00
+node2vec A 89.67± 0.12 84.39 ± 0.08 85.08 ± 0.03 71.79 ± 0.05
+DeepWalk A 89.44± 0.11 85.68 ± 0.06 84.61 ± 0.22 74.35 ± 0.06
+DeepWalk + features X, A 90.05± 0.08 86.28 ± 0.07 87.70 ± 0.04 77.21 ± 0.03
+GAE X, A 91.62± 0.13 85.27 ± 0.19 90.01 ± 0.17 70.15 ± 0.01
+VGAE X, A 92.20± 0.11 86.37 ± 0.21 92.11 ± 0.09 75.35 ± 0.14
+DGI X, A 91.61± 0.22 83.95 ± 0.47 92.15 ± 0.63 75.35 ± 0.14
+GMI X, A 90.68± 0.17 82.21 ± 0.31 OOM 74.85± 0.08
+MVGRL∗ X, A 92.08± 0.01 87.45 ± 0.21 92.18 ± 0.15 77.43 ± 0.17
+BGRL∗ X, A 92.95± 0.07 87.89 ± 0.10 92.72 ± 0.03 78.41 ± 0.09
+MERIT∗ X, A 92.53± 0.15 88.01 ± 0.12 92.51 ± 0.14 78.35 ± 0.05
+GCA∗ X, A 92.55± 0.03 87.82 ± 0.11 92.40 ± 0.07 78.26 ± 0.06
+ProGCL-weight X, A 93.30± 0.09 89.28± 0.15 93.51± 0.06 78.68± 0.12
+ProGCL-mix X, A 93.64± 0.13 89.55± 0.16 93.67± 0.12 78.45± 0.04
+Supervised GCN X, A, Y 92.42± 0.22 86.51 ± 0.54 93.03 ± 0.31 77.19± 0.12
+Supervised GAT X, A, Y 92.56± 0.35 86.93± 0.29 92.31± 0.24 77.65 ± 0.11
+Table 2. Summary of the micro-averaged F1 scores (± std) on
+inductive node classiﬁcation.
+Method Available Data Flickr Reddit
+Raw features X 20.3 58.5
+DeepWalk A 27.9 32.4
+GraphSAGE X, A 36.5 90.8
+DGI X, A 42.9±0.1 94.0±0.1
+GMI X, A 44.5±0.2 94.8±0.0
+COLES-S2GC X, A 46.8±0.5 95.2±0.3
+GRACE X, A 48.0±0.1 94.2±0.0
+ProGCL-weight X, A 49.2±0.6 95.1±0.2
+ProGCL-mix X, A 50.0±0.3 95.6±0.1
+Supervised FastGCN X, A, Y 48.1±0.5 89.5±1.2
+Supervised GraphSAGE X, A, Y 50.1±1.3 92.1±1.1
+However, the latter can perform better on Coauthor-CS
+and Wiki-CS. Combing the both (“DeepWalk + features”)
+can bring signiﬁcant improvements. Compared with GCA,
+our ProGCL emphasize the hard negatives or remove sam-
+pling bias, which lifts the representation quality. Secondly,
+ProGCL-mix performs better than ProGCL-weight in gen-
+eral. For inductive tasks, ProGCL also achieves competitive
+performance over other baselines as shown in Table 2.
+Table 3. Performance on the ogbn-arXiv measured in accuracy
+along with standard deviations. The results of baselines are taken
+from published reports. ‘−’ means that the results are unavailable.
+Validation Test
+MLP 57.65 ± 0.12 55.50 ± 0.23
+node2vec 71.29 ± 0.13 70.07 ± 0.13
+Random-Init 69.90 ± 0.11 68.94 ± 0.15
+DGI 71.26 ± 0.11 70.34 ± 0.16
+GRACE-Subsampling 72.61 ± 0.15 71.51 ± 0.11
+BGRL 72.53 ± 0.09 71.64 ± 0.12
+COLES-S2GC − 72.48± 0.25
+ProGCL-weight 72.45± 0.21 72.18± 0.09
+ProGCL-mix 72.82± 0.08 72.56± 0.20
+Supervised GCN 73.00 ± 0.17 71.74 ± 0.29
+4.4. Results on Large-Scale OGB Dataset
+We conduct experiments on another large graph datasets
+ogbn-arxiv from OGB benchmark (Hu et al., 2020). We
+adopt GRACE with sub-sampling as our base model and
+a 3-layer GCN as the encoder following Hu et al. (2020).
+As can observed in Table 3, ProGCL outperforms other
+unsupervised baselines, which veriﬁes that ProGCL can
+achieve good tradeoff between performance and complexity.
+We report the results on both validation and test sets, as is
+convention for this task since the dataset is split based on a
+chronological ordering.
+
+
+--- PAGE 8 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+4.5. Improving Various GCL Methods
+Amazon-Computers Amazon-Photo Coauthor-CS
+87.5
+90.0
+92.5
+95.0
+97.5Accuracy
+MERIT
+MERIT+ProGCL-weight
+MERIT+ProGCL-mix
+Figure 6. The performance of ProGCL for another graph con-
+trastive learning method MERIT (Jin et al., 2021).
+In addition to GCA and GRACE, we also evaluate the perfor-
+mance of ProGCL on another GCL method MERIT. The re-
+sults shown in Figure 6 demonstrate that ProGCL brings con-
+sistent improvements over the base method, which veriﬁes
+that our ProGCL is readily pluggable into various negatives-
+based GCL methods to improve their performance.
+4.6. Why ProGCL Can Alleviate the Bias?
+(a) Coauthor-CS
+ (b) Amazon-Photo
+Figure 7. The histograms of estimated probability.
+To verify that our ProGCL can alleviate the sampling bias,
+we plot estimated probability histograms of negatives in Fig-
+ure 7. Compared with similarity, the estimated probability
+serves as a more discriminative measure to distinguish true
+and false negatives, which can help us select hard and true
+negatives together with similarity as in Eq. (10).
+4.7. Ablation Study
+In this section, we replace or remove various parts of
+ProGCL to study the impact of each component.
+Table 4. Comparison between BMM and GMM.
+Datasets Amazon-Photo Amazon-ComputersCoauthor-CS
+Scheme weight mix weight mix weight mix
+GMM 92.71 92.83 88.35 89.29 92.79 92.79
+BMM 93.30 93.64 89.28 89.55 93.51 93.67
+BMM vs. GMM. We replace BMM in our ProGCL with
+GMM and report the performance in Table 4. BMM consis-
+tently outperforms GMM in both weight and mix schemes.
+The reason is that BMM can ﬁt the negatives distribution
+better than GMM as shown in Figure 4.
+Table 5. Comparison between ProGCL and other hard nagative
+mining methods. “↑” and “↓” refer to performance improvement
+and drop compared with GCA respectively.
+Methods/DatasetsAmazon-PhotoAmazon-ComputersCoauthor-CS
+GCA 92.55 87.82 92.40
++DCL 91.02 (↓1.53) 86.58 (↓1.24) 92.36 (↓0.04)
++HCL 91.48 (↓1.07) 87.21 (↓0.61) 93.06 (↑0.66)
++MoCHi 92.36 (↓0.19) 87.68 (↑0.14) 92.58 (↑0.18)
++Ring 91.33 (↓1.22) 84.18 (↓3.64) 92.48 (↓0.08)
++ProGCL-mix93.64(↑1.09) 89.55(↑1.73) 93.67(↑1.27)
+ProGCL vs. Negative mining techniques. To study
+whether ProGCL can better utilize hard negatives and
+remove sampling bias in GCL, we equip GCA with
+DCL (Chuang et al., 2020), HCL (Robinson et al., 2021),
+Ring (Wu et al., 2021) and MoCHi (Kalantidis et al., 2020)
+which have achieved immense success in CL. As shown
+in Table 5, these techniques bring limited beneﬁts over
+GCA. Instead, ProGCL introduces consistent and signif-
+icant improvements over GCA, which further validates that
+our ProGCL is more suitable for GCL.
+Table 6. Comparison betweenp(ct|s) and other alternatives.
+Datasets Amazon-PhotoAmazon-ComputersCoauthor-CS
+Alternativesweight mix weight mix weight mix
+pr 92.03 92.58 87.35 88.85 92.06 92.71
+pt 92.49 92.76 88.64 89.15 92.45 93.22
+p(ct|s) 93.30 93.64 89.28 89.55 93.51 93.67
+Performance attributable to ProGCL. We substitute the
+estimated probabilityp(ct|s) of ProGCL with random prob-
+abilitypr and tunedpt (1 - normalized similarity). As shown
+in Table 6,pt can bring minor improvement over randompr
+while the estimated posterior p(ct|s) by BMM is the best
+among the three alternatives.
+4.8. Hyperparameters Sensitivity Analysis
+Here we study the number of most hard negativesN′ and
+synthetic negativesm of ProGCL-mix. The results shown
+in Figure 8 illustrate that more samples mixing bring con-
+sistent performance gains in general. However, oversized
+N′ demonstrated no signiﬁcant advantages in both accuracy
+and efﬁciency.
+
+
+--- PAGE 9 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+400 500 600 700 800 900 100011001200
+N′
+92.8
+93.0
+93.2
+93.4
+93.6Accuracy
+m
+400
+600
+800
+1000
+1200
+Figure 8. Accuracy when varyingN′ (x-axis) andm on Amazon-
+Photo. We study more hyperparameters in the appendix.
+5. Conclusions
+In this paper, we explain why existing hard negative mining
+methods can not work well in GCL and contrapuntally intro-
+duce BMM to estimate the probability of a negative being
+true one. Also, we devise two schemes to further boost GCL.
+Interesting directions of future work include (1) applying
+GCL to more real-world tasks including social analysis and
+drug discovery (Sun et al., 2021; Xia et al., 2022c); (2) ex-
+ploring the theoretical explanations for the immense success
+of contrastive learning.
+6. Acknowledgements
+This work is supported in part by the Science and Technol-
+ogy Innovation 2030 - Major Project (No. 2021ZD0150100)
+and National Natural Science Foundation of China (No.
+U21A20427).
+References
+Chen, J., Ma, T., and Xiao, C. Fastgcn: fast learning with
+graph convolutional networks via importance sampling.
+arXiv preprint arXiv:1801.10247, 2018.
+Chen, T., Kornblith, S., Norouzi, M., and Hinton, G. A
+simple framework for contrastive learning of visual rep-
+resentations. In International conference on machine
+learning, pp. 1597–1607. PMLR, 2020.
+Chu, G., Wang, X., Shi, C., and Jiang, X. Cuco: Graph
+representation with curriculum contrastive learning. In
+Proceedings of the Thirtieth International Joint Confer-
+ence on Artiﬁcial Intelligence, IJCAI-21, 2021.
+Chuang, C.-Y ., Robinson, J., Yen-Chen, L., Torralba, A.,
+and Jegelka, S. Debiased contrastive learning. arXiv
+preprint arXiv:2007.00224, 2020.
+Gao, T., Yao, X., and Chen, D. Simcse: Simple con-
+trastive learning of sentence embeddings. arXiv preprint
+arXiv:2104.08821, 2021.
+Glorot, X. and Bengio, Y . Understanding the difﬁculty
+of training deep feedforward neural networks. In Pro-
+ceedings of the thirteenth international conference on
+artiﬁcial intelligence and statistics, pp. 249–256. JMLR
+Workshop and Conference Proceedings, 2010.
+Grover, A. and Leskovec, J. node2vec: Scalable feature
+learning for networks. In Proceedings of the 22nd ACM
+SIGKDD international conference on Knowledge discov-
+ery and data mining, pp. 855–864, 2016.
+Gupta, A. K. and Nadarajah, S. Handbook of beta distribu-
+tion and its applications. CRC press, 2004.
+Hamilton, W. L., Ying, R., and Leskovec, J. Representation
+learning on graphs: Methods and applications. arXiv
+preprint arXiv:1709.05584, 2017.
+Hassani, K. and Khasahmadi, A. H. Contrastive multi-view
+representation learning on graphs. In International Con-
+ference on Machine Learning , pp. 4116–4126. PMLR,
+2020.
+He, K., Zhang, X., Ren, S., and Sun, J. Deep residual learn-
+ing for image recognition. In Proceedings of the IEEE
+conference on computer vision and pattern recognition,
+pp. 770–778, 2016.
+He, K., Fan, H., Wu, Y ., Xie, S., and Girshick, R. Mo-
+mentum contrast for unsupervised visual representation
+learning. In Proceedings of the IEEE/CVF Conference
+on Computer Vision and Pattern Recognition, pp. 9729–
+9738, 2020.
+Hu, W., Fey, M., Zitnik, M., Dong, Y ., Ren, H., Liu, B.,
+Catasta, M., and Leskovec, J. Open graph benchmark:
+Datasets for machine learning on graphs. arXiv preprint
+arXiv:2005.00687, 2020.
+Ji, Y ., Wu, C., Liu, P., Wang, J., and Coombes, K. R. Appli-
+cations of beta-mixture models in bioinformatics. Bioin-
+formatics, 21(9):2118–2122, 2005.
+Jin, M., Zheng, Y ., Li, Y .-F., Gong, C., Zhou, C., and Pan,
+S. Multi-scale contrastive siamese networks for self-
+supervised graph representation learning. In The 30th
+International Joint Conference on Artiﬁcial Intelligence
+(IJCAI), 2021.
+Kalantidis, Y ., Sariyildiz, M. B., Pion, N., Weinzaepfel, P.,
+and Larlus, D. Hard negative mixing for contrastive learn-
+ing. In Neural Information Processing Systems (NeurIPS),
+2020.
+Kaya, M. and Bilge, H. S ¸. Deep metric learning: A survey.
+Symmetry, 11(9):1066, 2019.
+
+
+--- PAGE 10 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+Kipf, T. N. and Welling, M. Semi-supervised classiﬁca-
+tion with graph convolutional networks. arXiv preprint
+arXiv:1609.02907, 2016a.
+Kipf, T. N. and Welling, M. Variational graph auto-encoders.
+arXiv preprint arXiv:1611.07308, 2016b.
+Li, H., Wang, X., Zhang, Z., Yuan, Z., Li, H., and Zhu, W.
+Disentangled contrastive learning on graphs. Advances
+in Neural Information Processing Systems, 34, 2021.
+Lindsay, B. G. Mixture models: theory, geometry and ap-
+plications. In NSF-CBMS regional conference series in
+probability and statistics, pp. i–163. JSTOR, 1995.
+Mernyei, P. and Cangea, C. Wiki-cs: A wikipedia-based
+benchmark for graph neural networks. arXiv preprint
+arXiv:2007.02901, 2020.
+Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., and
+Dean, J. Distributed representations of words and phrases
+and their compositionality. Advances in neural informa-
+tion processing systems, 26, 2013.
+Oord, A. v. d., Li, Y ., and Vinyals, O. Representation learn-
+ing with contrastive predictive coding. arXiv preprint
+arXiv:1807.03748, 2018.
+Peng, Z., Huang, W., Luo, M., Zheng, Q., Rong, Y ., Xu, T.,
+and Huang, J. Graph representation learning via graphical
+mutual information maximization. In Proceedings of The
+Web Conference 2020, pp. 259–270, 2020.
+Pennington, J., Socher, R., and Manning, C. D. Glove:
+Global vectors for word representation. In Proceedings
+of the 2014 conference on empirical methods in natural
+language processing (EMNLP), pp. 1532–1543, 2014.
+Perozzi, B., Al-Rfou, R., and Skiena, S. Deepwalk: Online
+learning of social representations. In Proceedings of the
+20th ACM SIGKDD international conference on Knowl-
+edge discovery and data mining, pp. 701–710, 2014.
+Qiu, J., Chen, Q., Dong, Y ., Zhang, J., Yang, H., Ding, M.,
+Wang, K., and Tang, J. Gcc: Graph contrastive coding
+for graph neural network pre-training. In Proceedings
+of the 26th ACM SIGKDD International Conference on
+Knowledge Discovery & Data Mining , pp. 1150–1160,
+2020.
+Robinson, J. D., Chuang, C.-Y ., Sra, S., and Jegelka, S.
+Contrastive learning with hard negative samples. In
+International Conference on Learning Representations,
+2021. URL https://openreview.net/forum?
+id=CR1XOQ0UTh-.
+Shchur, O., Mumme, M., Bojchevski, A., and G¨unnemann,
+S. Pitfalls of graph neural network evaluation. arXiv
+preprint arXiv:1811.05868, 2018.
+Sinha, A., Shen, Z., Song, Y ., Ma, H., Eide, D., Hsu, B.-
+J., and Wang, K. An overview of microsoft academic
+service (mas) and applications. In Proceedings of the
+24th international conference on world wide web , pp.
+243–246, 2015.
+Sun, F.-Y ., Hoffman, J., Verma, V ., and Tang, J. Infograph:
+Unsupervised and semi-supervised graph-level represen-
+tation learning via mutual information maximization. In
+International Conference on Learning Representations,
+2020. URL https://openreview.net/forum?
+id=r1lfF2NYvH.
+Sun, M., Xing, J., Wang, H., Chen, B., and Zhou, J. Mocl:
+data-driven molecular ﬁngerprint via knowledge-aware
+contrastive learning from molecular graph. In Proceed-
+ings of the 27th ACM SIGKDD Conference on Knowledge
+Discovery & Data Mining, pp. 3585–3594, 2021.
+Suresh, S., Li, P., Hao, C., and Neville, J. Adversarial
+graph augmentation to improve graph contrastive learning.
+NeurIPS, 2021.
+Tan, C., Xia, J., Wu, L., and Li, S. Z. Co-learning: Learning
+from noisy labels with self-supervision. In Proceedings
+of the 29th ACM International Conference on Multimedia,
+pp. 1405–1413, 2021.
+Thakoor, S., Tallec, C., Azar, M. G., Munos, R., Veliˇckovi´c,
+P., and Valko, M. Bootstrapped representation learn-
+ing on graphs. In ICLR 2021 Workshop on Ge-
+ometrical and Topological Representation Learning ,
+2021. URL https://openreview.net/forum?
+id=QrzVRAA49Ud.
+Tong, Z., Liang, Y ., Ding, H., Dai, Y ., Li, X., and Wang, C.
+Directed graph contrastive learning. Advances in Neural
+Information Processing Systems, 34, 2021.
+Veliˇckovi´c, P., Cucurull, G., Casanova, A., Romero, A., Lio,
+P., and Bengio, Y . Graph attention networks. arXiv
+preprint arXiv:1710.10903, 2017.
+Velickovic, P., Fedus, W., Hamilton, W. L., Li`o, P., Bengio,
+Y ., and Hjelm, R. D. Deep graph infomax. In ICLR
+(Poster), 2019.
+Wu, M., Mosse, M., Zhuang, C., Yamins, D., and Goodman,
+N. Conditional negative sampling for contrastive learning
+of visual representations. In International Conference
+on Learning Representations, 2021. URL https://
+openreview.net/forum?id=v8b3e5jN66j.
+Xia, J., Lin, H., Xu, Y ., Wu, L., Gao, Z., Li, S., and Li, S. Z.
+Towards robust graph neural networks against label noise,
+2021. URL https://openreview.net/forum?
+id=H38f_9b90BO.
+
+
+--- PAGE 11 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+Xia, J., Tan, C., Wu, L., Xu, Y ., and Li, S. Z. Ot cleaner: La-
+bel correction as optimal transport. In ICASSP 2022
+- 2022 IEEE International Conference on Acoustics,
+Speech and Signal Processing (ICASSP), pp. 3953–3957,
+2022a. doi: 10.1109/ICASSP43922.2022.9747279.
+Xia, J., Wu, L., Chen, J., Hu, B., and Li, S. Z. Sim-
+grace: A simple framework for graph contrastive learn-
+ing without data augmentation. In Proceedings of the
+ACM Web Conference 2022, WWW ’22, pp. 1070–1079,
+New York, NY , USA, 2022b. Association for Com-
+puting Machinery. ISBN 9781450390965. doi: 10.
+1145/3485447.3512156. URL https://doi.org/
+10.1145/3485447.3512156.
+Xia, J., Zheng, J., Tan, C., Wang, G., and Li, S. Z. Towards
+effective and generalizable ﬁne-tuning for pre-trained
+molecular graph models. bioRxiv, 2022c.
+Xia, J., Zhu, Y ., Du, Y ., and Li, S. Z. A survey of pretraining
+on graphs: Taxonomy, methods, and applications. arXiv
+preprint arXiv:2202.07893, 2022d.
+Xu, D., Cheng, W., Luo, D., Chen, H., and Zhang, X. In-
+foGCL: Information-aware graph contrastive learning. In
+Beygelzimer, A., Dauphin, Y ., Liang, P., and Vaughan,
+J. W. (eds.), Advances in Neural Information Processing
+Systems, 2021. URL https://openreview.net/
+forum?id=519VBzfEaKW.
+You, Y ., Chen, T., Sui, Y ., Chen, T., Wang, Z., and Shen,
+Y . Graph contrastive learning with augmentations. In
+Larochelle, H., Ranzato, M., Hadsell, R., Balcan, M. F.,
+and Lin, H. (eds.), Advances in Neural Information Pro-
+cessing Systems, volume 33, pp. 5812–5823. Curran As-
+sociates, Inc., 2020. URL https://proceedings.
+neurips.cc/paper/2020/file/
+3fe230348e9a12c13120749e3f9fa4cd-Paper.
+pdf.
+You, Y ., Chen, T., Shen, Y ., and Wang, Z. Graph contrastive
+learning automated. arXiv preprint arXiv:2106.07594,
+2021.
+You, Y ., Chen, T., Wang, Z., and Shen, Y . Bringing your own
+view: Graph contrastive learning without prefabricated
+data augmentations, 2022.
+Zeng, H., Zhou, H., Srivastava, A., Kannan, R., and
+Prasanna, V . Graphsaint: Graph sampling based inductive
+learning method. arXiv preprint arXiv:1907.04931, 2019.
+Zhang, H., Wu, Q., Yan, J., Wipf, D., and Philip, S. Y . From
+canonical correlation analysis to self-supervised graph
+neural networks. In Thirty-Fifth Conference on Neural
+Information Processing Systems, 2021.
+Zhao, H., Yang, X., Wang, Z., Yang, E., and Deng, C. Graph
+debiased contrastive learning with joint representation
+clustering. In Proc. IJCAI, pp. 3434–3440, 2021.
+Zheng, J., Wang, Y ., Wang, G., Xia, J., Huang, Y ., Zhao,
+G., Zhang, Y ., and Li, S. Using context-to-vector with
+graph retroﬁtting to improve word embeddings. In Pro-
+ceedings of the 60th Annual Meeting of the Associa-
+tion for Computational Linguistics (Volume 1: Long Pa-
+pers), pp. 8154–8163, Dublin, Ireland, May 2022. As-
+sociation for Computational Linguistics. URL https:
+//aclanthology.org/2022.acl-long.561.
+Zhu, H., Sun, K., and Koniusz, P. Contrastive laplacian
+eigenmaps. Advances in Neural Information Processing
+Systems, 34, 2021a.
+Zhu, Y ., Xu, Y ., Yu, F., Liu, Q., Wu, S., and Wang, L. Deep
+graph contrastive representation learning. arXiv preprint
+arXiv:2006.04131, 2020.
+Zhu, Y ., Xu, Y ., Liu, Q., and Wu, S. An empirical study
+of graph contrastive learning. In Thirty-ﬁfth Conference
+on Neural Information Processing Systems Datasets and
+Benchmarks Track (Round 2), 2021b. URL https://
+openreview.net/forum?id=UuUbIYnHKO.
+Zhu, Y ., Xu, Y ., Yu, F., Liu, Q., Wu, S., and Wang, L. Graph
+contrastive learning with adaptive augmentation. In Pro-
+ceedings of the Web Conference 2021 , pp. 2069–2080,
+2021c.
+Zhu, Y ., Xu, Y ., Cui, H., Yang, C., Liu, Q., and Wu,
+S. Structure-Enhanced Heterogeneous Graph Con-
+trastive Learning. In Proceedings of the 2022 SIAM
+International Conference on Data Mining , pp. 82–
+90. SIAM, 2022. doi: 10.1137/1.9781611977172.10.
+URL https://epubs.siam.org/doi/abs/10.
+1137/1.9781611977172.10.
+
+
+--- PAGE 12 ---
+Appendix of ProGCL
+A. Datasets
+Table 7. Statistics of datasets used in experiments.
+Dataset Task Nodes Edges Features Classes
+Amazon-Photo Transductive 7,650 119,081 745 8
+Amazon-Computers Transductive 13,752 245,861 767 10
+Coauthor-CS Transductive 18,333 81,894 6,805 15
+Wiki-CS Transductive 11,701 216,123 300 10
+Flickr Inductive 89,250 899,756 500 7
+Reddit Inductive 231,443 11,606,919 602 41
+Ogbn-arXiv Inductive 169,343 1,166,243 128 40
+We introduce the datasets used in our experiments as follows:
+• WikiCS (Mernyei & Cangea, 2020) is a reference network constructed based on Wikipedia. The nodes correspond to
+articles about computer science and edges are hyperlinks between the articles. Nodes are labeled with ten classes each
+representing a branch of the ﬁeld. Node features are calculated as the average of pre-trained GloVe (Pennington et al.,
+2014) word embeddings of words in each article.
+• Amazon-Computers and Amazon-Photo (Shchur et al., 2018) are two networks of co-purchase relationships con-
+structed from Amazon, where nodes are goods and two goods are connected when they are frequently bought together.
+Each node has a sparse bag-of-words feature encoding product reviews and is labeled with its category.
+• Coauthor-CS (Shchur et al., 2018) is an academic networks, which contain co-authorship graphs based on the
+Microsoft Academic Graph from the KDD Cup 2016 challenge. In the graph, nodes represent authors and edges
+indicate co-authorship relationships; that is, two nodes are connected if they have co-authored a paper. Each node has a
+sparse bag-of-words feature based on paper keywords of the author. The label of an author corresponds to their most
+active research ﬁeld.
+• Flickr originates from NUS-wide1. The SNAP website2 collected Flickr data from four different sources including
+NUS-wide, and generated an un-directed graph. One node in the graph represents one image uploaded to Flickr. If
+two images share some common properties (e.g., same geographic location, same gallery, comments by the same user,
+etc.), there is an edge between the nodes of these two images. The node features are the 500-dimensional bag-of-word
+representation of the images provided by NUS-wide. For labels, we scan over the 81 tags of each image and manually
+merged them to 7 classes. Each image belongs to one of the 7 classes.
+• Reddit (Hamilton et al., 2017) contains Reddit posts created in September 2014, where posts belong to different
+communities (subreddit). In the dataset, nodes correspond to posts, and edges connect posts if the same user has
+commented on both. Node features are constructed from post title, content, and comments, using off-the-shelf GloVe
+word embeddings, along with other metrics such as post score and the number of comments.
+• Ogbn-arXiv is a large-scale graph from the Open Graph Benchmark (Hu et al., 2020). This is another citation network,
+where nodes represent CS papers on arXiv indexed by the Microsoft Academic Graph (Sinha et al., 2015). In our
+experiments, we symmetrize this graph and thus there is an edge between any pair of nodes if one paper has cited the
+1https://lms.comp.nus.edu.sg/research/NUS-WIDE.htm
+2https://snap.stanford.edu/data/web-ﬂickr.html
+
+
+--- PAGE 13 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+other. Papers are classiﬁed into 40 classes based on arXiv subject area. The node features are computed as the average
+word-embedding of all words in the paper, where the embeddings are computed using a skip-gram model (Mikolov
+et al., 2013) over the entire corpus.
+B. More Similarity Histograms of Negativess in SimCLR (CL) and GCA (GCL).
+(a) Amazon-photo (Graph)
+ (b) Amazon-computers (Graph)
+ (c) WikiCS (Graph)
+Figure 9. More similarity histograms of negative samples in and GCL.
+As demonstrated in Figure 9, the negatives distribution over similarity varies signiﬁcantly across GCL and CL. These
+phenomena provide explainations for the failure of existing techniques that emphasize hard negatives in GCL. More
+speciﬁcally, they regard the negatives that are most similar to anchor points as hard ones, which is feasible in CL. However,
+for graph-structured data (see Figure 9(a), Figure 9(b) and Figure 9(c)), many “hard” ones are false negatives indeed, which
+will undesirably push away the semantically similar samples.
+C. More Experimental Details
+C.1. Transductive learning
+We adopt a two-layer GCN (Kipf & Welling, 2016a) as the encoder for transductive learning following previous works (Velick-
+ovic et al., 2019; Zhu et al., 2020). We can describe the architecture of the encoder as,
+GCi(X, A) =σ
+(
+ˆD
+− 1
+2 ˆA ˆD
+− 1
+2
+XW i
+)
+,
+f(X, A) = GC2 (GC1(X, A), A),
+(17)
+where ˆA = A + I is the adjacency matrix with self-loops and ˆD = ∑
+i ˆAi is the degree matrix, σ(·) is a nonlinear
+activation function. Wi is the learnable weight matrix.
+C.2. Inductive learning
+Considering the large scale of some graph datasets, we adopt a three-layer GraphSAGE-GCN with residual connections (He
+et al., 2016) as the encoder following DGI (Velickovic et al., 2019) and GRACE (Zhu et al., 2020). The architecture of the
+encoder can be formulated as,
+ˆMPi(X, A) =σ
+([
+ˆD
+−1 ˆAX; X
+]
+Wi
+)
+,
+f(X, A) =ˆMP3
+(
+ˆMP2
+(
+ˆMP1(X, A), A
+)
+, A
+)
+.
+(18)
+D. Hyper-parameters Analysis
+Following GRACE (Zhu et al., 2020) and GCA (Zhu et al., 2021c), we initialize the model parameters with Glorot initializa-
+tion (Glorot & Bengio, 2010) and train the model using Adam SGD optimizer for all datasets. Theℓ2 weight decay factor is
+seted as 10−5 and the dropout rate is seted to zero. The parameters which control the sampling process of two views are the
+
+
+--- PAGE 14 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+Table 8. Hyperparameters speciﬁcations. “Starting epoch”E refers to the epoch for ﬁtting BMM; Initial weight winit is the initial weight
+for false negative component of mixture distribution; “Iterations” is the iterationsI of EM algorithm.
+Dataset τ learning
+rate
+Training
+epochs
+Hidden
+dimension
+Activation
+function
+Starting
+epoch
+Initial
+weight Iterations
+Amazon-Photo 0.3 0.01 2500 128 RRelu 400 0.15 10
+Amazon-Computers 0.2 0.01 2000 128 RRelu 400 0.05 10
+Coauthor-CS 0.2 0.0001 1000 256 RRelu 400 0.05 10
+Wiki-CS 0.4 0.01 4000 256 PRelu 50 0.05 10
+Reddit 0.4 0.0001 80 512 ELU 40 0.01 10
+Filckr 0.4 0.0001 80 512 ELU 20 0.15 10
+Ogbn-arXiv 0.4 0.0001 100 512 ELU 20 0.02 10
+200 300 400 500 600 700 800
+Starting Epoch E
+92.00
+92.25
+92.50
+92.75
+93.00
+93.25
+93.50
+93.75
+94.00Accuracy(%)
+Coauthor-CS
+Amazon-Photo
+(a) E
+0.05 0.10 0.15 0.20 0.25
+Initial weight winit
+92.00
+92.25
+92.50
+92.75
+93.00
+93.25
+93.50
+93.75
+94.00Accuracy(%)
+Coauthor-CS
+Amazon-Photo (b) winit
+50 100
+Iterations of EM I
+93.0
+93.2
+93.4
+93.6
+93.8
+94.0Accuracy(%)
+Coauthor-CS
+Amazon-Photo (c) I
+100 200 300 400
+M′
+93.0
+93.2
+93.4
+93.6
+93.8
+94.0Accuracy(%)
+Coauthor-CS
+Amazon-Photo (d) M′
+Figure 10. Accuracy when varyingE,winit,I andM′(M =NM′) for BMM.
+same as GRACE and GCA. Other hyper-parameters of ProGCL can be seen in Table 8. For transductive task, the two hyper-
+parameters were chosen in a gridE∈{ 50, 100, 200, 300, 400, 600, 800} andwinit∈{ 0.01, 0.05, 0.10, 0.15, 0.20, 0.25}.
+We further study the inﬂuence ofE,winit,I andM in Figure 10. Firstly, the accuracy varies signiﬁcantly across various
+starting epoch E in Amazon-Photo while varies slightly in Coauthor-CS, which illustrates the importance of tuning E
+varies across datasets. However, generally speaking, ProGCL’s performance does not see sharp drop when varyingE. This
+validates that BMM is ﬂexible enough to ﬁt various distributions of different epochs. As shown in ﬁgure 10(b), the initial
+weightwinit does not inﬂuence much, which illustrates that BMM can split the two component well to an ideal ratio even if
+the initial weight is far from intuitive one (the reciprocal of classes number). As shown in ﬁgure 10(c), we can observe minor
+improvement when we iterate EM algorithm more times. However, this will introduce more computational overhead and
+thus we setI = 10 in all experiments for convenience. As shown in Figure 9(c), sampling more similarities for ﬁtting the
+BMM can bring minor improvements, however, it will introduce much more computational overhead. In our experiments,
+we only sampleM′ = 100 samples for each anchor point. Thus, the number of total selected samplesM =NM′.
+E. Pseudo Codes of Inductive Learning.
+Different from transductive learning, it is not feasible to compute all the pairwise similarities for large-scale graph datasets.
+Thus, we extend ProGCL to inductive setting. The algorithm of ProGCL for inductive learning can be seen as follows. The
+equations mentioned in the algorithm can be seen in the main text.
+
+
+--- PAGE 15 ---
+ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+Algorithm 2 ProGCL-weight & ProGCL-mix (Inductive)
+Input:T,G,f,g,N, normalized cosine similaritys, epoch for ﬁtting BMME,mode (‘weight’ or ‘mix’), empty listP
+for storing the estimated probabilities, BatchsizeB.
+forepoch = 0, 1, 2,... do
+k = 0;
+for each mini-batch do
+Gs (Vs,Es)← Sampled sub-graph ofG with sampling rules of GraphSAGE;
+Draw two augmentation functionst∼T ,t′∼T ;
+˜G(1)
+s =t(Gs), ˜G(2)
+s =t′(Gs);
+Us =f(˜G(1)
+s ),Vs =f(˜G(2)
+s );
+for all ui∈U s and vi∈V s do
+sij =s(g(ui),g (vi));
+ifepoch =E then
+ComputeMi,j =p (ct|sij) with Eq. (4) to Eq. (9);
+P.append(M).
+end if
+ifepoch≥E then
+ifmode = ’weight’then
+ComputeJw with Eq. (10) to Eq. (12); (P[k] as the estimated probabilities fork-th minibatch)
+Update the parameters off,g withJw.
+end if
+ifmode = ’mix’then
+ComputeJm with Eq. (13) to Eq. (16); (P[k] as the estimated probabilities fork-th minibatch)
+Update the parameters off,g withJm.
+end if
+else ifepoch<E then
+ComputeJ with Eq. (1) to Eq. (2);
+Update the parameters off,g withJ .
+end if
+end for
+k =k + 1.
+end for
+end for
+Output:f,g .

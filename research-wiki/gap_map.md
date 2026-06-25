@@ -1,67 +1,99 @@
 # Gap Map
 
-Stable gap IDs for Stage 1. These are research gaps, not final methods.
+Stable gap IDs. These are research gaps and novelty boundaries, not final methods.
 
 ## G1: Semantic False Positives in Node-Level GCL
 
 - Status: unresolved
-- Evidence: GRACE/GCA assume semantic-preserving augmentations; G-Censor and CM-GCL show task/modality-aware positives matter.
-- Mechanism: positive-pair validity, not just augmentation rate.
-- Closest works: GCA, RGCL, G-Censor, CM-GCL.
+- Closest works: GCA, AFGRL, CM-GCL, G-Censor.
+- Already solved: adaptive augmentations, augmentation-free positives, multimodal positives, task-oriented views.
+- Not solved: systematic positive semantic-validity audit under identical frozen node evaluator.
+- Blocked claim: simple feature/structure positive heuristic as novelty.
+- Minimum novelty condition: show a measurable semantic-positive failure not covered by GCA/AFGRL/G-Censor.
+- Must-run falsification: correlate positive consistency diagnostics with downstream accuracy under fixed split/evaluator.
 - Stage 2 recommendation: YES
+- Risk: HIGH
 
 ## G2: False Negatives Under Homophily and Heterophily Shift
 
 - Status: unresolved
-- Evidence: ProGCL, HLCL, homophily-aware heterogeneous GCL, SPGCL.
-- Mechanism: negative-pair semantic validity changes by graph regime.
-- Closest works: ProGCL, HLCL, SPGCL.
+- Closest works: ProGCL, HLCL, SPGCL, homophily-aware heterogeneous GCL.
+- Already solved: probability-aware hard negatives, graph-filter heterophily views, positive sampling.
+- Not solved: unified regime-conditioned false-negative/false-positive boundary.
+- Blocked claim: generic hard-negative reweighting solves GCL negatives.
+- Minimum novelty condition: predict when negative mining is harmful/helpful across graph regimes.
+- Must-run falsification: validation-only false-negative estimates vs label agreement by homophily bin.
 - Stage 2 recommendation: YES
+- Risk: HIGH
 
 ## G3: Masked Graph Modeling vs Contrastive Learning Under Identical Evaluator
 
 - Status: unresolved
-- Evidence: GraphMAE, GraphMAE2, MaskGAE.
-- Mechanism: predictive/reconstructive SSL optimizes different signals from instance discrimination.
-- Closest works: GraphMAE2, MaskGAE.
+- Closest works: GraphMAE, GraphMAE2, MaskGAE.
+- Already solved: masked feature/edge modeling and latent prediction.
+- Not solved: apples-to-apples GCL vs MGM comparison under same split/evaluator/backbone.
+- Blocked claim: masked reconstruction alone as new contribution.
+- Minimum novelty condition: isolate objective-level difference after protocol alignment.
+- Must-run falsification: rerun GRACE/GCA/BGRL/GraphMAE variants under same split/seed/evaluator.
 - Stage 2 recommendation: YES
+- Risk: MEDIUM-HIGH
 
 ## G4: Negative-Free Collapse Is Under-Audited on Graphs
 
 - Status: unresolved
-- Evidence: BGRL, CCA-SSG, Graph Barlow Twins, AFGRL.
-- Mechanism: collapse/oversmoothing is representation-level, not just accuracy.
-- Closest works: BGRL, CCA-SSG.
+- Closest works: BGRL, CCA-SSG, Graph Barlow Twins, AFGRL.
+- Already solved: no-negative bootstrap/decorrelation/positive discovery.
+- Not solved: graph-specific collapse/oversmoothing diagnostics beyond accuracy.
+- Blocked claim: negative-free GCL as novelty.
+- Minimum novelty condition: define diagnostics that predict graph SSL failures.
+- Must-run falsification: compare rank/variance/eigenspectrum vs accuracy across graph regimes.
 - Stage 2 recommendation: YES
+- Risk: MEDIUM
 
 ## G5: Heterophily-Aware GCL Lacks Clear Boundary Conditions
 
 - Status: unresolved
-- Evidence: HLCL and supervised heterophily GNN literature.
-- Mechanism: filter/view assumptions differ across heterophily subtypes.
-- Closest works: HLCL, directed GCL.
+- Closest works: HLCL, directed GCL, supervised heterophily GNNs.
+- Already solved: graph-filter and directed-structure view generation.
+- Not solved: boundaries across heterophily subtypes.
+- Blocked claim: high-/low-pass filter addition for heterophily.
+- Minimum novelty condition: taxonomy plus evidence of failure not explained by HLCL.
+- Must-run falsification: evaluate same SSL objectives across heterophily benchmarks with fixed splits.
 - Stage 2 recommendation: YES
+- Risk: HIGH
 
 ## G6: LLM Semantic Priors Need Leakage-Safe Protocols
 
 - Status: unresolved
-- Evidence: LangGSL, CM-GCL and TAG/LLM graph learning.
-- Mechanism: semantic prior changes information source; leakage and contamination must be audited.
-- Closest works: LangGSL, CM-GCL.
+- Closest works: LangGSL, CM-GCL, TAG/LLM graph learning.
+- Already solved: text/LLM features, pseudo-labels, node-text contrast.
+- Not solved: leakage-safe, split-consistent GCL evaluation.
+- Blocked claim: LLM pseudo-labels improve GCL.
+- Minimum novelty condition: explicit leakage model and ablation against frozen text embeddings.
+- Must-run falsification: graph-only vs text-embedding vs LLM pseudo-label under no-test-label/no-contamination rules.
 - Stage 2 recommendation: UNCLEAR
+- Risk: HIGH
 
 ## G7: Worst-Group Robustness Is Missing from GCL Reporting
 
 - Status: unresolved
-- Evidence: protocol matrix shows mean-only reporting and unclear split/evaluator details.
-- Mechanism: average accuracy can hide homophily/noise/low-label failure regimes.
-- Closest works: robust GNN and heterophily-aware GCL.
-- Stage 2 recommendation: YES
+- Closest works: HLCL, robust GNNs, GroupDRO-style reporting.
+- Already solved: some heterophily/noise improvements.
+- Not solved: worst-group reporting for GCL claims.
+- Blocked claim: mean accuracy proves robustness.
+- Minimum novelty condition: define groups without test leakage and report worst-bin effects.
+- Must-run falsification: bin by homophily/noise/degree/label scarcity and report worst-bin accuracy.
+- Stage 2 recommendation: YES as diagnostic companion
+- Risk: MEDIUM
 
 ## G8: Cross-Domain Generalization Is Under-Specified
 
 - Status: unresolved
-- Evidence: GCC/G5 style transfer and OOD SSL literature.
-- Mechanism: domain shift changes graph invariances and spurious correlations.
-- Closest works: GCC, G5, IRM-style DG.
-- Stage 2 recommendation: UNCLEAR
+- Closest works: BGRL large-scale, GCC/G5, IRM-style DG.
+- Already solved: some graph pretraining and transfer settings.
+- Not solved: protocol-aligned domain generalization for node classification.
+- Blocked claim: broad cross-dataset generalization from same-domain tables.
+- Minimum novelty condition: specify source/target domains and invariant assumptions.
+- Must-run falsification: pretrain on one graph family, freeze/evaluate on another with controlled evaluator.
+- Stage 2 recommendation: DEFER unless Stage 2 targets cross-domain.
+- Risk: HIGH

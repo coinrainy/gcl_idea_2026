@@ -1,33 +1,30 @@
-# Stage 1 Paper Audit
+# Stage 1.5 Paper Audit
 
-本页补充 `research-wiki/papers/*.md` 中核心条目的 Stage 1 审计字段。若当前只看到题名、摘要或 OpenReview 检索片段，则不标为充分精读。
+No paper is marked directly comparable under the project protocol.
 
-| Paper | Wiki entry | Peer status | Official code | Split explicit | Directly comparable under project protocol | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| GRACE | `zhu2020_deep_graph_contrastive` | arXiv / widely used | yes | UNCLEAR | no | 已下载 PDF；需精读实验节确认 splits/seeds/test@best |
-| GCA | `zhu2020_graph_contrastive_learning` | WWW 2021 | yes | UNCLEAR | no | adaptive augmentation closest baseline |
-| ProGCL | `xia2021_progcl_rethinking_hard` | ICML 2022 | yes | UNCLEAR | no | false-negative / hard-negative closest work |
-| BGRL | `thakoor2021_largescale_representation_learning` | ICLR 2022 | yes | UNCLEAR | no | negative-free bootstrap closest baseline |
-| GraphMAE | `hou2022_graphmae_selfsupervised_masked` | KDD 2022 | yes | UNCLEAR | no | masked graph modeling competitor |
-| CCA-SSG | `zhang2021_from_canonical_correlation` | arXiv / graph SSL | yes/UNCLEAR | UNCLEAR | no | negative-free/decorrelation baseline |
-| Graph Barlow Twins | `bielak2021_graph_barlow_twins` | arXiv / status UNCLEAR | yes/UNCLEAR | UNCLEAR | no | redundancy-reduction baseline |
-| LangGSL | `su2024_bridging_large_language` | arXiv preprint | UNCLEAR | UNCLEAR | no | LLM/TAG closest-work risk |
-| Homophily-aware Heterogeneous GCL | `wang2025_homophilyaware_heterogeneous_graph` | arXiv preprint | UNCLEAR | UNCLEAR | no | false-negative + heterophily recent risk |
-| Khan-GCL | `wang2025_khangcl_kolmogorovarnold_network` | arXiv preprint | UNCLEAR | UNCLEAR | no | recent hard-negative preprint |
-| SPGCL | `shan2026_revisiting_positive_samples` | arXiv preprint | UNCLEAR | UNCLEAR | no | positive-sample construction recent risk |
-| Debiased Contrastive Learning | `chuang2020_debiased_contrastive_learning` | NeurIPS 2020 | yes/UNCLEAR | n/a | n/a | transfer primitive, not graph paper |
-| I-JEPA | `assran2023_selfsupervised_learning_from` | CVPR 2023 | yes/UNCLEAR | n/a | n/a | latent prediction transfer primitive |
-| IRM | `arjovsky2019_invariant_risk_minimization` | arXiv | yes/UNCLEAR | n/a | n/a | OOD/invariance transfer primitive |
+| Paper | Wiki entry | Status | Code | Protocol recovered | Still UNCLEAR | Directly comparable | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| GRACE | `zhu2020_deep_graph_contrastive` | arXiv / classic | yes | random 10/10/80 for citation; frozen logistic; 20 runs; fixed epochs | exact seeds, test@best | no | must rerun |
+| GCA | `zhu2020_graph_contrastive_learning` | WWW 2021 | yes | Wiki-CS public; others 10/10/80; frozen logistic; 20 runs | early stopping, test@best | no | high augmentation risk |
+| ProGCL | `xia2021_progcl_rethinking_hard` | ICML 2022 | yes | follows GCA/BGRL style; 20 random splits/model initializations for reproduced baselines | exact seed list, early stopping, test@best | no | high false-negative risk |
+| BGRL | `thakoor2021_largescale_representation_learning` | ICLR 2022 | yes | WikiCS canonical; Amazon/Coauthor 10/10/80; OGB official; frozen linear/logistic | test@best mostly unclear | no | S2 metadata recovered |
+| CCA-SSG | `zhang2021_from_canonical_correlation` | arXiv | yes/UNCLEAR | public citation; 1:1:9 main text vs 10/10/80 appendix for others; frozen logistic | split ambiguity, early stopping | no | rerun required |
+| Graph Barlow Twins | `bielak2021_graph_barlow_twins` | arXiv / UNCLEAR | yes/UNCLEAR | partial dataset info | evaluator/seeds/splits | no | still D-class |
+| AFGRL | `lee2021_augmentationfree_selfsupervised_learning` | AAAI 2022 | yes | WikiCS canonical; Amazon/Coauthor 10/10/80; logistic; validation-best test | exact seed list | no | blocks augmentation-free positive mining |
+| GraphMAE | `hou2022_graphmae_selfsupervised_masked` | KDD 2022 | yes | public citation splits; OGB official; frozen linear classifier; 20 random initializations | test@best | no | strong MGM baseline |
+| GraphMAE2 | `hou2023_graphmae2_decodingenhanced_masked` | WWW 2023 | yes | OGB official; MAG 5/5/40; 10 trials | early stopping, frozen/fine-tune separation | no | latent prediction risk |
+| MaskGAE | `li2022_whats_behind_mask` | arXiv/CoRR | yes/UNCLEAR | Photo/Computer node classification uses 1:1:8 random split | evaluator/seeds/test@best | no | more link-prediction centered |
+| HLCL | `yang2023_graph_contrastive_learning` | arXiv/OpenReview UNCLEAR | UNCLEAR | datasets recovered | exact splits/evaluator/seeds/status | no | high heterophily risk |
+| CM-GCL | audit-only | NeurIPS 2022 | yes | 70/10/20; ten runs; fine-tunes GNN; Macro-F1/AUC | exact early stopping | no | not frozen evaluator |
+| G-Censor | audit-only | OpenReview ICLR 2023 submission; status UNCLEAR | promised/UNCLEAR | OOD split by Node2Vec clusters; IID table datasets | IID split, seeds, early stopping | no | high task-oriented view risk |
+| LangGSL | `su2024_bridging_large_language` | arXiv 2024 | UNCLEAR | datasets recovered | split/evaluator/seeds/leakage protocol | no | LLM/TAG risk |
+| SPGCL | `shan2026_revisiting_positive_samples` | arXiv 2026 | UNCLEAR | some heterophily split sources recovered | evaluator/seeds/early stopping | no | recent positive-sample risk |
+| Khan-GCL | `wang2025_khangcl_kolmogorovarnold_network` | arXiv 2025 | UNCLEAR | 10 runs and test@best validation for downstream ROC-AUC | node-classification relevance/protocol | no | less central to node classification |
 
-## OpenReview-Only / Non-Wiki High-Risk Hits
+## S2 Recovery
 
-| Title | Status | Link | Code | Main review visibility | Project risk |
-| --- | --- | --- | --- | --- | --- |
-| CM-GCL | NeurIPS 2022 Accept | https://openreview.net/forum?id=f_kvHrM4Q0 | https://github.com/graphprojects/CM-GCL | not extracted | multimodal / imbalanced node classification |
-| InfoGCL | NeurIPS 2021 Poster | https://openreview.net/forum?id=519VBzfEaKW | UNCLEAR | not extracted | information-aware GCL unification |
-| HLCL | Submitted to ICLR 2023 / acceptance UNCLEAR in current pass | https://openreview.net/forum?id=NzcUQuhEGef | UNCLEAR | not extracted | heterophily-aware GCL |
-| G-Censor | Submitted to ICLR 2023 / acceptance UNCLEAR in current pass | https://openreview.net/forum?id=LiWGbK8_iOB | promised/UNCLEAR | not extracted | task-oriented counterfactual views |
+Semantic Scholar recovered BGRL metadata: ICLR venue, arXiv id `2102.06514`, citationCount 324, and S2 URL. Other core queries hit HTTP 429 and were not repeatedly retried.
 
-## Direct Comparability Decision
+## OpenReview Status
 
-No published result is marked directly comparable yet. Any SOTA or superiority claim must rerun baselines under `BENCHMARK_PROTOCOL.md` or prove exact split/evaluator/seed/test@best equivalence.
+CM-GCL: accepted NeurIPS 2022. InfoGCL: NeurIPS 2021 Poster. Transductive Linear Probing: LoG 2022 Oral. Directed GCL: NeurIPS 2021 Poster. HLCL and G-Censor remain `UNCLEAR` for final acceptance status in this pass.

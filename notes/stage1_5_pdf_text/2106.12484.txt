@@ -1,0 +1,1548 @@
+
+
+--- PAGE 1 ---
+From Canonical Correlation Analysis to
+Self-supervised Graph Neural Networks
+Hengrui Zhang1∗, Qitian Wu2, Junchi Yan2, David Wipf3, Philip S. Yu1†
+1 Department of Computer Science, University of Illinois at Chicago
+2 Department of Computer Science and Engineering, Shanghai Jiao Tong University
+3AWS Shanghai AI Lab
+hzhan55@uic.edu, {echo740, yanjunchi}@sjtu.edu.cn
+daviwipf@amazon.com, psyu@uic.edu
+Abstract
+We introduce a conceptually simple yet effective model for self-supervised represen-
+tation learning with graph data. It follows the previous methods that generate two
+views of an input graph through data augmentation. However, unlike contrastive
+methods that focus on instance-level discrimination, we optimize an innovative
+feature-level objective inspired by classical Canonical Correlation Analysis. Com-
+pared with other works, our approach requires none of the parameterized mutual
+information estimator, additional projector, asymmetric structures, and most im-
+portantly, negative samples which can be costly. We show that the new objective
+essentially 1) aims at discarding augmentation-variant information by learning
+invariant representations, and 2) can prevent degenerated solutions by decorrelating
+features in different dimensions. Our theoretical analysis further provides an under-
+standing for the new objective which can be equivalently seen as an instantiation
+of the Information Bottleneck Principle under the self-supervised setting. Despite
+its simplicity, our method performs competitively on seven public graph datasets.
+The code is available at: https://github.com/hengruizhang98/CCA-SSG.
+1 Introduction
+Self-supervised learning (SSL) has been a promising paradigm for learning useful representations
+without costly labels [7, 46, 5]. In general, it learns representations via a proxy objective between
+inputs and self-deﬁned signals, among which contrastive methods [46, 40, 16, 5, 12] have achieved
+impressive performance on learning image representations by maximizing the mutual information of
+two views (or augmentations) of the same input. Such methods can be interpreted as a discrimination
+of a joint distribution (positive pairs) from the product of two marginal ones (negative pairs) [50].
+Inspired by the success of contrastive learning in vision [17, 46, 40, 5, 16, 12, 6], similar methods
+have been adapted to learning graph neural networks [48, 15, 33, 57, 58]. Although these models
+have achieved impressive performance, they require complex designs and architectures. For example,
+DGI [48] and MVGRL [15] rely on a parameterized mutual information estimator to discriminate
+positive node-graph pairs from negative ones; GRACE [ 57] and GCA [ 58] harness an additional
+MLP-projector to guarantee sufﬁcient capacity. Moreover, negative pairs sampled or constructed from
+data often play an indispensable role in providing effective contrastive signals and have a large impact
+on performance. Selecting proper negative samples is often nontrivial for graph-structured data, not
+to mention the extra storage cost for prohibitively large graphs. BGRL [39] is a recent endeavor on
+∗This work was done during the author’s internship at AWS Shanghai AI Lab.
+†Corresponding author.
+35th Conference on Neural Information Processing Systems (NeurIPS 2021).
+arXiv:2106.12484v2  [cs.LG]  27 Oct 2021
+
+
+--- PAGE 2 ---
+Table 1: Technical comparison of self-supervised node representation learning methods. We provide
+a conceptual comparison with more self-supervised methods in Appendix G. Target denotes the
+comparison pair, N/G/F denotes node/graph/feature respectively.MI-Estimator: parameterized mutual
+information estimator. Proj/Pred: additional (MLP) projector or predictor. Asymmetric: asymmetric
+architectures such as EMA and Stop-Gradient, or two separate encoders for two branches. Neg
+examples: requiring negative examples to prevent trivial solutions. Space denotes space requirement
+for storing all the pairs. Our method is simple without any listed component and memory-efﬁcient.
+Methods Target MI-Estimator Proj/Pred Asymmetric Neg examples Space
+Instance-level
+DGI [48] N-G ! - - ! O(N )
+MVGRL [15] N-G ! - ! ! O(N )
+GRACE [57] N-N - ! - ! O(N 2)
+GCA [58] N-N - ! - ! O(N 2)
+BGRL [39] N-N - ! ! - O(N )
+CCA-SSG (Ours) F-F - - - - O(D2)
+targeting a negative-sample-free approach for GNN learning through asymmetric architectures [12, 6].
+However, it requires additional components, e.g., an exponential moving average (EMA) and Stop-
+Gradient, to empirically avoid degenerated solutions, leading to a more intricate architecture.
+Deviating from the large body of previous works on contrastive learning, in this paper we take a
+new perspective to address SSL on graphs. We introduce Canonical Correlation Analysis inspired
+Self-Supervised Learning on Graphs (CCA-SSG), a simple yet effective approach that opens the
+way to a new SSL objective and frees the model from intricate designs. It follows the common
+practice of prior arts, generating two views of an input graph through random augmentation and
+acquiring node representations through a shared GNN encoder. Differently, we propose to harness a
+non-contrastive and non-discriminative feature-level objective, which is inspired by the well-studied
+Canonical Correlation Analysis (CCA) methods [18, 10, 11, 14, 2, 4]. More speciﬁcally, the new
+objective aims at maximizing the correlation between two augmented views of the same input and
+meanwhile decorrelating different (feature) dimensions of a single view’s representation. We show
+that the objective 1) essentially pursuits discarding augmentation-variant information and preserving
+augmentation-invariant information, and 2) can prevent dimensional collapse [ 19] (i.e., different
+dimensions capture the same information) in nature. Furthermore, our theoretical analysis sheds
+more lights that under mild assumptions, our model is an instantiation of Information Bottleneck
+Principle [43, 44, 37] under SSL settings [53, 9, 45].
+To sum up, as shown in Table 1, our new objective induces a simple and light model without
+reliance on negative pairs [48, 15, 57, 58], a parameterized mutual information estimator [48, 15],
+an additional projector or predictor [57, 58, 39] or asymmetric architectures [39, 15]. We provide a
+thorough evaluation for the model on seven node classiﬁcation benchmarks. The empirical results
+demonstrate that despite its simplicity, CCA-SSG can achieve very competitive performance in
+general and even superior test accuracy in ﬁve datasets. It is worth noting that our approach is
+agnostic to the input data format, which means that it can potentially be applied to other scenarios
+beyond graph-structured data (such as vision, language, etc.). We leave such a technical extension for
+future works.
+Our contributions are as follows:
+1) We introduce a non-contrastive and non-discriminative objective for self-supervised learning,
+which is inspired by Canonical Correlation Analysis methods. It does not rely on negative samples,
+and can naturally remove the complicated components. Based on it we propose CCA-SSG, a simple
+yet effective framework for learning node representations without supervision (see Section 3).
+2) We theoretically prove that the proposed objective aims at keeping augmentation-invariant in-
+formation while discarding augmentation-variant one, and possesses an inherent relationship to an
+embodiment of Information Bottleneck Principle under self-supervised settings (see Section 4).
+3) Experimental results show that without complex designs, our method outperforms state-of-the-art
+self-supervised methods MVGRL [15] and GCA [58] on 5 out of 7 benchmarks. We also provide
+thorough ablation studies on the effectiveness of the key components of CCA-SSG (see Section 5).
+2
+
+
+--- PAGE 3 ---
+2 Related Works and Background
+Contrastive Learning on Graphs. Contrastive methods [46, 40, 17, 16, 5, 12] have been shown to
+be effective for unsupervised learning in vision, which have also been adapted to graphs. Inspired by
+the local-global mutual information maximization viewpoints [17], DGI [48] and InfoGraph [38] put
+forward unsupervised schemes for node and graph representation learning, respectively. MVGRL [15]
+generalizes CMC [40] to graph-structured data by introducing graph diffusion [23] to create another
+view for a graph. GCC [33] adopts InfoNCE loss [46] and MoCo-based negative pool [16] for large-
+scale GNN pretraining. GRACE [57], GCA [58] and GraphCL [52] follow the spirit of SimCLR [5]
+and learn node/graph representations by directly treating other nodes/graphs as negative samples.
+BGRL [39] targets a negative-sample-free model, inspired by BYOL [12], on node representation
+learning. But it still requires complex asymmetric architectures.
+Feature-level Self-supervised Objectives. The above-mentioned methods all focus on instance-
+level contrastive learning. To address their drawbacks, some recent works have been turning to
+feature-level objectives. For example, Contrastive Clustering [ 25] regards different feature di-
+mensions as different clusters, thus combining the cluster-level discrimination with instance-level
+discrimination. W-MSE [8] performs a differentiable whitening operation on learned embeddings,
+which implicitly scatters data points in embedding space. Barlow Twins [ 53] borrows the idea of
+redundancy reduction and adopts a soft decorrelation term that makes the cross-correlation matrix
+of two views’ representations close to an identity matrix. By contrast, our method is based on the
+classical Canonical Correlation Analysis, working by correlating the representations of two views
+from data augmentation and meanwhile decorrelating different feature dimensions of each view’s
+representation.
+Canonical Correlation Analysis. CCA is a classical multivariate analysis method, which is ﬁrst
+introduced in [18]. For two random variables X∈ Rm andY ∈ Rn, their covariance matrix is
+ΣXY =Cov(X,Y ). CCA aims at seeking two vectorsa∈ Rm andb∈ Rn such that the correlation
+ρ = corr(a⊤X,b⊤Y ) = a⊤ΣXYb√
+a⊤ΣXXa
+√
+b⊤ΣYY b
+is maximized. Formally, the objective is
+max
+a,b
+a⊤ΣXYb, s.t.a⊤ΣXXa =b⊤ΣYY b = 1. (1)
+For multi-dimensional cases, CCA seeks two sets of vectors maximizing their correlation and
+subjected to the constraint that they are uncorrelated with each other [10]. Later studies apply CCA to
+multi-view learning with deep models [2, 11, 14], by replacing the linear transformation with neural
+networks. Concretely, assumingX1,X 2 as two views of an input data, it optimizes
+max
+θ1,θ2
+Tr
+(
+P⊤
+θ1(X1)Pθ2(X2)
+)
+s.t.P⊤
+θ1(X1)Pθ1(X1) =P⊤
+θ2(X2)Pθ2(X2) =I. (2)
+wherePθ1 andPθ2 are two feedforward neural networks and I is an identity matrix. Despite its
+preciseness, such computation is really expensive [4]. Fortunately, soft CCA [4] removes the hard
+decorrelation constraint by adopting the following Lagrangian relaxation:
+min
+θ1,θ2
+Ldist (Pθ1(X1),Pθ2(X2)) +λ (LSDL(Pθ1(X1)) +LSDL(Pθ2(X2))), (3)
+whereLdist measures correlation between two views’ representations andLSDL (called stochastic
+decorrelation loss) computes anL1 distance betweenPθi(Xi) and an identity matrix, fori = 1, 2.
+3 Approach
+3.1 Model Framework
+In this paper we focus on self-supervised node representation learning, where we consider a single
+graph G = ( X, A). X∈ RN×F and A∈ RN×N denote node features and adjacency matrix
+respectively. HereN is the number of nodes within the graph andF denotes feature dimension.
+Our model simply consists of three parts: 1) a random graph augmentation generatorT . 2) a GNN-
+based graph encoderfθ whereθ denotes its parameters. 3) a novel feature-level objective function
+based on Canonical Correlation Analysis. Fig. 1 is an illustration of the proposed model.
+3
+
+
+--- PAGE 4 ---
+tA∼𝒯
+tB∼𝒯
+GNNθ
+GNNθ
+share
+weights
+ZA
+ZB
+G=(X,A)
+(1) random augmentation (2) graph neural network
+CCA
+(3)  CCA-based objectiveView  A
+View B
+Figure 1: Illustration of the proposed model: given an input graph, we ﬁrst generate two views through
+random augmentations: edge dropping and node feature masking. The two views are subsequently
+put into a shared GNN encoder to generate representations. The loss function is applied on the
+column-normalized embedding matrix of the two views. Note that this simple yet effective pipeline
+can also be conceptually applied for other data like vision and texts, which we leave for future works.
+Algorithm 1: PyTorch-style code for CCA-SSG
+# f: encoder network
+# lambda: trade-off
+# D: embedding dimension
+# g: input graph
+# feat: node features
+# generate two views through random augmentation
+g1, feat1 = augment(g, feat)
+g2, feat2 = augment(g, feat)
+z1 = f(g1, feat1) # embedding of the 1st view
+z2 = f(g2, feat2) # embedding of the 2st view
+# batch normalization
+z1_norm = ((z1 - z1.mean(0)) / z1.std(0))/ sqrt(D)
+z2_norm = ((z2 - z2.mean(0)) / z2.std(0))/ sqrt(D)
+# covariance matrix of each view
+c1 = torch.mm(z1_norm.T(), z1_norm)
+c2 = torch.mm(z2_norm.T(), z2_norm)
+iden = torch.eye(D)
+loss_inv = (z1_norm - z2_norm).pow(2).sum()
+loss_dec_1 = (c1 - iden).pow(2).sum()
+loss_dec_2 = (c2 - iden).pow(2).sum()
+loss_dec = loss_dec_1 + loss_dec_2
+loss = loss_inv + lambda * loss_dec
+Graph augmentations . We consider the
+standard pipeline for random graph augmen-
+tation that has been commonly used in pre-
+vious works [ 57, 39]. To be speciﬁc, we
+harness two ways for augmentation: edge
+dropping and node feature masking. Edge
+dropping randomly drops a fraction of edges
+from the original graph, while node feature
+masking randomly masks a fraction of fea-
+tures for all the nodes. In this way, T is
+composed of all the possible graph transfor-
+mation operations and each t∼T denotes
+a speciﬁc graph transformation for graphG.
+Note that we use commonly adopted aug-
+mentation methods to stay our focus on the
+design of objective function and conduct fair
+comparison with existing approaches. More
+complicated random augmentations [52, 58]
+can also be readily plugged into our model.
+Details for the used augmentation functions
+are in Appendix E.
+Training. In each training iteration, we ﬁrst randomly sample two graph transformations tA and
+tB fromT , and then generate two views ˜GA = ( ˜XA, ˜AA) and ˜GB = ( ˜XB, ˜AB) according to the
+transformations. The two views are subsequently fed into a shared GNN encoder to generate the node
+embeddings of the two views: ZA =fθ( ˜XA, ˜AA), ZB =fθ( ˜XB, ˜AB), where ZA, ZB∈ RN×D
+andD denotes embedding dimension. We further normalize the node embeddings along instance
+dimension so that each feature dimension has a 0-mean and 1/
+√
+N-standard deviation distribution:
+˜Z = Z−µ(Z)
+σ(Z)∗
+√
+N
+(4)
+The normalized ˜ZA, ˜ZB will be used to compute a feature-level objective in Section 3.2. To help
+better understand the proposed framework, we provide the PyTorch-style pseudocode for training
+CCA-SSG in Algorithm 1.
+Inference. To generate node embeddings for downstream tasks, we put the original graph G =
+(X, A) into the trained graph neural networkfθ and obtain node embeddings Z =fθ(X, A).
+4
+
+
+--- PAGE 5 ---
+3.2 Learning Objective
+Canonical Correlation Analysis has shown its great power in multi-view learning like instance
+recognition [4]. However, it still remains unexplored to leverage CCA for self-supervised learning.
+Note that in SSL, one generates two sets of data from the same input through transformation or
+random data augmentation, which could be regraded as two views of the input data. This inspires us
+to introduce the following objective for self-supervised representation learning:
+L =
+˜ZA− ˜ZB
+
+2
+F  
+invariance term
++λ
+(˜Z⊤
+A ˜ZA− I
+
+2
+F
++
+˜Z⊤
+B ˜ZB− I
+
+2
+F
+)
+  
+decorrelation term
+(5)
+whereλ is a non-negative hyperparameter trading off two terms. Note that minimizing the invariance
+term is essentially maximizing the correlation between two views as their representations are already
+normalized. In SSL, as the two augmented views come randomly from the same distribution, we can
+adopt one encoderfθ that is shared across two branches and seek for a regularization that encourages
+different feature dimensions to capture distinct semantics via the decorrelation term.
+We next provide a variance-covariance perspective to the new objective, following similar lines of
+reasoning in [41, 42]. Assume that input data come from a distribution x∼p(x) and s is a view of x
+through random augmentation s∼paug(·|x). Denote zs as the representation of s, then minimizing
+the invariance term, by expectation, is to minimize the variance of the normalized representation ˜zs,
+conditioned on x. Also, minimizing the decorrelation term is to push the off-diagonal elements of the
+covariance matrix (given by two ˜zs’s) close to0. Formally, we have
+Linv =
+˜ZA− ˜ZB
+
+2
+F
+=
+N∑
+i=1
+D∑
+k=1
+(˜zA
+i,j− ˜zB
+i,j)2∼= Ex
+[ D∑
+k=1
+Vs|x[˜zs,k]
+]
+∗ 2N, (6)
+Ldec =
+˜Z⊤
+S ˜ZS− I
+
+2
+F
+=∥Covs[˜z]−I∥2
+F
+∼=
+∑
+i̸=j
+(
+ρzs
+i,j
+)2
+, for ˜ZS∈{ ˜ZA, ˜ZB}, (7)
+whereρ is the Pearson correlation coefﬁcient.
+3.3 Advantages over Contrastive Methods
+In this subsection we provide a systematic comparison with previous self-supervised methods for node
+representation learning, including DGI [48], MVGRL [15], GRACE [57], GCA [58] and BGRL [39],
+and highlight the merits of CCA-SSG. A quick overview is presented in Table 1.
+No reliance on negative samples. Most of previous works highly rely on negative pairs to avoid
+collapse or interchangeable, trivial/degenerated solutions [48, 15, 57, 58]. E.g., DGI and MVGRL
+generate negative examples by corrupting the graph structure severely, and GRACE/GCA treats all
+the other nodes within a graph as negative examples. However, for self-supervised learning on graphs,
+it is non-trivial to construct informative negative examples since nodes are structurally connected, and
+selecting negative examples in an arbitrary manner may lead to large variance for stochastic gradients
+and slow training convergence [51]. The recently proposed BGRL model adopts asymmetric encoder
+architectures for SSL on graphs without the use of negative samples. However, though BGRL could
+avoid collapse empirically, it still remains as an open problem concerning its theoretical guarantee for
+preventing trivial solutions [41]. Compared with these methods, our model does not rely on negative
+pairs and asymmetric encoders. The feature decorrelation term can naturally prevent trivial solutions
+caused by the invariance term. We discuss the collapse issue detailedly in Appendix B.
+No MI estimator, projector network nor asymmetric architectures. Most previous works rely on
+additional components besides the GNN encoder to estimate some score functions in ﬁnal objectives.
+DGI and MVGRL require a parameterized estimator to approximate mutual information between
+two views, and GRACE leverages a MLP projector followed by an InfoNCE estimator. BGRL
+harnesses asymmetric encoder architecture which consists of EMA (Exponential Moving Average),
+Stop-Gradient and an additional projector. MVGRL also induces asymmetric architectures as it
+adopts two different GNNs for the input graph and the diffusion graph respectively. In contrast, our
+approach requires no additional components except a single GNN encoder.
+Better efﬁciency and scalability to large graphs . Consider a graph with N nodes. DGI and
+MVGRL contrast node embeddings with graph embedding, which would requireO(N) space cost.
+5
+
+
+--- PAGE 6 ---
+GRACE treats two views of the same node as positive pairs and treat views of different nodes as
+negative pairs, which would takeO(N2) space. BGRL focuses only on positive pairs, which will
+also takeO(N) space. By contrast, our method works on feature dimension. If we embed each node
+into aD-dimensional vector, the computation of the loss function would requireO(D2) space. This
+indicates that the memory cost does not grow consistently as the size of graph increases. As a result,
+our method is promising for handling large-scale graphs without prohibitively large space costs.
+4 Theoretical Insights with Connection to Information Theory
+In this section we provide some analysis of the proposed objective function: 1) Interpretation of the
+loss function with entropy and mutual information. 2) The connection between the proposed objective
+and the Information Bottleneck principle. 3) Why the learned representations would be informative
+to downstream tasks. The proofs of propositions, theorems and corollaries are in Appendix D.
+Notations. Denote the random variable of input data asX and the downstream task asT (it could be
+the labelY if the downstream task is classiﬁcation). Note that in SSL, we have no access to T in
+training and here we introduce the notation for our analysis. Deﬁne S as the self-supervised signal
+(i.e., an augmented view ofX), andS shares the same space asX. Our model learns a representation
+for the input, denoted by ZX and its views, denoted by ZS. ZX = fθ(X),ZS = fθ(S),fθ(·) is
+a encoder shared by the original data and its views, which is parameterized by θ. The target of
+representation learning is to learn a optimal encoder parameterθ. Furthermore, for random variable
+A,B,C , we useI(A,B ) to denote the mutual information betweenA andB,I(A,B|C) to denote
+conditional mutual information ofA andB on a givenC,H(A) for the entropy, andH(A|B) for
+conditional entropy. The proofs of propositions, theorems and corollaries are in Appendix D.
+4.1 An Entropy and Mutual Information Interpretation of the Objective
+We ﬁrst introduce an assumption about the distributions ofP (ZS) andP (ZS|X).
+Assumption 1. (Gaussian assumption ofP (ZS|X) andP (ZS)):
+P (ZS|X) =N (µX, ΣX),P (ZS) =N (µ, Σ). (8)
+With Assumption 1, we can arrive at the following propositions:
+Proposition 1. In expectation, minimizing Eq. (6) is equivalent to minimizing the entropy of ZS
+conditioned on inputX, i.e.,
+min
+θ
+Linv∼= min
+θ
+H(ZS|X). (9)
+Proposition 2. Minimizing Eq. (7) is equivalent to maximizing the entropy ofZS, i.e.,
+min
+θ
+Ldec∼= max
+θ
+H(ZS). (10)
+The two propositions unveil the effects of two terms in our objective. Combining two propositions,
+we can further interpret Eq. (5) from an information-theoretic perspective.
+Theorem 1. By optimizing Eq (5), we maximize the mutual information between the augmented
+view’s embeddingZS and the input dataX, and minimize the mutual information betweenZS and
+the view itselfS, conditioned on the input dataX. Formally we have
+min
+θ
+L⇒ max
+θ
+I(ZS,X ) and min
+θ
+I(ZS,S|X). (11)
+The proof is based on the facts I(ZS,X ) = H(ZS)−H(ZS|X) andI(ZS,S|X) = H(ZS|X) +
+H(ZS|S) = H(ZS|X). Theorem 1 indicates that our objective Eq. (5) learns representations
+that maximize the information of the input data, i.e., I(ZS,X ), and meanwhile minimize the lost
+information during augmentation, i.e.,I(ZS,S|X).
+4.2 Connection with the Information Bottleneck Principle
+The analysis in Section 4.1 enables us to further build a connection between our objective Eq. (5) and
+the well-studied Information Bottleneck Principle [43, 44, 37, 1] under SSL settings. Recall that the
+supervised Information Bottleneck (IB) is deﬁned as follows:
+6
+
+
+--- PAGE 7 ---
+Deﬁnition 1. The supervised IB aims at maximizing an Information Bottleneck Lagrangian:
+IBsup =I(Y,ZX)−βI(X,ZX), whereβ >0. (12)
+As we can see,IBsup attempts to maximize the information between the data representationZX and
+its corresponding labelY , and concurrently minimize the information betweenZX and the input data
+X (i.e., exploiting compression ofZX fromX). The intuition of IB principle is thatZX is expected
+to contain only the information that is useful for predictingY .
+Several recent works [9, 45, 53] propose various forms of IB under self-supervised settings. The
+most relevant one names Self-supervised Information Bottleneck:
+Deﬁnition 2. (Self-supervised Information Bottleneck [53]). The Self-supervised IB aims at maxi-
+mizing the following Lagrangian:
+IBssl =I(X,ZS)−βI(S,ZS), whereβ >0. (13)
+Intuitively,IBssl posits that a desirable representation is expected to be informative to augmentation
+invariant features, and to be a maximally compressed representation of the input.
+Our objective Eq. (5) is essentially an embodiment ofIBssl:
+Theorem 2. Assume 0 < β≤ 1, then by minimizing Eq. (5), the self-supervised Information
+Bottleneck objective is maximized, formally:
+min
+θ
+L⇒ max
+θ
+IBssl (14)
+Theorem 2 also shows that Eq. (5) implicitly follows the same spirit of IB principle under self-
+supervised settings. As further enlightenment, we can relate Eq. (5) with the multi-view Information
+Bottleneck [9] and the minimal and sufﬁcient representations for self-supervision [45]:
+Corollary 1. LetX1 =S,X2 =X and assume 0<β ≤ 1, then minimizing Eq. (5) is equivalent to
+minimizing the Multi-view Information Bottleneck Loss in [9]:
+LMIB =I(Z1,X 1|X2)−βI(X2,Z 1), where 0<β ≤ 1. (15)
+Corollary 2. When the data augmentation process is reversible, minimizing Eq. (5) is equivalent to
+learning the Minimal and Sufﬁcient Representations for Self-supervision in [45]:
+Zssl
+X = arg max
+ZX
+I(ZX,S ),Z sslmin
+X = arg min
+ZX
+H(ZX|S) s.t. I(ZX,S ) is maximized. (16)
+4.3 Inﬂuence on Downstream Tasks
+We have provided a principled understanding for our new objective. Next, we discuss its effect on
+downstream tasksT . The rationality of data augmentations in SSL is rooted in a conjecture that an
+ideal data augmentation approach would not change the information related to its label. We formulate
+this hypothesis as a building block for analysis on downstream tasks [36, 9].
+Assumption 2. (Task-relevant information and data augmentation). All the task-relevant information
+is shared across the input dataX and its augmentationsS, i.e.,I(X,T ) =I(S,T ) =I(X,S,T ),
+or equivalently,I(X,T|S) =I(S,T|X) = 0.
+This indicates that all the task-relevant information is contained in augmentation invariant features.
+We proceed to derive the following theorem which reveals the efﬁcacy of the learned representations
+by our objective with respect to downstream tasks.
+Theorem 3. (Task-relevant/irrelevant information). By optimizing Eq. (5), the task-relevant informa-
+tionI(ZS,T ) is maximized, and the task-irrelevant informationH(ZS|T ) is minimized. Formally,
+min
+θ
+L⇒ max
+θ
+I(ZS,T ) and min
+θ
+H(ZS|T ). (17)
+Therefore, the learned representationZS is expected to contain minimal and sufﬁcient information
+about downstream tasks [45, 9], which further illuminates the reason why the embeddings given by
+SSL approaches have superior performance on various downstream tasks.
+7
+
+
+--- PAGE 8 ---
+Table 2: Test accuracy on citation networks. The input column highlights the data used for training.
+(X for node features, A for adjacency matrix, S for diffusion matrix, and Y for node labels).
+Methods Input Cora Citeseer Pubmed
+Supervised
+MLP [47] X, Y 55.1 46.5 71.4
+LP [56] A, Y 68.0 45.3 63.0
+GCN [22] X, A, Y 81.5 70.3 79.0
+GAT [47] X, A, Y 83.0± 0.7 72.5 ± 0.7 79.0 ± 0.3
+Unsupervised
+Raw Features [48] X 47.9± 0.4 49.3 ± 0.2 69.1 ± 0.3
+Linear CCA [18] X 58.9± 1.5 27.5 ± 1.3 75.8 ± 0.4
+DeepWalk [32] A 70.7± 0.6 51.4 ± 0.5 74.3 ± 0.9
+GAE [21] X, A 71.5± 0.4 65.8 ± 0.4 72.1 ± 0.5
+DGI [48] X, A 82.3± 0.6 71.8 ± 0.7 76.8 ± 0.6
+MVGRL1 [15] X, S, A 83.5± 0.4 73.3± 0.5 80.1± 0.7
+GRACE2 [57] X, A 81.9± 0.4 71.2 ± 0.5 80.6 ± 0.4
+CCA-SSG (Ours) X, A 84.2± 0.4 73.1± 0.3 81.6± 0.4
+1 Results on Cora with authors’ code is inconsistent with [15]. We adopt the results with authors’ code.
+2 Results are from our reproducing with authors’ code, as [57] did not use the public splits.
+5 Experiments
+We assess the quality of representations after self-supervised pretraining on seven node classiﬁca-
+tion benchmarks: Cora, Citeseer, Pubmed, Coauthor CS, Coauthor Physicsand Amazon Computer,
+Amazon-Photo. We adopt the public splits for Cora, Citeseer, Pubmed, and a 1:1:9 training/valida-
+tion/testing splits for the other 4 datasets. Details of the datasets are in Appendix E.
+Evaluation protocol. We follow the linear evaluation scheme as introduced in [48]: i) We ﬁrst train
+the model on all the nodes in a graph without supervision, by optimizing the objective in Eq. (5). ii)
+After that, we freeze the parameters of the encoder and obtain all the nodes’ embeddings, which are
+subsequently fed into a linear classiﬁer (i.e., a logistic regression model) to generate a predicted label
+for each node. In the second stage, only nodes in training set are used for training the classiﬁer, and
+we report the classiﬁcation accuracy on testing nodes.
+We implement the model with PyTorch. All experiments are conducted on a NVIDIA V100 GPU with
+16 GB memory. We use the Adam optimizer [20] for both stages. The graph encoderfθ is speciﬁed
+as a standard two-layer GCN model [22] for all the datasets except citeseer (where we empirically
+ﬁnd that a one-layer GCN is better). We report the mean accuracy with a standard deviation through
+20 random initialization (on Coauthor CS, Coauthor Physics and Amazon Computer, Amazon-Photo,
+the split is also randomly generated). Detailed hyperparameter settings are in Appendix E.
+5.1 Comparison with Peer Methods
+We compare CCA-SSG with classical unsupervised models, Deepwalk [ 32] and GAE [ 21], and
+self-supervised models, DGI [48], MVGRL [15], GRACE [57] and GCA [58]. We also compare with
+supervised learning models, including MLP, Label Propagation (LP) [56], and supervised baselines
+GCN [22] and GAT [47]3. The results of baselines are quoted from [15, 57, 58] if not speciﬁed.
+We report the node classiﬁcation results of citation networks and other datasets in Table 2 and Table 3
+respectively. As we can see, CCA-SSG outperforms both the unsupervised competitors and the fully
+supervised baselines on Cora and Pubmed, despite its simple architecture. On Citeseer, CCA-SSG
+achieves competitive results as of the most powerful baseline MVGRL. On four larger benchmarks,
+CCA-SSG also achieves the best performance in four datasets except Coauther-Physics. It is worth
+mentioning that we empirically ﬁnd that on Coauthor-CS a pure 2-layer-MLP encoder is better than
+GNN models. This might because the graph-structured information is much less informative than
+the node features, presumably providing harmful signals for classiﬁcation (in fact, on Coauthor-CS,
+linear models using merely node features can greatly outperform DeepWalk/DeepWalk+features).
+3The BGRL [39] is not compared as its source code has not been released.
+8
+
+
+--- PAGE 9 ---
+Table 3: Test accuracy on co-author and co-purchase networks. We report both mean accuracy and
+standard deviation. Results of baseline models are from [58].
+Methods Input Computer Photo CS Physics
+Supervised GCN [22] X, A, Y 86.51± 0.54 92.42 ± 0.22 93.03 ± 0.31 95.65 ± 0.16
+Supervised GAT [47] X, A, Y 86.93± 0.29 92.56 ± 0.35 92.31 ± 0.24 95.47 ± 0.15
+Unsupervised
+Raw Features [48] X 73.81± 0.00 78.53 ± 0.00 90.37 ± 0.00 93.58 ± 0.00
+Linear CCA [18] X 79.84± 0.53 86.92 ± 0.72 93.13 ± 0.18 95.04 ± 0.17
+DeepWalk [32] A 85.68± 0.06 89.44 ± 0.11 84.61 ± 0.22 91.77 ± 0.15
+DeepWalk + features X, A 86.28± 0.07 90.05 ± 0.08 87.70 ± 0.04 94.90 ± 0.09
+GAE [21] X, A 85.27± 0.19 91.62 ± 0.13 90.01 ± 0.71 94.92 ± 0.07
+DGI [48] X, A 83.95± 0.47 91.61 ± 0.22 92.15 ± 0.63 94.51 ± 0.52
+MVGRL [15] X, S, A 87.52± 0.11 91.74 ± 0.07 92.11 ± 0.12 95.33 ± 0.03
+GRACE1 [57] X, A 86.25± 0.25 92.15 ± 0.24 92.93 ± 0.01 95.26 ± 0.02
+GCA1 [58] X, A 87.85± 0.31 92.49 ± 0.09 93.10 ± 0.01 95.68± 0.05
+CCA-SSG (Ours) X, A 88.74± 0.28 93.14 ± 0.14 93.31 ± 0.22 95.38± 0.06
+1 GCA is essentially an enhanced version of GRACE by adopting adaptive augmentations. Both GRACE
+and GCA would suffer from out of memory on Coauthor-Physics using a GPU wth 16GB memory. The
+reported results are from authors’ papers using a 32GB GPU.
+5.2 Ablation Study and Scalability Comparison
+Effectiveness of invariance/decorrelation terms . We alter our loss by removing the invari-
+ance/decorrelation term respectively to study the effects of each component, with results reported in
+Table 4. We ﬁnd that only using the invariance term will lead to merely performance drop instead of
+completely collapsed solutions. This is because node embeddings are normalized along the instance
+dimension to have a zero-mean and ﬁxed-standard deviation, and the worst solution is no worse than
+dimensional collapse (i.e., all the embeddings lie in an line, and our decorrelation term can help to
+prevent it) instead of complete collapse (i.e., all the embeddings degenerate into a single point). As
+expected, only optimizing the decorrelation term will lead to poor result, as the model learns nothing
+meaningful but disentangled representation. In Appendix B we discuss the relationship between
+complete/dimensional collapse, when the two cases happen and how to avoid them.
+Effect of decorrelation intensity. We study how the intensity of feature decorrelation improves/de-
+grades the performance by increasing the trade-off hyper-parameterλ. Fig. 2 shows test accuracy
+w.r.t. differentλ’s onCora, Citeseer and Pubmed. The performance beneﬁts from a proper selection
+ofλ (from 0.0005 to 0.001 in our experiments). When λ is too small, the decorrelation term does
+not work; if it is too large, the invariance term would be neglected, leading to serious performance
+degrade. An interesting ﬁnding is that even when λ is very small or even equals to 0 (w/oLdec
+in Table 4), the test accuracy on Citeseer does not degrade as much as that on Cora and Citeseer.
+The reason is that node embeddings of Citeseer is already highly uncorrelated even without the
+decorrelation term. Appendix F visualizes the correlation matrices without/with decorrelations.
+Effect of embedding dimension . Fig. 3 shows the effect of the embedding dimension. Similar
+to contrastive methods [ 48, 15, 57, 58], CCA-SSG beneﬁts from a large embedding dimension
+(compared with supervised learning), while the optimal embedding dimension of CCA-SSG (512
+on most benchmarks) is a bit larger than other methods (usually 128 or 256). Yet, we notice a
+performance drop as the embedding dimension increases. We conjecture that the CCA is essentially a
+dimension-reduction method, the ideal embedding dimension ought to be smaller than the dimension
+of input. Hence we do not apply it on well-compressed datasets (e.g. ogbn-arXiv and ogbn-product).
+Scalability Comparison. Table 5 compares model size, training time (till the epoch that gives the
+highest evaluation accuracy) and memory cost of CCA-SSG with other methods, on Cora, Pubmed
+and Amazon-Computers. Overall, our method has fewer parameters, shorter training time, and fewer
+memory cost than MVGRL, GRACE and GCA in most cases. DGI is another simple and efﬁcient
+model, but it yields much poorer performance. The results show that despite its simplicity and
+efﬁciency, our method achieves even better (or competitive) performance.
+9
+
+
+--- PAGE 10 ---
+Table 4: Ablation study of node
+classiﬁcation accuracy (%) on the
+key components of CCA-SSG.
+Variants Cora Citeseer Pubmed
+Baseline 84.2 73.1 81.6
+w/oLdec 79.1 72.2 75.3
+w/oLinv 40.1 28.9 46.5
+10 6
+ 10 5
+ 10 4
+ 10 3
+ 10 2
+0.60
+0.65
+0.70
+0.75
+0.80
+0.85Accuracy
+Cora
+Citeseer
+Pubmed
+Figure 2: Effect ofλ.
+64 128 256 512 1024 2048
+Embedding dimension: D
+0.72
+0.74
+0.76
+0.78
+0.80
+0.82
+0.84Accuracy
+Cora
+Citeseer
+Pubmed Figure 3: Effect ofD.
+Table 5: Comparison of the number of parameters, training time for achieving the best performance,
+and the memory cost of different methods on Cora, Pubmed and Amazon-Computer. MVGRL on
+Pubmed and Computer requires subgraph sampling with graph size 4000. Others are full-graph.
+Methods Cora (N: 2,708) Pubmed ( N: 19,717) Computer ( N: 13,752)
+#Paras Time Mem #Paras Time Mem #Paras Time Mem
+DGI 1260K 6.4s 1.4G 782K 5.9s 1.9G 919K 14.1s 1.9G
+MVGRL 1731K 26.9s 4.6G 775K 29s 5.4G 1049K 31.5s 5.5G
+GRACE/GCA 997K 8.3s 1.7G 520K 756s 12.6G 273K 314s 7.6G
+CCA-SSG(Ours) 997K 3.8s 1.6G 519K 9.6s 2.7G 656K 14.8s 2.5G
+6 Conclusion and Discussions
+In this paper, we have introduced CCA-SSG, a conceptually simple, efﬁcient yet effective method
+for self-supervised representation learning on graphs, based on the idea of Canonical Correlation
+Analysis. Compared with contrastive methods, our model does not require additional components
+except random augmentations and a GNN encoder, whose effectiveness is justiﬁed in experiments.
+Limitations of the work. Despite the theoretical grounds and the promising experimental justi-
+ﬁcations, our method would suffer from several limitations. 1) The objective Eq. (5) is essentially
+performing dimension reduction, while SSL approach usually requires a large embedding dimension.
+As a result, our method might not work well on datasets where input data does not have a large feature
+dimension. 2) Like other augmentation based methods, CCA-SSG highly relies on a high-quality,
+informative and especially, label-invariant augmentations. However, the augmentations used in our
+model might not perfectly meet these requirements, and it remains an open problem how to generate
+informative graph augmentations that have non-negative impacts on the downstream tasks.
+Potential negative societal impacts. This work explores a simple pipeline for representation
+learning without large amount of labeled data. However, in industry there are many career workers
+whose responsibility is to label or annotate data. The proposed method might reduce the need for
+labeling data manually, and thus makes a few individuals unemployed (especially for developing
+countries and remote areas). Furthermore, our model might be biased, as it tends to pay more attention
+to the majority and dominant features (shared information across most of the data). The minority
+group whose features are scare are likely to be downplayed by the algorithm.
+Acknowledgments and Disclosure of Funding
+This work was supported in part by NSF under grants III-1763325, III-1909323, III-2106758, and
+SaTC-1930941. Qitian Wu and Junchi Yan were partly supported by Shanghai Municipal Science and
+Technology Major Project (2021SHZDZX0102). We thank Amazon Web Services for sponsoring
+computation resources for this work.
+References
+[1] Rana Ali Amjad and Bernhard C. Geiger. Learning representations for neural network-based
+classiﬁcation using the information bottleneck principle. IEEE Trans. Pattern Anal. Mach.
+10
+
+
+--- PAGE 11 ---
+Intell., 42(9):2225–2239, 2020.
+[2] Galen Andrew, Raman Arora, Jeff A. Bilmes, and Karen Livescu. Deep canonical correlation
+analysis. In ICML, volume 28, pages 1247–1255, 2013.
+[3] Mohamed Ishmael Belghazi, Aristide Baratin, Sai Rajeshwar, Sherjil Ozair, Yoshua Bengio,
+Aaron Courville, and Devon Hjelm. Mutual information neural estimation. In International
+Conference on Machine Learning, pages 531–540, 2018.
+[4] Xiaobin Chang, Tao Xiang, and Timothy M. Hospedales. Scalable and effective deep CCA via
+soft decorrelation. In CVPR, pages 1488–1497, 2018.
+[5] Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey E. Hinton. A simple framework
+for contrastive learning of visual representations. In ICML, Proceedings of Machine Learning
+Research, pages 1597–1607, 2020.
+[6] Xinlei Chen and Kaiming He. Exploring simple siamese representation learning. arXiv preprint
+arXiv:2011.10566, 2020.
+[7] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. BERT: pre-training of
+deep bidirectional transformers for language understanding. In NAACL, pages 4171–4186,
+2019.
+[8] Aleksandr Ermolov, Aliaksandr Siarohin, Enver Sangineto, and Nicu Sebe. Whitening for
+self-supervised representation learning. arXiv preprint arXiv:2007.06346, 2020.
+[9] Marco Federici, Anjan Dutta, Patrick Forré, Nate Kushman, and Zeynep Akata. Learning robust
+representations via multi-view information bottleneck. In ICLR, 2020.
+[10] Gene H Golub and Hongyuan Zha. The canonical correlations of matrix pairs and their numerical
+computation. Linear algebra for signal processing, pages 27–29, 1995.
+[11] Yunchao Gong, Qifa Ke, Michael Isard, and Svetlana Lazebnik. A multi-view embedding space
+for modeling internet images, tags, and their semantics. Int. J. Comput. Vis., 106(2):210–233,
+2014.
+[12] Jean-Bastien Grill, Florian Strub, Florent Altché, Corentin Tallec, Pierre H. Richemond, Elena
+Buchatskaya, Carl Doersch, Bernardo Ávila Pires, Zhaohan Guo, Mohammad Gheshlaghi Azar,
+Bilal Piot, Koray Kavukcuoglu, Rémi Munos, and Michal Valko. Bootstrap your own latent - A
+new approach to self-supervised learning. In NeurIPS, 2020.
+[13] Michael Gutmann and Aapo Hyvärinen. Noise-contrastive estimation: A new estimation
+principle for unnormalized statistical models. In Proceedings of the Thirteenth International
+Conference on Artiﬁcial Intelligence and Statistics, pages 297–304, 2010.
+[14] David R. Hardoon, Sándor Szedmák, and John Shawe-Taylor. Canonical correlation analysis:
+An overview with application to learning methods. Neural Comput., 16(12):2639–2664, 2004.
+[15] Kaveh Hassani and Amir Hosein Khas Ahmadi. Contrastive multi-view representation learning
+on graphs. In ICML, volume 119 of Proceedings of Machine Learning Research, pages 4116–
+4126. PMLR, 2020.
+[16] Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, and Ross B. Girshick. Momentum contrast
+for unsupervised visual representation learning. In CVPR, pages 9726–9735, 2020.
+[17] R. Devon Hjelm, Alex Fedorov, Samuel Lavoie-Marchildon, Karan Grewal, Philip Bachman,
+Adam Trischler, and Yoshua Bengio. Learning deep representations by mutual information
+estimation and maximization. In ICLR, 2019.
+[18] Harold Hotelling. Relations between two sets of variates. Biometrika, 28:322–377, 1936.
+[19] Tianyu Hua, Wenxiao Wang, Zihui Xue, Yue Wang, Sucheng Ren, and Hang Zhao. On feature
+decorrelation in self-supervised learning. arXiv preprint arXiv:2105.00470, 2021.
+[20] Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In ICLR,
+2015.
+[21] Thomas N. Kipf and Max Welling. Variational graph auto-encoders. arXiv preprint
+arXiv:1611.07308, 2016.
+[22] Thomas N. Kipf and Max Welling. Semi-supervised classiﬁcation with graph convolutional
+networks. In ICLR, 2017.
+11
+
+
+--- PAGE 12 ---
+[23] Johannes Klicpera, Stefan Weißenberger, and Stephan Günnemann. Diffusion improves graph
+learning. In NeurIPS, pages 13333–13345, 2019.
+[24] Qimai Li, Zhichao Han, and Xiao-Ming Wu. Deeper insights into graph convolutional networks
+for semi-supervised learning. In AAAI, volume 32, 2018.
+[25] Yunfan Li, Peng Hu, Jerry Zitao Liu, Dezhong Peng, Joey Tianyi Zhou, and Xi Peng. Contrastive
+clustering. arXiv preprint arXiv:2009.09687, 2020.
+[26] Julian J. McAuley, Christopher Targett, Qinfeng Shi, and Anton van den Hengel. Image-based
+recommendations on styles and substitutes. In SIGIR, pages 43–52, 2015.
+[27] Jin Ming, Zheng Yizhen, Li Yuan-Fang, Gong Chen, Zhou Chuan, and Pan Shirui. Multi-
+scalecontrastive siamese networks for self-supervised graph representation learning. In IJCAI,
+2021.
+[28] Xu Minghao, Wang Hang, Ni Bingbing, Guo Hongyu, and Tang Jian. Self-supervised graph-
+levelrepresentation learning with local and global structure. In ICML, 2021.
+[29] Galileo Namata, Ben London, Lise Getoor, Bert Huang, and UMD EDU. Query-driven active
+surveying for collective classiﬁcation. In 10th International Workshop on Mining and Learning
+with Graphs, volume 8, 2012.
+[30] Sebastian Nowozin, Botond Cseke, and Ryota Tomioka. f-gan: Training generative neural
+samplers using variational divergence minimization. In NIPS, pages 271–279, 2016.
+[31] Zhen Peng, Wenbing Huang, Minnan Luo, Qinghua Zheng, Yu Rong, Tingyang Xu, and Junzhou
+Huang. Graph representation learning via graphical mutual information maximization. InWWW,
+pages 259–270, 2020.
+[32] Bryan Perozzi, Rami Al-Rfou, and Steven Skiena. Deepwalk: online learning of social repre-
+sentations. In KDD, pages 701–710. ACM, 2014.
+[33] Jiezhong Qiu, Qibin Chen, Yuxiao Dong, Jing Zhang, Hongxia Yang, Ming Ding, Kuansan
+Wang, and Jie Tang. GCC: graph contrastive coding for graph neural network pre-training. In
+KDD, pages 1150–1160, 2020.
+[34] Prithviraj Sen, Galileo Namata, Mustafa Bilgic, Lise Getoor, Brian Galligher, and Tina Eliassi-
+Rad. Collective classiﬁcation in network data. AI magazine, 29(3):93–93, 2008.
+[35] Arnab Sinha, Zhihong Shen, Yang Song, Hao Ma, Darrin Eide, Bo-June Paul Hsu, and Kuansan
+Wang. An overview of microsoft academic service (MAS) and applications. In WWW, pages
+243–246, 2015.
+[36] Karthik Sridharan and Sham M. Kakade. An information theoretic framework for multi-view
+learning. In COLR, pages 403–414. Omnipress, 2008.
+[37] DJ Strouse and David J. Schwab. The deterministic information bottleneck. In UAI, 2016.
+[38] Fan-Yun Sun, Jordan Hoffmann, Vikas Verma, and Jian Tang. Infograph: Unsupervised and
+semi-supervised graph-level representation learning via mutual information maximization. In
+ICLR, 2020.
+[39] Shantanu Thakoor, Corentin Tallec, Mohammad Gheshlaghi Azar, Rémi Munos, Petar Velick-
+ovic, and Michal Valko. Bootstrapped representation learning on graphs. arXiv preprint
+arXiv:2102.06514, 2021.
+[40] Yonglong Tian, Dilip Krishnan, and Phillip Isola. Contrastive multiview coding. In ECCV,
+pages 776–794, 2020.
+[41] Yuandong Tian, Xinlei Chen, and Surya Ganguli. Understanding self-supervised learning
+dynamics without contrastive pairs. arXiv preprint arXiv:2102.06810, 2021.
+[42] Yuandong Tian, Lantao Yu, Xinlei Chen, and Surya Ganguli. Understanding self-supervised
+learning with dual deep networks. arXiv preprint arXiv:2010.00578, 2020.
+[43] Naftali Tishby, Fernando C. N. Pereira, and William Bialek. The information bottleneck method.
+arXiv preprint physics/0004057, 2000.
+[44] Naftali Tishby and Noga Zaslavsky. Deep learning and the information bottleneck principle. In
+ITW, pages 1–5, 2015.
+[45] Yao-Hung Hubert Tsai, Yue Wu, Ruslan Salakhutdinov, and Louis-Philippe Morency. Self-
+supervised learning from a multi-view perspective. In ICLR, 2021.
+12
+
+
+--- PAGE 13 ---
+[46] Aäron van den Oord, Yazhe Li, and Oriol Vinyals. Representation learning with contrastive
+predictive coding. arXiv preprint arXiv:1807.03748, 2018.
+[47] Petar Velickovic, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Liò, and Yoshua
+Bengio. Graph attention networks. In ICLR, 2018.
+[48] Petar Velickovic, William Fedus, William L. Hamilton, Pietro Liò, Yoshua Bengio, and R. Devon
+Hjelm. Deep graph infomax. In ICLR, 2019.
+[49] Minjie Wang, Lingfan Yu, Da Zheng, Quan Gan, Yu Gai, Zihao Ye, Mufei Li, Jinjing Zhou,
+Qi Huang, Chao Ma, Ziyue Huang, Qipeng Guo, Hao Zhang, Haibin Lin, Junbo Zhao, Jinyang
+Li, Alexander J. Smola, and Zheng Zhang. Deep graph library: Towards efﬁcient and scalable
+deep learning on graphs. arXiv, 1909.01315, 2019.
+[50] Tongzhou Wang and Phillip Isola. Understanding contrastive representation learning through
+alignment and uniformity on the hypersphere. In ICML, pages 9929–9939, 2020.
+[51] Lee Xiong, Chenyan Xiong, Ye Li, Kwok-Fung Tang, Jialin Liu, Paul Bennett, Junaid Ahmed,
+and Arnold Overwijk. Approximate nearest neighbor negative contrastive learning for dense
+text retrieval. In ICLR, 2021.
+[52] Yuning You, Tianlong Chen, Yongduo Sui, Ting Chen, Zhangyang Wang, and Yang Shen.
+Graph contrastive learning with augmentations. In NeurIPS, 2020.
+[53] Jure Zbontar, Li Jing, Ishan Misra, Yann LeCun, and Stéphane Deny. Barlow twins: Self-
+supervised learning via redundancy reduction. In ICML, 2021.
+[54] Jiaqi Zeng and Pengtao Xie. Contrastive self-supervised learning for graph classiﬁcation. arXiv
+preprint arXiv:2009.05923, 2020.
+[55] Hanlin Zhang, Shuai Lin, Weiyang Liu, Pan Zhou, Jian Tang, Xiaodan Liang, and Eric P Xing.
+Iterative graph self-distillation. arXiv preprint arXiv:2010.12609, 2020.
+[56] Xiaojin Zhu, Zoubin Ghahramani, and John D. Lafferty. Semi-supervised learning using
+gaussian ﬁelds and harmonic functions. In ICML, pages 912–919, 2003.
+[57] Yanqiao Zhu, Yichen Xu, Feng Yu, Qiang Liu, Shu Wu, and Liang Wang. Deep graph contrastive
+representation learning. arXiv preprint arXiv:2006.04131, 2020.
+[58] Yanqiao Zhu, Yichen Xu, Feng Yu, Qiang Liu, Shu Wu, and Liang Wang. Graph contrastive
+learning with adaptive augmentation. In WWW, 2021.
+13
+
+
+--- PAGE 14 ---
+A Algorithm
+We provide the pseudo code for our method in Algorithm 2, the detailed description of which is in
+Section 3.1.
+Algorithm 2: Algorithm for CCA-SSG
+Input: A graph G = (X, A) withN nodes, where X is node feature matrix, and A is the
+adjacency matrix. AugmentationsT , encoderfθ by random initialization, trade-off
+hyper-parameterλ, maximum training stepsT .
+Output: Learned encoderfθ.
+1 while not reachingT do
+2 Sample two augmentation functionstA,tB∼T ;
+3 Generate transformed graphs: ˜GA = ( ˜XA, ˜AA), ˜GB = ( ˜XB, ˜AB) ;
+4 Get node embeddings through the graph neural network as encoder:
+ZA =fθ( ˜XA, ˜AA), ZB =fθ( ˜XB, ˜AB) ;
+5 Normalize embeddings along instance dimension: ˜ZA = ZA−µ(ZA)
+σ(ZA)∗
+√
+N, ˜ZB = ZB−µ(ZB)
+σ(ZB)∗
+√
+N ;
+6 Calculate the loss functionL according to Eq. (5) ;
+7 Updateθ by gradient descent;
+8 Inference: Z =fθ(X, A), whereθ is the frozen parameters of the encoder.
+B Discussions on Degenerated Solutions in SSL
+In this section we provide an illustration and some discussions for degenerated (collapsed) solutions,
+or namely trivial solutions, in self-supervised representation learning. The discussion is inspired by the
+separation of complete collapse and dimensional collapse proposed in [19]. We show that our method
+naturally avoids complete collapse through feature-wise normalization, and could prevent/alleviate
+dimensional collapse through the decorrelation term Eq. (7).
+In most contrastive learning methods especially the augmentation-based ones [46, 16, 5, 40], both
+positive pairs and negative pairs are required for learning a model. For instance, the widely adopted
+InfoNCE [46] loss has the following formulation:
+LInfoNCE =− log exp
+(
+zA
+i ·zB
+i /τ
+)
+∑
+j exp
+(
+zA
+i ·zB
+j /τ
+), (18)
+wherezA
+i andzB
+i are the (normalized) embeddings of two views of the same instancei, andτ is the
+temperature hyperparameter. The numerator enforces similarity between positive pairs (two views
+of the same instance), while the denominator promotes dis-similarity between negative pairs (two
+views of different instances). Therefore, minimizing Eq. (18) is equivalent to maximizing the cosine
+similarity of positive pairs and meanwhile minimizing the cosine similarity of negative pairs. Note
+that the normalization is applied for each instance (projecting the embedding onto a hypersphere),
+so we are essentially minimizing the distances between positive pairs and maximizing the distance
+between negative pairs. The previous work [50] provides a thorough analysis on the behaviors of the
+objective by decomposing it into two terms: 1) alignment term (for positive pairs) and 2) uniformity
+term (for negative pairs).
+The alignment loss is deﬁned as the expected distance between positive pairs:
+Lalign ≜ E(x,y)∼ppos∥f(x)−f(y)∥α
+2 , withα> 0. (19)
+The uniformity loss is the logarithm of the average pairwise Gaussian potential:
+Luniformity ≜ log Ex,y∼pdatae−t∥f(x)−f(y)∥2
+2, witht> 0 (20)
+Intuitively, the alignment term makes the positive pairs close to each other on the hypersphere, while
+the uniformity term makes different data points distribute on the hypersphere uniformly.
+14
+
+
+--- PAGE 15 ---
+(a) complete collapse
+ (b) uniformity
+ (c) dimensional collapse
+ (d) decorrelation
+Figure 4: An illustration of the two types of collapse and how to deal with them with a 2-d case. Blue
+circles are data points. Fig. 4(a): complete collapse, when all data samples degenerate to a same
+point on the hypersphere. Fig. 4(b): the uniformity loss keeps positive pairs close, but forces all
+data points to distribute on the hypersphere uniformly. Fig. 4(c): in dimensional collapse, the data
+points are not projected onto the hypersphere, but they distribute nearly as a line in the space, making
+them hard to discriminate. Fig. 4(d): the decorrelation term prevents dimensional collapse by directly
+decorrelating each dimensional representations, which implicitly scatters the data points.
+In particular, only considering the alignment term in Eq. (19) will lead to trivial solutions: all the
+embeddings would degenerate to a ﬁxed point on the hypersphere. This phenomenon is called
+complete collapse [19]. Denote ZA and ZB as two embedding matrix of two views (Z∈ RN×D
+and is row normalized), then in this case ZAZ⊤
+B∼= 1 is an all-one matrix (so as ZAZ⊤
+A and ZBZ⊤
+B).
+The uniformity term in Eq. (20) prevents complete collapse by separating the embeddings of arbitrary
+two data points, so that the data points would be embedded uniformly on the hypersphere. Fig. 4(a)
+and 4(b) provide an illustration for complete collapse and how the uniformity term prevents it.
+Another kind of collapse that has been neglected by most existing works isdimensional collapse [19].
+Different from complete collapse where all the data points degenerate intoa single point, dimensional
+collapse means data points are distributed on a line, and each dimension captures exactly the same
+features (or different dimensions are highly correlated can capture the same information). Note
+that if the data representations are normalized along feature dimensions, all the data points would
+be projected onto a hypersphere. Under this circumstance there will not be dimensional collapse.
+However, if we normalize the output along the instance dimension so that each column has zero-mean
+and 1/
+√
+N-standard deviation, as is done in this paper in Eq. (6), merely optimizing Eq. (6) would
+not prevent dimensional collapse, i.e. ˜Z⊤ ˜Z∼= 1 (˜Z∈ RN×D is normalized by column).
+In our model, the feature decorrelation term in Eq. (7) exactly prevents dimensional collapse by
+minimizing
+˜Z⊤ ˜Z− I
+
+2
+F
+. Note that the diagonal term is always equal to 1, so we are pushing each
+dimension to capture orthogonal features. Also, the feature decorrelation term implicitly scatters the
+data points in the space, making them distinguishable for downstream tasks [19, 8]. An illustration
+of the dimensional collapse and the effect of feature decorrelation is provided in Fig. 4(c) and 4(d),
+respectively.
+C Properties of Mutual Information and Entropy
+In this section, we enumerate some useful properties of mutual information and entropy that will be
+used in Appendix D for proving the theorems. For any random variablesA,B,C,X,Z , we have:
+• Property 1. Non-negativity:
+I(A,B )≥ 0,I (A,B|C)≥ 0. (21)
+• Property 2. Chain rule:
+I(A,B,C ) =I(A,B )−I(A,B|C). (22)
+• Property 3. Data Processing Inequality (DPI).Z =fθ(X), then:
+I(Z,A ) =I(fθ(X),A )≤I(X,A ) (23)
+15
+
+
+--- PAGE 16 ---
+• Property 4. Non-negativity of discrete entropy. For discrete random variable:
+H(A)≥ 0,H (A|B)≥ 0. (24)
+• Property 5. Relationship between entropy and mutual information:
+H(A) =H(A|B) +I(A,B ). (25)
+• Property 6. Entropy of deterministic function. If Z is deterministic givenX:
+H(Z|X) = 0 (26)
+• Property 7. Entropy of Gaussian distribution. Assume X obeys ak-dimensional Gaussian
+distribution,X∼N (µ, Σ), and we have
+H(X) = k
+2 (ln 2π + 1) + 1
+2 ln|Σ|. (27)
+D Proofs in Section 4
+As already introduced in Section 4, we use X and S to denote the data and its augmentations
+respectively. We useZX andZS to denote their embeddings through the encoderfθ:ZX =fθ(X),
+ZS =fθ(S). We aim to learn the optimal encoder parametersθ.
+D.1 Proof of Proposition 1
+Restate Proposition 1:
+Proposition 1. In expectation, minimizing Eq. (6) is equivalent to minimizing the entropy of ZS
+conditioned on the inputX, i.e.,:
+min
+θ
+Linv∼= min
+θ
+H(ZS|X) (28)
+Proof. Assume input data come from a distribution x∼p(x) and s is a view of x through random
+augmentation s∼ paug(·|x). Denote zs as the representation of s. Note that s1 and and s2 both
+come frompaug(·|x).
+Recall the invariance term: Linv =
+˜ZA− ˜ZB
+
+2
+F
+=
+N∑
+i=1
+D∑
+k=1
+(
+˜zA
+i,k− ˜zB
+i,k
+)2
+. If we ignore the
+normalization and use s1 and s2 to represent viewA and viewB. We have:
+Linv/N∼=Ex
+( D∑
+k=1
+Es1,s2∼p(·|x)(zs1
+k −zs2
+k )2
+)
+=Ex
+( D∑
+k=1
+Es1,s2∼p(·|x)(zs1
+k
+2 +zs2
+k
+2− 2∗zs1
+k zs2
+k )
+)
+=2∗ Ex
+( D∑
+k=1
+Vs∼p(·|x)zs
+k
+)
+=2∗
+D∑
+k=1
+Ex
+(
+Vs∼p(·|x)zs
+k
+)
+(29)
+This indicates that minimizingLinv is to minimize the variance of augmentation’s representations
+conditioned on the input data.
+Note the decorrelation term Eq. (7) aims to learn orthogonal representations at each dimension. If the
+representations are perfectly decorrelated, then H(ZS|X) =∑
+k
+H(ZS,k|X). With Assumption 1,
+each dimensional representation also obeys a 1-dimensional Gaussian distribution, whose entropy
+is H(ZS,k|X) = 1
+2 log 2πeσs
+k
+2. This indicates by minimizing the variance of features at each
+dimension, its entropy is also minimized. Hence we have Proposition 1.
+Remark 1. I(ZS,S|X) =H(ZS|X)−H(ZS|S,X ) =H(ZS|X) (Property 6 in Appendix C). So
+I(ZS,S|X) is also minimized.
+16
+
+
+--- PAGE 17 ---
+D.2 Proof of Proposition 2
+Restate Proposition 2:
+Proposition 2. Minimizing Eq. (7) is equivalent to maximizing the entropy ofZS, i.e.,
+min
+θ
+Ldec∼= max
+θ
+H(ZS). (30)
+Proof. With the assumption thatZS obeys a Gaussian distribution, we have:
+max
+θ
+H(ZS)∼= max
+θ
+log|ΣZS|, (31)
+where|ΣZS| is the determinant of the covariance matrix of the embeddings of the augmented data.
+Note that in our implementation we normalize the embedding matrix along the instance dimension:
+ΣZS
+∼= ˜Z⊤
+S ˜ZS, so the diagonal entries of ΣZS are all 1’s. AndΣZS∈ RD×D is a symmetric matrix.
+Ifλ1,λ 2,··· ,λD are theD eigenvalues of ΣZS , then
+D∑
+i=1
+λi = trace(ΣZS) =D. We have
+log|ΣZθ,X ′| = log
+D∏
+i=1
+λi =
+D∑
+i=1
+logλi≤D log
+D∑
+i=1
+λi
+D
+  
+Jensen Inequality
+= 0. (32)
+This means that the upper bound of|ΣZS| is 1, and the upper bound is achieved if and only ifλi = 1
+for∀i, which indicates ΣZS is an identity matrix. This global optimum is exactly the same as that of
+the feature decorrelation termLdec in Eq. (7). Therefore we conclude the proof.
+D.3 Proof of Theorem 1
+Restate Theorem 1:
+Theorem 1. By optimizing Eqn (5), we maximize the mutual information between the view’s
+embedding ZS and the input data X, and minimize the mutual information between the view’s
+embeddingZS and the view it selfS, conditioned on the input dataX. Formally,
+min
+θ
+L⇒ max
+θ
+I(ZS,X ) and min
+θ
+I(ZS,S|X). (33)
+Proof. According to Remark 1, we have:
+I(ZS,S|X) =H(ZS|X). (34)
+According to Property 5 in Appendix C, we have:
+I(ZS,X ) =H(ZS)−H(ZS|X). (35)
+Then combining Proposition 1 and Proposition 2, we conclude the proof.
+D.4 Proof of Theorem 2
+Restate Theorem 2:
+Theorem 2. Assume 0 < β≤ 1, then by minimizing Eq. (5), the self-supervised Information
+Bottleneck objective is maximized, formally:
+min
+θ
+L⇒ max
+θ
+IBssl. (36)
+17
+
+
+--- PAGE 18 ---
+Proof. According to Property 5 in Appendix C, we can rewrite the IB principle in SSL setting as:
+IBssl = [H(ZS)−H(ZS|X)]−β [H(ZS)−H(ZS|S)]. (37)
+Notice thatZS is deterministic givenS:ZS =fθ(S). According to Property 5 in Appendix C, we
+haveH(ZS|S) = 0. Hence, we further have the following relationship
+IBssl = (1−β)H(ZS)−H(ZS|X). (38)
+Letλ = 1−β≥ 0. Now we can decompose the objective IBssl into two terms: 1) maximizing
+H(ZS), which increases the information entropy of the embeddings of augmented data. 2) minimizing
+H(ZS|X), which decreases the entropy of the embeddings of augmented data, conditioned on the
+original data.
+With Proposition 1 and Proposition 2, we complete the proof.
+D.5 Proof of Corollary 1
+Restate Corollary 1:
+Corollary 1. LetX1 =S,X2 =X and assume 0<β ≤ 1, then minimizing Eq. (5) is equivalent to
+minimizing the Multi-view Information Bottleneck Loss in [9]:
+LMIB =I(Z1,X 1|X2)−βI(X2,Z 1), 0<β ≤ 1 (39)
+By maximizingI(X2,Z 1), the model could obtain sufﬁcient information for downstream tasks by
+ensuring the representationZ1 ofX1 is sufﬁcient forX2, and decreasingI(Z1,X 1|X2) will increase
+the robustness of the representation by discarding irrelevant information.
+Proof. LetX1 =S,X 2 =X be two views of the input data. We have:
+LMIB =I(ZS,S|X)−βI(X,ZS)
+= [H(ZS|X)−H(ZS|S,X )]−β[H(ZS)−H(ZS|X)]
+= (1−β)H(ZS|X)−βH(ZS)−H(ZS|S,X ).
+(40)
+AsZS is deterministic given S, we can obtain H(ZS|S,X ) = 0 . Based on this, we can further
+simplifyLMIB as
+LMIB =H(ZS|X)−λH(ZS), withλ> 0. (41)
+With Proposition 1 and Proposition 2, we complete the proof.
+D.6 Proof of Corollary 2
+Restate Corollary 2:
+Corollary 2. When the data augmentation process is reversible, minimizing Eq. (5) is equivalent to
+learning the Minimal and Sufﬁcient Representations for Self-supervision in [45]:
+Zssl
+X = arg max
+ZX
+I(ZX,S ),Z sslmin
+X = arg min
+ZX
+H(ZX|S) s.t.I(ZX,S ) is maximized. (42)
+Zssl
+X is the sufﬁcient self-supervised representation by maximizing I(ZX,S ), and Zsslmin
+X is the
+minimal and sufﬁcient representation by minimizingH(ZX|S).
+Proof. Eq. (42) can be converted to minimizing the relaxed Lagrangian objective as below
+Lsslmin =H(ZX|S)−βI(ZX,S ), withβ >0. (43)
+ThenLsslmin could be decomposed into
+Lsslmin =H(ZX|S)−βI(S,ZX)
+=H(ZX|S)−β[H(ZX)−H(ZX|S)]
+= (1 +β)H(ZX|S)−βH(ZX)
+(44)
+Withβ >0,Lsslmin is essentially a symmetric formulation of Eq. (38), by exchangingX withS, and
+ZX withZS. With the assumption that the data augmentation process is reversible and according to
+Proposition 1 and Proposition 2, we conclude the proof.
+18
+
+
+--- PAGE 19 ---
+D.7 Proof of Theorem 3
+Restate Theorem 3:
+Theorem 3 (task-relevant/irrelevant information). By optimizing Eq. (5), the task-relevant informa-
+tionI(ZS,T ) is maximized, and the task-irrelevant informationH(ZS|T ) is minimized. Formally:
+min
+θ
+L⇒ max
+θ
+I(ZS,T ) and min
+θ
+H(ZS|T ). (45)
+Proof. Note that with Assumption 2, we haveI(X,T|S) = I(S,T|X) = 0. Therefore we obtain
+0≤I(ZS,T|X)≤I(S,T|X) = 0, which inducesI(ZS,T|X) = 0. Then we can derive
+I(ZS,T ) =I(ZS,T|X) +I(ZS,X,T )
+=0 +I(ZS,X )−I(ZS,X|T )
+=I(ZS,X )−I(ZS,X|T )
+≥I(ZS,X )−I(X,S|T )
+(46)
+and
+H(ZS|T ) =H(ZS|X,T ) +I(ZS,X|T )
+=H(ZS|X)−I(ZS,T|X) +I(ZS,X|T )
+=H(ZS|X)− 0 +I(ZS,X|T )
+≤H(ZS|X) +I(X,S|T )
+(47)
+Note that I(X,S|T ) is a ﬁxed gap indicating the amount of task-irrelevant information shared
+betweenX andS.
+With Theorem 1, by optimizing the objective Eq. (5), we maximize the lower bound of the task-
+relevant informationI(ZS,T ), and minimize the upper bound of the task-irrelevant information
+H(ZS|T ). Then the proof is completed.
+E Implementation Details
+E.1 Loss function
+In our implementation we did not directly use the original loss function as given in Eqn. (5). For
+simplicity, we use its equivalent form, which can be easily derived from the following equation:
+˜ZA− ˜ZB
+
+2
+F
+=
+D∑
+k=1
+N∑
+i=1
+(˜zA
+i,k− ˜zB
+i,k)2
+=
+D∑
+k=1
+N∑
+i=1
+(
+(˜zA
+i,k)2 + (˜zB
+i,k)2− 2∗ ˜zA
+i,k ˜zB
+i,k
+)
+=
+D∑
+k=1
+(2− 2∗ ˜Z⊤
+A,k ˜ZB,k)
+=2D− 2∗ trace( ˜Z⊤
+A ˜ZB)
+(48)
+So we can rewrite the objective function Eqn. (5) as the following one:
+L =−trace( ˜Z⊤
+A ˜ZB) +λ′
+(˜Z⊤
+A ˜ZA− I
+
+2
+F
++
+˜Z⊤
+B ˜ZB− I
+
+2
+F
+)
+(49)
+where theλ′ here should be half of theλ in Eqn. (5). For simplicity we do not discriminate between
+these two symbols. The values of the trade-off parameterλ in Fig 2 as well as that in Appendix E.4
+are actually denoted asλ′ in Eqn. (49).
+19
+
+
+--- PAGE 20 ---
+Table 6: Statistics of benchmark datasets
+Dataset #Nodes #Edges #Classes #Features
+Cora 2,708 10,556 7 1,433
+Citeseer 3,327 9,228 6 3,703
+Pubmed 19,717 88,651 3 500
+Coauthor CS 18,333 327,576 15 6,805
+Coauthor Physics 34,493 991,848 5 8,451
+Amazon Computer 13,752 574,418 10 767
+Amazon Photo 7,650 287,326 8 745
+E.2 Graph augmentations
+We adopt two random data augmentations strategies on graphs: 1) Edge dropping. 2) Node feature
+masking. The two strategies are widely used in node-level contrastive learning [57, 58, 39].
+• Edge dropping works on the graph structure level, where we randomly remove a portion of
+edges in the original graph. Formally, given the edge dropping ratiope, for each edge we
+havepe probability to drop this edge from the graph. When calculating the degree for each
+node, the dropped edge will not be considered.
+• Node feature masking works on the node feature level, where we randomly set a fraction
+of features of all nodes as 0. Formally, given the node feature masking ratiopf , for each
+input feature, we set it as 0 with a probability of pf . Note that the masking operation is
+applied to the selected feature columns of all the nodes.
+Note that the previous works [57, 58, 39] use two separate sets of edge dropping ratiope and node
+feature dropping ratiopf for generating two views, i.e.pe1 andpf1 for viewA,pe2 andpf2 for view
+B. However, in our implementation, we letpe1 =pe2 andpf1 =pf2, so that the two transformations
+tA andtB come from the same distributionT .
+E.3 Datasets
+We evaluate our models on seven node classiﬁcation benchmarks: Cora, Citeseer, Pubmed, Coauthor
+CS, Coauthor Physics, Amazon Computer and Amazon Photo. We provide dataset statistics in Table 6,
+and brief introduction and settings are as follows:
+Cora4, Citeseer, Pubmed5 are three widely used node classiﬁcation benchmarks [ 34, 29]. Each
+dataset contains one citation network, where nodes mean papers and edges mean citation relationships.
+We use the public split for linear evaluation, where each class has ﬁxed 20 nodes for training, another
+ﬁxed 500 nodes and 1000 nodes are for validation/test respectively.
+Coauther CS, Coauther Physics are co-authorship graphs based on the Microsoft Academic Graph
+from the KDD Cup 2016 challenge [35]. Nodes are authors, that are connected by an edge if they
+co-authored a paper; node features represent paper keywords for each author’s papers, and class
+labels indicate most active ﬁelds of study for each author. As there is no public split for these datasets,
+we randomly split the nodes into train/validation/test (10%/10%/80%) sets.
+Amazon Computer, Amazon Photo are segments of the Amazon co-purchase graph [ 26], where
+nodes represent goods, edges indicate that two goods are frequently bought together; node features
+are bag-of-words encoded product reviews, and class labels are given by the product category. We
+also use a 10%/10%/80% split for these two datasets.
+For all datasets, we use the processed version provided by Deep Graph Library [49]6. All datasets are
+public available and do not have licenses.
+4https://relational.fit.cvut.cz/dataset/CORA
+5Citeseer and Pubmed: https://linqs.soe.ucsc.edu/data
+6https://docs.dgl.ai/en/0.6.x/api/python/dgl.data.html, Apache License 2.0
+20
+
+
+--- PAGE 21 ---
+Table 7: Details of hyper-parameters of the experimental results in Table 2 and Table 3.
+Dataset CCA-SSG Logistic Regression
+Steps # layers # hidden units λ lr wd pf pe lr wd
+Cora 50 2 512-512 1e-3 1e-3 0 0.1 0.4 1e-2 1e-4
+Citeseer 20 1 512 5e-4 1e-3 0 0.0 0.4 1e-2 1e-2
+Pubmed 100 2 512-512 1e-3 1e-3 0 0.3 0.5 1e-2 1e-4
+Computer 50 2 512-512 5e-4 1e-3 0 0.1 0.3 1e-2 1e-4
+Photo 50 2 512-512 1e-3 1e-3 0 0.2 0.3 1e-2 1e-4
+CS1 50 2 512-512 1e-3 1e-3 0 0.2 - 5e-3 1e-4
+Physics 100 2 512-512 1e-3 1e-3 0 0.5 0.5 5e-3 1e-4
+1 We use MLP (instead of GCN) as the encoder on Coauthor-CS, which is essentially equivalent to setting
+pe = 1.0 (drop all the edges except the self-loops).
+In Table 2, we have mentioned that for MVGRL [15] and GRACE [57], we reproduce the experiments
+with authors’ codes, both of which are publicly available: MVGRL7 and GRACE8.
+E.4 Hyper-parameters
+We provide all the detailed hyper-parameters on the seven benchmarks in Table 7. All hyper-
+parameters are selected through small grid search, and the search space is provided as follows:
+• Training steps: {20, 50, 100, 200}
+• Number of layers: {1, 2, 3}
+• Number of hidden units: {128, 256, 512, 1024}
+• λ: {1e-4, 5e-4, 1e-3, 5e-3, 1e-2}
+• learning rate of CCA-SSG: {5e-4, 1e-3, 5e-3}
+• weight decay of CCA-SSG: {0, 1e-5, 1e-4, 1e-3}
+• edge dropping ratio: {0, 0.1, 0.2, 0.3, 0.4, 0.5}
+• node feature masking ratio: {0, 0.1, 0.2, 0.3, 0.4, 0.5}
+• learning rate of logistic regression: {1e-3, 5e-3, 1e-2}
+• weight decay of logistic regression: {1e-4, 1e-3, 1e-2}
+F Additional Experiments
+F.1 Visualizations of Correlation Matrix
+In Fig. 5, we provide visualizations of the absolute correlation matrix of the raw input features, the
+embeddings without decorrelation term, and embeddings with decorrelation term on three datasets:
+Cora, Citeseer and Pubmed.
+As we can see, the raw input feature of the three datasets are all nearly fully uncorrelated (Fig. 5(a),
+5(d) and 5(g)). Speciﬁcally, the on-diagonal term is close to 1 while the off-diagonal term is close to
+0. When training without the decorrelation term Eq. (7), the off-diagonal elements of the correlation
+matrix of node embeddings increase dramatically as shown in Fig. 5(b) and 5(h), indicating that
+different dimensions fail to capture orthogonal information. Fig. 5(c) and 5(i) show that with the
+decorrelation term Eq. (7), our method could learn nearly highly disentangled representations. An
+interesting ﬁnding is that even without the decorrelation term, on Citeseer our method could still
+generate fairly uncorrelated representations (Fig. 5(e)). The possible reason is that: 1) on Citeseer,
+we use a one-layer GCN as the encoder, which is less expressive than a two-layer one and alleviate
+the trend of collapsing. 2) The number of training steps on Citeseer is much smaller than others, so
+that the impact of invariance term is weaken.
+7https://github.com/kavehhassani/mvgrl, no license.
+8https://github.com/CRIPAC-DIG/GRACE, Apache License 2.0.
+21
+
+
+--- PAGE 22 ---
+(a) Cora: raw feature
+ (b) Cora: w/o decorrelation
+ (c) Cora: with decorrelation
+(d) Citeseer: raw feature
+ (e) Citeseer: w/o decorrelation
+ (f) Citeseer: with decorrelation
+(g) Pubemd: raw feature
+ (h) Pubmed: w/o decorrelation
+ (i) Pubmed: with decorrelation
+Figure 5: Visualizations of the correlation matrix (absolute value) of the raw input features, the
+embeddings without decorrelation term, and embeddings with decorrelation term on Cora, Citeseer
+and Pubmed. Light green:→ 0; Dark blue:→ 1.
+These visualizations also echo the dimensional collapse issue as discussed in Appendix B: without the
+feature decorrelation term Eq. (7), there is a high probability that all the dimensions capture similar
+semantic information, thus leading to the dimensional collapse issue. The dimensional collapse can
+be fundamentally avoided by the decorrelation term Eq. (7).
+F.2 Effects of Augmentation Intensity
+We further explore the effects of augmentation intensity on downstream node classiﬁcation tasks. We
+try different combinations of the feature masking ratiopf and edge dropping ratiope, and report the
+corresponding performance on the 7 benchmarks mentioned in Appendix E.3. Other hyper-parameters
+are the same as reported in Table 7. As we can see in Fig. 6, for each dataset there exists an optimal
+pe/pf combination, that could help the model reach the best performance. Also, we ﬁnd that our
+method is not that sensitive to the augmentation intensity: as long aspe andpf are in a proper range,
+our method could still achieve impressive and competitive performance. However, it is still very
+important to select a proper augmentation intensity as well as augmentation method, in order for
+label-invariant data augmentations for learning informative representations.
+F.3 Performance under Low Label Rates
+We further evaluate the node embeddings learned through CCA-SSG on downstream node classiﬁca-
+tion tasks (still using linear, logistic regression), with respect to various label rates (ratio of training
+nodes). The experiments are conducted on three citation networks: Cora, Citeseer and Pubmed. In
+the linear evaluation step, we follow the setups in [24]: we train the linear classiﬁer with 1%, 2%,
+22
+
+
+--- PAGE 23 ---
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+80.0
+80.5
+81.0
+81.5
+82.0
+82.5
+83.0
+83.5
+84.0
+84.5
+(a) Cora
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+68
+69
+70
+71
+72
+73
+ (b) Citeseer
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+74
+75
+76
+77
+78
+79
+80
+81
+ (c) Pubmed
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+85.0
+85.5
+86.0
+86.5
+87.0
+87.5
+88.0
+88.5
+(d) Amazon-Computer
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+91.00
+91.25
+91.50
+91.75
+92.00
+92.25
+92.50
+92.75
+93.00
+ (e) Amazon-Photo
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+92.6
+92.8
+93.0
+93.2
+93.4
+ (f) Coauthor-CS
+0.0 0.1 0.2 0.3 0.4 0.5
+feature masking ratio
+0.00.10.20.30.40.5
+edge dropping ratio
+94.0
+94.2
+94.4
+94.6
+94.8
+95.0
+95.2
+95.4
+ (g) Coauthor-Physics
+Figure 6: Visualizations of the effects of different augmentation intensity, by adopting different
+combinations of feature masking ratiopf and edge dropping ratiope, and we report test accuracy
+(%). Each row represents a speciﬁc setting for edge dropping ratio pe and each column represents a
+speciﬁc setting for feature masking ratio pf . Note that when pe =pf = 0 (the upper left entry in
+each subﬁgure), the test accuracy for different datasets should be: 50.2 on Cora; 30.5 on Citeseer;
+46.4 on Pubmed; 54.56 on Computer; 83.95 on Photo; 90.4 on CS; 87.85 on Physics. Since these
+results are much worse than the others, we raise their values in each subﬁgure for better visualization.
+On CS, the edge dropping ratiope would make no difference to the performance as we use MLP as
+the encoder, which does not take graph structure as input.
+Table 8: Node classiﬁcation Accuracy under low label rates (%).
+Dataset Cora Citeseer Pubmed
+Label Rate 1% 2% 3% 4% 5% 1% 2% 3% 4% 5% 0.05% 0.1% 0.3%
+LP 62.3 65.4 67.5 69.0 70.2 40.2 43.6 45.3 46.4 47.3 66.4 65.4 66.8
+Cheby 52.0 62.4 70.8 74.1 77.6 42.8 59.9 66.2 68.3 69.3 47.3 51.2 72.8
+GCN 62.3 72.2 76.5 78.4 79.7 55.3 64.9 67.5 68.7 69.6 57.5 65.9 77.8
+CCA-SSG 72.5 79.3 81.0 82.0 82.3 58.9 65.6 68.6 70.8 71.7 68.8 73.1 81.1
+3%, 4%, 5% (resp. 0.05%, 0.1%, 0.3%) training nodes on Cora and Citeseer (resp. Pubmed), and
+then test the model with another 1000 nodes. Both training nodes and testing nodes are randomly
+selected for each trial, and we report the mean accuracy through 20 trials with random splits and
+random initialization in Table 8.
+We compare our method with Label Propagation, GCN with Chebyshev ﬁlter(Cheby) and the vanilla
+GCN [22], whose results are taken from [24] as well. As we can see in Table 8, our method achieves
+very impressive performance under low label rates, especially when the labeled nodes are really
+scarce (i.e. 1% on Cora and Citeseer, 0.05% on Pubmed). This is because through self-supervised
+pretraining, our method could fully utilize the information of unlabeled nodes, and learn good
+representations for them, which make them easy to distinguish even with only a few number of
+labeled nodes for training.
+G Further Comparisons with previous contrastive methods
+In Table 1 we have made a thorough comparison with typical contrastive methods from the technical
+details. Here, we further compare our method with more existing contrastive self-supervised graph
+models (both node-level and graph-level) from the perspective of their general, conceptual designs:
+1) How they generate views. 2) The pairs for contrasting. 3) The loss function. 4) Downstream tasks
+23
+
+
+--- PAGE 24 ---
+Table 9: Further conceptual comparison with existing contrastive learning methods on graphs. View
+generation in general(how the method generate views):Cross-scale means this method treat elements
+in different scales of the graph data as different views (e.g. node and graph); Fix-Diff means using
+ﬁxed graph diffusion [23] operation to create another view; Rand-Aug means using random graph
+augmentations (e.g. edge dropping, feature masking, etc.) to generate views. Pairs represents the
+contrasting components, whereN is node andG is graph. Loss (i.e. the used loss function): NCE
+represents Noise-Contrastive Estimation [13]; JSD represents Jensen-Shannon Mutual Information
+Estimator [30]; InfoNCE represents InfoNCE Estimator [ 46]; MINE means Mutual Information
+Neural Estimator [3]; BYOL means the asymmetric objective proposed in the BYOL paper [ 12].
+Tasks denotes the downstream tasks (node-level, graph-level or edge-level) to which the method has
+been applied.
+Methods View generation in general Pairs Loss Tasks
+Instance-level
+DGI [48] Cross-scale N-G NCE Node
+InfoGraph [38] Cross-scale N-G JSD Graph
+MVGRL [15] Fix-Diff + Cross-scale N-G NCE/JSD Node/Graph
+GCC [33] Rand-Aug N-N InfoNCE Node/Graph
+GMI [31] Hybrid 1 Hybrid MINE/JSD Node/Edge
+GRACE [57] Rand-Aug N-N InfoNCE Node
+GraphCL [52] Rand-Aug G-G InfoNCE Graph
+GCA [58] Rand-Aug N-N InfoNCE Node
+CSSL [54] Rand-Aug G-G InfoNCE Graph
+IGSD [55] Rand-Aug G-G BYOL+InfoNCE Graph
+GraphLog [28] Rand-Aug N-P-G 2 InfoNCE Graph
+BGRL [39] Rand-Aug N-N BYOL Node
+MERIT [27] Fix-Diff + Rand-Aug N-N BYOL+InfoNCE Node
+CCA-SSG (Ours) Rand-Aug F-F CCA Node
+1 The view generation and contrasting pairs in GMI [ 31] is unique and complex, and could not be
+classiﬁed into any category.
+2 P denotes hierarchical prototype and could be seen as clustering centroid.
+(i.e., node-level, edge-level or graph-level). The comparison is shown in Table 9. Note that this is a
+high-level comparison with general taxonomy, and each method may have distinct implementation
+details and speciﬁc designs.
+We highlight that all of the previous methods focus on contrastive learning at instance level. Our paper
+proposes a non-contrastive and non-discriminative objective as a new self-supervised representation
+learning framework, inspired by canonical correlation analysis.
+24
