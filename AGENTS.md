@@ -17,6 +17,7 @@ For copied Codex installs, use:
 ## 项目记录
 
 - 2026-06-25：初始化 GitHub 上传流程，新增 `.gitignore`，排除本机缓存、实验输出、大模型权重以及 `.agents/skills/` 绝对路径符号链接；保留 `.aris` 清单用于后续重建 ARIS 技能环境。
+- 2026-06-25：补充 GCL 节点分类研究契约、benchmark 协议、research brief 与 Codex reviewer 配置，并同步本次更新到 GitHub。
 
 cat >> AGENTS.md <<'EOF'
 
@@ -51,7 +52,7 @@ SOTA 不是预设事实，只能由严格、公平、可追溯的正式实验支
 
 - 只允许使用数据集真实标签和公认官方评测脚本。
 - 禁止使用 test set 选择模型、超参数、epoch 或增强强度。
-- 所有方法必须使用相同 split、相同 evaluator、相同 seed 列表和可比较训练预算。
+- 除了GCN等监督方法，其他方法必须使用相同 split、相同 evaluator、相同 seed 列表和可比较训练预算。
 - 没有官方划分时，必须保存并版本化 split 文件。
 - 每次运行保存 commit、配置、seed、命令、日志、结果文件路径。
 - 汇总表必须从原始 JSON/CSV 自动生成，不能手工复制最佳结果。
@@ -90,3 +91,15 @@ SOTA 不是预设事实，只能由严格、公平、可追溯的正式实验支
 所有决策写入 DECISION_LOG.md。
 失败 idea 写入 research-wiki，避免后续重复生成。
 EOF
+
+## Data Split Rules
+
+- 主实验默认采用 stratified random 1:1:8 split，即 train / validation / test = 10% / 10% / 80%。
+- 所有方法必须使用完全相同的 split 文件。
+- split 文件必须保存并版本化，不能运行时临时随机生成后不保存。
+- 正式实验默认使用 seeds 0-9。
+- 每个 seed 对应固定 split，并用于所有 baseline 和本方法。
+- Wiki-CS、OGB 和异配图 fixed-split benchmark 优先遵循官方或公认划分。
+- Planetoid public split 和 random 1:1:8 split 不能混在同一主表直接比较。
+- 所有结果必须显式标注 split 类型。
+- 若 split 协议不一致，禁止宣称方法优于对方。
