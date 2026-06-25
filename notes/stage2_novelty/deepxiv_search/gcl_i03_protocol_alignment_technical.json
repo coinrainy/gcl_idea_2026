@@ -1,0 +1,277 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2201.03812",
+      "score": 0.5,
+      "title": "Bootstrapping Informative Graph Augmentation via A Meta Learning Approach",
+      "tldr": "[research paper] MEGA introduces a learnable graph augmenter trained via meta-learning to generate informative, uniform graph augmentations that enhance instance-level diversity and feature-level informativeness in graph contrastive learning. By using second-order optimization to update the augmenter based on encoder performance, MEGA ensures the augmented graphs are hard and discriminative, forcing the encoder to learn more robust representations without compromising convergence. Experiments on benchmark datasets show superior performance over state-of-the-art methods in self-supervised graph representation learning.",
+      "abstract": "Recent works explore learning graph representations in a self-supervised manner. In graph contrastive learning, benchmark methods apply various graph augmentation approaches. However, most of the augmentation methods are non-learnable, which causes the issue of generating unbeneficial augmented graphs. Such augmentation may degenerate the representation ability of graph contrastive learning methods. Therefore, we motivate our method to generate augmented graph by a learnable graph augmenter, called MEta Graph Augmentation (MEGA). We then clarify that a \"good\" graph augmentation must have uniformity at the instance-level and informativeness at the feature-level. To this end, we propose a novel approach to learning a graph augmenter that can generate an augmentation with uniformity and informativeness. The objective of the graph augmenter is to promote our feature extraction network to learn a more discriminative feature representation, which motivates us to propose a meta-learning paradigm. Empirically, the experiments across multiple benchmark datasets demonstrate that MEGA outperforms the state-of-the-art methods in graph self-supervised learning tasks. Further experimental studies prove the effectiveness of different terms of MEGA.",
+      "authors": [
+        {
+          "misc": {
+            "email": "gaohang@iscas.ac.cn"
+          },
+          "name": "Hang Gao",
+          "orgs": [
+            "University of Chinese Academy of Sciences",
+            "Institute of Software Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiangmeng2019@iscas.ac.cn"
+          },
+          "name": "Jiangmeng Li",
+          "orgs": [
+            "University of Chinese Academy of Sciences",
+            "Institute of Software Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wenwen2018@iscas.ac.cn"
+          },
+          "name": "Wenwen Qiang",
+          "orgs": [
+            "University of Chinese Academy of Sciences",
+            "Institute of Software Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lingyu@iscas.ac.cn"
+          },
+          "name": "Lingyu Si",
+          "orgs": [
+            "University of Chinese Academy of Sciences",
+            "Institute of Software Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "fcsun@tsinghua.edu.cn"
+          },
+          "name": "Fuchun Sun",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Changwen Zheng",
+          "orgs": [
+            "Institute of Software Chinese Academy of Sciences"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.03812",
+      "date": "2022-01-11T00:00:00",
+      "citation_count": 15,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/hang53/MEGA."
+    },
+    {
+      "arxiv_id": "2211.16030",
+      "score": 0.5,
+      "title": "Graph Based Semi-supervised Learning Using Spatial Segregation Theory",
+      "tldr": "[research paper] The paper proposes a novel semi-supervised learning framework grounded in spatial segregation theory from reaction-diffusion systems, introducing a graph-based model with unique solutions derived from free boundary dynamics. Unlike standard Laplace-based methods that suffer from label spikes, this approach uses a modified PDE-inspired formulation that ensures smooth, globally consistent label propagation via a unique solution to a segregated system, validated through numerical experiments showing competitive performance at both high and low label rates.",
+      "abstract": "In this work we address graph based semi-supervised learning using the theory of the spatial segregation of competitive systems. First, we define a discrete counterpart over connected graphs by using direct analogue of the corresponding competitive system. This model turns out doesn't have a unique solution as we expected. Nevertheless, we suggest gradient projected and regularization methods to reach some of the solutions. Then we focus on a slightly different model motivated from the recent numerical results on the spatial segregation of reaction-diffusion systems. In this case we show that the model has a unique solution and propose a novel classification algorithm based on it. Finally, we present numerical experiments showing the method is efficient and comparable to other semi-supervised learning algorithms at high and low label rates.",
+      "authors": [
+        {
+          "misc": {
+            "email": "faridb.bozorgnia@tecnico.ulisboa.pt"
+          },
+          "name": "Farid Bozorgnia",
+          "orgs": [
+            "CAMGSD, Department of Mathematics, Instituto Superior Técnico, Lisbon, Portugal"
+          ]
+        },
+        {
+          "misc": {
+            "email": "fotouhi@sharif.edu"
+          },
+          "name": "Morteza Fotouhi",
+          "orgs": [
+            "Department of Mathematical Sciences, Sharif University of Technology, Tehran, Iran"
+          ]
+        },
+        {
+          "misc": {
+            "email": "arakelyanavetik@gmail.com"
+          },
+          "name": "Avetik Arakelyan",
+          "orgs": [
+            "Institute of Mathematics, NAS of Armenia, 0019 Yerevan, Armenia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "abderrahim.elmoataz@unicaen.fr"
+          },
+          "name": "Abderrahim Elmoataz",
+          "orgs": [
+            "University of Caen Normandy, GREYC UMR CNRS 6072, France"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2211.16030",
+      "date": "2022-11-29T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "math.NA",
+        "cs.NA"
+      ],
+      "venue": "Journal of Computer Science",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2205.06783",
+      "score": 0.33333334,
+      "title": "Embodied-Symbolic Contrastive Graph Self-Supervised Learning for Molecular Graphs",
+      "tldr": "[research paper] The paper proposes an embodied-symbolic contrastive graph self-supervised learning framework for molecular graphs, where molecular graphs are augmented with semantic knowledge from Chemical Knowledge Graphs (CKGs)—specifically Chemical Element KG and Functional Group KG—to create semantically aligned exemplars. These exemplar pairs are used in contrastive learning to jointly learn embodied (graph-structured) and symbolic (knowledge-graph-based) representations, enabling more robust and generalizable molecular graph embeddings through knowledge-enhanced graph augmentation and contrastive objectives. The approach leverages DGL and DGL-KE for efficient implementation and demonstrates the integration of domain-specific symbolic knowledge into self-supervised representation learning, improving model generalization beyond traditional graph SSL methods.",
+      "abstract": "Dual embodied-symbolic concept representations are the foundation for deep learning and symbolic AI integration. We discuss the use of dual embodied-symbolic concept representations for molecular graph representation learning, specifically with exemplar-based contrastive self-supervised learning (SSL). The embodied representations are learned from molecular graphs, and the symbolic representations are learned from the corresponding Chemical knowledge graph (KG). We use the Chemical KG to enhance molecular graphs with symbolic (semantic) knowledge and generate their augmented molecular graphs. We treat a molecular graph and its semantically augmented molecular graph as exemplars of the same semantic class, and use the pairs as positive pairs in exemplar-based contrastive SSL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "dtchang43@gmail.com"
+          },
+          "name": "Daniel T. Chang",
+          "orgs": [
+            "IBM (Retired)"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.06783",
+      "date": "2022-05-13T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1908.08169",
+      "score": 0.33333334,
+      "title": "SEAL: Semi-supervised Adversarial Active Learning on Attributed Graphs",
+      "tldr": "[research paper] SEAL introduces an adversarial active learning framework for node classification on attributed graphs by unifying AL query selection with graph neural networks via a closed-loop adversarial architecture. It trains a graph embedding network to embed both labeled and unlabeled nodes into a shared latent space, aiming to deceive a semisupervised discriminator into treating all nodes as labeled. The discriminator outputs class predictions and a divergence score in the same latent space, where the highest score identifies the most informative node for labeling. The two components mutually reinforce each other through backpropagation, enabling joint optimization of representation learning and active selection, overcoming the limitations of prior methods that naively combine disparate scoring functions or decouple query strategies from model training.",
+      "abstract": "Active learning (AL) on attributed graphs has received increasing attention with the prevalence of graph-structured data. Although AL has been widely studied for alleviating label sparsity issues with the conventional non-related data, how to make it effective over attributed graphs remains an open research question. Existing AL algorithms on graphs attempt to reuse the classic AL query strategies designed for non-related data. However, they suffer from two major limitations. First, different AL query strategies calculated in distinct scoring spaces are often naively combined to determine which nodes to be labelled. Second, the AL query engine and the learning of the classifier are treated as two separating processes, resulting in unsatisfactory performance. In this paper, we propose a SEmi-supervised Adversarial active Learning (SEAL) framework on attributed graphs, which fully leverages the representation power of deep neural networks and devises a novel AL query strategy in an adversarial way. Our framework learns two adversarial components: a graph embedding network that encodes both the unlabelled and labelled nodes into a latent space, expecting to trick the discriminator to regard all nodes as already labelled, and a semi-supervised discriminator network that distinguishes the unlabelled from the existing labelled nodes in the latent space. The divergence score, generated by the discriminator in a unified latent space, serves as the informativeness measure to actively select the most informative node to be labelled by an oracle. The two adversarial components form a closed loop to mutually and simultaneously reinforce each other towards enhancing the active learning performance. Extensive experiments on four real-world networks validate the effectiveness of the SEAL framework with superior performance improvements to state-of-the-art baselines.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yayong Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jie Yin",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ling Chen",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1908.08169",
+      "date": "2019-08-22T00:00:00",
+      "citation_count": 34,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2210.15120",
+      "score": 0.25,
+      "title": "Federated Graph Representation Learning using Self-Supervision",
+      "tldr": "[research paper] The paper proposes a novel federated graph representation learning (FedGRL) framework that addresses real-world limitations like label deficiency and downstream task heterogeneity by leveraging self-supervised learning and model interpolation. A shared global model is trained collaboratively via a self-supervised objective (using BGRL), while local client models provide task-specific supervision, enabling knowledge transfer across clients with minimal labeled data. Experiments on realistic cross-silo datasets—Twitch Gamer Network and a newly constructed Amazon Co-purchase Networks—show average gains of 6.1% and 11.5% over traditional supervised FedGRL, respectively, demonstrating superior performance in label-scarce, task-diverse settings.",
+      "abstract": "Federated graph representation learning (FedGRL) brings the benefits of distributed training to graph structured data while simultaneously addressing some privacy and compliance concerns related to data curation. However, several interesting real-world graph data characteristics viz. label deficiency and downstream task heterogeneity are not taken into consideration in current FedGRL setups. In this paper, we consider a realistic and novel problem setting, wherein cross-silo clients have access to vast amounts of unlabeled data with limited or no labeled data and additionally have diverse downstream class label domains. We then propose a novel FedGRL formulation based on model interpolation where we aim to learn a shared global model that is optimized collaboratively using a self-supervised objective and gets downstream task supervision through local client models. We provide a specific instantiation of our general formulation using BGRL a SoTA self-supervised graph representation learning method and we empirically verify its effectiveness through realistic cross-slio datasets: (1) we adapt the Twitch Gamer Network which naturally simulates a cross-geo scenario and show that our formulation can provide consistent and avg. 6.1% gains over traditional supervised federated learning objectives and on avg. 1.7% gains compared to individual client specific self-supervised training and (2) we construct and introduce a new cross-silo dataset called Amazon Co-purchase Networks that have both the characteristics of the motivated problem setting. And, we witness on avg. 11.5% gains over traditional supervised federated learning and on avg. 1.9% gains over individually trained self-supervised models. Both experimental results point to the effectiveness of our proposed formulation. Finally, both our novel problem setting and dataset contributions provide new avenues for the research in FedGRL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "suresh43@purdue.edu"
+          },
+          "name": "Susheel Suresh",
+          "orgs": [
+            "Purdue University",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "danny.godbout@microsoft.com"
+          },
+          "name": "Danny Godbout",
+          "orgs": [
+            "Microsoft",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "arko.mukherjee@microsoft.com"
+          },
+          "name": "Arko Mukherjee",
+          "orgs": [
+            "Microsoft",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mayank.shrivastava@microsoft.com"
+          },
+          "name": "Mayank Shrivastava",
+          "orgs": [
+            "Microsoft",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jenneville@microsoft.com"
+          },
+          "name": "Jennifer Neville",
+          "orgs": [
+            "Purdue University",
+            "Microsoft",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "panli@purdue.edu"
+          },
+          "name": "Pan Li",
+          "orgs": [
+            "Purdue University",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2210.15120",
+      "date": "2022-10-27T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

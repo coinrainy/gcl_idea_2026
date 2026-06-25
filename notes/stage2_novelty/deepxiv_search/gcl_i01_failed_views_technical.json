@@ -1,0 +1,316 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2011.01856",
+      "score": 0.5285714,
+      "title": "Finding Friends and Flipping Frenemies: Automatic Paraphrase Dataset Augmentation Using Graph Theory",
+      "tldr": "[research paper] The paper proposes a graph-theoretic framework to automatically augment and correct paraphrase datasets by modeling sentence pairs as a signed graph. Using transitivity of paraphrase relations, it infers new labels via shortest path propagation, expanding the dataset by 60.7% while preserving semantic consistency. Structural balance theory identifies mislabeled pairs—particularly negative edges within paraphrase clusters—where 88 training and 2 testing pairs are flipped to correct violations of expected graph balance, leading to a 4% reduction in error rate when fine-tuning BERT on the augmented dataset.",
+      "abstract": "Most NLP datasets are manually labeled, so suffer from inconsistent labeling or limited size. We propose methods for automatically improving datasets by viewing them as graphs with expected semantic properties. We construct a paraphrase graph from the provided sentence pair labels, and create an augmented dataset by directly inferring labels from the original sentence pairs using a transitivity property. We use structural balance theory to identify likely mislabelings in the graph, and flip their labels. We evaluate our methods on paraphrase models trained using these datasets starting from a pretrained BERT model, and find that the automatically-enhanced training sets result in more accurate models.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yc4dx@virginia.edu"
+          },
+          "name": "Hannah Chen",
+          "orgs": [
+            "Department of Computer Science",
+            "University of Virginia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yangfeng@virginia.edu"
+          },
+          "name": "Yangfeng Ji",
+          "orgs": [
+            "Department of Computer Science",
+            "University of Virginia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "evans@virginia.edu"
+          },
+          "name": "David Evans",
+          "orgs": [
+            "Department of Computer Science",
+            "University of Virginia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2011.01856",
+      "date": "2020-11-03T00:00:00",
+      "citation_count": 15,
+      "categories": [
+        "cs.CL"
+      ],
+      "venue": "Findings",
+      "venue_year": null,
+      "github_url": "https://github.com/hannahxchen/automatic-paraphrase-dataset-augmentation"
+    },
+    {
+      "arxiv_id": "2406.00403",
+      "score": 0.5,
+      "title": "Dual-perspective Cross Contrastive Learning in Graph Transformers",
+      "tldr": "[research paper] DC-GCL introduces a dual-perspective cross-contrastive framework that simultaneously applies controllable data augmentation (via node pruning and pre-trained model sampling) and pruning-based model augmentation (leveraging redundancy in graph transformers) to generate diverse and semantically reliable positive samples. By combining data and model perspectives in a graph transformer (GT)-based encoder, the method enhances feature consistency across augmented views, outperforming baselines in both unsupervised and transfer learning tasks through improved representation stability and accuracy.",
+      "abstract": "Graph contrastive learning (GCL) is a popular method for leaning graph representations by maximizing the consistency of features across augmented views. Traditional GCL methods utilize single-perspective i.e. data or model-perspective) augmentation to generate positive samples, restraining the diversity of positive samples. In addition, these positive samples may be unreliable due to uncontrollable augmentation strategies that potentially alter the semantic information. To address these challenges, this paper proposed a innovative framework termed dual-perspective cross graph contrastive learning (DC-GCL), which incorporates three modifications designed to enhance positive sample diversity and reliability: 1) We propose dual-perspective augmentation strategy that provide the model with more diverse training data, enabling the model effective learning of feature consistency across different views. 2) From the data perspective, we slightly perturb the original graphs using controllable data augmentation, effectively preserving their semantic information. 3) From the model perspective, we enhance the encoder by utilizing more powerful graph transformers instead of graph neural networks. Based on the model's architecture, we propose three pruning-based strategies to slightly perturb the encoder, providing more reliable positive samples. These modifications collectively form the DC-GCL's foundation and provide more diverse and reliable training inputs, offering significant improvements over traditional GCL methods. Extensive experiments on various benchmarks demonstrate that DC-GCL consistently outperforms different baselines on various datasets and tasks.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Zelin Yao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Chuang Liu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xueqi Ma",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Mukun Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jia Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xiantao Cai",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Bo Du",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Wenbin Hu",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2406.00403",
+      "date": "2024-06-01T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2001.06058",
+      "score": 0.33333334,
+      "title": "Understanding the Power of Persistence Pairing via Permutation Test",
+      "tldr": "[empirical study / experimental analysis] The paper introduces a permutation test to isolate the contribution of persistence pairing from critical value statistics in persistence diagrams (PDs), revealing that in graph classification, PDs perform well even with permuted (non-paired) points—indicating noise resilience and weak dependence on pairing—while in shape segmentation, pairing significantly improves performance, suggesting geometric structure sensitivity. The method provides empirical evidence on when PD-based features are effective, highlighting the role of data type (graph vs. shape), filtration stability, and featurization choices.",
+      "abstract": "Recently many efforts have been made to incorporate persistence diagrams, one of the major tools in topological data analysis (TDA), into machine learning pipelines. To better understand the power and limitation of persistence diagrams, we carry out a range of experiments on both graph data and shape data, aiming to decouple and inspect the effects of different factors involved. To this end, we also propose the so-called \\\\emph{permutation test} for persistence diagrams to delineate critical values and pairings of critical values. For graph classification tasks, we note that while persistence pairing yields consistent improvement over various benchmark datasets, it appears that for various filtration functions tested, most discriminative power comes from critical values. For shape segmentation and classification, however, we note that persistence pairing shows significant power on most of the benchmark datasets, and improves over both summaries based on merely critical values, and those based on permutation tests. Our results help provide insights on when persistence diagram based summaries could be more suitable.",
+      "authors": [
+        {
+          "misc": {
+            "email": "cai.507@osu.edu"
+          },
+          "name": "Chen Cai",
+          "orgs": [
+            "The Ohio State University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yusu@cse.ohio-state.edu"
+          },
+          "name": "Yusu Wang",
+          "orgs": [
+            "The Ohio State University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2001.06058",
+      "date": "2020-01-16T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG",
+        "cs.CG",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/Chen-Cai-OSU/Esme."
+    },
+    {
+      "arxiv_id": "2403.02719",
+      "score": 0.33333334,
+      "title": "Multi-Scale Subgraph Contrastive Learning",
+      "tldr": "[research paper] The paper challenges the standard assumption in graph contrastive learning that augmented graphs preserve semantic consistency, demonstrating via experiments that larger subgraphs retain higher semantic similarity than smaller ones due to their multi-scale structural complexity. It proposes a multi-scale subgraph contrastive learning framework that generates global (large) and local (small) subgraph views, enforces global view consistency, encourages global-local alignment, maintains local view dissimilarity, and uses a regressor to model semantic similarity more reliably than distance metrics in high dimensions, achieving state-of-the-art results on eight real-world graph classification datasets.",
+      "abstract": "Graph-level contrastive learning, aiming to learn the representations for each graph by contrasting two augmented graphs, has attracted considerable attention. Previous studies usually simply assume that a graph and its augmented graph as a positive pair, otherwise as a negative pair. However, it is well known that graph structure is always complex and multi-scale, which gives rise to a fundamental question: after graph augmentation, will the previous assumption still hold in reality? By an experimental analysis, we discover the semantic information of an augmented graph structure may be not consistent as original graph structure, and whether two augmented graphs are positive or negative pairs is highly related with the multi-scale structures. Based on this finding, we propose a multi-scale subgraph contrastive learning architecture which is able to characterize the fine-grained semantic information. Specifically, we generate global and local views at different scales based on subgraph sampling, and construct multiple contrastive relationships according to their semantic associations to provide richer self-supervised signals. Extensive experiments and parametric analyzes on eight graph classification real-world datasets well demonstrate the effectiveness of the proposed method.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liuyanbei@tiangong.edu.cn"
+          },
+          "name": "Yanbei Liu",
+          "orgs": [
+            "School of Life Sciences, Tiangong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zy0720@tiangong.edu.cn"
+          },
+          "name": "Yu Zhao",
+          "orgs": [
+            "School of Electronics and Information Engineering, Tiangong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaowang@bupt.edu.cn"
+          },
+          "name": "Xiao Wang",
+          "orgs": [
+            "School of Software, Beihang University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "genglei@tiangong.edu.cn"
+          },
+          "name": "Lei Geng",
+          "orgs": [
+            "School of Life Sciences, Tiangong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaozhitao@tiangong.edu.cn"
+          },
+          "name": "Zhitao Xiao",
+          "orgs": [
+            "School of Life Sciences, Tiangong University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2403.02719",
+      "date": "2024-03-05T00:00:00",
+      "citation_count": 28,
+      "categories": [
+        "cs.AI"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.08168",
+      "score": 0.32692307,
+      "title": "Exploiting Text Semantics for Few and Zero Shot Node Classification on Text-attributed Graph",
+      "tldr": "[research paper] The paper proposes Text Semantics Augmentation (TSA) to enhance few- and zero-shot node classification on text-attributed graphs (TAGs) by introducing semantic supervision beyond raw node-text pairs. TSA introduces two novel text-based augmentation techniques: positive semantics matching, which retrieves semantically similar texts to align node and text embeddings, and negative semantics contrast, which generates semantically opposite texts via negative prompts to enforce dissimilarity and improve robustness. Experiments on five datasets show TSA consistently outperforms state-of-the-art baselines, achieving average accuracy gains of 4.6% in few-shot and 8.8% in zero-shot settings, demonstrating superior semantic understanding and classification performance.",
+      "abstract": "Text-attributed graph (TAG) provides a text description for each graph node, and few- and zero-shot node classification on TAGs have many applications in fields such as academia and social networks. Existing work utilizes various graph-based augmentation techniques to train the node and text embeddings, while text-based augmentations are largely unexplored. In this paper, we propose Text Semantics Augmentation (TSA) to improve accuracy by introducing more text semantic supervision signals. Specifically, we design two augmentation techniques, i.e., positive semantics matching and negative semantics contrast, to provide more reference texts for each graph node or text description. Positive semantic matching retrieves texts with similar embeddings to match with a graph node. Negative semantic contrast adds a negative prompt to construct a text description with the opposite semantics, which is contrasted with the original node and text. We evaluate TSA on 5 datasets and compare with 13 state-of-the-art baselines. The results show that TSA consistently outperforms all baselines, and its accuracy improvements over the best-performing baseline are usually over 5%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "nai.yxwang@whu.edu.cn"
+          },
+          "name": "Yuxiang Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yanxiaosunny@gmail.com"
+          },
+          "name": "Xiao Yan",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "syjin@whu.edu.cn"
+          },
+          "name": "Shiyu Jin",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xuquanqing.xqq@oceanbase.com"
+          },
+          "name": "Quanqing Xu",
+          "orgs": [
+            "OceanBase"
+          ]
+        },
+        {
+          "misc": {
+            "email": "handc@whu.edu.cn"
+          },
+          "name": "Chuang Hu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yyzhu@whu.edu.cn"
+          },
+          "name": "Yuanyuan Zhu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dubo@whu.edu.cn"
+          },
+          "name": "Bo Du",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jia.wu@mq.edu.au"
+          },
+          "name": "Jia Wu",
+          "orgs": [
+            "School of Computing, Macquarie University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiawei.jiang@whu.edu.cn"
+          },
+          "name": "Jiawei Jiang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "School of Computing, Macquarie University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.08168",
+      "date": "2025-05-13T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

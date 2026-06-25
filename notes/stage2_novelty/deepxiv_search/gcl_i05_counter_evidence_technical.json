@@ -1,0 +1,353 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.75,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2303.12756",
+      "score": 0.5,
+      "title": "MaskCon: Masked Contrastive Learning for Coarse-Labelled Dataset",
+      "tldr": "[research paper] MaskCon introduces a masked contrastive learning framework that generates soft-label inter-sample relations using coarse labels to improve fine-grained representation learning. By masking sample comparisons with coarse labels and deriving soft positives via augmented view contrasts, it effectively leverages both intra-class structure and coarse label constraints, outperforming self-supervised and supervised contrastive baselines in generalization and accuracy across CIFAR, ImageNet, and fine-grained datasets like Stanford Cars and Online Products. The method provides tighter generalization bounds and subsumes existing state-of-the-art approaches as special cases through hyperparameter tuning.",
+      "abstract": "Deep learning has achieved great success in recent years with the aid of advanced neural network structures and large-scale human-annotated datasets. However, it is often costly and difficult to accurately and efficiently annotate large-scale datasets, especially for some specialized domains where fine-grained labels are required. In this setting, coarse labels are much easier to acquire as they do not require expert knowledge. In this work, we propose a contrastive learning method, called $\\\\textbf{Mask}$ed $\\\\textbf{Con}$trastive learning~($\\\\textbf{MaskCon}$) to address the under-explored problem setting, where we learn with a coarse-labelled dataset in order to address a finer labelling problem. More specifically, within the contrastive learning framework, for each sample our method generates soft-labels with the aid of coarse labels against other samples and another augmented view of the sample in question. By contrast to self-supervised contrastive learning where only the sample's augmentations are considered hard positives, and in supervised contrastive learning where only samples with the same coarse labels are considered hard positives, we propose soft labels based on sample distances, that are masked by the coarse labels. This allows us to utilize both inter-sample relations and coarse labels. We demonstrate that our method can obtain as special cases many existing state-of-the-art works and that it provides tighter bounds on the generalization error. Experimentally, our method achieves significant improvement over the current state-of-the-art in various datasets, including CIFAR10, CIFAR100, ImageNet-1K, Standford Online Products and Stanford Cars196 datasets. Code and annotations are available at https://github.com/MrChenFeng/MaskCon_CVPR2023.",
+      "authors": [
+        {
+          "misc": {
+            "email": "chen.feng@qmul.ac.uk"
+          },
+          "name": "Chen Feng",
+          "orgs": [
+            "Queen Mary University of London",
+            "UK"
+          ]
+        },
+        {
+          "misc": {
+            "email": "i.patras@qmul.ac.uk"
+          },
+          "name": "Ioannis Patras",
+          "orgs": [
+            "Queen Mary University of London",
+            "UK"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.12756",
+      "date": "2023-03-22T00:00:00",
+      "citation_count": 29,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "Computer Vision and Pattern Recognition",
+      "venue_year": 2023,
+      "github_url": "https://github.com/MrChenFeng/MaskCon_CVPR2023"
+    },
+    {
+      "arxiv_id": "2402.17345",
+      "score": 0.4761905,
+      "title": "LocalGCL: Local-aware Contrastive Learning for Graphs",
+      "tldr": "[research paper] LocalGCL introduces a masking-based modeling objective to complement contrastive learning in graph representation, addressing the overemphasis on global patterns by explicitly capturing local structural and feature details through feature masking. The framework jointly optimizes a contrastive loss and a reconstruction loss on masked graph features, enabling the model to learn representations that preserve both global topology and local node-level semantics, outperforming existing self-supervised graph methods in downstream tasks.",
+      "abstract": "Graph representation learning (GRL) makes considerable progress recently, which encodes graphs with topological structures into low-dimensional embeddings. Meanwhile, the time-consuming and costly process of annotating graph labels manually prompts the growth of self-supervised learning (SSL) techniques. As a dominant approach of SSL, Contrastive learning (CL) learns discriminative representations by differentiating between positive and negative samples. However, when applied to graph data, it overemphasizes global patterns while neglecting local structures. To tackle the above issue, we propose \\\\underline{Local}-aware \\\\underline{G}raph \\\\underline{C}ontrastive \\\\underline{L}earning (\\\\textbf{\\\\methnametrim}), a self-supervised learning framework that supplementarily captures local graph information with masking-based modeling compared with vanilla contrastive learning. Extensive experiments validate the superiority of \\\\methname against state-of-the-art methods, demonstrating its promise as a comprehensive graph representation learner.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Haojun Jiang",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jiawei Sun",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jie Li",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China",
+            "MoE Key Lab of Artificial Intelligence, AI Institute, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chentao Wu",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.17345",
+      "date": "2024-02-27T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.33333334,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2407.16234",
+      "score": 0.27222222,
+      "title": "A Multi-view Mask Contrastive Learning Graph Convolutional Neural Network for Age Estimation",
+      "tldr": "[research paper] The paper proposes MMCL-GCN, a graph neural network framework that combines multi-view masked image modeling and contrastive learning to enhance age estimation. It introduces an asymmetric siamese architecture with online encoder-decoder reconstruction and target encoder-based contrastive learning to jointly learn structural and semantic features from facial graphs. A multi-layer extreme learning machine with identity mapping is then used for age grouping and regression, achieving superior performance on Adience, MORPH-II, and LAP-2016 benchmarks by effectively capturing key facial point relationships and long-range contextual dependencies.",
+      "abstract": "The age estimation task aims to use facial features to predict the age of people and is widely used in public security, marketing, identification, and other fields. However, the features are mainly concentrated in facial keypoints, and existing CNN and Transformer-based methods have inflexibility and redundancy for modeling complex irregular structures. Therefore, this paper proposes a Multi-view Mask Contrastive Learning Graph Convolutional Neural Network (MMCL-GCN) for age estimation. Specifically, the overall structure of the MMCL-GCN network contains a feature extraction stage and an age estimation stage. In the feature extraction stage, we introduce a graph structure to construct face images as input and then design a Multi-view Mask Contrastive Learning (MMCL) mechanism to learn complex structural and semantic information about face images. The learning mechanism employs an asymmetric siamese network architecture, which utilizes an online encoder-decoder structure to reconstruct the missing information from the original graph and utilizes the target encoder to learn latent representations for contrastive learning. Furthermore, to promote the two learning mechanisms better compatible and complementary, we adopt two augmentation strategies and optimize the joint losses. In the age estimation stage, we design a Multi-layer Extreme Learning Machine (ML-IELM) with identity mapping to fully use the features extracted by the online encoder. Then, a classifier and a regressor were constructed based on ML-IELM, which were used to identify the age grouping interval and accurately estimate the final age. Extensive experiments show that MMCL-GCN can effectively reduce the error of age estimation on benchmark datasets such as Adience, MORPH-II, and LAP-2016.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yipingzhang@csuft.edu.cn"
+          },
+          "name": "Yiping Zhang",
+          "orgs": [
+            "Changsha University of Science and Technology",
+            "Hunan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuntaoshou@csuft.edu.cn"
+          },
+          "name": "Yuntao Shou",
+          "orgs": [
+            "Changsha University of Science and Technology",
+            "Hunan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mengtao@hnu.edu.cn"
+          },
+          "name": "Tao Meng",
+          "orgs": [
+            "Hunan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "aiwei@hnu.edu.cn"
+          },
+          "name": "Wei Ai",
+          "orgs": [
+            "Hunan University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "email": "lik@newpaltz.edu"
+          },
+          "name": "Keqin Li",
+          "orgs": [
+            "State University of New Paltz"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2407.16234",
+      "date": "2024-07-23T00:00:00",
+      "citation_count": 14,
+      "categories": [
+        "cs.CV",
+        "cs.CL"
+      ],
+      "venue": "Knowledge and Information Systems",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

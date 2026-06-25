@@ -1,0 +1,193 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "1912.00735",
+      "score": 0.5,
+      "title": "Using Laplacian Spectrum as Graph Feature Representation",
+      "tldr": "[research paper] The paper establishes the graph Laplacian spectrum (GLS) as a theoretically sound and practically efficient graph feature representation that satisfies key properties: consistency under structural deformation and invariance under isomorphism. Using a perturbation framework, it derives bounds on GLS distance in terms of graph divergence, proving that small structural changes yield bounded spectral shifts. Experimental validation on synthetic and real-world graphs confirms GLS's robustness and representational power as a baseline for graph embedding, outperforming heuristic methods in consistency and scalability.",
+      "abstract": "Graphs possess exotic features like variable size and absence of natural ordering of the nodes that make them difficult to analyze and compare. To circumvent this problem and learn on graphs, graph feature representation is required. A good graph representation must satisfy the preservation of structural information, with two particular key attributes: consistency under deformation and invariance under isomorphism. While state-of-the-art methods seek such properties with powerful graph neural-networks, we propose to leverage a simple graph feature: the graph Laplacian spectrum (GLS). We first remind and show that GLS satisfies the aforementioned key attributes, using a graph perturbation approach. In particular, we derive bounds for the distance between two GLS that are related to the \\\\textit{divergence to isomorphism}, a standard computationally expensive graph divergence. We finally experiment GLS as graph representation through consistency tests and classification tasks, and show that it is a strong graph feature representation baseline.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Edouard Pineau",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1912.00735",
+      "date": "2019-12-02T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/edouardpineau/Using-Laplacian-Spectrum-as-Graph-Feature-Representation"
+    },
+    {
+      "arxiv_id": "1304.1572",
+      "score": 0.5,
+      "title": "Stable and Informative Spectral Signatures for Graph Matching",
+      "tldr": "[research paper] The paper introduces Laplacian Family Signatures (LFS) as a general framework for first-order graph node signatures, deriving a stability bound based on graph Laplacian perturbations and optimizing a joint stability-informativeness objective to design custom spectral signatures per graph. It proposes the pairwise heat kernel distance as a stable second-order compatibility term that converges to adjacency-based terms in a limiting case, enabling robust approximate graph matching without requiring training data or prior correspondences.",
+      "abstract": "In this paper, we consider the approximate weighted graph matching problem and introduce stable and informative first and second order compatibility terms suitable for inclusion into the popular integer quadratic program formulation. Our approach relies on a rigorous analysis of stability of spectral signatures based on the graph Laplacian. In the case of the first order term, we derive an objective function that measures both the stability and informativeness of a given spectral signature. By optimizing this objective, we design new spectral node signatures tuned to a specific graph to be matched. We also introduce the pairwise heat kernel distance as a stable second order compatibility term; we justify its plausibility by showing that in a certain limiting case it converges to the classical adjacency matrix-based second order compatibility function. We have tested our approach on a set of synthetic graphs, the widely-used CMU house sequence, and a set of real images. These experiments show the superior performance of our first and second order compatibility terms as compared with the commonly used ones.",
+      "authors": [
+        {
+          "misc": {
+            "email": "nanhu@stanford.edu"
+          },
+          "name": "Nan Hu",
+          "orgs": [
+            "Stanford University",
+            "Stanford, CA, USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "rustamov@stanford.edu"
+          },
+          "name": "Raif M. Rustamov",
+          "orgs": [
+            "Stanford University",
+            "Stanford, CA, USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guibas@cs.stanford.edu"
+          },
+          "name": "Leonidas Guibas",
+          "orgs": [
+            "Stanford University",
+            "Stanford, CA, USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/1304.1572",
+      "date": "2013-04-04T00:00:00",
+      "citation_count": 28,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.11776",
+      "score": 0.44444445,
+      "title": "Generative and Contrastive Graph Representation Learning",
+      "tldr": "[research paper] The paper proposes a unified graph self-supervised learning framework that synergizes community-aware node-level contrastive learning with graph-level contrastive learning, addressing the limitations of both pure contrastive and generative methods. It introduces a principled positive pair generation strategy via community structure awareness, reduces reliance on computationally expensive negative sampling, and employs a comprehensive augmentation pipeline (feature masking, node, and edge perturbation) to enhance representation robustness. Experimental results on benchmark datasets show consistent performance gains—up to 2.01%—across node classification, clustering, and link prediction, outperforming state-of-the-art contrastive and generative methods, including hybrid approaches like GCMAE.",
+      "abstract": "Self-supervised learning (SSL) on graphs generates node and graph representations (i.e., embeddings) that can be used for downstream tasks such as node classification, node clustering, and link prediction. Graph SSL is particularly useful in scenarios with limited or no labeled data. Existing SSL methods predominantly follow contrastive or generative paradigms, each excelling in different tasks: contrastive methods typically perform well on classification tasks, while generative methods often excel in link prediction. In this paper, we present a novel architecture for graph SSL that integrates the strengths of both approaches. Our framework introduces community-aware node-level contrastive learning, providing more robust and effective positive and negative node pairs generation, alongside graph-level contrastive learning to capture global semantic information. Additionally, we employ a comprehensive augmentation strategy that combines feature masking, node perturbation, and edge perturbation, enabling robust and diverse representation learning. By incorporating these enhancements, our model achieves superior performance across multiple tasks, including node classification, clustering, and link prediction. Evaluations on open benchmark datasets demonstrate that our model outperforms state-of-the-art methods, achieving a performance lift of 0.23%-2.01% depending on the task and dataset.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "jiali.chen2@apple.com"
+          },
+          "name": "Jiali Chen",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "avijit.mukherjee@apple.com"
+          },
+          "name": "Avijit Mukherjee",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.11776",
+      "date": "2025-05-17T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2512.10374",
+      "score": 0.33333334,
+      "title": "Structural Sign Herdability in Temporally Switching Networks with Fixed Topology",
+      "tldr": "[research paper] This paper establishes that temporally switching networks with fixed topology achieve structural sign (SS) heredability in just two snapshots—fewer than required for structural controllability—due to the interaction of sign patterns and edge weight variations across time. It proves that switching only with identical topologies and edge weights offers no benefit, and that true SS heredability requires at least one snapshot with distinct parametric realization. A relaxed sign-matching condition enables the derivation of a two-snapshot sufficiency criterion for SS heredability in signed layered graphs with fixed underlying structure.",
+      "abstract": "This paper investigates structural herdability in a special class of temporally switching networks with fixed topology. We show that when the underlying digraph remains unchanged across all snapshots, the network attains complete SS herdability even in the presence of signed or layer dilations, a condition not applicable to static networks. This reveals a fundamental structural advantage of temporal dynamics and highlights a novel mechanism through which switching can overcome classical obstructions to herdability. To validate these conclusions, we utilize a more relaxed form of sign matching within each snapshot of the temporal network. Furthermore, we show that when all snapshots share the same underlying topology, the temporally switching network achieves $\\mathcal{SS}$ herdability within just two snapshots, which is fewer than the number required for structural controllability. Several examples are included to demonstrate these results.",
+      "authors": [
+        "Pradeep M",
+        "Twinkle Tripathy"
+      ],
+      "url": "https://arxiv.org/abs/2512.10374",
+      "date": "2025-12-11T07:40:07",
+      "citation_count": 0,
+      "categories": [
+        "eess.SY",
+        "cs.SY"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2402.17345",
+      "score": 0.25,
+      "title": "LocalGCL: Local-aware Contrastive Learning for Graphs",
+      "tldr": "[research paper] LocalGCL introduces a masking-based modeling objective to complement contrastive learning in graph representation, addressing the overemphasis on global patterns by explicitly capturing local structural and feature details through feature masking. The framework jointly optimizes a contrastive loss and a reconstruction loss on masked graph features, enabling the model to learn representations that preserve both global topology and local node-level semantics, outperforming existing self-supervised graph methods in downstream tasks.",
+      "abstract": "Graph representation learning (GRL) makes considerable progress recently, which encodes graphs with topological structures into low-dimensional embeddings. Meanwhile, the time-consuming and costly process of annotating graph labels manually prompts the growth of self-supervised learning (SSL) techniques. As a dominant approach of SSL, Contrastive learning (CL) learns discriminative representations by differentiating between positive and negative samples. However, when applied to graph data, it overemphasizes global patterns while neglecting local structures. To tackle the above issue, we propose \\\\underline{Local}-aware \\\\underline{G}raph \\\\underline{C}ontrastive \\\\underline{L}earning (\\\\textbf{\\\\methnametrim}), a self-supervised learning framework that supplementarily captures local graph information with masking-based modeling compared with vanilla contrastive learning. Extensive experiments validate the superiority of \\\\methname against state-of-the-art methods, demonstrating its promise as a comprehensive graph representation learner.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Haojun Jiang",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jiawei Sun",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jie Li",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China",
+            "MoE Key Lab of Artificial Intelligence, AI Institute, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chentao Wu",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.17345",
+      "date": "2024-02-27T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

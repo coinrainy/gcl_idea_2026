@@ -1,0 +1,283 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2106.05470",
+      "score": 0.5,
+      "title": "Automated Self-Supervised Learning for Graphs",
+      "tldr": "[research paper] AUTOSSL introduces an automated framework for searching optimal combinations of self-supervised pretext tasks in graph learning by leveraging the homophily principle—'like attracts like'—as a surrogate evaluation metric. It proposes pseudo-homophily to measure node embedding quality without ground-truth labels, theoretically linking it to mutual information upper bounds with downstream labels. The framework uses evolutionary and differentiable search strategies to optimize task weights, achieving up to 10.0% relative improvement in node clustering and classification across 8 real-world datasets.",
+      "abstract": "Graph self-supervised learning has gained increasing attention due to its capacity to learn expressive node representations. Many pretext tasks, or loss functions have been designed from distinct perspectives. However, we observe that different pretext tasks affect downstream tasks differently cross datasets, which suggests that searching pretext tasks is crucial for graph self-supervised learning. Different from existing works focusing on designing single pretext tasks, this work aims to investigate how to automatically leverage multiple pretext tasks effectively. Nevertheless, evaluating representations derived from multiple pretext tasks without direct access to ground truth labels makes this problem challenging. To address this obstacle, we make use of a key principle of many real-world graphs, i.e., homophily, or the principle that \"like attracts like,\" as the guidance to effectively search various self-supervised pretext tasks. We provide theoretical understanding and empirical evidence to justify the flexibility of homophily in this search task. Then we propose the AutoSSL framework which can automatically search over combinations of various self-supervised tasks. By evaluating the framework on 7 real-world datasets, our experimental results show that AutoSSL can significantly boost the performance on downstream tasks including node clustering and node classification compared with training under individual tasks. Code is released at https://github.com/ChandlerBang/AutoSSL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "jinwei2@msu.edu"
+          },
+          "name": "Wei Jin",
+          "orgs": [
+            "Michigan State University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaorui@msu.edu"
+          },
+          "name": "Xiaorui Liu",
+          "orgs": [
+            "Michigan State University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xy.zhao@cityu.edu.hk"
+          },
+          "name": "Xiaoyu Zhao",
+          "orgs": [
+            "City University of Hong Kong"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yao.ma@njit.edu"
+          },
+          "name": "Yao Ma",
+          "orgs": [
+            "New Jersey Institute of Technology"
+          ]
+        },
+        {
+          "misc": {
+            "email": "nshah@snap.com"
+          },
+          "name": "Neil Shah",
+          "orgs": [
+            "Snap Inc."
+          ]
+        },
+        {
+          "misc": {
+            "email": "tangjili@msu.edu"
+          },
+          "name": "Jiliang Tang",
+          "orgs": [
+            "Michigan State University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2106.05470",
+      "date": "2021-06-10T00:00:00",
+      "citation_count": 97,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "International Conference on Learning Representations",
+      "venue_year": null,
+      "github_url": "https://github.com/ChandlerBang/AutoSSL"
+    },
+    {
+      "arxiv_id": "2605.08178",
+      "score": 0.5,
+      "title": "Generalized Category Discovery in Federated Graph Learning",
+      "tldr": "[research paper] GCD-FGL introduces a federated graph learning framework for Generalized Category Discovery (GCD) in open-world settings, addressing two critical challenges: (1) the neighborhood absorption effect caused by structural truncation in decentralized graphs, where novel nodes are misclassified due to biased aggregation from known-category neighbors; and (2) global semantic inconsistency from divergent local representations across clients. The framework employs a client-side Topology-Reliable Semantic Alignment module to preserve novel node semantics via graph contrastive learning and a server-side Hierarchical Prototype Alignment strategy to harmonize dispersed novel category prototypes, enabling robust cross-client discovery of novel categories without requiring prior knowledge of the global label space.",
+      "abstract": "Federated Graph Learning (FGL) enables collaborative learning over distributed graph data, yet existing approaches largely rely on a closed-world assumption, limiting their applicability in dynamic environments where novel categories continuously emerge. To bridge this gap, we target the practical scenario of Federated Graph Generalized Category Discovery (FGGCD), aiming to collaboratively discover novel categories across decentralized graph clients while retaining knowledge of known categories. We observe that FGGCD introduces two fundamental challenges: (1) the Neighborhood Absorption Effect, where structural fragmentation leads to biased neighborhood aggregation, causing novel nodes to be misclassified as known categories; and (2) Global Semantic Inconsistency, where the aforementioned local biases propagate to the server and are amplified by heterogeneous subgraph distributions, hindering cross-client knowledge integration. To address these issues, we propose GCD-FGL, an FGL framework for GCD that integrates a client-side Topology-Reliable Semantic Alignment and Discovery process to mitigate the neighborhood absorption effect, and a server-side Hierarchical Prototype Alignment strategy to resolve global semantic inconsistency. Extensive experiments on five real-world graph datasets demonstrate that GCD-FGL consistently outperforms state-of-the-art baselines, achieving an average absolute gain of +4.86 in HRScore.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yuangenhz@mail.sdu.edu.cn"
+          },
+          "name": "Zhongzheng Yuan",
+          "orgs": [
+            "Shandong University, School of Airspace Science and Engineering, Weihai 264209, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "goluis.cc@gmail.com"
+          },
+          "name": "Lianshuai Guo",
+          "orgs": [
+            "Beijing Institute of Technology, School of Computer Science and Technology, Beijing 100081, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cs.xunkai.li@gmail.com"
+          },
+          "name": "Xunkai Li",
+          "orgs": [
+            "Shandong University, School of Airspace Science and Engineering, Weihai 264209, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hochi@sdu.edu.cn"
+          },
+          "name": "Wenyu Wang",
+          "orgs": [
+            "Shandong University, School of Airspace Science and Engineering, Weihai 264209, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mxqu@sdu.edu.cn"
+          },
+          "name": "Meixia Qu",
+          "orgs": [
+            "Shandong University, School of Airspace Science and Engineering, Weihai 264209, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2605.08178",
+      "date": "2026-05-05T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1412.3100",
+      "score": 0.35897437,
+      "title": "Semi-Supervised Learning with Heterophily",
+      "tldr": "[research paper] The paper introduces Semi-Supervised Learning with Heterophily (SSL-H), a framework that generalizes traditional graph-based label propagation methods by allowing propagation of heterophily—'opposites attract' relationships—between node classes. It leverages the row-sum-constant property of stochastic matrices to model class compatibilities via a compatibility matrix H, enabling linear inference of node labels under arbitrary class-level affinities. A key technical contribution is a computationally efficient algorithm for learning H from partially labeled graphs, inspired by Locally Linear Embedding (LLE), which reduces the problem to a fast optimization step without requiring prior knowledge of class compatibilities.",
+      "abstract": "We derive a family of linear inference algorithms that generalize existing graph-based label propagation algorithms by allowing them to propagate generalized assumptions about \"attraction\" or \"compatibility\" between classes of neighboring nodes (in particular those that involve heterophily between nodes where \"opposites attract\"). We thus call this formulation Semi-Supervised Learning with Heterophily (SSLH) and show how it generalizes and improves upon a recently proposed approach called Linearized Belief Propagation (LinBP). Importantly, our framework allows us to reduce the problem of estimating the relative compatibility between nodes from partially labeled graph to a simple optimization problem. The result is a very fast algorithm that -- despite its simplicity -- is surprisingly effective: we can classify unlabeled nodes within the same graph in the same time as LinBP but with a superior accuracy and despite our algorithm not knowing the compatibilities.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Wolfgang Gatterbauer",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1412.3100",
+      "date": "2014-12-09T00:00:00",
+      "citation_count": 15,
+      "categories": [
+        "cs.LG",
+        "cs.DB"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2005.04725",
+      "score": 0.33333334,
+      "title": "CONE-Align: Consistent Network Alignment with Proximity-Preserving Node Embedding",
+      "tldr": "[research paper] CONE-Align introduces a novel unsupervised network alignment method that enforces matched neighborhood consistency by first learning proximity-preserving node embeddings within each graph and then aligning the embedding subspaces to enable cross-graph comparison. Unlike existing methods that rely on structural similarity or transductive embeddings without subspace alignment, CONE-Align ensures that neighboring nodes in one graph are matched to similarly proximate nodes in another, significantly improving alignment accuracy—achieving 19.25% higher average performance than state-of-the-art baselines in noisy settings through principled embedding subspace alignment.",
+      "abstract": "Network alignment, the process of finding correspondences between nodes in different graphs, has many scientific and industrial applications. Existing unsupervised network alignment methods find suboptimal alignments that break up node neighborhoods, i.e. do not preserve matched neighborhood consistency. To improve this, we propose CONE-Align, which models intra-network proximity with node embeddings and uses them to match nodes across networks after aligning the embedding subspaces. Experiments on diverse, challenging datasets show that CONE-Align is robust and obtains 19.25% greater accuracy on average than the best-performing state-of-the-art graph alignment algorithm in highly noisy settings.",
+      "authors": [
+        {
+          "misc": {
+            "email": "shinech@umich.edu"
+          },
+          "name": "Xiyuan Chen",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mheimann@umich.edu"
+          },
+          "name": "Mark Heimann",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "vfatemeh@umich.edu"
+          },
+          "name": "Fatemeh Vahedian",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dkoutra@umich.edu"
+          },
+          "name": "Danai Koutra",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2005.04725",
+      "date": "2020-05-10T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "cs.SI",
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/GemsLab/CONE-Align"
+    },
+    {
+      "arxiv_id": "2508.04381",
+      "score": 0.25,
+      "title": "ProtoN: Prototype Node Graph Neural Network for Unconstrained Multi-Impression Ear Recognition",
+      "tldr": "[research paper] ProtoN introduces a graph-based few-shot learning framework for ear recognition that models multiple impressions of an identity as a graph with nodes representing individual impressions and a learnable prototype node encoding identity-level semantics. A Prototype Graph Neural Network (PGNN) uses dual-path message passing to refine both impression and prototype representations, while a cross-graph prototype alignment strategy enforces intra-class compactness and inter-class separation. A hybrid loss function balances episodic classification and global embedding structure, enabling robust few-shot identification under data scarcity; experiments on five ear datasets achieve up to 99.60% Rank-1 accuracy and 0.025 EER.",
+      "abstract": "Ear biometrics offer a stable and contactless modality for identity recognition, yet their effectiveness remains limited by the scarcity of annotated data and significant intra-class variability. Existing methods typically extract identity features from individual impressions in isolation, restricting their ability to capture consistent and discriminative representations. To overcome these limitations, a few-shot learning framework, ProtoN, is proposed to jointly process multiple impressions of an identity using a graph-based approach. Each impression is represented as a node in a class-specific graph, alongside a learnable prototype node that encodes identity-level information. This graph is processed by a Prototype Graph Neural Network (PGNN) layer, specifically designed to refine both impression and prototype representations through a dual-path message-passing mechanism. To further enhance discriminative power, the PGNN incorporates a cross-graph prototype alignment strategy that improves class separability by enforcing intra-class compactness while maintaining inter-class distinction. Additionally, a hybrid loss function is employed to balance episodic and global classification objectives, thereby improving the overall structure of the embedding space. Extensive experiments on five benchmark ear datasets demonstrate that ProtoN achieves state-of-the-art performance, with Rank-1 identification accuracy of up to 99.60% and an Equal Error Rate (EER) as low as 0.025, showing the effectiveness for few-shot ear recognition under limited data conditions.",
+      "authors": [
+        {
+          "misc": {
+            "email": "santhoshpps11@gmail.com"
+          },
+          "name": "Santhoshkumar Peddi",
+          "orgs": [
+            "Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, Kharagpur, India"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sadhvik.ini@gmail.com"
+          },
+          "name": "Sadhvik Bathini",
+          "orgs": [
+            "Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, Kharagpur, India"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Arun Balasubramanian",
+          "orgs": [
+            "Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, Kharagpur, India"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Monalisa Sarma",
+          "orgs": [
+            "Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, Kharagpur, India"
+          ]
+        },
+        {
+          "misc": {
+            "email": "debasis.samanta.iitkgp@gmail.com"
+          },
+          "name": "Debasis Samanta",
+          "orgs": [
+            "Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, Kharagpur, India"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2508.04381",
+      "date": "2025-08-06T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

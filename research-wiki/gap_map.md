@@ -109,3 +109,17 @@ DeepXiv targeted retrieval did not overturn the Stage 1.5 gap map. It sharpened 
 - G6 remains `UNCLEAR` for main Stage 2 direction because LangGSL and label-free LLM graph learning raise leakage and contamination issues.
 
 No new final method or idea was generated in Stage 1.6.
+
+## Stage 2A Idea Status
+
+Stage 2A generated 10 raw ideas and did not select a final method.
+
+- G1: `GCL-I01` is `REVISE`; `GCL-I05` is `KILL`.
+- G2: `GCL-I02` is `KEEP` and is a main candidate.
+- G3: `GCL-I03` is `KEEP` and is the highest-priority main candidate.
+- G4: `GCL-I09` is `REVISE`; use as companion diagnostic for `GCL-I03`.
+- G5: `GCL-I04` is `REVISE` and backup candidate; `GCL-I10` is `KILL` due scope.
+- G6: `GCL-I08` is `REVISE / DEFER`, not a main recommendation.
+- G7: `GCL-I06` is `REVISE`, companion diagnostic only.
+
+Stage 2A reviewer recommends `GCL-I03` and `GCL-I02` as main candidates, with `GCL-I04` as backup. No experiment has been run.

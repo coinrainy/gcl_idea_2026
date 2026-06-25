@@ -1,0 +1,213 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2303.06344",
+      "score": 1.0,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2308.10077",
+      "score": 0.3409091,
+      "title": "Contrastive Learning for Non-Local Graphs with Multi-Resolution Structural Views",
+      "tldr": "[research paper] The paper proposes a multiview contrastive learning framework that leverages multi-resolution diffusion filters on graphs to capture higher-order structural hierarchies, specifically targeting structural equivalence in heterophilic graphs. By cascading dilated diffusion operators to generate coarse, bandpass-filtered views of the graph, the method learns node representations invariant to multiple resolutions, enabling the discovery of latent structural similarities missed by traditional local or random-walk-based augmentations. Empirical results show significant performance gains—up to 16.06% on Cornell—over state-of-the-art graph contrastive methods on synthetic and real-world heterophilic datasets, with consistent improvements in downstream tasks.",
+      "abstract": "Learning node-level representations of heterophilic graphs is crucial for various applications, including fraudster detection and protein function prediction. In such graphs, nodes share structural similarity identified by the equivalence of their connectivity which is implicitly encoded in the form of higher-order hierarchical information in the graphs. The contrastive methods are popular choices for learning the representation of nodes in a graph. However, existing contrastive methods struggle to capture higher-order graph structures. To address this limitation, we propose a novel multiview contrastive learning approach that integrates diffusion filters on graphs. By incorporating multiple graph views as augmentations, our method captures the structural equivalence in heterophilic graphs, enabling the discovery of hidden relationships and similarities not apparent in traditional node representations. Our approach outperforms baselines on synthetic and real structural datasets, surpassing the best baseline by $16.06\\\\%$ on Cornell, $3.27\\\\%$ on Texas, and $8.04\\\\%$ on Wisconsin. Additionally, it consistently achieves superior performance on proximal tasks, demonstrating its effectiveness in uncovering structural information and improving downstream applications.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Asif Khan",
+          "orgs": [
+            "School of Informatics",
+            "University of Edinburgh",
+            "UK"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Amos Storkey",
+          "orgs": [
+            "School of Informatics",
+            "University of Edinburgh",
+            "UK"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2308.10077",
+      "date": "2023-08-19T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.01553",
+      "score": 0.33333334,
+      "title": "Detecting Low Pass Graph Signals via Spectral Pattern: Sampling Complexity and Applications",
+      "tldr": "[research paper] The paper introduces blind detection of low pass graph signals on modular graphs by exploiting a unique spectral pattern in the principal subspace of observed signals. Two detectors—based on the Perron-Frobenius theorem and K-means score—are derived to distinguish low pass from non-low pass signals without prior knowledge of the graph topology, with rigorous finite-sample performance bounds under stochastic block model assumptions. The method enables robust graph learning, identifies antagonistic ties in opinion dynamics, and detects anomalies in power systems by pre-screening corrupted or adversarial data, demonstrating improved accuracy over standard GSP methods when applied to real-world datasets with noise or attacks.",
+      "abstract": "This paper proposes a blind detection problem for low pass graph signals. Without assuming knowledge of the exact graph topology, we aim to detect if a set of graph signal observations are generated from a low pass graph filter. Our problem is motivated by the widely adopted assumption of low pass (a.k.a.~smooth) signals required by many existing works in graph signal processing (GSP), as well as the longstanding problem of network dynamics identification. Focusing on detecting low pass graph signals on modular graphs whose cutoff frequency coincides with the number of clusters in the graph, we propose to leverage the unique spectral pattern exhibited by such low pass graph signals. We analyze the sample complexity of these detectors considering the effects of graph filter's properties, random delays, and other parameters. We show novel applications of the blind detector on robustifying graph learning, identifying antagonistic ties in opinion dynamics, and detecting anomalies in power systems. Numerical experiments validate our findings.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Chenyue Zhang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yiran He",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Hoi-To Wai",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.01553",
+      "date": "2023-06-02T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "eess.SP"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2501.02969",
+      "score": 0.33333334,
+      "title": "LOHA: Direct Graph Spectral Contrastive Learning Between Low-pass and High-pass Views",
+      "tldr": "[research paper] LOHA introduces a self-supervised contrastive learning framework that directly contrasts low-pass and high-pass graph views by leveraging their inherent spectral diversity, rather than maximizing differences. Instead of pushing views apart, it harmonizes them via a composite feature derived from the spectral signal trend—capturing stable, filter-robust propagation differences—thereby preserving node-level feature consistency. This approach achieves 2.8% average performance gains over state-of-the-art methods across nine real-world graphs and outperforms fully supervised baselines on heterophilic datasets, demonstrating superior adaptability to varying homophily levels.",
+      "abstract": "Spectral Graph Neural Networks effectively handle graphs with different homophily levels, with low-pass filter mining feature smoothness and high-pass filter capturing differences. When these distinct filters could naturally form two opposite views for self-supervised learning, the commonalities between the counterparts for the same node remain unexplored, leading to suboptimal performance. In this paper, a simple yet effective self-supervised contrastive framework, LOHA, is proposed to address this gap. LOHA optimally leverages low-pass and high-pass views by embracing \"harmony in diversity\". Rather than solely maximizing the difference between these distinct views, which may lead to feature separation, LOHA harmonizes the diversity by treating the propagation of graph signals from both views as a composite feature. Specifically, a novel high-dimensional feature named spectral signal trend is proposed to serve as the basis for the composite feature, which remains relatively unaffected by changing filters and focuses solely on original feature differences. LOHA achieves an average performance improvement of 2.8% over runner-up models on 9 real-world datasets with varying homophily levels. Notably, LOHA even surpasses fully-supervised models on several datasets, which underscores the potential of LOHA in advancing the efficacy of spectral GNNs for diverse graph structures.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Ziyun Zou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yinghui Jiang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Lian Shen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Juan Liu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xiangrong Liu",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2501.02969",
+      "date": "2025-01-06T00:00:00",
+      "citation_count": 9,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2203.14748",
+      "score": 0.25,
+      "title": "Universal Graph Filter Design based on Butterworth, Chebyshev and Elliptic Functions",
+      "tldr": "[research paper] The paper proposes a universal IIR graph filter design framework based on Butterworth, Chebyshev, and Elliptic functions by deriving zero-pole structures from classical analog filter theory and constructing conjugate graph filters for high-pass responses. These high-pass filters are then mapped to low-pass, band-pass, and band-stop filters via frequency transformation, with filter order determined analytically based on passband and stopband attenuation requirements. The method outperforms ARMA, LLS, and Chebyshev FIR approaches in frequency response accuracy, with the Elliptic filter achieving the best approximation of step responses due to its steeper roll-off and tighter attenuation control.",
+      "abstract": "Graph filters are crucial tools in processing the spectrum of graph signals. In this paper, we propose to design universal IIR graph filters with low computational complexity by using three kinds of functions, which are Butterworth, Chebyshev, and Elliptic functions, respectively. Specifically, inspired by the classical analog filter design method, we first derive the zeros and poles of graph frequency responses. With these zeros and poles, we construct the conjugate graph filters to design the Butterworth high pass graph filter, Chebyshev high pass graph filter, and Elliptic high pass graph filter, respectively. On this basis, we further propose to construct a desired graph filter of low pass, band pass, and band stop by mapping the parameters of the desired graph filter to those of the equivalent high pass graph filter. Furthermore, we propose to set the graph filter order given the maximum passband attenuation and the minimum stopband attenuation. Our numerical results show that the proposed graph filter design methods realize the desired frequency response more accurately than the autoregressive moving average (ARMA) graph filter design method, the linear least-squares fitting (LLS) based graph filter design method, and the Chebyshev FIR polynomial graph filter design method.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yangz@njupt.edu.cn"
+          },
+          "name": "Zirui Ge",
+          "orgs": [
+            "School of Communication and Information Engineering, Nanjing University of Posts and Telecommunications, Nanjing, 210023, China."
+          ]
+        },
+        {
+          "misc": {
+            "email": "guohy@njupt.edu.cn"
+          },
+          "name": "Haiyan Guo",
+          "orgs": [
+            "School of Communication and Information Engineering, Nanjing University of Posts and Telecommunications, Nanjing, 210023, China."
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Tingting Wang",
+          "orgs": [
+            "School of Communication and Information Engineering, Nanjing University of Posts and Telecommunications, Nanjing, 210023, China."
+          ]
+        },
+        {
+          "misc": {
+            "email": "yangz@njupt.edu.cn",
+            "contributing_authors": [
+              "1019010430@njupt.edu.cn",
+              "guohy@njupt.edu.cn",
+              "2018010215@njupt.edu.cn"
+            ]
+          },
+          "name": "Zhen Yang",
+          "orgs": [
+            "School of Communication and Information Engineering, Nanjing University of Posts and Telecommunications, Nanjing, 210023, China."
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2203.14748",
+      "date": "2022-03-28T00:00:00",
+      "citation_count": 4,
+      "categories": [
+        "eess.SP"
+      ],
+      "venue": "Circuits, systems, and signal processing",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

@@ -75,3 +75,23 @@ Additional risk items from targeted search:
 - Label-free graph learning with LLM annotators (`2605.27913`) strengthens G6 leakage risk.
 
 No Stage 1.6 DeepXiv result is directly comparable under `BENCHMARK_PROTOCOL.md`. Exact saved split JSON, identical seed list and confirmed `test@best validation epoch` remain required.
+
+## Stage 2A Idea Status
+
+Raw ideas are recorded in `notes/STAGE2_RAW_IDEAS.md` and `research-wiki/ideas/`.
+
+Filtered ideas and novelty checks:
+
+- Main candidate 1: `GCL-I03` protocol-aligned MGM-vs-GCL regime selector. Reviewer verdict `KEEP`; frame as diagnostic/benchmark objective-boundary work.
+- Main candidate 2: `GCL-I02` regime-conditioned negative validity boundary. Reviewer verdict `KEEP`; frame as "when hard negatives are harmful", not reweighting.
+- Backup: `GCL-I04` heterophily-type signed relation contrast. Reviewer verdict `REVISE`; first prove subtype diagnostic beyond HLCL/GCL-OT.
+- Revise/companion: `GCL-I01`, `GCL-I06`, `GCL-I08`, `GCL-I09`.
+- Killed: `GCL-I05`, `GCL-I07`, `GCL-I10`; do not regenerate without a new closest-work delta.
+
+Required Stage 2B checks before experiments:
+
+- For `GCL-I03`: graph SSL benchmark/protocol papers, automated graph SSL objective selection, GCL vs untrained/GAE baselines.
+- For `GCL-I02`: Negative Metric Learning for Graphs, GRAPE/affinity-uncertainty hard negative, BalanceGCL, HomoGCL, homophily-aware heterogeneous GCL.
+- For `GCL-I04`: GCL-OT, DSSL, HGRL, GraphACL, relation-aware heterophily learning.
+
+No idea is accepted as a final method.

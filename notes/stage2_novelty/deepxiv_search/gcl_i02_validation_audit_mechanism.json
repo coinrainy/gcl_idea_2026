@@ -1,0 +1,253 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2306.05557",
+      "score": 0.5714286,
+      "title": "On Performance Discrepancies Across Local Homophily Levels in Graph Neural Networks",
+      "tldr": "[research paper] This paper identifies a critical failure mode in Graph Neural Networks (GNNs): performance degradation when a node's local homophily diverges from the global homophily of the graph. Through theoretical analysis, it shows that GNNs trained on globally homophilous graphs perform poorly on test nodes with locally heterophilous neighbors, due to an over-reliance on global homophily assumptions. Empirical validation across synthetic and real-world datasets demonstrates that GNNs designed for heterophilous settings (e.g., via decoupled aggregation or predict-before-propagate) maintain more consistent performance across local homophily levels, reducing performance discrepancies and revealing a structural inequality in GNN generalization that stems from network topology rather than exogenous attributes.",
+      "abstract": "Graph Neural Network (GNN) research has highlighted a relationship between high homophily (i.e., the tendency of nodes of the same class to connect) and strong predictive performance in node classification. However, recent work has found the relationship to be more nuanced, demonstrating that simple GNNs can learn in certain heterophilous settings. To resolve these conflicting findings and align closer to real-world datasets, we go beyond the assumption of a global graph homophily level and study the performance of GNNs when the local homophily level of a node deviates from the global homophily level. Through theoretical and empirical analysis, we systematically demonstrate how shifts in local homophily can introduce performance degradation, leading to performance discrepancies across local homophily levels. We ground the practical implications of this work through granular analysis on five real-world datasets with varying global homophily levels, demonstrating that (a) GNNs can fail to generalize to test nodes that deviate from the global homophily of a graph, and (b) high local homophily does not necessarily confer high performance for a node. We further show that GNNs designed for globally heterophilous graphs can alleviate performance discrepancy by improving performance across local homophily levels, offering a new perspective on how these GNNs achieve stronger global performance.",
+      "authors": [
+        {
+          "misc": {
+            "email": "dlovelan@umich.edu"
+          },
+          "name": "Donald Loveland",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "heimann2@11nl.gov"
+          },
+          "name": "Mark Heimann",
+          "orgs": [
+            "Lawrence Livermore National Lab"
+          ]
+        },
+        {
+          "misc": {
+            "email": "schaub@cs.rwth-aachen.de"
+          },
+          "name": "Michael T. Schaub",
+          "orgs": [
+            "RWTH Aachen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiongzhu@umich.edu"
+          },
+          "name": "Jiong Zhu",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "benfish@umich.edu"
+          },
+          "name": "Benjamin Fish",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dkoutra@umich.edu"
+          },
+          "name": "Danai Koutra",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.05557",
+      "date": "2023-06-08T00:00:00",
+      "citation_count": 11,
+      "categories": [
+        "cs.SI",
+        "cs.LG"
+      ],
+      "venue": "LOG IN",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2605.19733",
+      "score": 0.5,
+      "title": "Graph Neural Networks for Community Detection in Graph Signal Analysis",
+      "tldr": "[Research Paper] This paper investigates using Graph Neural Networks (GNNs) for community detection to facilitate graph signal interpolation via a Partition of Unity Method (PUM). By leveraging GNN-derived communities to construct local subdomains, the authors demonstrate that deep learning-based clustering provides effective partitions for scalable and accurate signal reconstruction on urban networks.",
+      "abstract": "Community detection is a central problem in graph analysis, with applications ranging from network science to graph signal processing. In recent years, Graph Neural Networks (GNNs) have emerged as effective tools for learning low-dimensional representations of graph-structured data and have shown strong performance in clustering tasks, particularly on large and high-dimensional graphs. This paper investigates the use of GNN-based community detection within a graph signal interpolation framework. After reviewing the main classes of GNN architectures for community detection according to a standard taxonomy, we integrate the resulting graph communities into a Partition of Unity Method (PUM) for interpolation with Graph Basis Functions (GBFs). In this approach, GNN-derived communities are used to construct local subdomains on which GBF interpolants are computed and subsequently combined into a global approximation. Numerical experiments on benchmark %graph datasets, including geometric and urban network examples demonstrate that the proposed combination of GNN-based clustering and GBF-PUM interpolation yields accurate signal reconstructions. The results indicate that deep learning-based community detection can provide effective graph partitions for localized interpolation schemes, supporting its use in scalable graph signal analysis.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Roberto Cavoretto",
+          "orgs": [
+            "Department of Mathematics “Giuseppe Peano”, University of Torino, via Carlo Alberto 10, 10123 Torino, Italy"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Alessandra De Rossi",
+          "orgs": [
+            "Department of Mathematics “Giuseppe Peano”, University of Torino, via Carlo Alberto 10, 10123 Torino, Italy"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Enrico Montini",
+          "orgs": [
+            "Department of Mathematics “Giuseppe Peano”, University of Torino, via Carlo Alberto 10, 10123 Torino, Italy"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2605.19733",
+      "date": "2026-05-19T12:07:51",
+      "citation_count": 0,
+      "categories": [
+        "math.NA",
+        "cs.LG",
+        "cs.NA"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2410.16593",
+      "score": 0.39215687,
+      "title": "Graph Sampling for Scalable and Expressive Graph Neural Networks on Homophilic Graphs",
+      "tldr": "[research paper] The paper proposes a graph sampling algorithm that leverages feature homophily to preserve graph connectivity during subgraph sampling, minimizing the trace of the data correlation matrix $XX^T$ to maintain the Laplacian trace—a proxy for graph connectivity. Unlike random or spectral sampling, this method achieves $O(d|E|)$ complexity, avoids disconnected components, and outperforms random sampling in preserving graph structure and GNN transferability on homophilic citation networks by maintaining higher rank in the graph Laplacian.",
+      "abstract": "Graph Neural Networks (GNNs) excel in many graph machine learning tasks but face challenges when scaling to large networks. GNN transferability allows training on smaller graphs and applying the model to larger ones, but existing methods often rely on random subsampling, leading to disconnected subgraphs and reduced model expressivity. We propose a novel graph sampling algorithm that leverages feature homophily to preserve graph structure. By minimizing the trace of the data correlation matrix, our method better preserves the graph Laplacian trace -- a proxy for the graph connectivity -- than random sampling, while achieving lower complexity than spectral methods. Experiments on citation networks show improved performance in preserving Laplacian trace and GNN transferability compared to random sampling.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Haolin Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Haoyu Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Luana Ruiz",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2410.16593",
+      "date": "2024-10-22T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "eess.SP",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2104.01404",
+      "score": 0.33333334,
+      "title": "New Benchmarks for Learning on Non-Homophilous Graphs",
+      "tldr": "[research paper] The paper introduces a suite of large-scale, real-world non-homophilous graph datasets that overcome the limitations of prior small, synthetic, or narrow datasets used to evaluate graph neural networks (GNNs) in low-homophily settings. It proposes a novel homophily metric that is robust to class imbalance and dataset size, enabling more accurate detection of homophily across diverse graph structures. Through extensive benchmarking of simple baselines and advanced GNNs, the authors demonstrate that standard GNNs perform poorly on non-homophilous graphs, while methods that decouple ego and neighbor features, use higher-order neighborhoods, or combine multi-scale graph information show improved performance—highlighting the need for more realistic and diverse benchmarks in graph learning.",
+      "abstract": "Much data with graph structures satisfy the principle of homophily, meaning that connected nodes tend to be similar with respect to a specific attribute. As such, ubiquitous datasets for graph machine learning tasks have generally been highly homophilous, rewarding methods that leverage homophily as an inductive bias. Recent work has pointed out this particular focus, as new non-homophilous datasets have been introduced and graph representation learning models better suited for low-homophily settings have been developed. However, these datasets are small and poorly suited to truly testing the effectiveness of new methods in non-homophilous settings. We present a series of improved graph datasets with node label relationships that do not satisfy the homophily principle. Along with this, we introduce a new measure of the presence or absence of homophily that is better suited than existing measures in different regimes. We benchmark a range of simple methods and graph neural networks across our proposed datasets, drawing new insights for further research. Data and codes can be found at https://github.com/CUAI/Non-Homophily-Benchmarks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "dl772@cornell.edu"
+          },
+          "name": "Derek Lim",
+          "orgs": [
+            "Cornell University",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "fmh42@cornell.edu"
+          },
+          "name": "Felix Hohne",
+          "orgs": [
+            "Cornell University",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xl289@cornell.edu"
+          },
+          "name": "Xiuyu Li",
+          "orgs": [
+            "Cornell University",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sernam@gmail.com"
+          },
+          "name": "Ser-Nam Lim",
+          "orgs": [
+            "Facebook AI",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2104.01404",
+      "date": "2021-04-03T00:00:00",
+      "citation_count": 116,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/CUAI/Non-Homophily-Benchmarks."
+    },
+    {
+      "arxiv_id": "2410.04287",
+      "score": 0.25,
+      "title": "Unveiling the Impact of Local Homophily on GNN Fairness: In-Depth Analysis and New Benchmarks",
+      "tldr": "[research paper] The paper identifies a novel source of GNN unfairness arising from out-of-distribution (OOD) local homophily—where trained models perform poorly and unfairly on nodes with underrepresented local homophily levels. It formally links local homophily to fairness via an OOD framework, showing that heterophilous nodes embedded in homophilous graphs amplify disparities in sensitive attribute predictions, leading to up to 30% fairness drops in semi-synthetic and 24% in real-world datasets. The work introduces three new GNN fairness benchmarks with diverse homophily levels and a semi-synthetic graph generator using optimal transport to control local homophily distributions.",
+      "abstract": "Graph Neural Networks (GNNs) often struggle to generalize when graphs exhibit both homophily (same-class connections) and heterophily (different-class connections). Specifically, GNNs tend to underperform for nodes with local homophily levels that differ significantly from the global homophily level. This issue poses a risk in user-centric applications where underrepresented homophily levels are present. Concurrently, fairness within GNNs has received substantial attention due to the potential amplification of biases via message passing. However, the connection between local homophily and fairness in GNNs remains underexplored. In this work, we move beyond global homophily and explore how local homophily levels can lead to unfair predictions. We begin by formalizing the challenge of fair predictions for underrepresented homophily levels as an out-of-distribution (OOD) problem. We then conduct a theoretical analysis that demonstrates how local homophily levels can alter predictions for differing sensitive attributes. We additionally introduce three new GNN fairness benchmarks, as well as a novel semi-synthetic graph generator, to empirically study the OOD problem. Across extensive analysis we find that two factors can promote unfairness: (a) OOD distance, and (b) heterophilous nodes situated in homophilous graphs. In cases where these two conditions are met, fairness drops by up to 24% on real world datasets, and 30% in semi-synthetic datasets. Together, our theoretical insights, empirical analysis, and algorithmic contributions unveil a previously overlooked source of unfairness rooted in the graph's homophily information.",
+      "authors": [
+        {
+          "misc": {
+            "email": "dlovelan@umich.edu"
+          },
+          "name": "Donald Loveland",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dkoutra@umich.edu"
+          },
+          "name": "Danai Koutra",
+          "orgs": [
+            "University of Michigan, Ann Arbor"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2410.04287",
+      "date": "2024-10-05T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG",
+        "cs.CY",
+        "cs.SI"
+      ],
+      "venue": "SDM",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

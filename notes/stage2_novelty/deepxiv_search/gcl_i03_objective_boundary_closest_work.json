@@ -1,0 +1,301 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2407.17723",
+      "score": 0.5,
+      "title": "Your Graph Recommender is Provably a Single-view Graph Contrastive Learning",
+      "tldr": "[theoretical research paper] The paper establishes a provable equivalence between graph recommenders (GR) and single-view graph contrastive learning (GCL), showing that LightGCN's encoder is effectively a linear graph convolution with one-hot inputs and that its recommendation loss is bounded by a single-view GCL loss. This equivalence explains design choices in GR (e.g., removal of self-loops and nonlinearity) and demonstrates that GR models can be trained entirely with GCL loss—challenging the prior assumption that GCL is unsupervised and unsuitable for pre-training in recommendation systems. The findings enable cross-pollination of research directions between GR and GCL, such as scalability and negative sample mining, and provide a rigorous theoretical foundation for existing models.",
+      "abstract": "Graph recommender (GR) is a type of graph neural network (GNNs) encoder that is customized for extracting information from the user-item interaction graph. Due to its strong performance on the recommendation task, GR has gained significant attention recently. Graph contrastive learning (GCL) is also a popular research direction that aims to learn, often unsupervised, GNNs with certain contrastive objectives. As a general graph representation learning method, GCLs have been widely adopted with the supervised recommendation loss for joint training of GRs. Despite the intersection of GR and GCL research, theoretical understanding of the relationship between the two fields is surprisingly sparse. This vacancy inevitably leads to inefficient scientific research.\\\n  In this paper, we aim to bridge the gap between the field of GR and GCL from the perspective of encoders and loss functions. With mild assumptions, we theoretically show an astonishing fact that graph recommender is equivalent to a commonly-used single-view graph contrastive model. Specifically, we find that (1) the classic encoder in GR is essentially a linear graph convolutional network with one-hot inputs, and (2) the loss function in GR is well bounded by a single-view GCL loss with certain hyperparameters. The first observation enables us to explain crucial designs of GR models, e.g., the removal of self-loop and nonlinearity. And the second finding can easily prompt many cross-field research directions. We empirically show a remarkable result that the recommendation loss and the GCL loss can be used interchangeably. The fact that we can train GR models solely with the GCL loss is particularly insightful, since before this work, GCLs were typically viewed as unsupervised methods that need fine-tuning. We also discuss some potential future works inspired by our theory.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yangwj22@m.fudan.edu.cn"
+          },
+          "name": "Wenjie Yang",
+          "orgs": [
+            "Fudan University",
+            "Shanghai",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "szzhang17@fdu.edu.cn"
+          },
+          "name": "Shengzhong Zhang",
+          "orgs": [
+            "Fudan University",
+            "Shanghai",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jxguo24@m.fudan.edu.cn"
+          },
+          "name": "Jiaxing Guo",
+          "orgs": [
+            "Fudan University",
+            "Shanghai",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "huangzf@fudan.edu.cn"
+          },
+          "name": "Zengfeng Huang",
+          "orgs": [
+            "Fudan University",
+            "Shanghai",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2407.17723",
+      "date": "2024-07-25T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2406.17359",
+      "score": 0.5,
+      "title": "Classification of 3-Node Restricted Excitatory-Inhibitory Networks",
+      "tldr": "[mathematical research paper] The paper classifies connected 3-node restricted excitatory-inhibitory (REI) networks under ODE-equivalence and minimality conditions, extending prior work on 2-node networks. It introduces a structural constraint where node type determines output type (excitatory nodes only emit excitatory signals), reducing the network space and enabling a precise taxonomy of network motifs. The classification identifies distinct dynamical classes and minimal representatives, providing a foundation for analyzing bifurcations and dynamics in biological regulatory networks such as gene regulatory networks in *E. coli*.",
+      "abstract": "We classify connected 3-node restricted excitatory-inhibitory networks, extending our previous paper (`Classification of 2-node Excitatory-Inhibitory Networks', Mathematical Biosciences 373 (2024) 109205). We assume that there are two node-types and two arrow-types, excitatory and inhibitory; all excitatory arrows are identical and all inhibitory arrows are identical; and excitatory (resp. inhibitory) nodes can only output excitatory (resp. inhibitory) arrows. The classification is performed under the following two network perspectives: ODE-equivalence and minimality; and valence less or equal to 2. The results of this and the previous work constitute a first step towards analysing dynamics and bifurcations of excitatory-inhibitory networks and have potential applications to biological network models.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Manuela Aguiar",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ana Dias",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ian Stewart",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2406.17359",
+      "date": "2024-06-25T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "math.DS"
+      ],
+      "venue": "Mathematical Biosciences",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2605.20257",
+      "score": 0.41025642,
+      "title": "Instance Discrimination for Link Prediction",
+      "tldr": "[Research Paper] This work adapts instance discrimination models, such as GRACE and BGRL, to the link prediction task by introducing link-based representations and a novel structural augmentation based on community structure. The proposed models, L-GRACE and L-BGRL, demonstrate performance on par with state-of-the-art methods, particularly on unattributed graphs.",
+      "abstract": "Recently, instance discrimination models have emerged as a major solution for self-supervised learning. Having already demonstrated its effectiveness in the image domain, instance discrimination learning is now proving equally convincing in the graph domain, in particular for node classification. However, fewer contributions have tackled the link prediction task. In this contribution, we propose to adapt existing methods to this context. We first provide a rigorous evaluation of existing self-supervised models in the field of link prediction, showing that the main performance depends on the augmentation process (like in computer vision). We then propose a new structural augmentation based on the community structure that is relevant for link prediction. Our main contribution introduces two new models, L-GRACE and L-BGRL, based on link representations instead of node representations, which improve the performance of the existing methods, especially on unattributed graphs, and we show that they perform on par with the state of the art, both in supervised and self-supervised contexts.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Valentin Cuzin-Rambaud",
+          "orgs": [
+            "Université Lyon 1, INSA Lyon, CNRS, LIRIS, UMR 5205, Lyon, France"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Mathieu Lefort",
+          "orgs": [
+            "Université Lyon 1, INSA Lyon, CNRS, LIRIS, UMR 5205, Lyon, France",
+            "Université Rennes, Inria, CNRS, IRISA - UMR 6074; F-35000 Rennes, France"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Rémy Cazabet",
+          "orgs": [
+            "Université Lyon 1, INSA Lyon, CNRS, LIRIS, UMR 5205, Lyon, France"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2605.20257",
+      "date": "2026-05-18T13:27:41",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": "https://github.com/valentincuzin/GCL-Link-Prediction."
+    },
+    {
+      "arxiv_id": "2312.09708",
+      "score": 0.33333334,
+      "title": "GraphRARE: Reinforcement Learning Enhanced Graph Neural Network with Relative Entropy",
+      "tldr": "[research paper] GraphRARE introduces a node-aware relative entropy metric that jointly captures node feature and structural similarity to measure remote node importance in heterophilic graphs, addressing the limitation of homophily-based GNNs. A deep reinforcement learning (DRL) agent dynamically determines per-node hyperparameters (k and d) for neighbor selection and pruning, adapting to individual node 'personality' without relying on fixed thresholds. This enables adaptive graph topology optimization that improves node classification performance by effectively filtering noisy, distant connections while preserving informative long-range relationships.",
+      "abstract": "Graph neural networks (GNNs) have shown advantages in graph-based analysis tasks. However, most existing methods have the homogeneity assumption and show poor performance on heterophilic graphs, where the linked nodes have dissimilar features and different class labels, and the semantically related nodes might be multi-hop away. To address this limitation, this paper presents GraphRARE, a general framework built upon node relative entropy and deep reinforcement learning, to strengthen the expressive capability of GNNs. An innovative node relative entropy, which considers node features and structural similarity, is used to measure mutual information between node pairs. In addition, to avoid the sub-optimal solutions caused by mixing useful information and noises of remote nodes, a deep reinforcement learning-based algorithm is developed to optimize the graph topology. This algorithm selects informative nodes and discards noisy nodes based on the defined node relative entropy. Extensive experiments are conducted on seven real-world datasets. The experimental results demonstrate the superiority of GraphRARE in node classification and its capability to optimize the original graph topology.",
+      "authors": [
+        {
+          "misc": {
+            "email": "pengtianhao@buaa.edu.cn"
+          },
+          "name": "Tianhao Peng",
+          "orgs": [
+            "Beihang University, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wwj09315@buaa.edu.cn"
+          },
+          "name": "Wenjun Wu",
+          "orgs": [
+            "Beihang University, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Haitao.yuan@ntu.edu.sg"
+          },
+          "name": "Haitao Yuan",
+          "orgs": [
+            "Nanyang Technological University, Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhifeng.bao@rmit.edu.au"
+          },
+          "name": "Zhifeng Bao",
+          "orgs": [
+            "RMIT University, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhaopengrui@buaa.edu.cn"
+          },
+          "name": "Zhao Pengrui",
+          "orgs": [
+            "Beihang University, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "nlsdeyuxin@buaa.edu.cn"
+          },
+          "name": "Xin Yu",
+          "orgs": [
+            "Beihang University, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xtlin@buaa.edu.cn"
+          },
+          "name": "Xuetao Lin",
+          "orgs": [
+            "Beihang University, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuliang@bjut.edu.cn"
+          },
+          "name": "Yu Liang",
+          "orgs": [
+            "Beijing University of Technology, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "buaapyj@buaa.edu.cn"
+          },
+          "name": "Yanjun Pu",
+          "orgs": [
+            "Beihang University, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2312.09708",
+      "date": "2023-12-15T00:00:00",
+      "citation_count": 23,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE International Conference on Data Engineering",
+      "venue_year": 2024,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2208.02162",
+      "score": 0.25,
+      "title": "One Node at a Time: Node-Level Network Classification",
+      "tldr": "[research paper] The paper demonstrates that nodes from distinct network categories exhibit distinguishable structural properties—such as degree, clustering coefficient, betweenness, eigenvector, and coreness—enabling accurate classification of individual nodes without access to the full network. This node-level discriminability allows for whole-network classification from small node samples and enables network bootstrapping via iterative node attachment/pruning, challenging the assumption that global network differences are the only source of structural variation.",
+      "abstract": "Network classification aims to group networks (or graphs) into distinct categories based on their structure. We study the connection between classification of a network and of its constituent nodes, and whether nodes from networks in different groups are distinguishable based on structural node characteristics such as centrality and clustering coefficient. We demonstrate, using various network datasets and random network models, that a classifier can be trained to accurately predict the network category of a given node (without seeing the whole network), implying that complex networks display distinct structural patterns even at the node level. Finally, we discuss two applications of node-level network classification: (i) whole-network classification from small samples of nodes, and (ii) network bootstrapping.",
+      "authors": [
+        {
+          "misc": {
+            "email": "sshai@wesleyan.edu"
+          },
+          "name": "Saray Shai",
+          "orgs": [
+            "Department of Mathematics and Computer Science",
+            "Wesleyan University",
+            "Middletown, CT USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hjacobs@wesleyan.edu"
+          },
+          "name": "Isaac Jacobs",
+          "orgs": [
+            "Department of Mathematics and Computer Science",
+            "Wesleyan University",
+            "Middletown, CT USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "peter.j.mucha@dartmouth.edu"
+          },
+          "name": "Peter J. Mucha",
+          "orgs": [
+            "Department of Mathematics",
+            "Dartmouth College",
+            "Hanover, NH USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2208.02162",
+      "date": "2022-08-03T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.SI",
+        "cs.LG",
+        "physics.soc-ph"
+      ],
+      "venue": "International Conference on Machine Learning and Applications",
+      "venue_year": 2021,
+      "github_url": null
+    }
+  ]
+}

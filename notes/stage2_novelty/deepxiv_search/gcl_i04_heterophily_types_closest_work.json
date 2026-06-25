@@ -1,0 +1,234 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2303.06344",
+      "score": 1.0,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2211.10890",
+      "score": 0.33333334,
+      "title": "Single-Pass Contrastive Learning Can Work for Both Homophilic and Heterophilic Graph",
+      "tldr": "[research paper] The paper proposes Single-Pass Graph Contrastive Learning (SP-GCL), a theoretically grounded, augmentation-free graph contrastive learning method that operates in a single forward pass and works effectively on both homophilic and heterophilic graphs. It establishes a concentration property of neighborhood-aggregated node features independent of graph type, showing that aggregated features concentrate around a fixed distribution, enabling a single-pass contrastive loss equivalent to matrix factorization on a transformed graph. This leads to strong theoretical performance guarantees for downstream node classification and empirically outperforms state-of-the-art methods on heterophilic benchmarks with significantly reduced computational overhead.",
+      "abstract": "Existing graph contrastive learning (GCL) techniques typically require two forward passes for a single instance to construct the contrastive loss, which is effective for capturing the low-frequency signals of node features. Such a dual-pass design has shown empirical success on homophilic graphs, but its effectiveness on heterophilic graphs, where directly connected nodes typically have different labels, is unknown. In addition, existing GCL approaches fail to provide strong performance guarantees. Coupled with the unpredictability of GCL approaches on heterophilic graphs, their applicability in real-world contexts is limited. Then, a natural question arises: Can we design a GCL method that works for both homophilic and heterophilic graphs with a performance guarantee? To answer this question, we theoretically study the concentration property of features obtained by neighborhood aggregation on homophilic and heterophilic graphs, introduce the single-pass augmentation-free graph contrastive learning loss based on the property, and provide performance guarantees for the minimizer of the loss on downstream tasks. As a direct consequence of our analysis, we implement the Single-Pass Graph Contrastive Learning method (SP-GCL). Empirically, on 14 benchmark datasets with varying degrees of homophily, the features learned by the SP-GCL can match or outperform existing strong baselines with significantly less computational overhead, which demonstrates the usefulness of our findings in real-world cases.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haonan.wang@u.nus.edu"
+          },
+          "name": "Haonan Wang",
+          "orgs": [
+            "National University of Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jieyuz2@cs.washington.edu"
+          },
+          "name": "Jieyu Zhang",
+          "orgs": [
+            "University of Washington"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiz3@illinois.edu"
+          },
+          "name": "Qi Zhu",
+          "orgs": [
+            "University of Illinois Urbana-Champaign"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wei.huang.vr@riken.jp"
+          },
+          "name": "Wei Huang",
+          "orgs": [
+            "RIKEN Center for Advanced Intelligence Project"
+          ]
+        },
+        {
+          "misc": {
+            "email": "kenji@nus.edu.sg"
+          },
+          "name": "Kenji Kawaguchi",
+          "orgs": [
+            "National University of Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xkxiao@nus.edu.sg"
+          },
+          "name": "Xiaokui Xiao",
+          "orgs": [
+            "National University of Singapore"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2211.10890",
+      "date": "2022-11-20T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "Trans. Mach. Learn. Res.",
+      "venue_year": null,
+      "github_url": "https://github.com/haonan3/SPGCL"
+    },
+    {
+      "arxiv_id": "2311.18177",
+      "score": 0.33333334,
+      "title": "An Effective Universal Polynomial Basis for Spectral Graph Neural Networks",
+      "tldr": "[research paper] The paper introduces UniBasis, a universal polynomial basis for spectral graph neural networks that adapts to the heterophily degree of graphs by aligning polynomial bases with signal frequency distributions in heterogeneous graph structures. Through theoretical analysis, it proves that optimal graph filters' frequency components scale with heterophily, leading to the design of an adaptive heterophily basis that combines with a homophily basis to form UniBasis. The resulting UniFilter outperforms 20 baselines across real-world and synthetic datasets with varying heterophily, demonstrating superior performance on heterophily graphs and validating the basis's adaptability and interpretability.",
+      "abstract": "Spectral Graph Neural Networks (GNNs), also referred to as graph filters have gained increasing prevalence for heterophily graphs. Optimal graph filters rely on Laplacian eigendecomposition for Fourier transform. In an attempt to avert the prohibitive computations, numerous polynomial filters by leveraging distinct polynomials have been proposed to approximate the desired graph filters. However, polynomials in the majority of polynomial filters are predefined and remain fixed across all graphs, failing to accommodate the diverse heterophily degrees across different graphs. To tackle this issue, we first investigate the correlation between polynomial bases of desired graph filters and the degrees of graph heterophily via a thorough theoretical analysis. Afterward, we develop an adaptive heterophily basis by incorporating graph heterophily degrees. Subsequently, we integrate this heterophily basis with the homophily basis, creating a universal polynomial basis UniBasis. In consequence, we devise a general polynomial filter UniFilter. Comprehensive experiments on both real-world and synthetic datasets with varying heterophily degrees significantly support the superiority of UniFilter, demonstrating the effectiveness and generality of UniBasis, as well as its promising capability as a new method for graph analysis.",
+      "authors": [
+        {
+          "misc": {
+            "email": "kkhuang@nus.edu.sg"
+          },
+          "name": "Keke Huang",
+          "orgs": [
+            "National University of Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "pl219@cam.ac.uk"
+          },
+          "name": "Pietro Liò",
+          "orgs": [
+            "University of Cambridge"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2311.18177",
+      "date": "2023-11-30T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG",
+        "cs.SI",
+        "eess.SP"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1907.07837",
+      "score": 0.25,
+      "title": "The relation between the independence number and rank of a signed graph",
+      "tldr": "[research paper] The paper establishes a tight inequality relating the rank of a signed graph, its cyclomatic number, and the independence number of its underlying graph: $2n - 2c(G) \\leq r(G,\\sigma) + 2\\alpha(G) \\leq 2n$. The lower bound is achieved precisely when the signed graph has a specific structural form involving disjoint cycles and pendant vertices, and the extremal cases are fully characterized. This extends prior work on rank-nullity relations in signed graphs by introducing a novel interplay between topological graph invariants and spectral properties.",
+      "abstract": "A signed graph $(G, \\\\sigma)$ is a graph with a sign attached to each of its edges, where $G$ is the underlying graph of $(G, \\\\sigma)$. Let $c(G)$, $\\\\alpha(G)$ and $r(G, \\\\sigma)$ be the cyclomatic number, the independence number and the rank of the adjacency matrix of $(G, \\\\sigma)$, respectively. In this paper, we study the relation among the independence number, the rank and the cyclomatic number of a signed graph $(G, \\\\sigma)$ with order $n$, and prove that $2n-2c(G) \\\\leq r(G, \\\\sigma)+2\\\\alpha(G) \\\\leq 2n$. Furthermore, the signed graphs that reaching the lower bound are investigated.",
+      "authors": [
+        {
+          "misc": {
+            "email": "he1046436120@126.com"
+          },
+          "name": "Shengjie He",
+          "orgs": [
+            "Department of Mathematics, Beijing Jiaotong University, Beijing, 100044, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "rxhao@bjtu.edu.cn"
+          },
+          "name": "Rong-Xia Hao",
+          "orgs": [
+            "Department of Mathematics, Beijing Jiaotong University, Beijing, 100044, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/1907.07837",
+      "date": "2019-07-18T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "math.CO"
+      ],
+      "venue": "arXiv: Combinatorics",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.05533",
+      "score": 0.25,
+      "title": "Rethinking Graph Contrastive Learning through Relative Similarity Preservation",
+      "tldr": "[research paper] Graph contrastive learning (GCL) traditionally enforces absolute similarity between augmented graph views, but this fails due to graphs' discrete, non-Euclidean nature—view generation distorts semantics and similarity verification is unreliable. The paper identifies a universal pattern across 11 real-world graphs: label consistency decays systematically with structural distance, showing smooth decay in homophily and oscillatory decay in heterophily graphs, revealing that structural proximity naturally encodes relative semantic similarity. This insight leads to RELGCL, a novel framework that preserves relative similarity via collective pairwise and listwise objectives, outperforming 20 existing methods across both homophily and heterophily graphs with strong theoretical grounding from random walk theory.",
+      "abstract": "Graph contrastive learning (GCL) has achieved remarkable success by following the computer vision paradigm of preserving absolute similarity between augmented views. However, this approach faces fundamental challenges in graphs due to their discrete, non-Euclidean nature -- view generation often breaks semantic validity and similarity verification becomes unreliable. Through analyzing 11 real-world graphs, we discover a universal pattern transcending the homophily-heterophily dichotomy: label consistency systematically diminishes as structural distance increases, manifesting as smooth decay in homophily graphs and oscillatory decay in heterophily graphs. We establish theoretical guarantees for this pattern through random walk theory, proving label distribution convergence and characterizing the mechanisms behind different decay behaviors. This discovery reveals that graphs naturally encode relative similarity patterns, where structurally closer nodes exhibit collectively stronger semantic relationships. Leveraging this insight, we propose RELGCL, a novel GCL framework with complementary pairwise and listwise implementations that preserve these inherent patterns through collective similarity objectives. Extensive experiments demonstrate that our method consistently outperforms 20 existing approaches across both homophily and heterophily graphs, validating the effectiveness of leveraging natural relative similarity over artificial absolute similarity.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Zhiyuan Ning",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Pengfei Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ziyue Qiao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Pengyang Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yuanchun Zhou",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.05533",
+      "date": "2025-05-08T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

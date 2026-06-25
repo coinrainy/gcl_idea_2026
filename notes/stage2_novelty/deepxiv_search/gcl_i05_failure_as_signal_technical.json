@@ -1,0 +1,257 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2512.13235",
+      "score": 0.6111111,
+      "title": "CORE: Contrastive Masked Feature Reconstruction on Graphs",
+      "tldr": "[research paper] The paper establishes a theoretical convergence between masked feature reconstruction (MFR) and node-level graph contrastive learning (GCL) under low temperature regimes, where negative sampling becomes negligible. It proposes CORE, a novel self-supervised framework that integrates MFR with GCL by forming positive pairs between original and reconstructed masked node features, and using other masked nodes as negative samples—enabling contextual feature prioritization without requiring graph augmentations. Empirical results show CORE outperforms MFR, GraphMAE, and GraphMAE2 by up to 3.82% on graph classification and 3.76% on node classification tasks, demonstrating superior performance through synergistic reconstruction and discrimination.",
+      "abstract": "In the rapidly evolving field of self-supervised learning on graphs, generative and contrastive methodologies have emerged as two dominant approaches. Our study focuses on masked feature reconstruction (MFR), a generative technique where a model learns to restore the raw features of masked nodes in a self-supervised manner. We observe that both MFR and graph contrastive learning (GCL) aim to maximize agreement between similar elements. Building on this observation, we reveal a novel theoretical insight: under specific conditions, the objectives of MFR and node-level GCL converge, despite their distinct operational mechanisms. This theoretical connection suggests these approaches are complementary rather than fundamentally different, prompting us to explore their integration to enhance self-supervised learning on graphs. Our research presents Contrastive Masked Feature Reconstruction (CORE), a novel graph self-supervised learning framework that integrates contrastive learning into MFR. Specifically, we form positive pairs exclusively between the original and reconstructed features of masked nodes, encouraging the encoder to prioritize contextual information over the node's own features. Additionally, we leverage the masked nodes themselves as negative samples, combining MFR's reconstructive power with GCL's discriminative ability to better capture intrinsic graph structures. Empirically, our proposed framework CORE significantly outperforms MFR across node and graph classification tasks, demonstrating state-of-the-art results. In particular, CORE surpasses GraphMAE and GraphMAE2 by up to 2.80% and 3.72% on node classification tasks, and by up to 3.82% and 3.76% on graph classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "jybo.2020@phdcs.smu.edu.sg"
+          },
+          "name": "Jianyuan Bo",
+          "orgs": [
+            "Singapore Management University",
+            "Singapore, Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yfang@smu.edu.sg"
+          },
+          "name": "Yuan Fang",
+          "orgs": [
+            "Singapore Management University",
+            "Singapore, Singapore"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2512.13235",
+      "date": "2025-12-15T11:48:48",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2304.03717",
+      "score": 0.5,
+      "title": "On the Importance of Contrastive Loss in Multimodal Learning",
+      "tldr": "[theoretical research paper] The paper provides a theoretical analysis of contrastive learning in multimodal settings, showing that positive pairs drive alignment of cross-modal representations while increasing the condition number, whereas negative pairs reduce the condition number and enforce balanced representation learning—critical for recovering full singular vectors of the observation matrices. The authors prove that stochastic gradient descent with normalization converges efficiently to a balanced, near-optimal solution, and demonstrate that omitting negative pairs leads to rank-one solutions that fail to capture full modality structure, even if alignment is achieved.",
+      "abstract": "Recently, contrastive learning approaches (e.g., CLIP (Radford et al., 2021)) have received huge success in multimodal learning, where the model tries to minimize the distance between the representations of different views (e.g., image and its caption) of the same data point while keeping the representations of different data points away from each other. However, from a theoretical perspective, it is unclear how contrastive learning can learn the representations from different views efficiently, especially when the data is not isotropic. In this work, we analyze the training dynamics of a simple multimodal contrastive learning model and show that contrastive pairs are important for the model to efficiently balance the learned representations. In particular, we show that the positive pairs will drive the model to align the representations at the cost of increasing the condition number, while the negative pairs will reduce the condition number, keeping the learned representations balanced.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yunwei.ren@princeton.edu"
+          },
+          "name": "Yunwei Ren",
+          "orgs": [
+            "Princeton University",
+            "Carnegie Mellon University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuanzhil@andrew.cmu.edu"
+          },
+          "name": "Yuanzhi Li",
+          "orgs": [
+            "Carnegie Mellon University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2304.03717",
+      "date": "2023-04-07T00:00:00",
+      "citation_count": 9,
+      "categories": [
+        "cs.LG",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.11776",
+      "score": 0.5,
+      "title": "Generative and Contrastive Graph Representation Learning",
+      "tldr": "[research paper] The paper proposes a unified graph self-supervised learning framework that synergizes community-aware node-level contrastive learning with graph-level contrastive learning, addressing the limitations of both pure contrastive and generative methods. It introduces a principled positive pair generation strategy via community structure awareness, reduces reliance on computationally expensive negative sampling, and employs a comprehensive augmentation pipeline (feature masking, node, and edge perturbation) to enhance representation robustness. Experimental results on benchmark datasets show consistent performance gains—up to 2.01%—across node classification, clustering, and link prediction, outperforming state-of-the-art contrastive and generative methods, including hybrid approaches like GCMAE.",
+      "abstract": "Self-supervised learning (SSL) on graphs generates node and graph representations (i.e., embeddings) that can be used for downstream tasks such as node classification, node clustering, and link prediction. Graph SSL is particularly useful in scenarios with limited or no labeled data. Existing SSL methods predominantly follow contrastive or generative paradigms, each excelling in different tasks: contrastive methods typically perform well on classification tasks, while generative methods often excel in link prediction. In this paper, we present a novel architecture for graph SSL that integrates the strengths of both approaches. Our framework introduces community-aware node-level contrastive learning, providing more robust and effective positive and negative node pairs generation, alongside graph-level contrastive learning to capture global semantic information. Additionally, we employ a comprehensive augmentation strategy that combines feature masking, node perturbation, and edge perturbation, enabling robust and diverse representation learning. By incorporating these enhancements, our model achieves superior performance across multiple tasks, including node classification, clustering, and link prediction. Evaluations on open benchmark datasets demonstrate that our model outperforms state-of-the-art methods, achieving a performance lift of 0.23%-2.01% depending on the task and dataset.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "jiali.chen2@apple.com"
+          },
+          "name": "Jiali Chen",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "avijit.mukherjee@apple.com"
+          },
+          "name": "Avijit Mukherjee",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.11776",
+      "date": "2025-05-17T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.33333334,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.22028",
+      "score": 0.25,
+      "title": "Weakly-Supervised Contrastive Learning for Imprecise Class Labels",
+      "tldr": "[research paper] The paper proposes a graph-theoretic framework for weakly-supervised contrastive learning that replaces discrete positive/negative pairs with continuous semantic similarity, derived from noisy or partial labels. By modeling sample pairs via semantic similarity—computed from augmented views and weak supervision—the method constructs a similarity graph where edges reflect the likelihood of shared class membership, enabling robust representation learning under ambiguous labels. Theoretical analysis establishes an error bound showing convergence to supervised contrastive learning under mild conditions, with empirical gains of 6.8% and 7.8% in noisy and partial label settings, respectively.",
+      "abstract": "Contrastive learning has achieved remarkable success in learning effective representations, with supervised contrastive learning often outperforming self-supervised approaches. However, in real-world scenarios, data annotations are often ambiguous or inaccurate, meaning that class labels may not reliably indicate whether two examples belong to the same class. This limitation restricts the applicability of supervised contrastive learning. To address this challenge, we introduce the concept of ``continuous semantic similarity'' to define positive and negative pairs. Instead of directly relying on imprecise class labels, we measure the semantic similarity between example pairs, which quantifies how closely they belong to the same category by iteratively refining weak supervisory signals. Based on this concept, we propose a graph-theoretic framework for weakly-supervised contrastive learning, where semantic similarity serves as the graph weights. Our framework is highly versatile and can be applied to many weakly-supervised learning scenarios. We demonstrate its effectiveness through experiments in two common settings, i.e., noisy label and partial label learning, where existing methods can be easily integrated to significantly improve performance. Theoretically, we establish an error bound for our approach, showing that it can approximate supervised contrastive learning under mild conditions. The implementation code is available at https://github.com/Speechless-10308/WSC.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Zi-Hao Zhou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jun-Jie Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Tong Wei",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Min-Ling Zhang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.22028",
+      "date": "2025-05-28T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": "https://github.com/Speechless-10308/WSC."
+    }
+  ]
+}

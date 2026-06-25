@@ -1,0 +1,377 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2402.07225",
+      "score": 1.0,
+      "title": "Rethinking Graph Masked Autoencoders through Alignment and Uniformity",
+      "tldr": "[theoretical research paper] The paper establishes a theoretical bridge between Graph Masked Autoencoders (GraphMAE) and graph contrastive learning (GCL), proving that GraphMAE's node-level reconstruction implicitly performs context-level alignment via mutual information lower bounds. It identifies two key limitations: (1) alignment is constrained by random masking, which fails to generate hard-to-align samples, and (2) uniformity is not strictly enforced due to partial dimensional collapse. To address these, AUG-MAE introduces an easy-to-hard adversarial masking strategy to enhance alignment and an explicit uniformity regularizer to enforce representation uniformity across the hypersphere, resulting in superior downstream performance and improved representation quality.",
+      "abstract": "Self-supervised learning on graphs can be bifurcated into contrastive and generative methods. Contrastive methods, also known as graph contrastive learning (GCL), have dominated graph self-supervised learning in the past few years, but the recent advent of graph masked autoencoder (GraphMAE) rekindles the momentum behind generative methods. Despite the empirical success of GraphMAE, there is still a dearth of theoretical understanding regarding its efficacy. Moreover, while both generative and contrastive methods have been shown to be effective, their connections and differences have yet to be thoroughly investigated. Therefore, we theoretically build a bridge between GraphMAE and GCL, and prove that the node-level reconstruction objective in GraphMAE implicitly performs context-level GCL. Based on our theoretical analysis, we further identify the limitations of the GraphMAE from the perspectives of alignment and uniformity, which have been considered as two key properties of high-quality representations in GCL. We point out that GraphMAE's alignment performance is restricted by the masking strategy, and the uniformity is not strictly guaranteed. To remedy the aforementioned limitations, we propose an Alignment-Uniformity enhanced Graph Masked AutoEncoder, named AUG-MAE. Specifically, we propose an easy-to-hard adversarial masking strategy to provide hard-to-align samples, which improves the alignment performance. Meanwhile, we introduce an explicit uniformity regularizer to ensure the uniformity of the learned representations. Experimental results on benchmark datasets demonstrate the superiority of our model over existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liang.wang@cripac.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiang.tao@cripac.ia.ac.cn"
+          },
+          "name": "Xiang Tao",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiang.liu@nlpr.ia.ac.cn"
+          },
+          "name": "Qiang Liu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shu.wu@nlpr.ia.ac.cn"
+          },
+          "name": "Shu Wu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wangliang@nlpr.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.07225",
+      "date": "2024-02-11T00:00:00",
+      "citation_count": 40,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/AzureLeon1/AUG-MAE."
+    },
+    {
+      "arxiv_id": "2205.10803",
+      "score": 0.5833334,
+      "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+      "tldr": "[research paper] GraphMAE introduces a generative self-supervised approach to graph autoencoding that replaces structure reconstruction with feature reconstruction using a masked input and scaled cosine error (SCE), addressing key limitations in prior graph autoencoders such as sensitivity to reconstruction metrics, training instability, and reliance on structural augmentation. The method achieves superior performance across 21 datasets in node and graph classification tasks by eliminating the need for negative sampling or complex training dynamics, demonstrating that simple, well-designed generative objectives can outperform contrastive baselines in graph pre-training.",
+      "abstract": "Self-supervised learning (SSL) has been extensively explored in recent years. Particularly, generative SSL has seen emerging success in natural language processing and other AI fields, such as the wide adoption of BERT and GPT. Despite this, contrastive learning-which heavily relies on structural data augmentation and complicated training strategies-has been the dominant approach in graph SSL, while the progress of generative SSL on graphs, especially graph autoencoders (GAEs), has thus far not reached the potential as promised in other fields. In this paper, we identify and examine the issues that negatively impact the development of GAEs, including their reconstruction objective, training robustness, and error metric. We present a masked graph autoencoder GraphMAE that mitigates these issues for generative self-supervised graph pretraining. Instead of reconstructing graph structures, we propose to focus on feature reconstruction with both a masking strategy and scaled cosine error that benefit the robust training of GraphMAE. We conduct extensive experiments on 21 public datasets for three different graph learning tasks. The results manifest that GraphMAE-a simple graph autoencoder with careful designs-can consistently generate outperformance over both contrastive and generative state-of-the-art baselines. This study provides an understanding of graph autoencoders and demonstrates the potential of generative self-supervised pre-training on graphs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuxiao21@mails.tsinghua.edu.cn"
+          },
+          "name": "Xiao Liu",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cyk20@mails.tsinghua.edu.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yang.yhx@alibaba-inc.com"
+          },
+          "name": "Hongxia Yang",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cjwang@birentech.com"
+          },
+          "name": "Chunjie Wang",
+          "orgs": [
+            "BirenTech Research"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10803",
+      "date": "2022-05-22T00:00:00",
+      "citation_count": 893,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/THUDM/GraphMAE"
+    },
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.39215687,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2401.04741",
+      "score": 0.25,
+      "title": "Masked AutoEncoder for Graph Clustering without Pre-defined Cluster Number k",
+      "tldr": "[research paper] GCMA introduces a masked autoencoder framework for graph clustering that eliminates the need for pre-defined cluster numbers $k$ by leveraging graph masking for self-supervised representation learning and integrating an improved density-based clustering decoder that jointly reconstructs masked graph structures and automatically infers $k$. The model achieves end-to-end clustering with automatic $k$ determination, superior generalization via multi-target decoding, and outperforms state-of-the-art methods on five benchmark datasets by capturing both structural and density-based cluster patterns without relying on parametric assumptions.",
+      "abstract": "Graph clustering algorithms with autoencoder structures have recently gained popularity due to their efficient performance and low training cost. However, for existing graph autoencoder clustering algorithms based on GCN or GAT, not only do they lack good generalization ability, but also the number of clusters clustered by such autoencoder models is difficult to determine automatically. To solve this problem, we propose a new framework called Graph Clustering with Masked Autoencoders (GCMA). It employs our designed fusion autoencoder based on the graph masking method for the fusion coding of graph. It introduces our improved density-based clustering algorithm as a second decoder while decoding with multi-target reconstruction. By decoding the mask embedding, our model can capture more generalized and comprehensive knowledge. The number of clusters and clustering results can be output end-to-end while improving the generalization ability. As a nonparametric class method, extensive experiments demonstrate the superiority of \\\\textit{GCMA} over state-of-the-art baselines.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yuanchi Ma",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Hui He",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zhongxiang Lei",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zhendong Niu",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2401.04741",
+      "date": "2024-01-09T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2202.08391",
+      "score": 0.2,
+      "title": "Graph Masked Autoencoders with Transformers",
+      "tldr": "[research paper] Graph Masked Autoencoders (GMAE) introduce a self-supervised transformer-based framework for graph representation learning that addresses two key limitations of deep transformers in graph domains: high training difficulty and quadratic memory complexity. By employing node masking and an asymmetric encoder-decoder architecture—where the encoder is deep and the decoder is shallow—the model reduces memory footprint significantly while enabling effective pre-training. The masked autoencoding mechanism allows for scalable training on large graphs, and experiments demonstrate state-of-the-art performance in both graph and node classification tasks, with pre-training and fine-tuning achieving results comparable to end-to-end training without requiring complex hyperparameter tuning.",
+      "abstract": "Recently, transformers have shown promising performance in learning graph representations. However, there are still some challenges when applying transformers to real-world scenarios due to the fact that deep transformers are hard to train from scratch and the quadratic memory consumption w.r.t. the number of nodes. In this paper, we propose Graph Masked Autoencoders (GMAEs), a self-supervised transformer-based model for learning graph representations. To address the above two challenges, we adopt the masking mechanism and the asymmetric encoder-decoder design. Specifically, GMAE takes partially masked graphs as input, and reconstructs the features of the masked nodes. The encoder and decoder are asymmetric, where the encoder is a deep transformer and the decoder is a shallow transformer. The masking mechanism and the asymmetric design make GMAE a memory-efficient model compared with conventional transformers. We show that, when serving as a conventional self-supervised graph representation model, GMAE achieves state-of-the-art performance on both the graph classification task and the node classification task under common downstream evaluation protocols. We also show that, compared with training in an end-to-end manner from scratch, we can achieve comparable performance after pre-training and fine-tuning using GMAE while simplifying the training process.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "Data Science and Machine Intelligence Lab, Faculty of Engineering and Information Technology, University of Technology Sydney, Sydney, New South Wales, 2007, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Hongxu.Chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "Data Science and Machine Intelligence Lab, Faculty of Engineering and Information Technology, University of Technology Sydney, Sydney, New South Wales, 2007, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "Data Science and Machine Intelligence Lab, Faculty of Engineering and Information Technology, University of Technology Sydney, Sydney, New South Wales, 2007, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xg.sheldon.sun@gmail.com"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "Chinese University of Hong Kong, Hong Kong"
+          ]
+        },
+        {
+          "misc": {
+            "email": "psyu@cs.uic.edu"
+          },
+          "name": "Philip S. Yu",
+          "orgs": [
+            "Department of Computer Science, University of Illinois at Chicago, Chicago, Illinois, 60637, the United States"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Guandong.Xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "Data Science and Machine Intelligence Lab, Faculty of Engineering and Information Technology, University of Technology Sydney, Sydney, New South Wales, 2007, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2202.08391",
+      "date": "2022-02-17T00:00:00",
+      "citation_count": 22,
+      "categories": [
+        "cs.LG",
+        "cs.IR"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": "https://github.com/RinneSz/GMAE"
+    }
+  ]
+}

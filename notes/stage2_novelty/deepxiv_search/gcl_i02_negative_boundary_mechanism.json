@@ -1,0 +1,362 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.6111111,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.13854",
+      "score": 0.5,
+      "title": "Similarity Preserving Adversarial Graph Contrastive Learning",
+      "tldr": "[research paper] The paper identifies a critical trade-off in adversarially trained graph contrastive learning (GCL): while such methods achieve robustness to graph structural attacks, they degrade node feature similarity preservation due to forced alignment between clean and adversarially perturbed graphs. To resolve this, the authors propose SP-AGCL, a framework that simultaneously learns from a clean graph and two auxiliary views—(1) a node similarity-preserving view and (2) an adversarial view—enabling robustness without sacrificing feature-level similarity. Experiments validate SP-AGCL's effectiveness across noisy labels, heterophilous networks, and adversarial attacks, outperforming baseline GCL methods in downstream tasks while maintaining semantic consistency in node representations.",
+      "abstract": "Recent works demonstrate that GNN models are vulnerable to adversarial attacks, which refer to imperceptible perturbation on the graph structure and node features. Among various GNN models, graph contrastive learning (GCL) based methods specifically suffer from adversarial attacks due to their inherent design that highly depends on the self-supervision signals derived from the original graph, which however already contains noise when the graph is attacked. To achieve adversarial robustness against such attacks, existing methods adopt adversarial training (AT) to the GCL framework, which considers the attacked graph as an augmentation under the GCL framework. However, we find that existing adversarially trained GCL methods achieve robustness at the expense of not being able to preserve the node feature similarity. In this paper, we propose a similarity-preserving adversarial graph contrastive learning (SP-AGCL) framework that contrasts the clean graph with two auxiliary views of different properties (i.e., the node similarity-preserving view and the adversarial view). Extensive experiments demonstrate that SP-AGCL achieves a competitive performance on several downstream tasks, and shows its effectiveness in various scenarios, e.g., a network with adversarial attacks, noisy labels, and heterophilous neighbors. Our code is available at https://github.com/yeonjun-in/torch-SP-AGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yeonjun.in@kaist.ac.kr"
+          },
+          "name": "Yeonjun In",
+          "orgs": [
+            "KAIST",
+            "Daejeon",
+            "Republic of Korea"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ykhoon08@kaist.ac.kr"
+          },
+          "name": "Kanghoon Yoon",
+          "orgs": [
+            "KAIST",
+            "Daejeon",
+            "Republic of Korea"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cy.park@kaist.ac.kr"
+          },
+          "name": "Chanyoung Park",
+          "orgs": [
+            "KAIST",
+            "Daejeon",
+            "Republic of Korea"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.13854",
+      "date": "2023-06-24T00:00:00",
+      "citation_count": 17,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CR"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/yeonjun-in/torch-SP-AGCL"
+    },
+    {
+      "arxiv_id": "2006.09963",
+      "score": 0.33333334,
+      "title": "GCC: Graph Contrastive Coding for Graph Neural Network Pre-Training",
+      "tldr": "[research paper] GCC introduces a self-supervised pre-training framework for graph neural networks (GNNs) by formulating subgraph instance discrimination as a contrastive learning task. It samples multi-hop subgraphs from each vertex's ego network and trains a GIN-based encoder to distinguish instances from different vertices, capturing universal structural patterns across diverse graphs. Experiments show that GCC pre-trained on heterogeneous datasets achieves competitive or superior performance on downstream tasks like node classification, demonstrating strong transferability and validating the efficacy of pre-training in graph representation learning.",
+      "abstract": "Graph representation learning has emerged as a powerful technique for addressing real-world problems. Various downstream graph learning tasks have benefited from its recent developments, such as node classification, similarity search, and graph classification. However, prior arts on graph representation learning focus on domain specific problems and train a dedicated model for each graph dataset, which is usually non-transferable to out-of-domain data. Inspired by the recent advances in pre-training from natural language processing and computer vision, we design Graph Contrastive Coding (GCC) -- a self-supervised graph neural network pre-training framework -- to capture the universal network topological properties across multiple networks. We design GCC's pre-training task as subgraph instance discrimination in and across networks and leverage contrastive learning to empower graph neural networks to learn the intrinsic and transferable structural representations. We conduct extensive experiments on three graph learning tasks and ten graph datasets. The results show that GCC pre-trained on a collection of diverse datasets can achieve competitive or better performance to its task-specific and trained-from-scratch counterparts. This suggests that the pre-training and fine-tuning paradigm presents great potential for graph representation learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "qiujz16@mails.tsinghua.edu.cn"
+          },
+          "name": "Jiezhong Qiu",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cqb19@mails.tsinghua.edu.cn"
+          },
+          "name": "Qibin Chen",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxdong@microsoft.com"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Microsoft Research, Redmond"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhang-jing@ruc.edu.cn"
+          },
+          "name": "Jing Zhang",
+          "orgs": [
+            "Remin University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yang.yhx@alibaba-inc.com"
+          },
+          "name": "Hongxia Yang",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dm18@mails.tsinghua.edu.cn"
+          },
+          "name": "Ming Ding",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "kuansan.wang@microsoft.com"
+          },
+          "name": "Kuansan Wang",
+          "orgs": [
+            "Microsoft Research, Redmond"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2006.09963",
+      "date": "2020-06-17T00:00:00",
+      "citation_count": 1115,
+      "categories": [
+        "cs.LG",
+        "cs.SI",
+        "stat.ML"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/THUDM/GCC"
+    },
+    {
+      "arxiv_id": "2509.01959",
+      "score": 0.33333334,
+      "title": "Structure-aware Contrastive Learning for Diagram Understanding of Multimodal Models",
+      "tldr": "[research paper] The paper proposes a structure-aware contrastive learning framework to improve vision-language models' understanding of diagrammatic content, such as flowcharts. It introduces synthetic hard positive and negative samples by manipulating diagram elements (e.g., nodes, arrows) to create semantically valid yet visually distinct or dissimilar variants, and employs two specialized loss functions: a structure-aware contrastive loss to enforce semantic consistency and a distinct factor orthogonal loss to disentangle shared vs. uncorrelated representation factors. Empirical results on flowchart datasets show significant gains over standard CLIP and hard-negative CLIP in image-text matching and visual question answering tasks, demonstrating that structural semantics must be explicitly modeled in diagram understanding.",
+      "abstract": "Multimodal models, such as the Contrastive Language-Image Pre-training (CLIP) model, have demonstrated remarkable success in aligning visual and linguistic representations. However, these models exhibit limitations when applied to specialised visual domains, such as diagrams, which encode structured, symbolic information distinct from that of natural imagery.\\\n  In this paper, we introduce a novel training paradigm explicitly designed to enhance the comprehension of diagrammatic images within vision-language models. Our approach uses ``hard'' samples for our proposed contrastive learning that incorporates two specialised loss functions that leverage the inherent structural properties of diagrams. By integrating these objectives into model training, our method enables models to develop a more structured and semantically coherent understanding of diagrammatic content.\\\n  We empirically validate our approach on a benchmark dataset of flowcharts, as a representative class of diagrammatic imagery, demonstrating substantial improvements over standard CLIP and conventional hard negative CLIP learning paradigms for both image-text matching and visual question answering tasks. Our findings underscore the significance of tailored training strategies for specialised tasks and contribute to advancing diagrammatic understanding within the broader landscape of vision-language integration.",
+      "authors": [
+        {
+          "misc": {
+            "email": "sasaki.hiroshi@jri.co.jp"
+          },
+          "name": "Hiroshi Sasaki",
+          "orgs": [
+            "The Japan Research Institute, Limited"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2509.01959",
+      "date": "2025-09-02T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "venue": "2025 IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)",
+      "venue_year": 2025,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2206.00212",
+      "score": 0.25,
+      "title": "Negative Sampling for Contrastive Representation Learning: A Review",
+      "tldr": "[survey paper] This survey systematically reviews negative sampling (NS) techniques in contrastive representation learning (CRL), identifying four core categories—random, instance-based, graph-based, and adaptive—each with distinct trade-offs in efficiency, effectiveness, stability, and data independence. The paper demonstrates that naive random negative sampling leads to poor convergence and performance, while intelligent strategies (e.g., adaptive or graph-based) improve gradient dynamics and representation quality by selecting informative negatives, especially in domains like vision, NLP, and retrieval. The work highlights critical open challenges, such as scalable negative distribution modeling and cross-domain generalization, to guide future research.",
+      "abstract": "The learn-to-compare paradigm of contrastive representation learning (CRL), which compares positive samples with negative ones for representation learning, has achieved great success in a wide range of domains, including natural language processing, computer vision, information retrieval and graph learning. While many research works focus on data augmentations, nonlinear transformations or other certain parts of CRL, the importance of negative sample selection is usually overlooked in literature. In this paper, we provide a systematic review of negative sampling (NS) techniques and discuss how they contribute to the success of CRL. As the core part of this paper, we summarize the existing NS methods into four categories with pros and cons in each genre, and further conclude with several open research questions as future directions. By generalizing and aligning the fundamental NS ideas across multiple domains, we hope this survey can accelerate cross-domain knowledge sharing and motivate future researches for better CRL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "xulanling_sherry@163.com"
+          },
+          "name": "Lanling Xu",
+          "orgs": [
+            "Microsoft Research Asia",
+            "School of Information, Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jianxun.lian@microsoft.com"
+          },
+          "name": "Jianxun Lian",
+          "orgs": [
+            "Microsoft Research Asia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "batmanfly@gmail.com"
+          },
+          "name": "Wayne Xin Zhao",
+          "orgs": [
+            "Gaoling School of Artificial Intelligence, Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "migon@microsoft.com"
+          },
+          "name": "Ming Gong",
+          "orgs": [
+            "Microsoft STC Asia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lisho@microsoft.com"
+          },
+          "name": "Linjun Shou",
+          "orgs": [
+            "Microsoft STC Asia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "djiang@microsoft.com"
+          },
+          "name": "Daxin Jiang",
+          "orgs": [
+            "Microsoft STC Asia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xingx@microsoft.com"
+          },
+          "name": "Xing Xie",
+          "orgs": [
+            "Microsoft Research Asia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jrwen@ruc.edu.cn"
+          },
+          "name": "Ji-Rong Wen",
+          "orgs": [
+            "School of Information, Renmin University of China",
+            "Gaoling School of Artificial Intelligence, Renmin University of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2206.00212",
+      "date": "2022-06-01T00:00:00",
+      "citation_count": 56,
+      "categories": [
+        "cs.IR"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

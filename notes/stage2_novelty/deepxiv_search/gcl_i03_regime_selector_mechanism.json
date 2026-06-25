@@ -1,0 +1,265 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2202.06996",
+      "score": 0.5,
+      "title": "Unlabeled Data Help: Minimax Analysis and Adversarial Robustness",
+      "tldr": "[theoretical research paper] This paper conducts a rigorous minimax analysis of reconstruction-based self-supervised learning (SSL), establishing rate-optimality under various data generation models and demonstrating that unlabeled data enhance estimation efficiency by leveraging conditional independence. It shows that SSL improves convergence rates when $n_1 + n_3 > n_1 + n_2$, and further proves that incorporating SSL into adversarial training improves robustness against adversarial inputs, with the minimax lower bound confirming that unlabeled data do not degrade performance even under conditional dependence.",
+      "abstract": "The recent proposed self-supervised learning (SSL) approaches successfully demonstrate the great potential of supplementing learning algorithms with additional unlabeled data. However, it is still unclear whether the existing SSL algorithms can fully utilize the information of both labelled and unlabeled data. This paper gives an affirmative answer for the reconstruction-based SSL algorithm \\\\citep{lee2020predicting} under several statistical models. While existing literature only focuses on establishing the upper bound of the convergence rate, we provide a rigorous minimax analysis, and successfully justify the rate-optimality of the reconstruction-based SSL algorithm under different data generation models. Furthermore, we incorporate the reconstruction-based SSL into the existing adversarial training algorithms and show that learning from unlabeled data helps improve the robustness.",
+      "authors": [
+        {
+          "misc": {
+            "email": "xing49@purdue.edu"
+          },
+          "name": "Yue Xing",
+          "orgs": [
+            "Purdue University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qfsong@purdue.edu"
+          },
+          "name": "Qifan Song",
+          "orgs": [
+            "Purdue University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guangcheng@ucla.edu"
+          },
+          "name": "Guang Cheng",
+          "orgs": [
+            "University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2202.06996",
+      "date": "2022-02-14T00:00:00",
+      "citation_count": 4,
+      "categories": [
+        "stat.ML",
+        "cs.LG"
+      ],
+      "venue": "International Conference on Artificial Intelligence and Statistics",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2402.07225",
+      "score": 0.5,
+      "title": "Rethinking Graph Masked Autoencoders through Alignment and Uniformity",
+      "tldr": "[theoretical research paper] The paper establishes a theoretical bridge between Graph Masked Autoencoders (GraphMAE) and graph contrastive learning (GCL), proving that GraphMAE's node-level reconstruction implicitly performs context-level alignment via mutual information lower bounds. It identifies two key limitations: (1) alignment is constrained by random masking, which fails to generate hard-to-align samples, and (2) uniformity is not strictly enforced due to partial dimensional collapse. To address these, AUG-MAE introduces an easy-to-hard adversarial masking strategy to enhance alignment and an explicit uniformity regularizer to enforce representation uniformity across the hypersphere, resulting in superior downstream performance and improved representation quality.",
+      "abstract": "Self-supervised learning on graphs can be bifurcated into contrastive and generative methods. Contrastive methods, also known as graph contrastive learning (GCL), have dominated graph self-supervised learning in the past few years, but the recent advent of graph masked autoencoder (GraphMAE) rekindles the momentum behind generative methods. Despite the empirical success of GraphMAE, there is still a dearth of theoretical understanding regarding its efficacy. Moreover, while both generative and contrastive methods have been shown to be effective, their connections and differences have yet to be thoroughly investigated. Therefore, we theoretically build a bridge between GraphMAE and GCL, and prove that the node-level reconstruction objective in GraphMAE implicitly performs context-level GCL. Based on our theoretical analysis, we further identify the limitations of the GraphMAE from the perspectives of alignment and uniformity, which have been considered as two key properties of high-quality representations in GCL. We point out that GraphMAE's alignment performance is restricted by the masking strategy, and the uniformity is not strictly guaranteed. To remedy the aforementioned limitations, we propose an Alignment-Uniformity enhanced Graph Masked AutoEncoder, named AUG-MAE. Specifically, we propose an easy-to-hard adversarial masking strategy to provide hard-to-align samples, which improves the alignment performance. Meanwhile, we introduce an explicit uniformity regularizer to ensure the uniformity of the learned representations. Experimental results on benchmark datasets demonstrate the superiority of our model over existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liang.wang@cripac.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiang.tao@cripac.ia.ac.cn"
+          },
+          "name": "Xiang Tao",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiang.liu@nlpr.ia.ac.cn"
+          },
+          "name": "Qiang Liu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shu.wu@nlpr.ia.ac.cn"
+          },
+          "name": "Shu Wu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wangliang@nlpr.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.07225",
+      "date": "2024-02-11T00:00:00",
+      "citation_count": 40,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/AzureLeon1/AUG-MAE."
+    },
+    {
+      "arxiv_id": "2504.12011",
+      "score": 0.33333334,
+      "title": "Balancing Graph Embedding Smoothness in Self-Supervised Learning via Information-Theoretic Decomposition",
+      "tldr": "[research paper] The paper introduces BSG, a novel framework that decomposes the self-supervised learning objective in graphs via an information-theoretic approach by introducing a neighbor representation variable, revealing that performance polarization in graph SSL stems from an imbalance in three key terms: neighbor loss (promotes smoothness), divergence loss (prevents oversmoothing), and minimal loss (discards task-irrelevant information). By balancing these terms, BSG achieves more consistent and generalized representations across downstream tasks—outperforming existing methods in both node classification and link prediction—demonstrating that optimal graph embedding smoothness lies in a middle ground rather than extreme smoothing or oversmoothing.",
+      "abstract": "Self-supervised learning (SSL) in graphs has garnered significant attention, particularly in employing Graph Neural Networks (GNNs) with pretext tasks initially designed for other domains, such as contrastive learning and feature reconstruction. However, it remains uncertain whether these methods effectively reflect essential graph properties, precisely representation similarity with its neighbors. We observe that existing methods position opposite ends of a spectrum driven by the graph embedding smoothness, with each end corresponding to outperformance on specific downstream tasks. Decomposing the SSL objective into three terms via an information-theoretic framework with a neighbor representation variable reveals that this polarization stems from an imbalance among the terms, which existing methods may not effectively maintain. Further insights suggest that balancing between the extremes can lead to improved performance across a wider range of downstream tasks. A framework, BSG (Balancing Smoothness in Graph SSL), introduces novel loss functions designed to supplement the representation quality in graph-based SSL by balancing the derived three terms: neighbor loss, minimal loss, and divergence loss. We present a theoretical analysis of the effects of these loss functions, highlighting their significance from both the SSL and graph smoothness perspectives. Extensive experiments on multiple real-world datasets across node classification and link prediction consistently demonstrate that BSG achieves state-of-the-art performance, outperforming existing methods. Our implementation code is available at https://github.com/steve30572/BSG.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Heesoo Jung",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Hogun Park",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2504.12011",
+      "date": "2025-04-16T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2025,
+      "github_url": "https://github.com/stve30572/BSG"
+    },
+    {
+      "arxiv_id": "2406.02953",
+      "score": 0.33333334,
+      "title": "GraphAlign: Pretraining One Graph Neural Network on Multiple Graphs via Feature Alignment",
+      "tldr": "[research paper] GraphAlign introduces a feature-alignment framework to enable a single graph neural network (GNN) to be pretrained across diverse, heterogeneous graphs with rich node features in a self-supervised manner. It achieves this through three key components: (1) a language model-based feature encoder to map textual node attributes into a shared semantic space, (2) per-graph feature normalization to reduce distributional disparities, and (3) a mixture-of-feature-expert (MoE) module that dynamically routes nodes to specialized feature projectors based on their characteristics—enabling fine-grained handling of domain-specific feature distributions. The method is compatible with existing graph self-supervised frameworks (e.g., BGRL, GraphMAE) and outperforms both individual and naive joint training on in-domain and out-of-domain graphs, demonstrating strong transferability and few-shot generalization without task-specific prompts or additional modules.",
+      "abstract": "Graph self-supervised learning (SSL) holds considerable promise for mining and learning with graph-structured data. Yet, a significant challenge in graph SSL lies in the feature discrepancy among graphs across different domains. In this work, we aim to pretrain one graph neural network (GNN) on a varied collection of graphs endowed with rich node features and subsequently apply the pretrained GNN to unseen graphs. We present a general GraphAlign method that can be seamlessly integrated into the existing graph SSL framework. To align feature distributions across disparate graphs, GraphAlign designs alignment strategies of feature encoding, normalization, alongside a mixture-of-feature-expert module. Extensive experiments show that GraphAlign empowers existing graph SSL frameworks to pretrain a unified and powerful GNN across multiple graphs, showcasing performance superiority on both in-domain and out-of-domain graphs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hz-li20@mails.tsinghua.edu.cn"
+          },
+          "name": "Haozhan Li",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yukuo Cen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jie Tang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yuxiao Dong",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2406.02953",
+      "date": "2024-06-05T00:00:00",
+      "citation_count": 14,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2401.10590",
+      "score": 0.25,
+      "title": "Adversarial Robustness of Link Sign Prediction in Signed Graphs",
+      "tldr": "[research paper] The paper identifies a fundamental vulnerability in Signed Graph Neural Networks (SGNNs) stemming from their reliance on balance theory, which can be exploited via black-box attacks that reduce graph balance degree—introducing a novel 'balance-attack' method. Despite existing defense strategies like balance learning, they suffer from 'Irreversibility of Balance-related Information,' where restored edges fail to preserve original sign distributions. To address this, the authors propose Balance Augmented-Signed Graph Contrastive Learning (BA-SGCL), a framework that uses contrastive learning with balance-augmented views to maintain high balance in latent space, enabling robust sign prediction under adversarial perturbations. Experiments validate BA-SGCL's superior resilience across multiple SGNN architectures and real-world datasets.",
+      "abstract": "Signed graphs serve as fundamental data structures for representing positive and negative relationships in social networks, with signed graph neural networks (SGNNs) emerging as the primary tool for their analysis. Our investigation reveals that balance theory, while essential for modeling signed relationships in SGNNs, inadvertently introduces exploitable vulnerabilities to black-box attacks. To showcase this, we propose balance-attack, a novel adversarial strategy specifically designed to compromise graph balance degree, and develop an efficient heuristic algorithm to solve the associated NP-hard optimization problem. While existing approaches attempt to restore attacked graphs through balance learning techniques, they face a critical challenge we term \"Irreversibility of Balance-related Information,\" as restored edges fail to align with original attack targets. To address this limitation, we introduce Balance Augmented-Signed Graph Contrastive Learning (BA-SGCL), an innovative framework that combines contrastive learning with balance augmentation techniques to achieve robust graph representations. By maintaining high balance degree in the latent space, BA-SGCL not only effectively circumvents the irreversibility challenge but also significantly enhances model resilience. Extensive experiments across multiple SGNN architectures and real-world datasets demonstrate both the effectiveness of our proposed balance-attack and the superior robustness of BA-SGCL, advancing the security and reliability of signed graph analysis in social networks. Datasets and codes of the proposed framework are at the github repository https://anonymous.4open.science/r/BA-SGCL-submit-DF41/.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jialong Zhou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xing Ai",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yuni Lai",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Tomasz Michalak",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Gaolei Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jianhua Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Kai Zhou",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2401.10590",
+      "date": "2024-01-19T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.CR"
+      ],
+      "venue": "IEEE Transactions on Dependable and Secure Computing",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

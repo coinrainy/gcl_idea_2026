@@ -1,0 +1,289 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2512.13235",
+      "score": 0.5833334,
+      "title": "CORE: Contrastive Masked Feature Reconstruction on Graphs",
+      "tldr": "[research paper] The paper establishes a theoretical convergence between masked feature reconstruction (MFR) and node-level graph contrastive learning (GCL) under low temperature regimes, where negative sampling becomes negligible. It proposes CORE, a novel self-supervised framework that integrates MFR with GCL by forming positive pairs between original and reconstructed masked node features, and using other masked nodes as negative samples—enabling contextual feature prioritization without requiring graph augmentations. Empirical results show CORE outperforms MFR, GraphMAE, and GraphMAE2 by up to 3.82% on graph classification and 3.76% on node classification tasks, demonstrating superior performance through synergistic reconstruction and discrimination.",
+      "abstract": "In the rapidly evolving field of self-supervised learning on graphs, generative and contrastive methodologies have emerged as two dominant approaches. Our study focuses on masked feature reconstruction (MFR), a generative technique where a model learns to restore the raw features of masked nodes in a self-supervised manner. We observe that both MFR and graph contrastive learning (GCL) aim to maximize agreement between similar elements. Building on this observation, we reveal a novel theoretical insight: under specific conditions, the objectives of MFR and node-level GCL converge, despite their distinct operational mechanisms. This theoretical connection suggests these approaches are complementary rather than fundamentally different, prompting us to explore their integration to enhance self-supervised learning on graphs. Our research presents Contrastive Masked Feature Reconstruction (CORE), a novel graph self-supervised learning framework that integrates contrastive learning into MFR. Specifically, we form positive pairs exclusively between the original and reconstructed features of masked nodes, encouraging the encoder to prioritize contextual information over the node's own features. Additionally, we leverage the masked nodes themselves as negative samples, combining MFR's reconstructive power with GCL's discriminative ability to better capture intrinsic graph structures. Empirically, our proposed framework CORE significantly outperforms MFR across node and graph classification tasks, demonstrating state-of-the-art results. In particular, CORE surpasses GraphMAE and GraphMAE2 by up to 2.80% and 3.72% on node classification tasks, and by up to 3.82% and 3.76% on graph classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "jybo.2020@phdcs.smu.edu.sg"
+          },
+          "name": "Jianyuan Bo",
+          "orgs": [
+            "Singapore Management University",
+            "Singapore, Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yfang@smu.edu.sg"
+          },
+          "name": "Yuan Fang",
+          "orgs": [
+            "Singapore Management University",
+            "Singapore, Singapore"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2512.13235",
+      "date": "2025-12-15T11:48:48",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.5,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2301.02242",
+      "score": 0.5,
+      "title": "Graph Contrastive Learning for Multi-omics Data",
+      "tldr": "[research paper] MOGCL introduces a graph contrastive learning framework to pre-train multi-omics representations by constructing heterogeneous graphs from DNA methylation, miRNA, and mRNA data, leveraging graph augmentations to learn robust node embeddings through contrastive objectives. The model is fine-tuned on downstream classification tasks and outperforms baseline methods on ROSMAP (Alzheimer’s) and BRCA (breast cancer) datasets in AUC, accuracy, and F1 scores, demonstrating that contrastive pre-training enhances feature learning in multi-omics integration.",
+      "abstract": "Advancements in technologies related to working with omics data require novel computation methods to fully leverage information and help develop a better understanding of human diseases. This paper studies the effects of introducing graph contrastive learning to help leverage graph structure and information to produce better representations for downstream classification tasks for multi-omics datasets. We present a learnining framework named Multi-Omics Graph Contrastive Learner(MOGCL) which outperforms several aproaches for integrating multi-omics data for supervised learning tasks. We show that pre-training graph models with a contrastive methodology along with fine-tuning it in a supervised manner is an efficient strategy for multi-omics data classification.",
+      "authors": [
+        {
+          "misc": {
+            "email": "n.rajadhyaksha@somaiya.edu"
+          },
+          "name": "Nishant Rajadhyaksha",
+          "orgs": [
+            "K.J Somaiya College of Engineering",
+            "Mumbai"
+          ]
+        },
+        {
+          "misc": {
+            "email": "aarushi5812@gmail.com"
+          },
+          "name": "Aarushi Chitkara",
+          "orgs": [
+            "St Xaviers College",
+            "Mumbai"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2301.02242",
+      "date": "2023-01-03T00:00:00",
+      "citation_count": 10,
+      "categories": [
+        "q-bio.GN",
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.04979",
+      "score": 0.33333334,
+      "title": "CoCo: A Coupled Contrastive Framework for Unsupervised Domain Adaptive Graph Classification",
+      "tldr": "[research paper] CoCo introduces a coupled contrastive framework for unsupervised domain adaptive graph classification by jointly leveraging implicit (via GCN) and explicit (via hierarchical graph kernel) topological representations. Cross-branch contrastive learning aligns complementary views to enhance representation quality, while cross-domain contrastive learning reduces domain discrepancy by minimizing distances between semantically similar cross-domain graph pairs, formalized as an EM-based log-likelihood maximization problem. The method achieves superior performance on benchmark datasets through comprehensive topological modeling and domain alignment.",
+      "abstract": "Although graph neural networks (GNNs) have achieved impressive achievements in graph classification, they often need abundant task-specific labels, which could be extensively costly to acquire. A credible solution is to explore additional labeled graphs to enhance unsupervised learning on the target domain. However, how to apply GNNs to domain adaptation remains unsolved owing to the insufficient exploration of graph topology and the significant domain discrepancy. In this paper, we propose Coupled Contrastive Graph Representation Learning (CoCo), which extracts the topological information from coupled learning branches and reduces the domain discrepancy with coupled contrastive learning. CoCo contains a graph convolutional network branch and a hierarchical graph kernel network branch, which explore graph topology in implicit and explicit manners. Besides, we incorporate coupled branches into a holistic multi-view contrastive learning framework, which not only incorporates graph representations learned from complementary views for enhanced understanding, but also encourages the similarity between cross-domain example pairs with the same semantics for domain alignment. Extensive experiments on popular datasets show that our CoCo outperforms these competing baselines in different settings generally.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Nan Yin",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Li Shen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Mengzhu Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Long Lan",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zeyu Ma",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Chong Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xian-Sheng Hua",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xiao Luo",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.04979",
+      "date": "2023-06-08T00:00:00",
+      "citation_count": 63,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.11776",
+      "score": 0.2916667,
+      "title": "Generative and Contrastive Graph Representation Learning",
+      "tldr": "[research paper] The paper proposes a unified graph self-supervised learning framework that synergizes community-aware node-level contrastive learning with graph-level contrastive learning, addressing the limitations of both pure contrastive and generative methods. It introduces a principled positive pair generation strategy via community structure awareness, reduces reliance on computationally expensive negative sampling, and employs a comprehensive augmentation pipeline (feature masking, node, and edge perturbation) to enhance representation robustness. Experimental results on benchmark datasets show consistent performance gains—up to 2.01%—across node classification, clustering, and link prediction, outperforming state-of-the-art contrastive and generative methods, including hybrid approaches like GCMAE.",
+      "abstract": "Self-supervised learning (SSL) on graphs generates node and graph representations (i.e., embeddings) that can be used for downstream tasks such as node classification, node clustering, and link prediction. Graph SSL is particularly useful in scenarios with limited or no labeled data. Existing SSL methods predominantly follow contrastive or generative paradigms, each excelling in different tasks: contrastive methods typically perform well on classification tasks, while generative methods often excel in link prediction. In this paper, we present a novel architecture for graph SSL that integrates the strengths of both approaches. Our framework introduces community-aware node-level contrastive learning, providing more robust and effective positive and negative node pairs generation, alongside graph-level contrastive learning to capture global semantic information. Additionally, we employ a comprehensive augmentation strategy that combines feature masking, node perturbation, and edge perturbation, enabling robust and diverse representation learning. By incorporating these enhancements, our model achieves superior performance across multiple tasks, including node classification, clustering, and link prediction. Evaluations on open benchmark datasets demonstrate that our model outperforms state-of-the-art methods, achieving a performance lift of 0.23%-2.01% depending on the task and dataset.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "jiali.chen2@apple.com"
+          },
+          "name": "Jiali Chen",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "avijit.mukherjee@apple.com"
+          },
+          "name": "Avijit Mukherjee",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.11776",
+      "date": "2025-05-17T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

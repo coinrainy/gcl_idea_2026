@@ -1,0 +1,205 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2110.02027",
+      "score": 1.0,
+      "title": "ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning",
+      "tldr": "[research paper] Graph Contrastive Learning (GCL) suffers from poor performance when applying existing hard negative mining techniques due to the prevalence of false negatives—samples that are semantically similar to anchors but are incorrectly classified as negatives. The root cause lies in the bimodal distribution of negative similarities in GCL, which arises from GNN message passing, leading to sampling bias. ProGCL addresses this by modeling negative hardness using a two-component beta mixture model to estimate the probability of a negative being true (i.e., not sharing the same class), combining this probability with similarity to form a more reliable hardness metric. Two schemes—ProGCL-weight and ProGCL-mix—are proposed to leverage this improved measure, resulting in consistent performance gains, state-of-the-art results on unsupervised benchmarks, and superior performance compared to supervised baselines.",
+      "abstract": "Contrastive Learning (CL) has emerged as a dominant technique for unsupervised representation learning which embeds augmented versions of the anchor close to each other (positive samples) and pushes the embeddings of other samples (negatives) apart. As revealed in recent studies, CL can benefit from hard negatives (negatives that are most similar to the anchor). However, we observe limited benefits when we adopt existing hard negative mining techniques of other domains in Graph Contrastive Learning (GCL). We perform both experimental and theoretical analysis on this phenomenon and find it can be attributed to the message passing of Graph Neural Networks (GNNs). Unlike CL in other domains, most hard negatives are potentially false negatives (negatives that share the same class with the anchor) if they are selected merely according to the similarities between anchor and themselves, which will undesirably push away the samples of the same class. To remedy this deficiency, we propose an effective method, dubbed \\\\textbf{ProGCL}, to estimate the probability of a negative being true one, which constitutes a more suitable measure for negatives' hardness together with similarity. Additionally, we devise two schemes (i.e., \\\\textbf{ProGCL-weight} and \\\\textbf{ProGCL-mix}) to boost the performance of GCL. Extensive experiments demonstrate that ProGCL brings notable and consistent improvements over base GCL methods and yields multiple state-of-the-art results on several unsupervised benchmarks or even exceeds the performance of supervised ones. Also, ProGCL is readily pluggable into various negatives-based GCL methods for performance improvement. We release the code at \\\\textcolor{magenta}{\\\\url{https://github.com/junxia97/ProGCL}}.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jun Xia",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Lirong Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ge Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jintao Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Stan Z. Li",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2110.02027",
+      "date": "2021-10-05T00:00:00",
+      "citation_count": 174,
+      "categories": [
+        "cs.AI"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": "https://github.com/junxia97/ProGCL."
+    },
+    {
+      "arxiv_id": "2109.00217",
+      "score": 0.33333334,
+      "title": "Multi-Sample based Contrastive Loss for Top-k Recommendation",
+      "tldr": "[research paper] The paper proposes Multi-Sample based Contrastive Loss (MSCL), a novel contrastive loss function that addresses sample imbalance and underutilization of sparse positive samples in top-k recommendation. MSCL introduces adaptive weighting to emphasize positive samples (via hyperparameter α) and employs multi-positive data augmentation by combining multiple positive items in a batch, thereby expanding the effective training space and improving representation learning. The method is integrated into LightGCN and achieves state-of-the-art performance, demonstrating superior efficiency and applicability over traditional BPR and standard contrastive losses, especially in sparse datasets.",
+      "abstract": "The top-k recommendation is a fundamental task in recommendation systems which is generally learned by comparing positive and negative pairs. The Contrastive Loss (CL) is the key in contrastive learning that has received more attention recently and we find it is well suited for top-k recommendations. However, it is a problem that CL treats the importance of the positive and negative samples as the same. On the one hand, CL faces the imbalance problem of one positive sample and many negative samples. On the other hand, positive items are so few in sparser datasets that their importance should be emphasized. Moreover, the other important issue is that the sparse positive items are still not sufficiently utilized in recommendations. So we propose a new data augmentation method by using multiple positive items (or samples) simultaneously with the CL loss function. Therefore, we propose a Multi-Sample based Contrastive Loss (MSCL) function which solves the two problems by balancing the importance of positive and negative samples and data augmentation. And based on the graph convolution network (GCN) method, experimental results demonstrate the state-of-the-art performance of MSCL. The proposed MSCL is simple and can be applied in many methods. We will release our code on GitHub upon the acceptance.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Hao Tang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Guoshuai Zhao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yuxia Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xueming Qian",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2109.00217",
+      "date": "2021-09-01T00:00:00",
+      "citation_count": 39,
+      "categories": [
+        "cs.IR",
+        "cs.AI"
+      ],
+      "venue": "IEEE transactions on multimedia",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2603.01381",
+      "score": 0.33333334,
+      "title": "Differential gene expression analysis via two-component mixture models with a semiparametric skew-normal scale mixture alternative",
+      "tldr": "[research paper] Introduces a semiparametric two-component mixture model for differential gene expression where the null component is standard normal and the alternative follows a skew-normal scale mixture with an unspecified scale mixing distribution. The model relaxes symmetry assumptions via a nonparametric maximum likelihood estimation (NPMLE) of the mixing distribution, enabling flexible modeling of skewed and heavy-tailed gene expression data. The method improves upon existing parametric and symmetric semiparametric approaches by accommodating asymmetry and heavy tails, leading to reduced false discovery and false negative rates in colon cancer and leukemia datasets.",
+      "abstract": "Two-component mixture models are particularly useful for identifying differentially expressed genes, but their performance can deteriorate markedly when the alternative distribution departs from parametric assumptions or symmetry. We propose a semiparametric mixture model in which the null component is standard normal and the alternative follows a skew-normal scale mixture with an unspecified scale mixing distribution. This formulation accommodates skewness and heavy tails, providing a flexible and computationally tractable tool for differential gene-expression analysis without restrictive distributional assumptions. We establish identifiability and consistency of the model and develop an efficient estimation algorithm that incorporates nonparametric maximum likelihood estimation of the scale distribution. Numerical studies show notable improvements over existing parametric and nonparametric approaches for modeling the alternative distribution, and applications to colon cancer and leukemia datasets demonstrate reduced false discovery and false negative rates.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ohsangkon@pknu.ac.kr"
+          },
+          "name": "Sangkon Oh",
+          "orgs": [
+            "PKNU"
+          ]
+        },
+        {
+          "misc": {
+            "email": "g.mclachlan@uq.edu.au"
+          },
+          "name": "Geoffrey J. McLachlan",
+          "orgs": [
+            "University of Queensland (UQ)"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2603.01381",
+      "date": "2026-03-02T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "stat.ME"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2602.14840",
+      "score": 0.25,
+      "title": "Statistical Validation and Vetting of Exoplanet Candidate TOI 7475.01",
+      "tldr": "[research paper] A multi-stage vetting pipeline validates TOI 7475.01 as a planetary transit using preserved photometry, BLS detection, centroid stability analysis, and Gaia DR3 spatial contamination checks; the signal exhibits a U-shaped transit with consistent depth across transits, ruling out eclipsing binaries; statistical validation via Triceratops yields a false positive probability (FPP) of effectively zero, with 45% probability assigned to a transiting planet orbiting the target star, confirming its planetary nature with high confidence.",
+      "abstract": "We present a comprehensive validation analysis of the exoplanet candidate TOI 7475.01 (TIC 376866659), detected by the TESS mission. Using a custom pipeline combining natural flux preservation with robust BLS detection, we identified a transit signal with a period of $3.2538$ days and a depth of $\\sim 4600$ ppm. To rule out false positives, we performed centroid analysis, spatial contamination checks using Gaia DR3, and a statistical validation using triceratops. Our results show a Signal-to-Noise Ratio (SNR) of 294.13 and a False Positive Probability (FPP) of $\\approx 0$. Based on the clean spatial environment, stable centroids, and high statistical probability, we validate TOI 7475.01 as a planetary companion.",
+      "authors": [
+        {
+          "misc": {
+            "orcid": "0009-0007-1479-2386"
+          },
+          "name": "Biel Escolà-Rodrigo",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2602.14840",
+      "date": "2026-02-16T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "astro-ph.EP"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2301.13340",
+      "score": 0.25,
+      "title": "Affinity Uncertainty-based Hard Negative Mining in Graph Contrastive Learning",
+      "tldr": "[research paper] AUGCL introduces a data-driven uncertainty estimation framework that evaluates the hardness of negative instances in graph contrastive learning by modeling collective affinity information between anchors and negatives. Instead of relying on predefined similarity thresholds or bimodal distribution priors, it learns an uncertainty score per negative instance relative to an anchor, where high uncertainty indicates a hard negative. This uncertainty is directly incorporated into the contrastive loss as an adaptive weighting term, theoretically equivalent to a triplet loss with margin proportional to uncertainty, enabling robust feature learning on non-i.i.d. graph data with improved performance and adversarial robustness across 10 datasets.",
+      "abstract": "Hard negative mining has shown effective in enhancing self-supervised contrastive learning (CL) on diverse data types, including graph CL (GCL). The existing hardness-aware CL methods typically treat negative instances that are most similar to the anchor instance as hard negatives, which helps improve the CL performance, especially on image data. However, this approach often fails to identify the hard negatives but leads to many false negatives on graph data. This is mainly due to that the learned graph representations are not sufficiently discriminative due to oversmooth representations and/or non-independent and identically distributed (non-i.i.d.) issues in graph data. To tackle this problem, this article proposes a novel approach that builds a discriminative model on collective affinity information (i.e., two sets of pairwise affinities between the negative instances and the anchor instance) to mine hard negatives in GCL. In particular, the proposed approach evaluates how confident/uncertain the discriminative model is about the affinity of each negative instance to an anchor instance to determine its hardness weight relative to the anchor instance. This uncertainty information is then incorporated into the existing GCL loss functions via a weighting term to enhance their performance. The enhanced GCL is theoretically grounded that the resulting GCL loss is equivalent to a triplet loss with an adaptive margin being exponentially proportional to the learned uncertainty of each negative instance. Extensive experiments on ten graph datasets show that our approach does the following: 1) consistently enhances different state-of-the-art (SOTA) GCL methods in both graph and node classification tasks and 2) significantly improves their robustness against adversarial attacks. Code is available at https://github.com/mala-lab/AUGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "Chaoxi.Niu@student.uts.edu.au"
+          },
+          "name": "Chaoxi Niu",
+          "orgs": [
+            "Australian Artificial Intelligence Institute",
+            "University of Technology Sydney",
+            "Sydney, NSW 2007",
+            "Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "pangguansong@gmail.com"
+          },
+          "name": "Guansong Pang",
+          "orgs": [
+            "School of Computing and Information Systems",
+            "Singapore Management University",
+            "178902",
+            "Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Ling.Chen@uts.edu.au"
+          },
+          "name": "Ling Chen",
+          "orgs": [
+            "Australian Artificial Intelligence Institute",
+            "University of Technology Sydney",
+            "Sydney, NSW 2007",
+            "Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2301.13340",
+      "date": "2023-01-31T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "venue_year": null,
+      "github_url": "https://github.com/mala-lab/AUGCL"
+    }
+  ]
+}

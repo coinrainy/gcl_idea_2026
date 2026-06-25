@@ -1,0 +1,239 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2103.00082",
+      "score": 0.530303,
+      "title": "Secure Evaluation of Knowledge Graph Merging Gain",
+      "tldr": "[research paper] Proposes a privacy-preserving protocol for comparing knowledge graphs between two untrusted parties without revealing sensitive data, using blind signatures and counting Bloom filters to compute intersection metrics and entropy-based gain indicators while minimizing information leakage. The protocol enables secure, unbiased sharing of a random subset of the seller's knowledge graph for quality evaluation, with provable security against malicious actors and linear scalability in time, space, and communication costs.",
+      "abstract": "Finding out the differences and commonalities between the knowledge of two parties is an important task. Such a comparison becomes necessary, when one party wants to determine how much it is worth to acquire the knowledge of the second party, or similarly when two parties try to determine, whether a collaboration could be beneficial. When these two parties cannot trust each other (for example, due to them being competitors) performing such a comparison is challenging as neither of them would be willing to share any of their assets. This paper addresses this problem for knowledge graphs, without a need for non-disclosure agreements nor a third party during the protocol.\\\n  During the protocol, the intersection between the two knowledge graphs is determined in a privacy preserving fashion. This is followed by the computation of various metrics, which give an indication of the potential gain from obtaining the other parties knowledge graph, while still keeping the actual knowledge graph contents secret. The protocol makes use of blind signatures and (counting) Bloom filters to reduce the amount of leaked information. Finally, the party who wants to obtain the other's knowledge graph can get a part of such in a way that neither party is able to know beforehand which parts of the graph are obtained (i.e., they cannot choose to only get or share the good parts). After inspection of the quality of this part, the Buyer can decide to proceed with the transaction.\\\n  The analysis of the protocol indicates that the developed protocol is secure against malicious participants. Further experimental analysis shows that the resource consumption scales linear with the number of statements in the knowledge graph.",
+      "authors": [
+        {
+          "misc": {
+            "email": "leandro.eichenberger@rwth-aachen.de"
+          },
+          "name": "Leandro Eichenberger",
+          "orgs": [
+            "Computer Science 5, RWTH Aachen",
+            "Aachen",
+            "Germany"
+          ]
+        },
+        {
+          "misc": {
+            "email": "m.cochez@vu.nl",
+            "orcid": "0000-0001-5726-4638"
+          },
+          "name": "Michael Cochez",
+          "orgs": [
+            "Computer Science, Vrije Universiteit Amsterdam",
+            "Amsterdam",
+            "the Netherlands"
+          ]
+        },
+        {
+          "misc": {
+            "email": "benjamin.heitmann@cs.rwth-aachen.de"
+          },
+          "name": "Benjamin Heitmann",
+          "orgs": [
+            "Computer Science 5, RWTH Aachen",
+            "Aachen",
+            "Germany",
+            "Fraunhofer FIT",
+            "Aachen",
+            "Germany"
+          ]
+        },
+        {
+          "misc": {
+            "email": "stefan.decker@rwth-aachen.de"
+          },
+          "name": "Stefan Decker",
+          "orgs": [
+            "Computer Science 5, RWTH Aachen",
+            "Aachen",
+            "Germany",
+            "Fraunhofer FIT",
+            "Aachen",
+            "Germany"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2103.00082",
+      "date": "2021-02-26T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/blindedwebconf/submission1688"
+    },
+    {
+      "arxiv_id": "2212.08016",
+      "score": 0.5,
+      "title": "Graph comparison meets Alexandrov",
+      "tldr": "[mathematical proof / geometric analysis] The paper proves that any nontrivial graph comparison in a metric space implies either the nonnegative curvature condition (C₄-comparison) or nonpositive curvature in the sense of Alexandrov (T₃-comparison). It establishes a complete classification of graphs with trivial comparison—those that hold in all metric spaces—showing they are built from paths and complete graphs attached to endpoints via a vertex-fusion operation. The core result reduces the general graph comparison problem to a structural analysis of multipath graphs, which are graphs where adjacency is constrained by a level function with bounded differences of 1.",
+      "abstract": "Graph comparison is a certain type of condition on metric space encoded by a finite graph. We show that any nontrivial graph comparison implies one of Alexandrov's comparisons. The proof gives a complete description of graphs with trivial graph comparisons.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Nina Lebedeva",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Anton Petrunin",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2212.08016",
+      "date": "2022-12-15T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "math.MG",
+        "math.CO",
+        "math.DG"
+      ],
+      "venue": "Siberian mathematical journal",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2501.14694",
+      "score": 0.33333334,
+      "title": "Towards Automated Self-Supervised Learning for Truly Unsupervised Graph Anomaly Detection",
+      "tldr": "[research paper] The paper identifies critical flaws in current self-supervised learning (SSL) approaches for graph anomaly detection—specifically, arbitrary hyperparameter selection and label leakage during hyperparameter tuning—leading to inflated performance estimates. It proposes an internal evaluation strategy that uses only data-driven, label-free metrics to automatically select optimal augmentation functions, hyperparameters, and loss combination weights without relying on ground-truth labels. Extensive experiments across 10 SSL-based GAD methods on benchmark datasets demonstrate that label leakage causes severe overestimation of performance, while the proposed internal strategy consistently yields more reliable, truly unsupervised results.",
+      "abstract": "Self-supervised learning (SSL) is an emerging paradigm that exploits supervisory signals generated from the data itself, and many recent studies have leveraged SSL to conduct graph anomaly detection. However, we empirically found that three important factors can substantially impact detection performance across datasets: 1) the specific SSL strategy employed; 2) the tuning of the strategy's hyperparameters; and 3) the allocation of combination weights when using multiple strategies. Most SSL-based graph anomaly detection methods circumvent these issues by arbitrarily or selectively (i.e., guided by label information) choosing SSL strategies, hyperparameter settings, and combination weights. While an arbitrary choice may lead to subpar performance, using label information in an unsupervised setting is label information leakage and leads to severe overestimation of a method's performance. Leakage has been criticized as \"one of the top ten data mining mistakes\", yet many recent studies on SSL-based graph anomaly detection have been using label information to select hyperparameters. To mitigate this issue, we propose to use an internal evaluation strategy (with theoretical analysis) to select hyperparameters in SSL for unsupervised anomaly detection. We perform extensive experiments using 10 recent SSL-based graph anomaly detection algorithms on various benchmark datasets, demonstrating both the prior issues with hyperparameter selection and the effectiveness of our proposed strategy.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yuhang.wang@umail.leidenuniv.nl"
+          },
+          "name": "Yuhang Wang",
+          "orgs": [
+            "Leiden Institute of Advanced Computer Science (LIACS)",
+            "Leiden University",
+            "the Netherlands"
+          ]
+        },
+        {
+          "misc": {
+            "email": "m.van.leeuwen@liacs.leidenuniv.nl"
+          },
+          "name": "Matthijs van Leeuwen",
+          "orgs": [
+            "Leiden Institute of Advanced Computer Science (LIACS)",
+            "Leiden University",
+            "the Netherlands"
+          ]
+        },
+        {
+          "misc": {
+            "email": "z.li@liacs.leidenuniv.nl"
+          },
+          "name": "Zhong Li",
+          "orgs": [
+            "Leiden Institute of Advanced Computer Science (LIACS)",
+            "Leiden University",
+            "the Netherlands"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2501.14694",
+      "date": "2025-01-24T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Data mining and knowledge discovery",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1803.02509",
+      "score": 0.33333334,
+      "title": "An Application of HodgeRank to Online Peer Assessment",
+      "tldr": "[research paper] HodgeRank is applied to online peer assessment to generate objective, bias-resistant reference rankings by solving a least-squares problem over pairwise comparison data, leveraging combinatorial Hodge theory to detect and correct inconsistent grading patterns in student evaluations. The method identifies global ranking scores that minimize deviation from observed pairwise grades while enforcing cyclic consistency constraints, offering a more robust alternative to traditional peer ranking methods like PeerRank or Borda aggregation.",
+      "abstract": "Bias and heterogeneity in peer assessment can lead to the issue of unfair scoring in the educational field. To deal with this problem, we propose a reference ranking method for an online peer assessment system using HodgeRank. Such a scheme provides instructors with an objective scoring reference based on mathematics.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Tse-Yu Lin",
+          "orgs": [
+            "Department of Mathematical Sciences, National Chengchi University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yen-Lung Tsai",
+          "orgs": [
+            "Department of Mathematical Sciences, National Chengchi University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/1803.02509",
+      "date": "2018-03-07T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "stat.ML",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2602.03217",
+      "score": 0.29347825,
+      "title": "Topology Matters: A Cautionary Case Study of Graph SSL on Neuro-Inspired Benchmarks",
+      "tldr": "[research paper] A hierarchical self-supervised learning framework for graph SSL is evaluated on a neuro-inspired synthetic benchmark that mimics multimodal connectome properties. The study reveals a critical failure: invariance-based SSL objectives, designed to be topologically invariant, catastrophically underperform compared to simple heuristics that exploit community structure, due to an objective mismatch where the model learns to ignore structural motifs. The work introduces a controllable multiplex graph generator and a rigorous four-stage evaluation protocol, exposing a fundamental flaw in applying generic graph SSL to data with inherent topological organization and advocating for new SSL objectives that explicitly preserve structural features like modularity and edge-level motifs.",
+      "abstract": "Understanding how local interactions give rise to global brain organization requires models that can represent information across multiple scales. We introduce a hierarchical self-supervised learning (SSL) framework that jointly learns node-, edge-, and graph-level embeddings, inspired by multimodal neuroimaging. We construct a controllable synthetic benchmark mimicking the topological properties of connectomes. Our four-stage evaluation protocol reveals a critical failure: the invariance-based SSL model is fundamentally misaligned with the benchmark's topological properties and is catastrophically outperformed by classical, topology-aware heuristics. Ablations confirm an objective mismatch: SSL objectives designed to be invariant to topological perturbations learn to ignore the very community structure that classical methods exploit. Our results expose a fundamental pitfall in applying generic graph SSL to connectome-like data. We present this framework as a cautionary case study, highlighting the need for new, topology-aware SSL objectives for neuro-AI research that explicitly reward the preservation of structure (e.g., modularity or motifs).",
+      "authors": [
+        {
+          "misc": {},
+          "name": "May Kristine Jonson Carlon",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Su Myat Noe",
+          "orgs": [
+            "2"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Haojiong Wang",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yasuo Kuniyoshi",
+          "orgs": [
+            "1"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2602.03217",
+      "date": "2026-02-03T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

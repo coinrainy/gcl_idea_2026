@@ -1,0 +1,107 @@
+notes/DEEPXIV_TARGETED_SEARCH.md:16:| graph contrastive learning heterophily | HLCL (`2303.06344`), robust GCL/GROC (`2102.13085`), heterophilic hypergraph CL (`2511.18783`), homophily-aware heterogeneous GCL (`2501.08538`), GCL-OT (`2511.16778`) | Keep G5/G2 high risk; add GCL-OT and hypergraph items as Stage 2 checks if heterophily is selected. |
+notes/DEEPXIV_TARGETED_SEARCH.md:35:| HLCL (`2303.06344`) | brief/head/Experiments available | heterophily graph-filter risk confirmed | acceptance status, exact split/evaluator/seeds |
+notes/DEEPXIV_TARGETED_SEARCH.md:37:| SPGCL (`2606.10284`) | brief/head/Experiments/Appendix available | homophily/heterophily node classification, frozen linear classifier, ten repeats, ablation table | exact saved splits, seed identities, test@best |
+notes/CLOSEST_WORK_DELTA_TABLE.md:8:| G2 false negatives under homophily/heterophily | ProGCL, HLCL, SPGCL, homophily-aware heterogeneous GCL | false-negative-aware hard mining; graph-filter heterophily views; positive sampling | unified regime-conditioned false negative/positive boundary | "hard negative reweighting solves GCL negatives" | negative validity may depend on homophily/feature/text regime | separate from ProGCL by predicting when negative mining is harmful/helpful | validation-only false-negative estimates vs label agreement by homophily bin | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:11:| G5 heterophily boundary conditions | HLCL, directed GCL, supervised heterophily GNNs | filters/augmentation for heterophily and directed structure | boundaries of heterophily types and failure modes | "add high-pass/low-pass filter for heterophily" | different heterophily types may require different SSL assumptions | taxonomy + evidence of failure not explained by HLCL filters | evaluate same SSL objectives across Actor/Chameleon/Squirrel/Penn94/Twitch/Genius with fixed splits | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:13:| G7 worst-group robustness | HLCL, robust GNNs, GroupDRO-style reporting | improves some heterophily/noise settings | worst-group reporting for GCL claims | "mean accuracy proves robustness" | robust GCL may fail on minority graph regimes | define groups without test leakage and report worst-bin effects | bin by homophily/noise/degree/label scarcity and report worst-bin accuracy | MEDIUM |
+notes/CLOSEST_WORK_DELTA_TABLE.md:27:- G5: heterophily claims must separate from HLCL, GCL-OT, GraphACL/DSSL/HGRL-style baselines and SPGCL heterophily tables.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:12:| Paper | Datasets | Split | Planetoid public? | 1:1:8? | Wiki-CS? | OGB? | Heterophily fixed? | Evaluator | Frozen/fine-tune | Seeds | Early stopping | test@best/final | Code | Class | Must rerun / missing |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:24:| HLCL | Cora/CiteSeer/PubMed/Actor/Chameleon/Squirrel/Penn94/Twitch/Genius | exact split UNCLEAR | UNCLEAR | UNCLEAR | no | no | likely benchmark fixed for heterophily, but not confirmed | GCL/classifier UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | D | need exact splits/evaluator |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:28:| SPGCL | homophily + heterophily node datasets | geom-gcn splits for some; others UNCLEAR | UNCLEAR | UNCLEAR | no | no | yes for some heterophily | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | D | recent preprint; exact protocol needed |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:37:GRACE, GCA, ProGCL, BGRL, AFGRL, GraphMAE/GraphMAE2 and HLCL, depending on selected Stage 2 gap.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:49:| SPGCL | Frozen linear classifier, ten repeats, homophily/heterophily tables, ablations | remains D/C because exact split files, seed identities and test@best are not confirmed |
+notes/GCL_LITERATURE_MAP.md:8:- arXiv: 成功；用于核心 GCL、masked graph、LLM/TAG、heterophily 查询。
+notes/GCL_LITERATURE_MAP.md:9:- OpenReview: 部分成功；关键词搜索命中 HLCL、CM-GCL、InfoGCL、G-Censor 等，但 API 429 限制导致 LLM/false-negative 查询部分为空。
+notes/GCL_LITERATURE_MAP.md:31:| Heterophily | HLCL: Graph CL under Heterophily via Graph Filters | 2023 | ICLR submission / arXiv, status unclear from search | unclear | node classification | high/low-pass graph filters | directly targeted for heterophily | closest heterophily-aware GCL | graph filters may cover spectral heterophily gap |
+notes/GCL_LITERATURE_MAP.md:35:| Directed graphs | Directed Graph Contrastive Learning | 2023/2024 | OpenReview hit, status unclear | unclear | directed node tasks | Laplacian perturbation/curriculum | relevant under directed setting | structure-preserving augmentation risk | not core unless directed graphs included |
+notes/GCL_LITERATURE_MAP.md:44:2. 近三年节点分类：AFGRL、GraphMAE2、HLCL、CM-GCL、LangGSL、Khan-GCL、SPGCL 是重点风险池。
+notes/GCL_LITERATURE_MAP.md:51:9. Homophily / heterophily：HLCL 是核心风险；需要按 graph regime 分析而非只加 spectral filter。
+notes/GCL_LITERATURE_MAP.md:64:| HLCL | 2023 | Submitted to ICLR 2023 / UNCLEAR acceptance | https://openreview.net/forum?id=NzcUQuhEGef | unclear | reviews not extracted | heterophily-aware GCL | high |
+notes/GCL_LITERATURE_MAP.md:67:| Directed Graph Contrastive Learning | 2023/2024 | OpenReview hit / UNCLEAR | https://openreview.net/forum?id=yLEcG62ANX | unclear | reviews not extracted | directed graph view generation | medium if directed graphs used |
+notes/GCL_LITERATURE_MAP.md:72:- Any heterophily claim must be separated from HLCL and supervised heterophily GNN baselines.
+notes/GCL_GAP_CANDIDATES.md:20:## G2: False Negatives Under Homophily and Heterophily Shift
+notes/GCL_GAP_CANDIDATES.md:24:- Existing shortcoming: ProGCL handles false negatives probabilistically, but regime-specific failure under homophily/heterophily remains under-characterized.
+notes/GCL_GAP_CANDIDATES.md:25:- Evidence: ProGCL; HLCL; homophily-aware heterogeneous GCL.
+notes/GCL_GAP_CANDIDATES.md:27:- Closest work: ProGCL, HLCL, SPGCL.
+notes/GCL_GAP_CANDIDATES.md:65:## G5: Heterophily-Aware GCL Lacks Clear Boundary Conditions
+notes/GCL_GAP_CANDIDATES.md:68:- Gap name: spectral/filter solutions may not generalize across heterophily types
+notes/GCL_GAP_CANDIDATES.md:69:- Existing shortcoming: HLCL uses graph filters, but heterophily can arise from labels, features, directedness, or roles.
+notes/GCL_GAP_CANDIDATES.md:70:- Evidence: HLCL; supervised heterophily GNN literature; Directed GCL OpenReview hit.
+notes/GCL_GAP_CANDIDATES.md:72:- Closest work: HLCL.
+notes/GCL_GAP_CANDIDATES.md:73:- Technical opening: categorize heterophily failure types before designing methods.
+notes/GCL_GAP_CANDIDATES.md:74:- Minimum falsification experiment: fixed split evaluation over multiple heterophily benchmark families.
+notes/GCL_GAP_CANDIDATES.md:75:- Negative-result value: identifies which heterophily subtype matters for GCL.
+notes/GCL_GAP_CANDIDATES.md:102:- Closest work: robust GNN / heterophily-aware GCL.
+notes/GCL_BENCHMARK_PROTOCOLS.md:13:| Paper | Datasets | Split protocol | Planetoid public | 1:1:8 | Wiki-CS | OGB | Heterophily fixed split | Metric | test@best/final | Early stopping | Evaluator | Seeds | Report | Baseline evaluator same? | Comparable under our protocol |
+notes/GCL_BENCHMARK_PROTOCOLS.md:27:| HLCL | heterophily benchmark graphs | UNCLEAR from OpenReview/arXiv snippets | no | maybe no | no | maybe large graphs | yes likely for heterophily | Accuracy | UNCLEAR | UNCLEAR | GCL evaluator | UNCLEAR | mean±std likely | yes likely | Need exact fixed splits before comparison |
+notes/GCL_BENCHMARK_PROTOCOLS.md:46:HLCL, CM-GCL, G-Censor, LangGSL, Khan-GCL and SPGCL are high-risk closest works whose paper-level protocol must be checked before claims.
+notes/GCL_BENCHMARK_PROTOCOLS.md:53:4. OGB official splits and heterophily fixed splits should not be collapsed into the random split table.
+notes/stage1_5_pdf_text/2505.15103.txt:462:GraphACL(Luo et al. 2023) 73.3±0.5 76.2 ±0.6 64.1 ±0.4 62.6 ±0.6 85.0±1.6 76.9±1.2 78.9±0.7 80.1 ±1.2 74.6
+notes/stage1_5_pdf_text/2505.15103.txt:604:GraphACL(Luo et al. 2023) 79.3±0.4 90.2±0.9 - 75.5 ±0.4 74.7 ±0.6 - - 74.3 ±0.7
+notes/STAGE2_FILTERED_IDEAS.md:31:4. GCL-I04: Heterophily-type signed relation contrast.
+notes/stage1_5_pdf_text/2110.02027.txt:1030:Directed graph contrastive learning. Advances in Neural
+notes/STAGE2_RAW_IDEAS.md:9:Primary: G1 semantic false positives, G2 false negatives under homophily/heterophily, G3 MGM vs GCL under identical evaluator, G5 heterophily boundary conditions.
+notes/STAGE2_RAW_IDEAS.md:45:- Core problem: hard negatives can be useful in homophilic regimes but harmful false negatives in heterophilic or role-based regimes.
+notes/STAGE2_RAW_IDEAS.md:46:- Why current methods fail: ProGCL estimates false-negative probabilities but does not characterize graph-regime boundaries; HLCL focuses on filters; SPGCL focuses positives.
+notes/STAGE2_RAW_IDEAS.md:47:- Closest works: ProGCL, HLCL, SPGCL, negative metric learning for graphs, counterfactual hard negatives.
+notes/STAGE2_RAW_IDEAS.md:48:- What closest works already solve: hard-negative risk, heterophily filters, positive sampling, some counterfactual negative construction.
+notes/STAGE2_RAW_IDEAS.md:90:## Idea GCL-I04: Heterophily-Type Signed Relation Contrast
+notes/STAGE2_RAW_IDEAS.md:93:- Title: 异配类型感知的 signed relation contrast
+notes/STAGE2_RAW_IDEAS.md:95:- Core problem: heterophily is not one phenomenon; label, feature, role and directed heterophily imply different SSL relations.
+notes/STAGE2_RAW_IDEAS.md:96:- Why current methods fail: HLCL high/low-pass filters can mix role equivalence with class similarity; SPGCL positive sampling does not define relation ontology.
+notes/STAGE2_RAW_IDEAS.md:97:- Closest works: HLCL, SPGCL, directed GCL, supervised heterophily GNNs.
+notes/STAGE2_RAW_IDEAS.md:98:- What closest works already solve: heterophily filters, positive sampling, performance on several heterophily benchmarks.
+notes/STAGE2_RAW_IDEAS.md:99:- What remains open: which relation should be aligned, separated or predicted under each heterophily type.
+notes/STAGE2_RAW_IDEAS.md:100:- Core hypothesis: signed multi-relation contrast better matches heterophily subtypes than binary positive/negative or universal filters.
+notes/STAGE2_RAW_IDEAS.md:101:- Method sketch: estimate relation type from ego graph; align homophilic-same relations; prototype-align role-equivalent nodes; predict context for complementary heterophilic relations; send uncertain relations to masked diagnostics; report by subtype.
+notes/STAGE2_RAW_IDEAS.md:105:- Minimum novelty condition: explains failures not captured by HLCL-style filters.
+notes/STAGE2_RAW_IDEAS.md:106:- Minimum falsification experiment: compare signed relation contrast to HLCL-style filters on heterophily subtypes.
+notes/STAGE2_RAW_IDEAS.md:107:- Kill condition: relation type cannot be estimated or never beats HLCL/SPGCL.
+notes/STAGE2_RAW_IDEAS.md:108:- Support condition: clear improvement on at least one heterophily subtype and honest explanation of non-improving subtypes.
+notes/STAGE2_RAW_IDEAS.md:147:- Closest works: GroupDRO, robust GNNs, HLCL, ProGCL.
+notes/CORE_CLOSEST_WORK_READING.md:265:## HLCL
+notes/CORE_CLOSEST_WORK_READING.md:267:- Paper: Graph Contrastive Learning under Heterophily via Graph Filters
+notes/CORE_CLOSEST_WORK_READING.md:270:- Main task: homophily and heterophily node classification
+notes/CORE_CLOSEST_WORK_READING.md:271:- Core problem: standard GCL performs poorly on heterophilic graphs
+notes/CORE_CLOSEST_WORK_READING.md:272:- Core mechanism: split homophilic/heterophilic subgraphs and contrast low-/high-pass filtered views
+notes/CORE_CLOSEST_WORK_READING.md:273:- Strategy: heterophily-aware positives/views
+notes/CORE_CLOSEST_WORK_READING.md:282:- Main result: reported gains under heterophily
+notes/CORE_CLOSEST_WORK_READING.md:283:- Ablations: homophilic/heterophilic subgraph and filters
+notes/CORE_CLOSEST_WORK_READING.md:285:- Observed limitations: boundary conditions of heterophily types remain open
+notes/CORE_CLOSEST_WORK_READING.md:286:- Closest-work risk: very high for heterophily-aware GCL
+notes/CORE_CLOSEST_WORK_READING.md:287:- Blocked idea: simply adding high-/low-pass filters
+notes/CORE_CLOSEST_WORK_READING.md:374:- Main task: node classification across homophily/heterophily
+notes/CORE_CLOSEST_WORK_READING.md:381:- Split protocol: uses geom-gcn splits for some heterophily datasets; other exact splits UNCLEAR
+notes/CORE_CLOSEST_WORK_READING.md:431:- SPGCL: uses homophily and heterophily node classification, standard GCN backbone for SSL baselines, frozen linear classifier, ten repeats, and ablations for energy-aware propagation / energy-guided positive sampling. Exact saved splits and seed identities remain unclear.
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:12:tags: ["gcl", "heterophily", "heterogeneous", "false-negative"]
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:53:> Heterogeneous graph pre-training (HGP) has demonstrated remarkable performance across various domains. However, the issue of heterophily in real-world heterogeneous graphs (HGs) has been largely overlooked. To bridge this research gap, we proposed a novel heterogeneous graph contrastive learning framework, termed HGMS, which leverages connection strength and multi-view self-expression to learn homophilous node representations. Specifically, we design a heterogeneous edge dropping augmentation strategy that enhances the homophily of augmented views. Moreover, we introduce a multi-view self-expressive learning method to infer the homophily between nodes. In practice, we develop two approaches to solve the self-expressive matrix. The solved self-expressive matrix serves as an additional augmented view to provide homophilous information and is used to identify false negatives in contrastive loss. Extensive experimental results demonstrate the superiority of HGMS across different downstream tasks.
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:17:| HLCL | `yang2023_graph_contrastive_learning` | arXiv/OpenReview UNCLEAR | UNCLEAR | datasets recovered | exact splits/evaluator/seeds/status | no | high heterophily risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:21:| SPGCL | `shan2026_revisiting_positive_samples` | arXiv 2026 | UNCLEAR | some heterophily split sources recovered | evaluator/seeds/early stopping | no | recent positive-sample risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:30:CM-GCL: accepted NeurIPS 2022. InfoGCL: NeurIPS 2021 Poster. Transductive Linear Probing: LoG 2022 Oral. Directed GCL: NeurIPS 2021 Poster. HLCL and G-Censor remain `UNCLEAR` for final acceptance status in this pass.
+research-wiki/query_pack.md:9:arXiv/PDF recovery succeeded for high-risk closest works. Semantic Scholar is still rate-limited except BGRL metadata. DeepXiv has been fixed after Stage 1.5 (`deepxiv-sdk==0.3.1`, adapter search/brief verified). Exa unavailable because `EXA_API_KEY` is empty. OpenReview partly recovered; HLCL and G-Censor acceptance status remain `UNCLEAR`.
+research-wiki/query_pack.md:19:- HLCL: heterophily-aware graph filters; acceptance/protocol details still `UNCLEAR`.
+research-wiki/query_pack.md:34:- G2 false negatives under homophily/heterophily;
+research-wiki/query_pack.md:36:- G5 heterophily boundary conditions.
+research-wiki/query_pack.md:51:- Do not claim false-negative handling unless separated from ProGCL/SPGCL/HLCL.
+research-wiki/query_pack.md:62:- Exact accepted/rejected status for HLCL and G-Censor.
+research-wiki/query_pack.md:63:- Exact evaluator/seeds/early stopping for Graph Barlow Twins, HLCL, G-Censor, LangGSL, SPGCL.
+research-wiki/query_pack.md:64:- Whether Stage 2 wants a main gap around positives/negatives, MGM comparison, or heterophily boundary conditions.
+research-wiki/query_pack.md:74:- GCL-OT (`2511.16778`) and heterophilic hypergraph CL (`2511.18783`) should be checked if Stage 2 selects heterophily.
+research-wiki/papers/yang2023_graph_contrastive_learning.md:4:title: "Graph Contrastive Learning under Heterophily via Graph Filters"
+research-wiki/papers/yang2023_graph_contrastive_learning.md:12:tags: ["gcl", "heterophily", "graph-filters", "node-classification", "closest-work"]
+research-wiki/papers/yang2023_graph_contrastive_learning.md:16:# Graph Contrastive Learning under Heterophily via Graph Filters
+research-wiki/papers/yang2023_graph_contrastive_learning.md:19:HLCL uses graph filters to construct homophily/heterophily-aware views for graph contrastive learning.
+research-wiki/papers/yang2023_graph_contrastive_learning.md:53:> Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.
+research-wiki/index.md:22:- `paper:yang2023_graph_contrastive_learning` — Graph Contrastive Learning under Heterophily via Graph Filters (2023)
+research-wiki/gap_map.md:17:## G2: False Negatives Under Homophily and Heterophily Shift
+research-wiki/gap_map.md:20:- Closest works: ProGCL, HLCL, SPGCL, homophily-aware heterogeneous GCL.
+research-wiki/gap_map.md:21:- Already solved: probability-aware hard negatives, graph-filter heterophily views, positive sampling.
+research-wiki/gap_map.md:53:## G5: Heterophily-Aware GCL Lacks Clear Boundary Conditions
+research-wiki/gap_map.md:56:- Closest works: HLCL, directed GCL, supervised heterophily GNNs.
+research-wiki/gap_map.md:58:- Not solved: boundaries across heterophily subtypes.
+research-wiki/gap_map.md:59:- Blocked claim: high-/low-pass filter addition for heterophily.
+research-wiki/gap_map.md:60:- Minimum novelty condition: taxonomy plus evidence of failure not explained by HLCL.
+research-wiki/gap_map.md:61:- Must-run falsification: evaluate same SSL objectives across heterophily benchmarks with fixed splits.
+research-wiki/gap_map.md:80:- Closest works: HLCL, robust GNNs, GroupDRO-style reporting.
+research-wiki/gap_map.md:81:- Already solved: some heterophily/noise improvements.
+research-wiki/gap_map.md:108:- G5 remains high risk because HLCL, GCL-OT and related heterophily papers already address filter/transport/heterophily variants.

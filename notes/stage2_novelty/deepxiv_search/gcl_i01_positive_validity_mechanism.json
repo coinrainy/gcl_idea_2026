@@ -1,0 +1,206 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "1807.08093",
+      "score": 0.5,
+      "title": "Conditional Infilling GANs for Data Augmentation in Mammogram Classification",
+      "tldr": "[research paper] The paper proposes a class-conditional GAN (ciGAN) for synthetic lesion generation in mammograms via contextual infilling, where patches of normal images are augmented with synthetic malignant or benign lesions using segmentation masks and class labels. The model leverages a multi-scale generator architecture to stabilize training and generate high-resolution (256×256) patches, demonstrating improved classification performance—specifically, a 0.014 AUC gain over baseline and 0.009 AUC over traditional augmentation—when used to train a ResNet-50 classifier on patch-level data, addressing class imbalance and limited dataset size in medical imaging.",
+      "abstract": "Deep learning approaches to breast cancer detection in mammograms have recently shown promising results. However, such models are constrained by the limited size of publicly available mammography datasets, in large part due to privacy concerns and the high cost of generating expert annotations. Limited dataset size is further exacerbated by substantial class imbalance since \"normal\" images dramatically outnumber those with findings. Given the rapid progress of generative models in synthesizing realistic images, and the known effectiveness of simple data augmentation techniques (e.g. horizontal flipping), we ask if it is possible to synthetically augment mammogram datasets using generative adversarial networks (GANs). We train a class-conditional GAN to perform contextual in-filling, which we then use to synthesize lesions onto healthy screening mammograms. First, we show that GANs are capable of generating high-resolution synthetic mammogram patches. Next, we experimentally evaluate using the augmented dataset to improve breast cancer classification performance. We observe that a ResNet-50 classifier trained with GAN-augmented training data produces a higher AUROC compared to the same model trained only on traditionally augmented data, demonstrating the potential of our approach.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Eric Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Kevin Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "David Cox",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "William Lotter",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1807.08093",
+      "date": "2018-07-21T00:00:00",
+      "citation_count": 149,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "RAMBO+BIA+TIA@MICCAI",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2309.16014",
+      "score": 0.5,
+      "title": "Graph-level Representation Learning with Joint-Embedding Predictive Architectures",
+      "tldr": "[research paper] Graph-JEPA introduces a joint-embedding predictive architecture for self-supervised graph representation learning, eliminating the need for data augmentation or negative samples by predicting subgraph embeddings from context subgraphs. It leverages a hyperbolic angle-based prediction objective to model hierarchical graph structures, achieving superior performance in graph classification and regression while being significantly faster than existing methods—up to 8× faster than MVGRL and 1.45× faster than Graph-MAE—and demonstrating near-perfect discrimination of non-isomorphic graphs beyond the capability of the 1-WL test.",
+      "abstract": "Joint-Embedding Predictive Architectures (JEPAs) have recently emerged as a novel and powerful technique for self-supervised representation learning. They aim to learn an energy-based model by predicting the latent representation of a target signal y from the latent representation of a context signal x. JEPAs bypass the need for negative and positive samples, traditionally required by contrastive learning while avoiding the overfitting issues associated with generative pretraining. In this paper, we show that graph-level representations can be effectively modeled using this paradigm by proposing a Graph Joint-Embedding Predictive Architecture (Graph-JEPA). In particular, we employ masked modeling and focus on predicting the latent representations of masked subgraphs starting from the latent representation of a context subgraph. To endow the representations with the implicit hierarchy that is often present in graph-level concepts, we devise an alternative prediction objective that consists of predicting the coordinates of the encoded subgraphs on the unit hyperbola in the 2D plane. Through multiple experimental evaluations, we show that Graph-JEPA can learn highly semantic and expressive representations, as shown by the downstream performance in graph classification, regression, and distinguishing non-isomorphic graphs. The code is available at https://github.com/geriskenderi/graph-jepa.",
+      "authors": [
+        {
+          "misc": {
+            "email": "name.surname@univr.it"
+          },
+          "name": "Geri Skenderi",
+          "orgs": [
+            "University of Verona"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lihang4@msu.edu"
+          },
+          "name": "Hang Li",
+          "orgs": [
+            "Michigan State University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tangjili@msu.edu"
+          },
+          "name": "Jiliang Tang",
+          "orgs": [
+            "Michigan State University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "name.surname@univr.it"
+          },
+          "name": "Marco Cristani",
+          "orgs": [
+            "University of Verona"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2309.16014",
+      "date": "2023-09-27T00:00:00",
+      "citation_count": 16,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Trans. Mach. Learn. Res.",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2408.06377",
+      "score": 0.3768116,
+      "title": "Masked Graph Autoencoders with Contrastive Augmentation for Spatially Resolved Transcriptomics Data",
+      "tldr": "[research paper] STMGAC introduces a contrastive augmentation strategy within a masked graph autoencoder framework to jointly achieve spatial domain identification and gene denoising in spatial transcriptomics. By leveraging self-distillation to generate persistent latent supervision and employing triplet learning via positive-negative anchor pairs, the method enhances stability and discriminative power in latent space representations. Experimental validation on five datasets demonstrates superior performance over state-of-the-art methods in both clustering accuracy and trajectory inference, with key improvements attributed to the integration of contrastive learning and structured anchor selection.",
+      "abstract": "With the rapid advancement of Spatial Resolved Transcriptomics (SRT) technology, it is now possible to comprehensively measure gene transcription while preserving the spatial context of tissues. Spatial domain identification and gene denoising are key objectives in SRT data analysis. We propose a Contrastively Augmented Masked Graph Autoencoder (STMGAC) to learn low-dimensional latent representations for domain identification. In the latent space, persistent signals for representations are obtained through self-distillation to guide self-supervised matching. At the same time, positive and negative anchor pairs are constructed using triplet learning to augment the discriminative ability. We evaluated the performance of STMGAC on five datasets, achieving results superior to those of existing baseline methods. All code and public datasets used in this paper are available at https://github.com/wenwenmin/STMGAC and https://zenodo.org/records/13253801.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Donghai Fang",
+          "orgs": [
+            "School of Information Science and Engineering, Yunnan University, Kunming 650091, Yunnan, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Fangfang Zhu",
+          "orgs": [
+            "College of Nursing Health Sciences, Yunnan Open University, Kunming 650599, Yunnan, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Dongting Xie",
+          "orgs": [
+            "School of Information Science and Engineering, Yunnan University, Kunming 650091, Yunnan, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "minwenwen@ynu.edu.cn"
+          },
+          "name": "Wenwen Min",
+          "orgs": [
+            "School of Information Science and Engineering, Yunnan University, Kunming 650091, Yunnan, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2408.06377",
+      "date": "2024-08-09T00:00:00",
+      "citation_count": 9,
+      "categories": [
+        "q-bio.GN",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "venue": "IEEE International Conference on Bioinformatics and Biomedicine",
+      "venue_year": 2024,
+      "github_url": "https://github.com/wenwenmin/STMGAC"
+    },
+    {
+      "arxiv_id": "1805.06201",
+      "score": 0.33333334,
+      "title": "Contextual Augmentation: Data Augmentation by Words with Paradigmatic Relations",
+      "tldr": "[research paper] Contextual augmentation leverages bidirectional language models to replace words with contextually predicted variants that maintain paradigmatic relations—enabling broader, more natural substitutions than synonym-based methods. A label-conditional architecture is introduced to ensure generated sentences remain label-compatible by conditioning word predictions on the original label, preventing label-inconsistent augmentations. Experiments across six text classification tasks show improved performance of CNN and RNN classifiers through this method, demonstrating superior generalization over traditional synonym-based augmentation.",
+      "abstract": "We propose a novel data augmentation for labeled sentences called contextual augmentation. We assume an invariance that sentences are natural even if the words in the sentences are replaced with other words with paradigmatic relations. We stochastically replace words with other words that are predicted by a bi-directional language model at the word positions. Words predicted according to a context are numerous but appropriate for the augmentation of the original words. Furthermore, we retrofit a language model with a label-conditional architecture, which allows the model to augment sentences without breaking the label-compatibility. Through the experiments for six various different text classification tasks, we demonstrate that the proposed method improves classifiers based on the convolutional or recurrent neural networks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "sosk@preferred.jp"
+          },
+          "name": "Sosuke Kobayashi",
+          "orgs": [
+            "Preferred Networks, Inc."
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/1805.06201",
+      "date": "2018-05-16T00:00:00",
+      "citation_count": 673,
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "venue": "North American Chapter of the Association for Computational Linguistics",
+      "venue_year": null,
+      "github_url": "https://github.com/pfnet-research/contextual_augmentation"
+    },
+    {
+      "arxiv_id": "2210.15721",
+      "score": 0.25,
+      "title": "GraphMAD: Graph Mixup for Data Augmentation using Data-Driven Convex Clustering",
+      "tldr": "[research paper] GraphMAD introduces a data-driven nonlinear mixup framework for graph data augmentation by projecting graphs onto a continuous latent space defined by graphons, then leveraging convex clustering to learn nonlinear mixup functions that interpolate between graph descriptors. Unlike traditional linear mixup, this approach jointly models relationships across all samples via clusterpaths, enabling more expressive and robust data augmentation that preserves class structure. The method demonstrates superior performance in graph classification by allowing distinct mixup functions for data and labels, with empirical validation on benchmark datasets.",
+      "abstract": "We develop a novel data-driven nonlinear mixup mechanism for graph data augmentation and present different mixup functions for sample pairs and their labels. Mixup is a data augmentation method to create new training data by linearly interpolating between pairs of data samples and their labels. Mixup of graph data is challenging since the interpolation between graphs of potentially different sizes is an ill-posed operation. Hence, a promising approach for graph mixup is to first project the graphs onto a common latent feature space and then explore linear and nonlinear mixup strategies in this latent space. In this context, we propose to (i) project graphs onto the latent space of continuous random graph models known as graphons, (ii) leverage convex clustering in this latent space to generate nonlinear data-driven mixup functions, and (iii) investigate the use of different mixup functions for labels and data samples. We evaluate our graph data augmentation performance on benchmark datasets and demonstrate that nonlinear data-driven mixup functions can significantly improve graph classification.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Madeline Navarro",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Santiago Segarra",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2210.15721",
+      "date": "2022-10-27T00:00:00",
+      "citation_count": 16,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE International Conference on Acoustics, Speech, and Signal Processing",
+      "venue_year": 2023,
+      "github_url": "https://github.com/mn51/graphmad"
+    }
+  ]
+}

@@ -1,0 +1,356 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2205.10803",
+      "score": 0.7,
+      "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+      "tldr": "[research paper] GraphMAE introduces a generative self-supervised approach to graph autoencoding that replaces structure reconstruction with feature reconstruction using a masked input and scaled cosine error (SCE), addressing key limitations in prior graph autoencoders such as sensitivity to reconstruction metrics, training instability, and reliance on structural augmentation. The method achieves superior performance across 21 datasets in node and graph classification tasks by eliminating the need for negative sampling or complex training dynamics, demonstrating that simple, well-designed generative objectives can outperform contrastive baselines in graph pre-training.",
+      "abstract": "Self-supervised learning (SSL) has been extensively explored in recent years. Particularly, generative SSL has seen emerging success in natural language processing and other AI fields, such as the wide adoption of BERT and GPT. Despite this, contrastive learning-which heavily relies on structural data augmentation and complicated training strategies-has been the dominant approach in graph SSL, while the progress of generative SSL on graphs, especially graph autoencoders (GAEs), has thus far not reached the potential as promised in other fields. In this paper, we identify and examine the issues that negatively impact the development of GAEs, including their reconstruction objective, training robustness, and error metric. We present a masked graph autoencoder GraphMAE that mitigates these issues for generative self-supervised graph pretraining. Instead of reconstructing graph structures, we propose to focus on feature reconstruction with both a masking strategy and scaled cosine error that benefit the robust training of GraphMAE. We conduct extensive experiments on 21 public datasets for three different graph learning tasks. The results manifest that GraphMAE-a simple graph autoencoder with careful designs-can consistently generate outperformance over both contrastive and generative state-of-the-art baselines. This study provides an understanding of graph autoencoders and demonstrates the potential of generative self-supervised pre-training on graphs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuxiao21@mails.tsinghua.edu.cn"
+          },
+          "name": "Xiao Liu",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cyk20@mails.tsinghua.edu.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yang.yhx@alibaba-inc.com"
+          },
+          "name": "Hongxia Yang",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cjwang@birentech.com"
+          },
+          "name": "Chunjie Wang",
+          "orgs": [
+            "BirenTech Research"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10803",
+      "date": "2022-05-22T00:00:00",
+      "citation_count": 893,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/THUDM/GraphMAE"
+    },
+    {
+      "arxiv_id": "2509.01541",
+      "score": 0.5,
+      "title": "Graph Contrastive Learning versus Untrained Baselines: The Role of Dataset Size",
+      "tldr": "[research paper] Graph Contrastive Learning (GCL) does not universally outperform untrained baselines; its advantage emerges only at larger dataset scales, with a crossover point around 4,000 graphs on molecular datasets. On small datasets like TU benchmarks, simple baselines—such as untrained GNNs and handcrafted graph statistics—match or exceed GCL performance, suggesting that reported GCL gains may stem from dataset size bias rather than intrinsic learning benefits. On the large ogbg-molhiv dataset, GCL eventually surpasses baselines beyond ~4.5k graphs, but the performance gap plateaus at ~2% ROC-AUC, indicating limited scalability gains with more data and highlighting the need for size-aware benchmarking in GCL evaluation.",
+      "abstract": "Graph Contrastive Learning (GCL) has emerged as a leading paradigm for self-supervised learning on graphs, with strong performance reported on standardized datasets and growing applications ranging from genomics to drug discovery. We ask a basic question: does GCL actually outperform untrained baselines? We find that GCL's advantage depends strongly on dataset size and task difficulty. On standard datasets, untrained Graph Neural Networks (GNNs), simple multilayer perceptrons, and even handcrafted statistics can rival or exceed GCL. On the large molecular dataset ogbg-molhiv, we observe a crossover: GCL lags at small scales but pulls ahead beyond a few thousand graphs, though this gain eventually plateaus. On synthetic datasets, GCL accuracy approximately scales with the logarithm of the number of graphs and its performance gap (compared with untrained GNNs) varies with respect to task complexity. Moving forward, it is crucial to identify the role of dataset size in benchmarks and applications, as well as to design GCL algorithms that avoid performance plateaus.",
+      "authors": [
+        {
+          "misc": {
+            "email": "smayan@uchicago.edu"
+          },
+          "name": "Smayan Khanna",
+          "orgs": [
+            "University of Chicago"
+          ]
+        },
+        {
+          "misc": {
+            "email": "gokmen@uchicago.edu"
+          },
+          "name": "Doruk Efe Gökmen",
+          "orgs": [
+            "University of Chicago"
+          ]
+        },
+        {
+          "misc": {
+            "email": "risi@uchicago.edu"
+          },
+          "name": "R. Kondor",
+          "orgs": [
+            "University of Chicago"
+          ]
+        },
+        {
+          "misc": {
+            "email": "vitelli@uchicago.edu"
+          },
+          "name": "Vincenzo Vitelli",
+          "orgs": [
+            "University of Chicago"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2509.01541",
+      "date": "2025-09-01T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cond-mat.soft"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2410.10241",
+      "score": 0.3409091,
+      "title": "Revisiting and Benchmarking Graph Autoencoders: A Contrastive Learning Perspective",
+      "tldr": "[research paper] The paper establishes a theoretical and empirical equivalence between graph autoencoders (GAEs) and graph contrastive learning (GCL), demonstrating that GAEs implicitly perform contrastive learning by contrasting paired subgraph views. It proposes 1rGAE—a unified, modular GAE framework grounded in contrastive learning principles—offering a systematic recipe (augmentation, contrastive views, encoder/decoder, contrastive loss, optional negative samples) to design effective GAEs, and benchmarks its performance across diverse graph tasks, revealing that contrastive design significantly enhances representation quality and generalization.",
+      "abstract": "Graph autoencoders (GAEs) are self-supervised learning models that can learn meaningful representations of graph-structured data by reconstructing the input graph from a low-dimensional latent space. Over the past few years, GAEs have gained significant attention in academia and industry. In particular, the recent advent of GAEs with masked autoencoding schemes marks a significant advancement in graph self-supervised learning research. While numerous GAEs have been proposed, the underlying mechanisms of GAEs are not well understood, and a comprehensive benchmark for GAEs is still lacking. In this work, we bridge the gap between GAEs and contrastive learning by establishing conceptual and methodological connections. We revisit the GAEs studied in previous works and demonstrate how contrastive learning principles can be applied to GAEs. Motivated by these insights, we introduce lrGAE (left-right GAE), a general and powerful GAE framework that leverages contrastive learning principles to learn meaningful representations. Our proposed lrGAE not only facilitates a deeper understanding of GAEs but also sets a new benchmark for GAEs across diverse graph-based learning tasks. The source code for lrGAE, including the baselines and all the code for reproducing the results, is publicly available at https://github.com/EdisonLeeeee/lrGAE.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University",
+            "Coupang"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yuchang Zhu",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Huizhe Zhang",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Xinzhou Jin",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Guibin Zhang",
+          "orgs": [
+            "Shanghai AI Laboratory"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Zulun Zhu",
+          "orgs": [
+            "Nanyang Technological University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2410.10241",
+      "date": "2024-10-14T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "stat.ML"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/1rGAE"
+    },
+    {
+      "arxiv_id": "2006.05582",
+      "score": 0.3409091,
+      "title": "Contrastive Multi-View Representation Learning on Graphs",
+      "tldr": "[research paper] The paper proposes a self-supervised contrastive learning framework for graph representations by contrasting structural views derived from first-order neighbors and graph diffusion, demonstrating that increasing view count beyond two or using multi-scale encodings does not improve performance. It achieves state-of-the-art results on 8 out of 8 node and graph classification benchmarks via a simple architecture without specialized encoders, outperforming prior contrastive methods and supervised baselines on 4 benchmarks, with key findings showing that graph readout outperforms hierarchical pooling and that regularization or normalization degrades performance.",
+      "abstract": "We introduce a self-supervised approach for learning node and graph level representations by contrasting structural views of graphs. We show that unlike visual representation learning, increasing the number of views to more than two or contrasting multi-scale encodings do not improve performance, and the best performance is achieved by contrasting encodings from first-order neighbors and a graph diffusion. We achieve new state-of-the-art results in self-supervised learning on 8 out of 8 node and graph classification benchmarks under the linear evaluation protocol. For example, on Cora (node) and Reddit-Binary (graph) classification benchmarks, we achieve 86.8% and 84.5% accuracy, which are 5.5% and 2.4% relative improvements over previous state-of-the-art. When compared to supervised baselines, our approach outperforms them in 4 out of 8 benchmarks. Source code is released at: https://github.com/kavehhassani/mvgrl",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2006.05582",
+      "date": "2020-06-10T00:00:00",
+      "citation_count": 1664,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2310.15523",
+      "score": 0.33333334,
+      "title": "Generative and Contrastive Paradigms Are Complementary for Graph Self-Supervised Learning",
+      "tldr": "[research paper] The paper proposes GCMAE, a unified framework that combines masked autoencoder (MAE) and contrastive learning (CL) paradigms for graph self-supervised learning. By sharing a common encoder, GCMAE enables the MAE branch to leverage global structural information extracted by the CL branch, while the CL branch benefits from local feature details captured by MAE. The framework reconstructs the full adjacency matrix instead of masked edges, and introduces a discrimination loss to mitigate feature smoothing by enhancing node embedding disparity, leading to up to 3.2% accuracy gains across node classification, link prediction, and graph classification tasks.",
+      "abstract": "For graph self-supervised learning (GSSL), masked autoencoder (MAE) follows the generative paradigm and learns to reconstruct masked graph edges or node features. Contrastive Learning (CL) maximizes the similarity between augmented views of the same graph and is widely used for GSSL. However, MAE and CL are considered separately in existing works for GSSL. We observe that the MAE and CL paradigms are complementary and propose the graph contrastive masked autoencoder (GCMAE) framework to unify them. Specifically, by focusing on local edges or node features, MAE cannot capture global information of the graph and is sensitive to particular edges and features. On the contrary, CL excels in extracting global information because it considers the relation between graphs. As such, we equip GCMAE with an MAE branch and a CL branch, and the two branches share a common encoder, which allows the MAE branch to exploit the global information extracted by the CL branch. To force GCMAE to capture global graph structures, we train it to reconstruct the entire adjacency matrix instead of only the masked edges as in existing works. Moreover, a discrimination loss is proposed for feature reconstruction, which improves the disparity between node embeddings rather than reducing the reconstruction error to tackle the feature smoothing problem of MAE. We evaluate GCMAE on four popular graph tasks (i.e., node classification, node clustering, link prediction, and graph classification) and compare with 14 state-of-the-art baselines. The results show that GCMAE consistently provides good accuracy across these tasks, and the maximum accuracy improvement is up to 3.2% compared with the best-performing baseline.",
+      "authors": [
+        {
+          "misc": {
+            "email": "nai.yxwang@whu.edu.cn"
+          },
+          "name": "Yuxiang Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yanxiaosunny@gmail.com"
+          },
+          "name": "Xiao Yan",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chuang Hu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ccchengff@pku.edu.cn"
+          },
+          "name": "Fangcheng Fu",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wentao.zhang@pku.edu.cn"
+          },
+          "name": "Wentao Zhang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wanghao.cs@whu.edu.cn"
+          },
+          "name": "Hao Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jedi.shang@gmail.com"
+          },
+          "name": "Shuo Shang",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiawei.jiang@whu.edu.cn"
+          },
+          "name": "Jiawei Jiang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "University of Electronic Science and Technology of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.15523",
+      "date": "2023-10-24T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE International Conference on Data Engineering",
+      "venue_year": 2024,
+      "github_url": null
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2406.01449",
+      "score": 0.5,
+      "title": "SLANT: Spurious Logo ANalysis Toolkit",
+      "tldr": "[research paper] SLANT introduces a semi-automatic toolkit to discover spurious logo correlations in vision-language models (VLMs), revealing that logos—such as Adidas or corporate branding—can spuriously correlate with negative human adjectives (e.g., 'greedy'), the concept of 'harmlessness' (misclassifying harmful content as harmless), and object classes (e.g., traffic lights), leading to degraded zero-shot performance. The toolkit mines a comprehensive logo bank (CC12M-LogoBank) and identifies such correlations via targeted probing, while offering two lightweight mitigation strategies—cropping and logo masking—that integrate seamlessly into zero-shot inference. The findings expose a novel, accessible attack vector where malicious actors can embed logos to manipulate model decisions, highlighting a critical vulnerability in real-world content moderation and classification systems.",
+      "abstract": "Online content is filled with logos, from ads and social media posts to website branding and product placements. Consequently, these logos are prevalent in the extensive web-scraped datasets used to pretrain Vision-Language Models, which are used for a wide array of tasks (content moderation, object classification). While these models have been shown to learn harmful correlations in various tasks, whether these correlations include logos remains understudied. Understanding this is especially important due to logos often being used by public-facing entities like brands and government agencies. To that end, we develop SLANT: A Spurious Logo ANalysis Toolkit. Our key finding is that some logos indeed lead to spurious incorrect predictions, for example, adding the Adidas logo to a photo of a person causes a model classify the person as greedy. SLANT contains a semi-automatic mechanism for mining such \"spurious\" logos. The mechanism consists of a comprehensive logo bank, CC12M-LogoBank, and an algorithm that searches the bank for logos that VLMs spuriously correlate with a user-provided downstream recognition target. We uncover various seemingly harmless logos that VL models correlate 1) with negative human adjectives 2) with the concept of `harmlessness'; causing models to misclassify harmful online content as harmless, and 3) with user-provided object concepts; causing lower recognition accuracy on ImageNet zero-shot classification. Furthermore, SLANT's logos can be seen as effective attacks against foundational models; an attacker could place a spurious logo on harmful content, causing the model to misclassify it as harmless. This threat is alarming considering the simplicity of logo attacks, increasing the attack surface of VL models. As a defense, we include in our Toolkit two effective mitigation strategies that seamlessly integrate with zero-shot inference of foundation models.",
+      "authors": [
+        {
+          "misc": {
+            "email": "mqraitem@bu.edu"
+          },
+          "name": "Maan Qraitem",
+          "orgs": [
+            "Boston University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "piotrt@bu.edu"
+          },
+          "name": "Piotr Teterwak",
+          "orgs": [
+            "Boston University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "saenko@bu.edu"
+          },
+          "name": "Kate Saenko",
+          "orgs": [
+            "Boston University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "bplum@bu.edu"
+          },
+          "name": "Bryan A. Plummer",
+          "orgs": [
+            "Boston University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2406.01449",
+      "date": "2024-06-03T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2012.05860",
+      "score": 0.5,
+      "title": "GNN-XML: Graph Neural Networks for Extreme Multi-label Text Classification",
+      "tldr": "[research paper] GNN-XML introduces a graph neural network framework for Extreme Multi-label Text Classification (XMTC) that addresses scalability and data sparsity by modeling label correlations via a co-occurrence-based label graph, performing attributed graph clustering with a low-pass filter to form semantic label clusters, and employing a bilateral-branch graph isomorphism network to decouple representation and classifier learning—specifically enhancing tail label prediction through re-balanced sampling. The method achieves superior performance on large-scale, long-tailed datasets by leveraging graph structure to reduce label space while preserving semantic dependencies and handling text inputs with high word counts.",
+      "abstract": "Extreme multi-label text classification (XMTC) aims to tag a text instance with the most relevant subset of labels from an extremely large label set. XMTC has attracted much recent attention due to massive label sets yielded by modern applications, such as news annotation and product recommendation. The main challenges of XMTC are the data scalability and sparsity, thereby leading to two issues: i) the intractability to scale to the extreme label setting, ii) the presence of long-tailed label distribution, implying that a large fraction of labels have few positive training instances. To overcome these problems, we propose GNN-XML, a scalable graph neural network framework tailored for XMTC problems. Specifically, we exploit label correlations via mining their co-occurrence patterns and build a label graph based on the correlation matrix. We then conduct the attributed graph clustering by performing graph convolution with a low-pass graph filter to jointly model label dependencies and label features, which induces semantic label clusters. We further propose a bilateral-branch graph isomorphism network to decouple representation learning and classifier learning for better modeling tail labels. Experimental results on multiple benchmark datasets show that GNN-XML significantly outperforms state-of-the-art methods while maintaining comparable prediction efficiency and model size.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ecnuzdm@gmail.com"
+          },
+          "name": "Daoming Zong",
+          "orgs": [
+            "East China Normal University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "s1sun@cs.ecnu.edu.cn"
+          },
+          "name": "Shiliang Sun",
+          "orgs": [
+            "East China Normal University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2012.05860",
+      "date": "2020-12-10T00:00:00",
+      "citation_count": 11,
+      "categories": [
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2401.12479",
+      "score": 0.33333334,
+      "title": "TD^2-Net: Toward Denoising and Debiasing for Dynamic Scene Graph Generation",
+      "tldr": "[research paper] TD2-Net introduces a denoising spatio-temporal transformer (D-Trans) module that uses differentiable Top-K selection via Gumbel-Softmax to filter noisy contextual neighbors, improving object representation by focusing on relevant spatio-temporal neighbors. It also proposes an asymmetrical reweighting loss (AR-Loss) that applies higher focusing factors to positive relationship samples and incorporates effective sample counts to mitigate both positive-negative and head-tail label imbalances, achieving a 12.7% improvement in mean-Recall@10 over state-of-the-art methods on Action Genome.",
+      "abstract": "Dynamic scene graph generation (SGG) focuses on detecting objects in a video and determining their pairwise relationships. Existing dynamic SGG methods usually suffer from several issues, including 1) Contextual noise, as some frames might contain occluded and blurred objects. 2) Label bias, primarily due to the high imbalance between a few positive relationship samples and numerous negative ones. Additionally, the distribution of relationships exhibits a long-tailed pattern. To address the above problems, in this paper, we introduce a network named TD$^2$-Net that aims at denoising and debiasing for dynamic SGG. Specifically, we first propose a denoising spatio-temporal transformer module that enhances object representation with robust contextual information. This is achieved by designing a differentiable Top-K object selector that utilizes the gumbel-softmax sampling strategy to select the relevant neighborhood for each object. Second, we introduce an asymmetrical reweighting loss to relieve the issue of label bias. This loss function integrates asymmetry focusing factors and the volume of samples to adjust the weights assigned to individual samples. Systematic experimental results demonstrate the superiority of our proposed TD$^2$-Net over existing state-of-the-art approaches on Action Genome databases. In more detail, TD$^2$-Net outperforms the second-best competitors by 12.7 \\\\% on mean-Recall@10 for predicate classification.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Xin Lin",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Chong Shi",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yibing Zhan",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zuopeng Yang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yaqi Wu",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Dacheng Tao",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2401.12479",
+      "date": "2024-01-23T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2508.21816",
+      "score": 0.33333334,
+      "title": "The Demon is in Ambiguity: Revisiting Situation Recognition with Single Positive Multi-Label Learning",
+      "tldr": "[research paper] The paper challenges the conventional single-label formulation of verb classification in situation recognition (SR), demonstrating through embedding analysis and case studies that visual events are inherently ambiguous and semantically overlapping. It proposes a novel Single Positive Multi-Label Learning (SPMLL) framework to model this ambiguity, introduces a large-scale multi-label evaluation benchmark via a VLM-LLM pre-annotation pipeline, and develops the Graph Enhanced Verb Multilayer Perceptron (GE-VerbMLP) to exploit label correlations and improve decision boundaries—achieving over 3% gains in multi-label Average Precision (MAP) while maintaining competitive single-label accuracy.",
+      "abstract": "Context recognition (SR) is a fundamental task in computer vision that aims to extract structured semantic summaries from images by identifying key events and their associated entities. Specifically, given an input image, the model must first classify the main visual events (verb classification), then identify the participating entities and their semantic roles (semantic role labeling), and finally localize these entities in the image (semantic role localization). Existing methods treat verb classification as a single-label problem, but we show through a comprehensive analysis that this formulation fails to address the inherent ambiguity in visual event recognition, as multiple verb categories may reasonably describe the same image. This paper makes three key contributions: First, we reveal through empirical analysis that verb classification is inherently a multi-label problem due to the ubiquitous semantic overlap between verb categories. Second, given the impracticality of fully annotating large-scale datasets with multiple labels, we propose to reformulate verb classification as a single positive multi-label learning (SPMLL) problem - a novel perspective in SR research. Third, we design a comprehensive multi-label evaluation benchmark for SR that is carefully designed to fairly evaluate model performance in a multi-label setting. To address the challenges of SPMLL, we futher develop the Graph Enhanced Verb Multilayer Perceptron (GE-VerbMLP), which combines graph neural networks to capture label correlations and adversarial training to optimize decision boundaries. Extensive experiments on real-world datasets show that our approach achieves more than 3\\\\% MAP improvement while remaining competitive on traditional top-1 and top-5 accuracy metrics.",
+      "authors": [
+        {
+          "misc": {
+            "email": "yiming.lin21@student.xjtlu.edu.cn"
+          },
+          "name": "Yiming Lin",
+          "orgs": [
+            "School of Advanced Technology",
+            "Xi'an Jiaotong-Liverpool University",
+            "Suzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Yuchen.Niu17@alumni.xjtlu.edu.cn"
+          },
+          "name": "Yuchen Niu",
+          "orgs": [
+            "School of Advanced Technology",
+            "Xi'an Jiaotong-Liverpool University",
+            "Suzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shang.wang24@student.xjtlu.edu.cn"
+          },
+          "name": "Shang Wang",
+          "orgs": [
+            "School of Advanced Technology",
+            "Xi'an Jiaotong-Liverpool University",
+            "Suzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "kaizhu.huang@dukekunshan.edu.cn"
+          },
+          "name": "Kaizhu Huang",
+          "orgs": [
+            "Data Science Research Center",
+            "Duke Kunshan University",
+            "Suzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiufeng.wang@xjtlu.edu.cn"
+          },
+          "name": "Qiufeng Wang",
+          "orgs": [
+            "School of Advanced Technology",
+            "Xi'an Jiaotong-Liverpool University",
+            "Suzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaobo.jin@xjtlu.edu.cn"
+          },
+          "name": "Xiao-Bo Jin",
+          "orgs": [
+            "School of Advanced Technology",
+            "Xi'an Jiaotong-Liverpool University",
+            "Suzhou, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2508.21816",
+      "date": "2025-08-29T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "venue": "Industrial Conference on Data Mining",
+      "venue_year": 2025,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2211.14394",
+      "score": 0.25,
+      "title": "Link Prediction with Non-Contrastive Learning",
+      "tldr": "[research paper] Non-contrastive graph self-supervised learning (SSL) methods, while effective for node-level tasks, are found to underperform in link prediction—especially in inductive settings—due to overfitting from lack of negative link representations. BGRL performs well in transductive settings but fails in inductive settings where generalization to unseen nodes is required; T-BGRL addresses this by introducing cheap corruption-based negative samples that simulate negative link pairs without expensive negative sampling, achieving up to 120% improvement in Hits@50 across 5/6 datasets with 14× speedup over contrastive baselines.",
+      "abstract": "A recent focal area in the space of graph neural networks (GNNs) is graph self-supervised learning (SSL), which aims to derive useful node representations without labeled data. Notably, many state-of-the-art graph SSL methods are contrastive methods, which use a combination of positive and negative samples to learn node representations. Owing to challenges in negative sampling (slowness and model sensitivity), recent literature introduced non-contrastive methods, which instead only use positive samples. Though such methods have shown promising performance in node-level tasks, their suitability for link prediction tasks, which are concerned with predicting link existence between pairs of nodes (and have broad applicability to recommendation systems contexts) is yet unexplored. In this work, we extensively evaluate the performance of existing non-contrastive methods for link prediction in both transductive and inductive settings. While most existing non-contrastive methods perform poorly overall, we find that, surprisingly, BGRL generally performs well in transductive settings. However, it performs poorly in the more realistic inductive settings where the model has to generalize to links to/from unseen nodes. We find that non-contrastive models tend to overfit to the training graph and use this analysis to propose T-BGRL, a novel non-contrastive framework that incorporates cheap corruptions to improve the generalization ability of the model. This simple modification strongly improves inductive performance in 5/6 of our datasets, with up to a 120% improvement in Hits@50--all with comparable speed to other non-contrastive baselines and up to 14x faster than the best-performing contrastive baseline. Our work imparts interesting findings about non-contrastive learning for link prediction and paves the way for future researchers to further expand upon this area.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wshia002@ucr.edu"
+          },
+          "name": "William Shiao",
+          "orgs": [
+            "University of California, Riverside"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zguo5@nd.edu"
+          },
+          "name": "Zhichun Guo",
+          "orgs": [
+            "University of Notre Dame"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tzhao@snap.com"
+          },
+          "name": "Tong Zhao",
+          "orgs": [
+            "Snap Inc."
+          ]
+        },
+        {
+          "misc": {
+            "email": "epapalex@ucr.edu"
+          },
+          "name": "Evangelos E. Papalexakis",
+          "orgs": [
+            "University of California, Riverside"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yliu2@snap.com"
+          },
+          "name": "Yozen Liu",
+          "orgs": [
+            "Snap Inc."
+          ]
+        },
+        {
+          "misc": {
+            "email": "nshah@snap.com"
+          },
+          "name": "Neil Shah",
+          "orgs": [
+            "Snap Inc."
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2211.14394",
+      "date": "2022-11-25T00:00:00",
+      "citation_count": 22,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "International Conference on Learning Representations",
+      "venue_year": null,
+      "github_url": "https://github.com/snap-research/non-contrastive-link-prediction"
+    }
+  ]
+}

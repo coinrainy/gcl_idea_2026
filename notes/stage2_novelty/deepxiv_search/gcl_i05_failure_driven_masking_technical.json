@@ -1,0 +1,301 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2408.13471",
+      "score": 0.5,
+      "title": "Disentangled Generative Graph Representation Learning",
+      "tldr": "[research paper] DiGGR introduces a disentangled generative graph representation learning framework that jointly trains a probabilistic graph generation model with a graph masked autoencoder (GMAE) to learn latent disentangled factors. These factors guide structured, factor-wise masking strategies during reconstruction, enabling end-to-end joint learning that improves representation disentanglement and robustness by separating heterogeneous neighborhood influences (e.g., professional vs. social communities) in nodes. Experiments on 11 datasets show superior performance in node and graph classification compared to baseline GMAEs and disentangled methods, demonstrating convergence and effectiveness under generative training.",
+      "abstract": "Recently, generative graph models have shown promising results in learning graph representations through self-supervised methods. However, most existing generative graph representation learning (GRL) approaches rely on random masking across the entire graph, which overlooks the entanglement of learned representations. This oversight results in non-robustness and a lack of explainability. Furthermore, disentangling the learned representations remains a significant challenge and has not been sufficiently explored in GRL research. Based on these insights, this paper introduces DiGGR (Disentangled Generative Graph Representation Learning), a self-supervised learning framework. DiGGR aims to learn latent disentangled factors and utilizes them to guide graph mask modeling, thereby enhancing the disentanglement of learned representations and enabling end-to-end joint learning. Extensive experiments on 11 public datasets for two different graph learning tasks demonstrate that DiGGR consistently outperforms many previous self-supervised methods, verifying the effectiveness of the proposed approach.",
+      "authors": [
+        {
+          "misc": {
+            "email": "xinyuehu122@gmail.com"
+          },
+          "name": "Xinyue Hu",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xd_zhibin@163.com"
+          },
+          "name": "Zhibin Duan",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xinyangATK@gmail.com"
+          },
+          "name": "Xinyang Liu",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxinli2020@gmail.com"
+          },
+          "name": "Yuxin Li",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "bchen@mail.xidian.edu.com"
+          },
+          "name": "Bo Chen",
+          "orgs": [
+            "Xidian University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mingyuan.zhou@mccombs.utexas.edu",
+            "corresponding_author": true
+          },
+          "name": "Mingyuan Zhou",
+          "orgs": [
+            "The University of Texas at Austin"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2408.13471",
+      "date": "2024-08-24T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2311.12737",
+      "score": 0.5,
+      "title": "Exploring Graph Classification Techniques Under Low Data Constraints: A Comprehensive Study",
+      "tldr": "[survey paper] This survey systematically categorizes and analyzes graph data augmentation and few-shot learning techniques under low-data constraints, focusing on rule-based and learning-based augmentation methods (e.g., edge/node dropping, feature masking, subgraph cropping, interpolation) and meta-learning strategies for graph classification. It identifies key challenges like overfitting and label scarcity in graph-based tasks and evaluates how augmentation and few-shot paradigms improve generalization in sparse datasets through consistency loss, contrastive learning, and graph-level interpolation.",
+      "abstract": "This survey paper presents a brief overview of recent research on graph data augmentation and few-shot learning. It covers various techniques for graph data augmentation, including node and edge perturbation, graph coarsening, and graph generation, as well as the latest developments in few-shot learning, such as meta-learning and model-agnostic meta-learning. The paper explores these areas in depth and delves into further sub classifications. Rule based approaches and learning based approaches are surveyed under graph augmentation techniques. Few-Shot Learning on graphs is also studied in terms of metric learning techniques and optimization-based techniques. In all, this paper provides an extensive array of techniques that can be employed in solving graph processing problems faced in low-data scenarios.",
+      "authors": [
+        {
+          "misc": {
+            "email": "1kmkothari_b19@ce.vjti.ac.in"
+          },
+          "name": "Kush Kothari",
+          "orgs": [
+            "Department of Computer Engineering and Information Technology",
+            "Veermata Jijabai Technology Institute",
+            "Mumbai, India"
+          ]
+        },
+        {
+          "misc": {
+            "email": "2bdmehta_b19@ce.vjti.ac.in"
+          },
+          "name": "Bhavya Mehta",
+          "orgs": [
+            "Department of Computer Engineering and Information Technology",
+            "Veermata Jijabai Technology Institute",
+            "Mumbai, India"
+          ]
+        },
+        {
+          "misc": {
+            "email": "3rsnambiar_b19@ce.vjti.ac.in"
+          },
+          "name": "Reshmika Nambiar",
+          "orgs": [
+            "Department of Computer Engineering and Information Technology",
+            "Veermata Jijabai Technology Institute",
+            "Mumbai, India"
+          ]
+        },
+        {
+          "misc": {
+            "email": "4scshrawne@ce.vjti.ac.in"
+          },
+          "name": "Seema Shrawne",
+          "orgs": [
+            "Department of Computer Engineering and Information Technology",
+            "Veermata Jijabai Technology Institute",
+            "Mumbai, India"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2311.12737",
+      "date": "2023-11-21T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Computing Communication and Networking Technologies",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2201.09830",
+      "score": 0.33333334,
+      "title": "Learning Graph Augmentations to Learn Graph Representations",
+      "tldr": "[research paper] LG2AR introduces an end-to-end probabilistic framework for graph augmentation that learns dataset-specific augmentation policies and parameter distributions, enabling adaptive, data-driven augmentation strategies for both node and graph-level representations. Unlike prior methods that rely on hand-crafted or heuristic augmentations, LG2AR jointly optimizes a selection policy and augmentation heads to maximize representation consistency under diverse graph structures and distribution shifts, achieving state-of-the-art performance on 18 out of 20 benchmarks across linear and semi-supervised settings.",
+      "abstract": "Devising augmentations for graph contrastive learning is challenging due to their irregular structure, drastic distribution shifts, and nonequivalent feature spaces across datasets. We introduce LG2AR, Learning Graph Augmentations to Learn Graph Representations, which is an end-to-end automatic graph augmentation framework that helps encoders learn generalizable representations on both node and graph levels. LG2AR consists of a probabilistic policy that learns a distribution over augmentations and a set of probabilistic augmentation heads that learn distributions over augmentation parameters. We show that LG2AR achieves state-of-the-art results on 18 out of 20 graph-level and node-level benchmarks compared to previous unsupervised models under both linear and semi-supervised evaluation protocols. The source code will be released here: https://github.com/kavehhassani/lg2ar",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.09830",
+      "date": "2022-01-24T00:00:00",
+      "citation_count": 26,
+      "categories": [
+        "cs.LG",
+        "cs.NE"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2205.10803",
+      "score": 0.33333334,
+      "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+      "tldr": "[research paper] GraphMAE introduces a generative self-supervised approach to graph autoencoding that replaces structure reconstruction with feature reconstruction using a masked input and scaled cosine error (SCE), addressing key limitations in prior graph autoencoders such as sensitivity to reconstruction metrics, training instability, and reliance on structural augmentation. The method achieves superior performance across 21 datasets in node and graph classification tasks by eliminating the need for negative sampling or complex training dynamics, demonstrating that simple, well-designed generative objectives can outperform contrastive baselines in graph pre-training.",
+      "abstract": "Self-supervised learning (SSL) has been extensively explored in recent years. Particularly, generative SSL has seen emerging success in natural language processing and other AI fields, such as the wide adoption of BERT and GPT. Despite this, contrastive learning-which heavily relies on structural data augmentation and complicated training strategies-has been the dominant approach in graph SSL, while the progress of generative SSL on graphs, especially graph autoencoders (GAEs), has thus far not reached the potential as promised in other fields. In this paper, we identify and examine the issues that negatively impact the development of GAEs, including their reconstruction objective, training robustness, and error metric. We present a masked graph autoencoder GraphMAE that mitigates these issues for generative self-supervised graph pretraining. Instead of reconstructing graph structures, we propose to focus on feature reconstruction with both a masking strategy and scaled cosine error that benefit the robust training of GraphMAE. We conduct extensive experiments on 21 public datasets for three different graph learning tasks. The results manifest that GraphMAE-a simple graph autoencoder with careful designs-can consistently generate outperformance over both contrastive and generative state-of-the-art baselines. This study provides an understanding of graph autoencoders and demonstrates the potential of generative self-supervised pre-training on graphs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuxiao21@mails.tsinghua.edu.cn"
+          },
+          "name": "Xiao Liu",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cyk20@mails.tsinghua.edu.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yang.yhx@alibaba-inc.com"
+          },
+          "name": "Hongxia Yang",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cjwang@birentech.com"
+          },
+          "name": "Chunjie Wang",
+          "orgs": [
+            "BirenTech Research"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10803",
+      "date": "2022-05-22T00:00:00",
+      "citation_count": 893,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/THUDM/GraphMAE"
+    },
+    {
+      "arxiv_id": "2206.07700",
+      "score": 0.25,
+      "title": "Masked Siamese ConvNets",
+      "tldr": "[research paper] Masked siamese networks fail with ConvNets due to parasitic edge generation from masking—convolutional kernels detect artificial edges introduced by masks, distorting feature maps and suppressing edge-detecting kernels. The authors identify four key issues: parasitic edges, superficial solutions, local-global feature imbalance, and weak training signals. They propose a series of empirical designs (spatial, channel, macro masking) that mitigate these problems, resulting in Masked Siamese ConvNets (MSCN) that outperform baselines on low-shot classification and object detection benchmarks, demonstrating that masking can work with ConvNets when properly designed.",
+      "abstract": "Self-supervised learning has shown superior performances over supervised methods on various vision benchmarks. The siamese network, which encourages embeddings to be invariant to distortions, is one of the most successful self-supervised visual representation learning approaches. Among all the augmentation methods, masking is the most general and straightforward method that has the potential to be applied to all kinds of input and requires the least amount of domain knowledge. However, masked siamese networks require particular inductive bias and practically only work well with Vision Transformers. This work empirically studies the problems behind masked siamese networks with ConvNets. We propose several empirical designs to overcome these problems gradually. Our method performs competitively on low-shot image classification and outperforms previous methods on object detection benchmarks. We discuss several remaining issues and hope this work can provide useful data points for future general-purpose self-supervised learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ljng@fb.com"
+          },
+          "name": "Li Jing",
+          "orgs": [
+            "Meta AI"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiachen.zhu@nyu.edu"
+          },
+          "name": "Jiachen Zhu",
+          "orgs": [
+            "NYU"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yann@fb.com"
+          },
+          "name": "Yann LeCun",
+          "orgs": [
+            "Meta AI",
+            "NYU"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2206.07700",
+      "date": "2022-06-15T00:00:00",
+      "citation_count": 37,
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

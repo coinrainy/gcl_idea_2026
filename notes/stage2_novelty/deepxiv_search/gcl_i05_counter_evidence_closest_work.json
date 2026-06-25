@@ -1,0 +1,375 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2205.10053",
+      "score": 1.0,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2201.02534",
+      "score": 0.38596493,
+      "title": "MGAE: Masked Autoencoders for Self-Supervised Learning on Graphs",
+      "tldr": "[research paper] MGAE introduces a masked autoencoding framework for graph self-supervised learning by randomly masking up to 70% of edges and reconstructing them via a cross-correlation decoder that leverages latent node representations. Unlike traditional graph autoencoders or edge-drop GSSL methods, MGAE operates on a sparsely masked graph, enabling efficient training with high masking ratios while preserving robust node representations through cross-node correlation modeling, outperforming state-of-the-art methods on link prediction and node classification tasks.",
+      "abstract": "We introduce a novel masked graph autoencoder (MGAE) framework to perform effective learning on graph structure data. Taking insights from self-supervised learning, we randomly mask a large proportion of edges and try to reconstruct these missing edges during training. MGAE has two core designs. First, we find that masking a high ratio of the input graph structure, e.g., $70\\\\%$, yields a nontrivial and meaningful self-supervisory task that benefits downstream applications. Second, we employ a graph neural network (GNN) as an encoder to perform message propagation on the partially-masked graph. To reconstruct the large number of masked edges, a tailored cross-correlation decoder is proposed. It could capture the cross-correlation between the head and tail nodes of anchor edge in multi-granularity. Coupling these two designs enables MGAE to be trained efficiently and effectively. Extensive experiments on multiple open datasets (Planetoid and OGB benchmarks) demonstrate that MGAE generally performs better than state-of-the-art unsupervised learning competitors on link prediction and node classification.",
+      "authors": [
+        {
+          "misc": {
+            "email": "qytan@tamu.edu"
+          },
+          "name": "Qiaoyu Tan",
+          "orgs": [
+            "Texas A&M University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ninghao.liu@uga.edu"
+          },
+          "name": "Ninghao Liu",
+          "orgs": [
+            "University of Georgia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaohuang@comp.polyu.edu.hk"
+          },
+          "name": "Xiao Huang",
+          "orgs": [
+            "The Hong Kong Polytechnic University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "rui.chen1@samsung.com"
+          },
+          "name": "Rui Chen",
+          "orgs": [
+            "Samsung Research America"
+          ]
+        },
+        {
+          "misc": {
+            "email": "soohyunc@gmail.com"
+          },
+          "name": "Soo-Hyun Choi",
+          "orgs": [
+            "Samsung Research America"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xia.hu@rice.edu"
+          },
+          "name": "Xia Hu",
+          "orgs": [
+            "Rice University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.02534",
+      "date": "2022-01-07T00:00:00",
+      "citation_count": 55,
+      "categories": [
+        "cs.LG",
+        "cs.IR",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2402.07225",
+      "score": 0.375,
+      "title": "Rethinking Graph Masked Autoencoders through Alignment and Uniformity",
+      "tldr": "[theoretical research paper] The paper establishes a theoretical bridge between Graph Masked Autoencoders (GraphMAE) and graph contrastive learning (GCL), proving that GraphMAE's node-level reconstruction implicitly performs context-level alignment via mutual information lower bounds. It identifies two key limitations: (1) alignment is constrained by random masking, which fails to generate hard-to-align samples, and (2) uniformity is not strictly enforced due to partial dimensional collapse. To address these, AUG-MAE introduces an easy-to-hard adversarial masking strategy to enhance alignment and an explicit uniformity regularizer to enforce representation uniformity across the hypersphere, resulting in superior downstream performance and improved representation quality.",
+      "abstract": "Self-supervised learning on graphs can be bifurcated into contrastive and generative methods. Contrastive methods, also known as graph contrastive learning (GCL), have dominated graph self-supervised learning in the past few years, but the recent advent of graph masked autoencoder (GraphMAE) rekindles the momentum behind generative methods. Despite the empirical success of GraphMAE, there is still a dearth of theoretical understanding regarding its efficacy. Moreover, while both generative and contrastive methods have been shown to be effective, their connections and differences have yet to be thoroughly investigated. Therefore, we theoretically build a bridge between GraphMAE and GCL, and prove that the node-level reconstruction objective in GraphMAE implicitly performs context-level GCL. Based on our theoretical analysis, we further identify the limitations of the GraphMAE from the perspectives of alignment and uniformity, which have been considered as two key properties of high-quality representations in GCL. We point out that GraphMAE's alignment performance is restricted by the masking strategy, and the uniformity is not strictly guaranteed. To remedy the aforementioned limitations, we propose an Alignment-Uniformity enhanced Graph Masked AutoEncoder, named AUG-MAE. Specifically, we propose an easy-to-hard adversarial masking strategy to provide hard-to-align samples, which improves the alignment performance. Meanwhile, we introduce an explicit uniformity regularizer to ensure the uniformity of the learned representations. Experimental results on benchmark datasets demonstrate the superiority of our model over existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liang.wang@cripac.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiang.tao@cripac.ia.ac.cn"
+          },
+          "name": "Xiang Tao",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiang.liu@nlpr.ia.ac.cn"
+          },
+          "name": "Qiang Liu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shu.wu@nlpr.ia.ac.cn"
+          },
+          "name": "Shu Wu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wangliang@nlpr.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.07225",
+      "date": "2024-02-11T00:00:00",
+      "citation_count": 40,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/AzureLeon1/AUG-MAE."
+    },
+    {
+      "arxiv_id": "2402.15172",
+      "score": 0.33333334,
+      "title": "Attention-Guided Masked Autoencoders For Learning Image Representations",
+      "tldr": "[research paper] The paper proposes an attention-guided reconstruction loss for Masked Autoencoders (MAEs) that leverages self-supervised object discovery to generate attention maps, which are then used to prioritize reconstruction of relevant objects over background elements. This shifts the learning focus toward semantically meaningful regions, improving latent representations for linear probing and k-NN classification without altering the original masking strategy or increasing computational cost, thereby narrowing the performance gap between MAEs and state-of-the-art models on off-the-shelf evaluation tasks.",
+      "abstract": "Masked autoencoders (MAEs) have established themselves as a powerful method for unsupervised pre-training for computer vision tasks. While vanilla MAEs put equal emphasis on reconstructing the individual parts of the image, we propose to inform the reconstruction process through an attention-guided loss function. By leveraging advances in unsupervised object discovery, we obtain an attention map of the scene which we employ in the loss function to put increased emphasis on reconstructing relevant objects, thus effectively incentivizing the model to learn more object-focused representations without compromising the established masking strategy. Our evaluations show that our pre-trained models learn better latent representations than the vanilla MAE, demonstrated by improved linear probing and k-NN classification results on several benchmarks while at the same time making ViTs more robust against varying backgrounds.",
+      "authors": [
+        {
+          "misc": {
+            "email": "leon.sick@uni-ulm.de"
+          },
+          "name": "Leon Sick",
+          "orgs": [
+            "Ulm University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dominik.engel@uni-ulm.de"
+          },
+          "name": "Dominik Engel",
+          "orgs": [
+            "Ulm University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "phermosilla@cvl.tuwien.ac.at"
+          },
+          "name": "Pedro Hermosilla",
+          "orgs": [
+            "TU Vienna"
+          ]
+        },
+        {
+          "misc": {
+            "email": "timo.ropinski@uni-ulm.de"
+          },
+          "name": "Timo Ropinski",
+          "orgs": [
+            "Ulm University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.15172",
+      "date": "2024-02-23T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "venue": "IEEE Workshop/Winter Conference on Applications of Computer Vision",
+      "venue_year": 2025,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2501.08850",
+      "score": 0.27941176,
+      "title": "Graph Counterfactual Explainable AI via Latent Space Traversal",
+      "tldr": "[research paper] The paper proposes a permutation-equivariant graph variational autoencoder (PEGVAE) to generate counterfactual explanations for black-box graph classifiers by traversing a continuous latent space while preserving node permutation invariance. Unlike prior methods that rely on explicit counterfactual losses, the approach leverages the semantic structure of the latent space guided by the classifier's decision boundary, enabling interpretable, in-distribution modifications to graph inputs—such as altering molecular structures or social network configurations—without requiring retraining or ad-hoc loss design.",
+      "abstract": "Explaining the predictions of a deep neural network is a nontrivial task, yet high-quality explanations for predictions are often a prerequisite for practitioners to trust these models. Counterfactual explanations aim to explain predictions by finding the ''nearest'' in-distribution alternative input whose prediction changes in a pre-specified way. However, it remains an open question how to define this nearest alternative input, whose solution depends on both the domain (e.g. images, graphs, tabular data, etc.) and the specific application considered. For graphs, this problem is complicated i) by their discrete nature, as opposed to the continuous nature of state-of-the-art graph classifiers; and ii) by the node permutation group acting on the graphs. We propose a method to generate counterfactual explanations for any differentiable black-box graph classifier, utilizing a case-specific permutation equivariant graph variational autoencoder. We generate counterfactual explanations in a continuous fashion by traversing the latent space of the autoencoder across the classification boundary of the classifier, allowing for seamless integration of discrete graph structure and continuous graph attributes. We empirically validate the approach on three graph datasets, showing that our model is consistently high-performing and more robust than the baselines.",
+      "authors": [
+        {
+          "misc": {
+            "url": "",
+            "email": ""
+          },
+          "name": "Andreas Abildtrup Hansen",
+          "orgs": [
+            "Technical University of Denmark, Kongens Lyngby, Denmark"
+          ]
+        },
+        {
+          "misc": {
+            "url": "",
+            "email": ""
+          },
+          "name": "Paraskevas Pegios",
+          "orgs": [
+            "Technical University of Denmark, Kongens Lyngby, Denmark"
+          ]
+        },
+        {
+          "misc": {
+            "url": "",
+            "email": ""
+          },
+          "name": "Anna Calissano",
+          "orgs": [
+            "Imperial College London, London, England"
+          ]
+        },
+        {
+          "misc": {
+            "url": "",
+            "email": ""
+          },
+          "name": "Aasa Feragen",
+          "orgs": [
+            "Technical University of Denmark, Kongens Lyngby, Denmark",
+            "Pioneer Centre for AI, Copenhagen, Denmark"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2501.08850",
+      "date": "2025-01-15T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "stat.ML"
+      ],
+      "venue": "NLDL",
+      "venue_year": null,
+      "github_url": "https://github.com/abildtrup/latent-graph-counterfactuals"
+    }
+  ]
+}

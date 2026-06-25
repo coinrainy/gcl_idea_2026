@@ -1,0 +1,291 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2412.11075",
+      "score": 0.56666666,
+      "title": "Edge Contrastive Learning: An Augmentation-Free Graph Contrastive Learning Model",
+      "tldr": "[research paper] AFECL introduces edge-level contrastive learning without data augmentation by generating edge embeddings via node embedding concatenation, defining positive pairs as edges sharing common nodes and negatives as otherwise disconnected edges. It achieves state-of-the-art performance in link prediction and semi-supervised node classification with scarce labels, overcoming limitations of existing GCL methods that ignore edge-level topological signals and rely on computationally expensive or structurally damaging augmentations.",
+      "abstract": "Graph contrastive learning (GCL) aims to learn representations from unlabeled graph data in a self-supervised manner and has developed rapidly in recent years. However, edgelevel contrasts are not well explored by most existing GCL methods. Most studies in GCL only regard edges as auxiliary information while updating node features. One of the primary obstacles of edge-based GCL is the heavy computation burden. To tackle this issue, we propose a model that can efficiently learn edge features for GCL, namely AugmentationFree Edge Contrastive Learning (AFECL) to achieve edgeedge contrast. AFECL depends on no augmentation consisting of two parts. Firstly, we design a novel edge feature generation method, where edge features are computed by embedding concatenation of their connected nodes. Secondly, an edge contrastive learning scheme is developed, where edges connecting the same nodes are defined as positive pairs, and other edges are defined as negative pairs. Experimental results show that compared with recent state-of-the-art GCL methods or even some supervised GNNs, AFECL achieves SOTA performance on link prediction and semi-supervised node classification of extremely scarce labels. The source code is available at https://github.com/YujunLi361/AFECL.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yujun Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Hongyuan Zhang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "email": "corresponding author"
+          },
+          "name": "Yuan Yuan",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2412.11075",
+      "date": "2024-12-15T00:00:00",
+      "citation_count": 7,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/YujunLi361/AFECL."
+    },
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.5,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2402.17345",
+      "score": 0.5,
+      "title": "LocalGCL: Local-aware Contrastive Learning for Graphs",
+      "tldr": "[research paper] LocalGCL introduces a masking-based modeling objective to complement contrastive learning in graph representation, addressing the overemphasis on global patterns by explicitly capturing local structural and feature details through feature masking. The framework jointly optimizes a contrastive loss and a reconstruction loss on masked graph features, enabling the model to learn representations that preserve both global topology and local node-level semantics, outperforming existing self-supervised graph methods in downstream tasks.",
+      "abstract": "Graph representation learning (GRL) makes considerable progress recently, which encodes graphs with topological structures into low-dimensional embeddings. Meanwhile, the time-consuming and costly process of annotating graph labels manually prompts the growth of self-supervised learning (SSL) techniques. As a dominant approach of SSL, Contrastive learning (CL) learns discriminative representations by differentiating between positive and negative samples. However, when applied to graph data, it overemphasizes global patterns while neglecting local structures. To tackle the above issue, we propose \\\\underline{Local}-aware \\\\underline{G}raph \\\\underline{C}ontrastive \\\\underline{L}earning (\\\\textbf{\\\\methnametrim}), a self-supervised learning framework that supplementarily captures local graph information with masking-based modeling compared with vanilla contrastive learning. Extensive experiments validate the superiority of \\\\methname against state-of-the-art methods, demonstrating its promise as a comprehensive graph representation learner.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Haojun Jiang",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jiawei Sun",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jie Li",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China",
+            "MoE Key Lab of Artificial Intelligence, AI Institute, Shanghai Jiao Tong University, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chentao Wu",
+          "orgs": [
+            "Department of Computer Science and Engineering, Shanghai Jiao Tong University, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.17345",
+      "date": "2024-02-27T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.11776",
+      "score": 0.3768116,
+      "title": "Generative and Contrastive Graph Representation Learning",
+      "tldr": "[research paper] The paper proposes a unified graph self-supervised learning framework that synergizes community-aware node-level contrastive learning with graph-level contrastive learning, addressing the limitations of both pure contrastive and generative methods. It introduces a principled positive pair generation strategy via community structure awareness, reduces reliance on computationally expensive negative sampling, and employs a comprehensive augmentation pipeline (feature masking, node, and edge perturbation) to enhance representation robustness. Experimental results on benchmark datasets show consistent performance gains—up to 2.01%—across node classification, clustering, and link prediction, outperforming state-of-the-art contrastive and generative methods, including hybrid approaches like GCMAE.",
+      "abstract": "Self-supervised learning (SSL) on graphs generates node and graph representations (i.e., embeddings) that can be used for downstream tasks such as node classification, node clustering, and link prediction. Graph SSL is particularly useful in scenarios with limited or no labeled data. Existing SSL methods predominantly follow contrastive or generative paradigms, each excelling in different tasks: contrastive methods typically perform well on classification tasks, while generative methods often excel in link prediction. In this paper, we present a novel architecture for graph SSL that integrates the strengths of both approaches. Our framework introduces community-aware node-level contrastive learning, providing more robust and effective positive and negative node pairs generation, alongside graph-level contrastive learning to capture global semantic information. Additionally, we employ a comprehensive augmentation strategy that combines feature masking, node perturbation, and edge perturbation, enabling robust and diverse representation learning. By incorporating these enhancements, our model achieves superior performance across multiple tasks, including node classification, clustering, and link prediction. Evaluations on open benchmark datasets demonstrate that our model outperforms state-of-the-art methods, achieving a performance lift of 0.23%-2.01% depending on the task and dataset.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "jiali.chen2@apple.com"
+          },
+          "name": "Jiali Chen",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "avijit.mukherjee@apple.com"
+          },
+          "name": "Avijit Mukherjee",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.11776",
+      "date": "2025-05-17T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2203.01564",
+      "score": 0.25,
+      "title": "Graph Representation Learning Beyond Node and Homophily",
+      "tldr": "[research paper] PairE introduces a novel unsupervised graph representation learning framework that moves beyond the node-centric and homophily-assumed paradigms by using paired nodes as the fundamental embedding unit. It employs a multi-self-supervised autoencoder with two pretext tasks—preserving low-frequency (commonality) and high-frequency (differences) signals—to jointly learn representations that capture both homophily and heterophily. This enables superior performance on edge classification (up to 101.1% relative improvement) and node classification (up to 82.5% gain) by explicitly modeling feature differences between connected nodes, which are critical for tasks requiring fine-grained relational inferences.",
+      "abstract": "Unsupervised graph representation learning aims to distill various graph information into a downstream task-agnostic dense vector embedding. However, existing graph representation learning approaches are designed mainly under the node homophily assumption: connected nodes tend to have similar labels and optimize performance on node-centric downstream tasks. Their design is apparently against the task-agnostic principle and generally suffers poor performance in tasks, e.g., edge classification, that demands feature signals beyond the node-view and homophily assumption. To condense different feature signals into the embeddings, this paper proposes PairE, a novel unsupervised graph embedding method using two paired nodes as the basic unit of embedding to retain the high-frequency signals between nodes to support node-related and edge-related tasks. Accordingly, a multi-self-supervised autoencoder is designed to fulfill two pretext tasks: one retains the high-frequency signal better, and another enhances the representation of commonality. Our extensive experiments on a diversity of benchmark datasets clearly show that PairE outperforms the unsupervised state-of-the-art baselines, with up to 101.1\\\\% relative improvement on the edge classification tasks that rely on both the high and low-frequency signals in the pair and up to 82.5\\\\% relative performance gain on the node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "youli.syvail@gmail.com"
+          },
+          "name": "You Li",
+          "orgs": [
+            "School of Computer Science and Engineering, Central South University, Changsha, 410083, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "linbei@csu.edu.cn"
+          },
+          "name": "Bei Lin",
+          "orgs": [
+            "School of Computer Science and Engineering, Central South University, Changsha, 410083, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lblhandsome@gmail.com"
+          },
+          "name": "Binli Luo",
+          "orgs": [
+            "School of Computer Science and Engineering, Central South University, Changsha, 410083, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ninggui@csu.edu.cn",
+            "corresponding_author": true
+          },
+          "name": "Ning Gui",
+          "orgs": [
+            "School of Computer Science and Engineering, Central South University, Changsha, 410083, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2203.01564",
+      "date": "2022-03-03T00:00:00",
+      "citation_count": 21,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "IEEE Transactions on Knowledge and Data Engineering",
+      "venue_year": null,
+      "github_url": "https://github.com/syvail/PairE-Graph-Representation-Learning-Beyond-Node-and-Homophily"
+    }
+  ]
+}

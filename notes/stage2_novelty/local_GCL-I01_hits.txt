@@ -1,0 +1,179 @@
+notes/DEEPXIV_TARGETED_SEARCH.md:29:| AFGRL (`2112.02472`) | brief/head/Experiments available | augmentation-free positives; logistic evaluator; reports test when validation is best | exact seed list |
+notes/CLOSEST_WORK_DELTA_TABLE.md:7:| G1 semantic false positives | GCA, AFGRL, CM-GCL, G-Censor | adaptive augmentations; augmentation-free positives; multimodal positives; task-oriented counterfactual views | systematic positive semantic-validity audit under frozen node evaluator | "better positives via simple feature/structure heuristic" | positive validity may fail differently across graph regimes | show a measurable semantic-positive failure not covered by adaptive augmentation or AFGRL/G-Censor | correlate positive consistency diagnostics with downstream accuracy under fixed split/evaluator | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:8:| G2 false negatives under homophily/heterophily | ProGCL, HLCL, SPGCL, homophily-aware heterogeneous GCL | false-negative-aware hard mining; graph-filter heterophily views; positive sampling | unified regime-conditioned false negative/positive boundary | "hard negative reweighting solves GCL negatives" | negative validity may depend on homophily/feature/text regime | separate from ProGCL by predicting when negative mining is harmful/helpful | validation-only false-negative estimates vs label agreement by homophily bin | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:10:| G4 negative-free collapse diagnostics | BGRL, CCA-SSG, Graph Barlow Twins, AFGRL | remove negatives; decorrelate features; discover positives | graph-specific collapse/oversmoothing diagnostics beyond accuracy | "negative-free GCL is novel" | collapse may manifest as graph smoothing/rank loss by regime | define graph representation diagnostics that predict failures | compare rank/variance/eigenspectrum vs accuracy across regimes | MEDIUM |
+notes/CLOSEST_WORK_DELTA_TABLE.md:12:| G6 leakage-safe LLM semantic priors | LangGSL, CM-GCL, TAG/LLM graph learning | use text/LLM features and node-text contrast | leakage-safe, split-consistent GCL evaluation | "LLM pseudo-labels improve GCL" | text semantics may help detect false positives/negatives if audited | explicit leakage model and ablation against frozen text embeddings | compare graph-only, text-embedding, LLM pseudo-label under no-test-label/no-contamination rules | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:24:- G1: simple positive/augmentation changes are more strongly blocked by GMA/GMCL, GPA, iGCL, AFGRL and G-Censor-like task-oriented views.
+notes/stage1_5_pdf_text/2106.12484.txt:34:of a joint distribution (positive pairs) from the product of two marginal ones (negative pairs) [50].
+notes/stage1_5_pdf_text/2106.12484.txt:363:GRACE treats two views of the same node as positive pairs and treat views of different nodes as
+notes/stage1_5_pdf_text/2106.12484.txt:364:negative pairs, which would takeO(N2) space. BGRL focuses only on positive pairs, which will
+notes/stage1_5_pdf_text/2106.12484.txt:849:positive pairs and negative pairs are required for learning a model. For instance, the widely adopted
+notes/stage1_5_pdf_text/2106.12484.txt:867:temperature hyperparameter. The numerator enforces similarity between positive pairs (two views
+notes/stage1_5_pdf_text/2106.12484.txt:870:similarity of positive pairs and meanwhile minimizing the cosine similarity of negative pairs. Note
+notes/stage1_5_pdf_text/2106.12484.txt:872:so we are essentially minimizing the distances between positive pairs and maximizing the distance
+notes/stage1_5_pdf_text/2106.12484.txt:874:objective by decomposing it into two terms: 1) alignment term (for positive pairs) and 2) uniformity
+notes/stage1_5_pdf_text/2106.12484.txt:876:The alignment loss is deﬁned as the expected distance between positive pairs:
+notes/stage1_5_pdf_text/2106.12484.txt:882:Intuitively, the alignment term makes the positive pairs close to each other on the hypersphere, while
+notes/stage1_5_pdf_text/2106.12484.txt:894:point on the hypersphere. Fig. 4(b): the uniformity loss keeps positive pairs close, but forces all
+notes/stage1_5_pdf_text/2006.04131.txt:52:Positive pairs
+notes/stage1_5_pdf_text/2006.04131.txt:63:positive pairs with negative-sampled counterparts. Inspired by previous success of the Deep InfoMax
+notes/stage1_5_pdf_text/2006.04131.txt:181:We deﬁne the pairwise objective for each positive pair (ui, vi) as
+notes/stage1_5_pdf_text/2006.04131.txt:185:the positive pair
+notes/stage1_5_pdf_text/2006.04131.txt:201:positive pair, we naturally deﬁne negative samples as all other nodes in the two views. Therefore,
+notes/stage1_5_pdf_text/2006.04131.txt:205:as the average over all positive pairs, formally given by
+notes/stage1_5_pdf_text/2110.15438.txt:57:Positive Pair
+notes/stage1_5_pdf_text/2110.15438.txt:61:view augmentation,qi(·),qj(·), to obtain two semantically similar views, vi, vj. 2) the two views
+notes/stage1_5_pdf_text/2110.15438.txt:192:to score the positive pairs zi, zj higher compared to other negative pairs. Typically, the negative
+notes/stage1_5_pdf_text/2110.15438.txt:203:between the views of positive pairs. In other words,I(zi, zj) ⩾log(N ) -LNCE , whereI(·) measures
+notes/stage1_5_pdf_text/2505.15103.txt:61:construction of augmented graph data pairs. Positive pairs
+notes/stage1_5_pdf_text/2505.15103.txt:111:positive pair
+notes/stage1_5_pdf_text/2505.15103.txt:278:courage similarity between positive pairs and dissimilarity
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:20:| AFGRL | WikiCS, Amazon, Coauthor | WikiCS canonical; Amazon/Coauthor 10/10/80 for 20 splits | no | yes for Amazon/Coauthor | canonical | no | no | logistic regression | frozen | 20 splits | validation-best reported | test at best validation | yes | C | rerun under project split/evaluator |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:26:| G-Censor | CiteSeer, Computers, Cora Full, Cora ML, DBLP, Flickr, Photo, PubMed | IID split unclear; OOD by Node2Vec clusters | UNCLEAR | UNCLEAR | no | no | no | model-agnostic GNN | likely fine-tune | UNCLEAR | UNCLEAR | test set accuracy | UNCLEAR | D | need accepted version/code/protocol |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:37:GRACE, GCA, ProGCL, BGRL, AFGRL, GraphMAE/GraphMAE2 and HLCL, depending on selected Stage 2 gap.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:47:| AFGRL | Logistic evaluator; test performance selected at best validation | remains C due missing exact seed list/project splits |
+notes/stage1_5_pdf_text/2010.14945.txt:312:objective for each positive pair(𝒖𝑖, 𝒗𝑖) as
+notes/stage1_5_pdf_text/2010.14945.txt:317:positive pair
+notes/stage1_5_pdf_text/2010.14945.txt:337:Given a positive pair, we naturally define negative samples as
+notes/stage1_5_pdf_text/2010.14945.txt:627:product, i.e.𝑠(𝒖, 𝒗) = 𝒖⊤𝒗, and further assuming that positive pairs
+notes/stage1_5_pdf_text/2010.14945.txt:1100:and further assuming that positive pairs are far more aligned than
+notes/GCL_LITERATURE_MAP.md:9:- OpenReview: 部分成功；关键词搜索命中 HLCL、CM-GCL、InfoGCL、G-Censor 等，但 API 429 限制导致 LLM/false-negative 查询部分为空。
+notes/GCL_LITERATURE_MAP.md:27:| Augmentation-free | AFGRL | 2023 | AAAI, peer-reviewed | yes/unclear | node classification | neighbor discovery without augmentation | directly targeted | nearest no-augmentation GCL | may invalidate "augmentation not needed" novelty |
+notes/GCL_LITERATURE_MAP.md:34:| Task-oriented views | G-Censor | 2023 | ICLR submission / status unclear | promised/unclear | node property prediction | counterfactual task-oriented views | directly targeted | closest task-oriented augmentation | strong risk for counterfactual view claims |
+notes/GCL_LITERATURE_MAP.md:44:2. 近三年节点分类：AFGRL、GraphMAE2、HLCL、CM-GCL、LangGSL、Khan-GCL、SPGCL 是重点风险池。
+notes/GCL_LITERATURE_MAP.md:45:3. Augmentation-based GCL：GRACE/GCA/RGCL/G-Censor 说明“更好增强”本身已拥挤。
+notes/GCL_LITERATURE_MAP.md:47:5. False positive / false negative：false negative 已有 ProGCL；false positive、semantic-positive 仍缺系统协议。
+notes/GCL_LITERATURE_MAP.md:48:6. Negative-free / bootstrap：BGRL、CCA-SSG、GBT、AFGRL 说明不能只声称“无负样本”。
+notes/GCL_LITERATURE_MAP.md:65:| G-Censor | 2023 | Submitted to ICLR 2023 / UNCLEAR acceptance | https://openreview.net/forum?id=LiWGbK8_iOB | unclear/promised | reviews not extracted | task-oriented counterfactual views | high |
+notes/GCL_LITERATURE_MAP.md:71:- Any positive/negative construction claim must be separated from ProGCL, SPGCL, CM-GCL, and G-Censor.
+notes/GCL_LITERATURE_MAP.md:73:- Any negative-free claim must be separated from BGRL, CCA-SSG, Graph Barlow Twins, and AFGRL.
+notes/GCL_BENCHMARK_PROTOCOLS.md:23:| AFGRL | node classification benchmarks | UNCLEAR | likely public/standard | UNCLEAR | maybe | no | no | Accuracy | UNCLEAR | UNCLEAR | augmentation-free SSL evaluator | UNCLEAR | mean±std likely | yes likely | Protocol unclear |
+notes/GCL_BENCHMARK_PROTOCOLS.md:29:| G-Censor | eight node-property datasets | OpenReview abstract only; exact split UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | Accuracy | UNCLEAR | UNCLEAR | model-agnostic GNN | UNCLEAR | UNCLEAR | UNCLEAR | Protocol unclear |
+notes/GCL_BENCHMARK_PROTOCOLS.md:46:HLCL, CM-GCL, G-Censor, LangGSL, Khan-GCL and SPGCL are high-risk closest works whose paper-level protocol must be checked before claims.
+notes/GCL_GAP_CANDIDATES.md:5:## G1: Semantic False Positives in Node-Level GCL
+notes/GCL_GAP_CANDIDATES.md:8:- Gap name: positive pairs can be semantically inconsistent
+notes/GCL_GAP_CANDIDATES.md:9:- Existing shortcoming: GRACE/GCA-style augmentations assume two corrupted views of a node preserve semantics, but edge/feature drops can destroy label-relevant context or preserve spurious structure.
+notes/GCL_GAP_CANDIDATES.md:10:- Evidence: GRACE/GCA rely on stochastic/adaptive augmentations; G-Censor argues task-oriented views matter; CM-GCL uses node-text modality to form contrastive pairs.
+notes/GCL_GAP_CANDIDATES.md:11:- Mechanism vs tuning: failure is about whether the positive relation is valid, not the drop rate alone.
+notes/GCL_GAP_CANDIDATES.md:12:- Closest work: GCA, RGCL, G-Censor, CM-GCL.
+notes/GCL_GAP_CANDIDATES.md:15:- Negative-result value: shows augmentation semantics are not a major bottleneck under strict protocol.
+notes/STAGE2_FILTERED_IDEAS.md:30:3. GCL-I01: Semantic-preserving positive validity tests.
+notes/stage1_5_pdf_text/2110.02027.txt:200:Positive pairs
+notes/stage1_5_pdf_text/2110.02027.txt:227:the training objective for each positive pair (ui, vi) is,
+notes/stage1_5_pdf_text/2110.02027.txt:232:positive pair
+notes/stage1_5_pdf_text/2110.02027.txt:252:of all the positive pairs,
+notes/stage1_5_pdf_text/2110.02027.txt:488:positive pair
+notes/stage1_5_pdf_text/2110.02027.txt:508:the positive pairs,
+notes/stage1_5_pdf_text/2110.02027.txt:542:we can then deﬁne the training objective for each positive pair
+notes/stage1_5_pdf_text/2110.02027.txt:552:positive pair
+notes/STAGE2_RAW_IDEAS.md:9:Primary: G1 semantic false positives, G2 false negatives under homophily/heterophily, G3 MGM vs GCL under identical evaluator, G5 heterophily boundary conditions.
+notes/STAGE2_RAW_IDEAS.md:15:## Idea GCL-I01: Semantic-Preserving Positive Validity Tests
+notes/STAGE2_RAW_IDEAS.md:21:- Why current methods fail: GRACE/GCA tune augmentation; AFGRL/SPGCL discover positives; G-Censor proposes task-oriented views. None gives a protocol-aligned positive semantic-validity audit under this project's frozen evaluator.
+notes/STAGE2_RAW_IDEAS.md:22:- Closest works: GRACE, GCA, AFGRL, G-Censor, SPGCL, CM-GCL.
+notes/STAGE2_RAW_IDEAS.md:24:- What remains open: auditable positive validity before alignment.
+notes/STAGE2_RAW_IDEAS.md:27:- Relation to SSL theory: modifies InfoNCE alignment by adding a masked-latent validity condition; reports uniformity cost.
+notes/STAGE2_RAW_IDEAS.md:28:- Mechanism: positive + masked latent validation.
+notes/STAGE2_RAW_IDEAS.md:30:- Minimum novelty condition: distinct from GCA centrality, AFGRL kNN/cluster positives and G-Censor counterfactual views.
+notes/STAGE2_RAW_IDEAS.md:31:- Minimum falsification experiment: compare positive validity score vs downstream accuracy for GRACE/GCA/AFGRL under fixed splits/evaluator.
+notes/STAGE2_RAW_IDEAS.md:32:- Kill condition: validity score does not correlate with validation/test accuracy and performance does not beat GCA/AFGRL.
+notes/STAGE2_RAW_IDEAS.md:122:- Closest works: GCA, G-Censor, GraphMAE2, MaskGAE.
+notes/STAGE2_RAW_IDEAS.md:125:- Core hypothesis: predicting which perturbations break positive validity teaches the encoder what context should not be invariant.
+notes/STAGE2_RAW_IDEAS.md:126:- Method sketch: generate perturbations and view consistency; route low-consistency views to masked counter-evidence instead of alignment; predict failed ego-context latent; align high-consistency views; analyze failure-prediction vs downstream accuracy.
+notes/STAGE2_RAW_IDEAS.md:165:- Closest works: AFGRL, SPGCL, prototypical/cluster GCL, SwAV/DeepCluster transfers.
+notes/STAGE2_RAW_IDEAS.md:166:- Hypothesis: balancing prototypes by feature diversity, degree distribution and homophily diversity reduces false positives/negatives.
+notes/STAGE2_RAW_IDEAS.md:184:- Mechanism: semantic positive/negative auditor.
+notes/STAGE2_RAW_IDEAS.md:199:- Method sketch: define rank/variance, neighbor smoothing and class-mixing diagnostics; trace BGRL/CCA-SSG/GBT/AFGRL; apply diagnosis-specific repair; report whether diagnostics precede failure.
+research-wiki/query_pack.md:9:arXiv/PDF recovery succeeded for high-risk closest works. Semantic Scholar is still rate-limited except BGRL metadata. DeepXiv has been fixed after Stage 1.5 (`deepxiv-sdk==0.3.1`, adapter search/brief verified). Exa unavailable because `EXA_API_KEY` is empty. OpenReview partly recovered; HLCL and G-Censor acceptance status remain `UNCLEAR`.
+research-wiki/query_pack.md:17:- CCA-SSG / Graph Barlow Twins / AFGRL: no-negative/decorrelation/augmentation-free positive discovery.
+research-wiki/query_pack.md:21:- G-Censor: task-oriented counterfactual views; OpenReview status and protocol still `UNCLEAR`.
+research-wiki/query_pack.md:33:- G1 semantic false positives;
+research-wiki/query_pack.md:50:- Do not claim better augmentation unless separated from GCA/AFGRL/G-Censor.
+research-wiki/query_pack.md:52:- Do not claim negative-free novelty unless separated from BGRL/CCA-SSG/GBT/AFGRL.
+research-wiki/query_pack.md:62:- Exact accepted/rejected status for HLCL and G-Censor.
+research-wiki/query_pack.md:63:- Exact evaluator/seeds/early stopping for Graph Barlow Twins, HLCL, G-Censor, LangGSL, SPGCL.
+notes/stage1_5_pdf_text/2112.02472.txt:27:world datasets demonstrate the superiority of AFGRL. The
+notes/stage1_5_pdf_text/2112.02472.txt:28:source code for AFGRL is available at https://github.com/
+notes/stage1_5_pdf_text/2112.02472.txt:29:Namkyeong/AFGRL.
+notes/stage1_5_pdf_text/2112.02472.txt:41:sentation by pulling semantically similar (positive) pairs to-
+notes/stage1_5_pdf_text/2112.02472.txt:153:Representation Learning (AFGRL), which requires neither
+notes/stage1_5_pdf_text/2112.02472.txt:180:Our extensive experiments demonstrate that AFGRL out-
+notes/stage1_5_pdf_text/2112.02472.txt:184:ily depend on the choice of hyperparameters,AFGRL is sta-
+notes/stage1_5_pdf_text/2112.02472.txt:320:Finally, we present our proposed method, called AFGRL.
+notes/stage1_5_pdf_text/2112.02472.txt:392:Figure 2: The overall architecture of AFGRL. Given a graph,fθ andfξ generate node embeddings Hθ and Hξ both of which
+notes/stage1_5_pdf_text/2112.02472.txt:428:5.1 Augmentation-Free GRL ( AFGRL)
+notes/stage1_5_pdf_text/2112.02472.txt:437:1AFGRL adopts the architecture of BGRL (Thakoor et al.
+notes/stage1_5_pdf_text/2112.02472.txt:471:a mechanism to ﬁlter out false positives from the samples
+notes/stage1_5_pdf_text/2112.02472.txt:496:Hence, to ﬁlter out false positives from the nearest neigh-
+notes/stage1_5_pdf_text/2112.02472.txt:508:tion, while ﬁltering out false positives from noisy nearest
+notes/stage1_5_pdf_text/2112.02472.txt:603:work. Following BYOL, AFGRL’s online network is up-
+notes/stage1_5_pdf_text/2112.02472.txt:611:In summary, 1) AFGRL does not rely on arbitrary aug-
+notes/stage1_5_pdf_text/2112.02472.txt:613:ing stable performance. 2) AFGRL ﬁlters out false posi-
+notes/stage1_5_pdf_text/2112.02472.txt:636:AFGRL 77.62± 0.49 89.88± 0.33 93.22± 0.28 93.27± 0.17 95.69± 0.10
+notes/stage1_5_pdf_text/2112.02472.txt:641:Datasets. To evaluate AFGRL, we conduct experiments
+notes/stage1_5_pdf_text/2112.02472.txt:659:Evaluation protocol. We evaluateAFGRL on three node-
+notes/stage1_5_pdf_text/2112.02472.txt:682:GRACE GCA BGRL AFGRL
+notes/stage1_5_pdf_text/2112.02472.txt:695:GRACE GCA BGRL AFGRL
+notes/stage1_5_pdf_text/2112.02472.txt:712:observations: 1) Our augmentation-free AFGRL generally
+notes/stage1_5_pdf_text/2112.02472.txt:720:uate AFGRL on node clustering (Table 3) and similar-
+notes/stage1_5_pdf_text/2112.02472.txt:723:that AFGRL generally outperforms other methods in node
+notes/stage1_5_pdf_text/2112.02472.txt:738:global structural information is crucial. 4) AFGRL gener-
+notes/stage1_5_pdf_text/2112.02472.txt:740:is expected because AFGRL aims to make nearest neigh-
+notes/stage1_5_pdf_text/2112.02472.txt:744:Figure 6: Ablation study on AFGRL.
+notes/stage1_5_pdf_text/2112.02472.txt:746:nent of AFGRL, we conduct ablation studies on two datasets
+notes/stage1_5_pdf_text/2112.02472.txt:759:that AFGRL still gives competitive performance even when
+notes/stage1_5_pdf_text/2112.02472.txt:766:analysis on the hyperparameters k and M of AFGRL. We
+notes/stage1_5_pdf_text/2112.02472.txt:774:ding dimension D. We observe that AFGRL beneﬁts from
+notes/stage1_5_pdf_text/2112.02472.txt:781:(a) GCA (b) AFGRL
+notes/stage1_5_pdf_text/2112.02472.txt:785:node embeddings of GCA (Figure 8(a)) and AFGRL (Fig-
+notes/stage1_5_pdf_text/2112.02472.txt:791:that AFGRL captures more ﬁne-grained class information
+notes/stage1_5_pdf_text/2112.02472.txt:792:compared with GCA. That is, for AFGRL, there tend to be
+notes/stage1_5_pdf_text/2112.02472.txt:796:that nodes are more tightly grouped in AFGRL compared
+notes/stage1_5_pdf_text/2112.02472.txt:797:with GCA, which implies that AFGRL captures more ﬁne-
+notes/stage1_5_pdf_text/2112.02472.txt:805:the original graph, AFGRL discovers nodes that can serve
+notes/stage1_5_pdf_text/2112.02472.txt:808:beneﬁt of AFGRL over other self-supervised methods on
+notes/stage1_5_pdf_text/2112.02472.txt:811:samples for the model training, which makes AFGRL prac-
+notes/stage1_5_pdf_text/2112.02472.txt:813:downstream tasks, we empirically show that AFGRL is su-
+notes/stage1_5_pdf_text/2112.02472.txt:975:We evaluated the performance ofAFGRL on node-level tasks, i.e.,
+notes/stage1_5_pdf_text/2112.02472.txt:1057:AFGRL  
+notes/stage1_5_pdf_text/2112.02472.txt:1064:of AFGRL is deﬁned as a multi-layer perceptron (MLP) with batch
+notes/stage1_5_pdf_text/2112.02472.txt:1066:L = 1 ) works the best for AFGRL, the hidden size of fθ is not
+notes/stage1_5_pdf_text/2112.02472.txt:1076:tailed hyperparameter speciﬁcations of AFGRL.
+notes/stage1_5_pdf_text/2112.02472.txt:1077:It is important to note that AFGRL does not have hyperparam-
+notes/stage1_5_pdf_text/2112.02472.txt:1079:combinations is non-trivial to ﬁnd 2. Instead, AFGRL newly intro-
+notes/stage1_5_pdf_text/2112.02472.txt:1085:of AFGRL.
+notes/stage1_5_pdf_text/2112.02472.txt:1105:Table 7: Hyperparameter speciﬁcations for AFGRL. The three right-most columns denote the hyperparameters that are newly
+notes/stage1_5_pdf_text/2112.02472.txt:1106:introduced in AFGRL. In contrast to GRACE, GCA and BGRL,AFGRL does not have hyperparameters associated with graph
+notes/stage1_5_pdf_text/2112.02472.txt:1113:AFGRL https://github.com/Namkyeong/AFGRL
+notes/stage1_5_pdf_text/cm_gcl_neurips2022.txt:49:by maximizing the similarity between positive pairs while minimizing the similarity between negative
+notes/stage1_5_pdf_text/cm_gcl_neurips2022.txt:96:nating positive pairs and negative pairs generated from unlabeled data. Specifically, GraphCL [45]
+notes/stage1_5_pdf_text/cm_gcl_neurips2022.txt:247:T ) as a similar pair (positive pair) if the node and the
+notes/stage1_5_pdf_text/cm_gcl_neurips2022.txt:341:G) is regarded as a positive pair if (vi, vp) in S,
+notes/stage1_5_pdf_text/cm_gcl_neurips2022.txt:638:the performance drops obviously with too many positive pairs. That is to say, the intra-modality
+notes/stage1_5_pdf_text/cm_gcl_neurips2022.txt:639:GCL has inverse performance if the positive pairs are not qualified enough. Besides, in Figure 4.(b),
+research-wiki/papers/zhu2020_graph_contrastive_learning.md:53:> Recently, contrastive learning (CL) has emerged as a successful method for unsupervised graph representation learning. Most graph CL methods first perform stochastic augmentation on the input graph to obtain two graph views and maximize the agreement of representations in the two views. Despite the prosperous development of graph CL methods, the design of graph augmentation schemes -- a crucial component in CL -- remains rarely explored. We argue that the data augmentation schemes should preserve intrinsic structures and attributes of graphs, which will force the model to learn representations that are insensitive to perturbation on unimportant nodes and edges. However, most existing methods adopt uniform data augmentation schemes, like uniformly dropping edges and uniformly shuffling features, leading to suboptimal performance. In this paper, we propose a novel graph contrastive representation learning method with adaptive augmentation that incorporates various priors for topological and semantic aspects of the graph. Specifically, on the topology level, we design augmentation schemes based on node centrality measures to highlight important connective structures. On the node attribute level, we corrupt node features by adding more noise to unimportant node features, to enforce the model to recognize underlying semantic information. We perform extensive experiments of node classification on a variety of real-world datasets. Experimental results demonstrate that our proposed method consistently outperforms existing state-of-the-art baselines and even surpasses some supervised counterparts, which validates the effectiveness of the proposed contrastive framework with adaptive augmentation.
+research-wiki/papers/wang2025_khangcl_kolmogorovarnold_network.md:53:> Graph contrastive learning (GCL) has demonstrated great promise for learning generalizable graph representations from unlabeled data. However, conventional GCL approaches face two critical limitations: (1) the restricted expressive capacity of multilayer perceptron (MLP) based encoders, and (2) suboptimal negative samples that either from random augmentations-failing to provide effective 'hard negatives'-or generated hard negatives without addressing the semantic distinctions crucial for discriminating graph data. To this end, we propose Khan-GCL, a novel framework that integrates the Kolmogorov-Arnold Network (KAN) into the GCL encoder architecture, substantially enhancing its representational capacity. Furthermore, we exploit the rich information embedded within KAN coefficient parameters to develop two novel critical feature identification techniques that enable the generation of semantically meaningful hard negative samples for each graph representation. These strategically constructed hard negatives guide the encoder to learn more discriminative features by emphasizing critical semantic differences between graphs. Extensive experiments demonstrate that our approach achieves state-of-the-art performance compared to existing GCL methods across a variety of datasets and tasks.
+research-wiki/papers/lee2021_augmentationfree_selfsupervised_learning.md:19:AFGRL removes explicit graph augmentations and negatives by discovering structurally and semantically related positive nodes.
+research-wiki/papers/lee2021_augmentationfree_selfsupervised_learning.md:53:> Inspired by the recent success of self-supervised methods applied on images, self-supervised learning on graph structured data has seen rapid growth especially centered on augmentation-based contrastive methods. However, we argue that without carefully designed augmentation techniques, augmentations on graphs may behave arbitrarily in that the underlying semantics of graphs can drastically change. As a consequence, the performance of existing augmentation-based methods is highly dependent on the choice of augmentation scheme, i.e., hyperparameters associated with augmentations. In this paper, we propose a novel augmentation-free self-supervised learning framework for graphs, named AFGRL. Specifically, we generate an alternative view of a graph by discovering nodes that share the local structural information and the global semantics with the graph. Extensive experiments towards various node-level tasks, i.e., node classification, clustering, and similarity search on various real-world datasets demonstrate the superiority of AFGRL. The source code for AFGRL is available at https://github.com/Namkyeong/AFGRL.
+research-wiki/papers/assran2023_selfsupervised_learning_from.md:53:> This paper demonstrates an approach for learning highly semantic image representations without relying on hand-crafted data-augmentations. We introduce the Image-based Joint-Embedding Predictive Architecture (I-JEPA), a non-generative approach for self-supervised learning from images. The idea behind I-JEPA is simple: from a single context block, predict the representations of various target blocks in the same image. A core design choice to guide I-JEPA towards producing semantic representations is the masking strategy; specifically, it is crucial to (a) sample target blocks with sufficiently large scale (semantic), and to (b) use a sufficiently informative (spatially distributed) context block. Empirically, when combined with Vision Transformers, we find I-JEPA to be highly scalable. For instance, we train a ViT-Huge/14 on ImageNet using 16 A100 GPUs in under 72 hours to achieve strong downstream performance across a wide range of tasks, from linear classification to object counting and depth prediction.
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:13:| AFGRL | `lee2021_augmentationfree_selfsupervised_learning` | AAAI 2022 | yes | WikiCS canonical; Amazon/Coauthor 10/10/80; logistic; validation-best test | exact seed list | no | blocks augmentation-free positive mining |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:19:| G-Censor | audit-only | OpenReview ICLR 2023 submission; status UNCLEAR | promised/UNCLEAR | OOD split by Node2Vec clusters; IID table datasets | IID split, seeds, early stopping | no | high task-oriented view risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:30:CM-GCL: accepted NeurIPS 2022. InfoGCL: NeurIPS 2021 Poster. Transductive Linear Probing: LoG 2022 Oral. Directed GCL: NeurIPS 2021 Poster. HLCL and G-Censor remain `UNCLEAR` for final acceptance status in this pass.
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:41:- GCA/CCA-SSG/AFGRL: DeepXiv confirms important evaluator/split details, but no result meets project direct-comparability requirements.
+research-wiki/gap_map.md:5:## G1: Semantic False Positives in Node-Level GCL
+research-wiki/gap_map.md:8:- Closest works: GCA, AFGRL, CM-GCL, G-Censor.
+research-wiki/gap_map.md:10:- Not solved: systematic positive semantic-validity audit under identical frozen node evaluator.
+research-wiki/gap_map.md:12:- Minimum novelty condition: show a measurable semantic-positive failure not covered by GCA/AFGRL/G-Censor.
+research-wiki/gap_map.md:44:- Closest works: BGRL, CCA-SSG, Graph Barlow Twins, AFGRL.
+research-wiki/gap_map.md:105:- G1 remains open but high risk because GMA/GMCL, GPA, iGCL, AFGRL and G-Censor-like task-oriented views already cover many positive/augmentation heuristics.
+research-wiki/papers/shan2026_revisiting_positive_samples.md:53:> Graph Contrastive Learning (GCL), which trains graph encoders by maximizing similarity between positive samples and minimizing it between negative ones, has emerged as a mainstream graph pre-training paradigm. It is widely recognized that positive samples are essential in GCLs. Ideally, maximizing the similarity of positive samples enables graph encoders to capture intrinsic semantic and patterns of graph data. However, we discover an interesting phenomenon: GCLs can achieve competitive performance even without positive samples. This motivates us to revisit the fundamental mechanism of positive samples in GCLs. From the perspective of Dirichlet energy, we theoretically finds that message passing, a key mechanism in graph encoders, trivializes the maximization of positive samples, preventing GCLs from effectively learning from positive samples. To address this, we propose SPGCL to mitigate the trivialization caused by message passing and restore the learning efficacy of positive samples. Specifically, we find that high Dirichlet energy features help positive samples provide effective learning signals while low Dirichlet energy features contribute little to positive learning signal but is useful for positive sampling. Based on this, SPGCL propagates only high Dirichlet energy features and uses low energy features to construct a probability matrix for reliable positive sampling. Extensive experiments demonstrate the effectiveness of SPGCL.
+notes/CORE_CLOSEST_WORK_READING.md:13:- Strategy: positive pairs are same node across two augmented views; negatives are other nodes
+notes/CORE_CLOSEST_WORK_READING.md:28:- Remaining gap: semantic validity of positives and regime-specific failure
+notes/CORE_CLOSEST_WORK_READING.md:37:- Core problem: uniform random augmentations can destroy important graph semantics
+notes/CORE_CLOSEST_WORK_READING.md:54:- Remaining gap: semantic positive validity and false-positive audit
+notes/CORE_CLOSEST_WORK_READING.md:80:- Remaining gap: regime-conditioned false negatives and semantic positives
+notes/CORE_CLOSEST_WORK_READING.md:161:## AFGRL
+notes/CORE_CLOSEST_WORK_READING.md:317:## G-Censor
+notes/CORE_CLOSEST_WORK_READING.md:319:- Paper: G-Censor: Graph Contrastive Learning with Task-Oriented Counterfactual Views
+notes/CORE_CLOSEST_WORK_READING.md:392:- Remaining gap: semantic positives and protocol-aligned validation
+notes/CORE_CLOSEST_WORK_READING.md:404:- Augmentation: semantically meaningful hard negative construction
+notes/CORE_CLOSEST_WORK_READING.md:429:- AFGRL: uses logistic regression on learned embeddings and reports test performance when validation performance is best; exact seed list remains unclear.

@@ -1,0 +1,256 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "0801.0590",
+      "score": 0.5,
+      "title": "An algorithm for finding the Independence Number of a graph",
+      "tldr": "[research paper] The paper establishes a constructive transformation from any connected graph $G$ to a split graph $G'$ with the same independence number $eta(G)$ and same vertex count, where $G'$ has a degree sequence consisting of $(n - eta)$ vertices of degree $n-1$ (forming a clique) and $eta$ vertices of degree $n - eta$ (forming an independent set). This transformation enables a new algorithmic approach: first, using the degree sequence of $G$, one constructs $G'$ via a deterministic edge-addition rule based on vertex cover and non-adjacency; second, by leveraging the known structure of split graphs, the independence number $eta(G)$ can be derived from the degree sequence of $G'$ using the Havel-Hakimi procedure and degree constraints. The key technical contribution lies in the explicit construction of such a split graph and the reduction of the NP-hard independence number problem to a degree-based realizability check in a structured graph class.",
+      "abstract": "In this paper, we prove that for every connected graph G, there exists a split graph H with the same independence number and the same order. Then we propose a first algorithm for finding this graph, given the degree sequence of the input graph G. Further, we propose a second algorithm for finding the independence number of G, given the adjacency matrix of G.",
+      "authors": [
+        {
+          "misc": {
+            "email": "o_ket1@yahoo.fr"
+          },
+          "name": "Omar Kettani",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/0801.0590",
+      "date": "2008-01-03T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.DM",
+        "cs.DS"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2402.07225",
+      "score": 0.5,
+      "title": "Rethinking Graph Masked Autoencoders through Alignment and Uniformity",
+      "tldr": "[theoretical research paper] The paper establishes a theoretical bridge between Graph Masked Autoencoders (GraphMAE) and graph contrastive learning (GCL), proving that GraphMAE's node-level reconstruction implicitly performs context-level alignment via mutual information lower bounds. It identifies two key limitations: (1) alignment is constrained by random masking, which fails to generate hard-to-align samples, and (2) uniformity is not strictly enforced due to partial dimensional collapse. To address these, AUG-MAE introduces an easy-to-hard adversarial masking strategy to enhance alignment and an explicit uniformity regularizer to enforce representation uniformity across the hypersphere, resulting in superior downstream performance and improved representation quality.",
+      "abstract": "Self-supervised learning on graphs can be bifurcated into contrastive and generative methods. Contrastive methods, also known as graph contrastive learning (GCL), have dominated graph self-supervised learning in the past few years, but the recent advent of graph masked autoencoder (GraphMAE) rekindles the momentum behind generative methods. Despite the empirical success of GraphMAE, there is still a dearth of theoretical understanding regarding its efficacy. Moreover, while both generative and contrastive methods have been shown to be effective, their connections and differences have yet to be thoroughly investigated. Therefore, we theoretically build a bridge between GraphMAE and GCL, and prove that the node-level reconstruction objective in GraphMAE implicitly performs context-level GCL. Based on our theoretical analysis, we further identify the limitations of the GraphMAE from the perspectives of alignment and uniformity, which have been considered as two key properties of high-quality representations in GCL. We point out that GraphMAE's alignment performance is restricted by the masking strategy, and the uniformity is not strictly guaranteed. To remedy the aforementioned limitations, we propose an Alignment-Uniformity enhanced Graph Masked AutoEncoder, named AUG-MAE. Specifically, we propose an easy-to-hard adversarial masking strategy to provide hard-to-align samples, which improves the alignment performance. Meanwhile, we introduce an explicit uniformity regularizer to ensure the uniformity of the learned representations. Experimental results on benchmark datasets demonstrate the superiority of our model over existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liang.wang@cripac.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiang.tao@cripac.ia.ac.cn"
+          },
+          "name": "Xiang Tao",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiang.liu@nlpr.ia.ac.cn"
+          },
+          "name": "Qiang Liu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shu.wu@nlpr.ia.ac.cn"
+          },
+          "name": "Shu Wu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wangliang@nlpr.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.07225",
+      "date": "2024-02-11T00:00:00",
+      "citation_count": 40,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/AzureLeon1/AUG-MAE."
+    },
+    {
+      "arxiv_id": "1911.04277",
+      "score": 0.33333334,
+      "title": "Linear Time Recognition of Equimatchable Split Graphs",
+      "tldr": "[research paper] The paper presents a linear-time algorithm for recognizing equimatchable split graphs—graphs where all maximal matchings have the same size and whose vertices partition into a clique and an independent set. It establishes structural properties showing that equimatchable split graphs are equimatchable when either the clique or independent set has size 1 or when the independent set has size 2 and the clique is odd-sized. The key result is that equimatchability in such graphs implies the clique size must be odd when both parts are size at least 2, and leverages this to design a linear-time recognition procedure by exploiting the constraints of split graph structure and matching properties.",
+      "abstract": "A maximal matching $M$ that consists of independent edges is a subgraph of a simple and undirected graph $G$ for which $G-M$ forms an independent set. A graph $G$ is called equimatchable if all maximal matchings have the same number of edges. On the other hand, $G$ is called as a split graph if its vertices can be partitioned into two subsets for which one of them forms a clique whereas the second forms an independent set. We will give a linear time algorithm for recognition of equimatchable split graphs.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Mehmet Akif Yildiz",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1911.04277",
+      "date": "2019-11-08T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "math.CO"
+      ],
+      "venue": "arXiv: Combinatorics",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2310.15523",
+      "score": 0.33333334,
+      "title": "Generative and Contrastive Paradigms Are Complementary for Graph Self-Supervised Learning",
+      "tldr": "[research paper] The paper proposes GCMAE, a unified framework that combines masked autoencoder (MAE) and contrastive learning (CL) paradigms for graph self-supervised learning. By sharing a common encoder, GCMAE enables the MAE branch to leverage global structural information extracted by the CL branch, while the CL branch benefits from local feature details captured by MAE. The framework reconstructs the full adjacency matrix instead of masked edges, and introduces a discrimination loss to mitigate feature smoothing by enhancing node embedding disparity, leading to up to 3.2% accuracy gains across node classification, link prediction, and graph classification tasks.",
+      "abstract": "For graph self-supervised learning (GSSL), masked autoencoder (MAE) follows the generative paradigm and learns to reconstruct masked graph edges or node features. Contrastive Learning (CL) maximizes the similarity between augmented views of the same graph and is widely used for GSSL. However, MAE and CL are considered separately in existing works for GSSL. We observe that the MAE and CL paradigms are complementary and propose the graph contrastive masked autoencoder (GCMAE) framework to unify them. Specifically, by focusing on local edges or node features, MAE cannot capture global information of the graph and is sensitive to particular edges and features. On the contrary, CL excels in extracting global information because it considers the relation between graphs. As such, we equip GCMAE with an MAE branch and a CL branch, and the two branches share a common encoder, which allows the MAE branch to exploit the global information extracted by the CL branch. To force GCMAE to capture global graph structures, we train it to reconstruct the entire adjacency matrix instead of only the masked edges as in existing works. Moreover, a discrimination loss is proposed for feature reconstruction, which improves the disparity between node embeddings rather than reducing the reconstruction error to tackle the feature smoothing problem of MAE. We evaluate GCMAE on four popular graph tasks (i.e., node classification, node clustering, link prediction, and graph classification) and compare with 14 state-of-the-art baselines. The results show that GCMAE consistently provides good accuracy across these tasks, and the maximum accuracy improvement is up to 3.2% compared with the best-performing baseline.",
+      "authors": [
+        {
+          "misc": {
+            "email": "nai.yxwang@whu.edu.cn"
+          },
+          "name": "Yuxiang Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yanxiaosunny@gmail.com"
+          },
+          "name": "Xiao Yan",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chuang Hu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ccchengff@pku.edu.cn"
+          },
+          "name": "Fangcheng Fu",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wentao.zhang@pku.edu.cn"
+          },
+          "name": "Wentao Zhang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wanghao.cs@whu.edu.cn"
+          },
+          "name": "Hao Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jedi.shang@gmail.com"
+          },
+          "name": "Shuo Shang",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiawei.jiang@whu.edu.cn"
+          },
+          "name": "Jiawei Jiang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "University of Electronic Science and Technology of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.15523",
+      "date": "2023-10-24T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE International Conference on Data Engineering",
+      "venue_year": 2024,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "1007.2926",
+      "score": 0.25,
+      "title": "Orbit decomposition of Jordan matrix algebras of order three under the automorphism groups",
+      "tldr": "[mathematical research paper] The paper provides a refined orbit decomposition for the automorphism group acting on real and complex split Jordan algebras of hermitian 3×3 matrices over split composition algebras (quaternions or octonions). It establishes that two elements are in the same orbit if and only if they share the same dimension of the generating subspace under the cross product and the same characteristic polynomial, simplifying Jacobson's earlier condition involving minimal and generic polynomials. This result is particularly significant over the reals, where non-diagonalizability under the automorphism group $F_{4(4)}$ arises due to non-definite invariant bilinear forms, while diagonalizability holds under larger groups like $E_{6(6)}$.",
+      "abstract": "The orbit decomposition is given under the automorphism group on the real split Jordan algebra of all hermitian matrices of order three corresponding to any real split composition algebra, or the automorphism group on the complexification, explicitly, in terms of the cross product of H. Freudenthal and the characteristic polynomial.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Akihiro Nishio",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Osami Yasukura",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1007.2926",
+      "date": "2010-07-17T00:00:00",
+      "citation_count": 6,
+      "categories": [
+        "math.DG",
+        "math.RT"
+      ],
+      "venue": "arXiv: Differential Geometry",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

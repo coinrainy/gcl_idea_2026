@@ -1,0 +1,375 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2310.15523",
+      "score": 0.64285713,
+      "title": "Generative and Contrastive Paradigms Are Complementary for Graph Self-Supervised Learning",
+      "tldr": "[research paper] The paper proposes GCMAE, a unified framework that combines masked autoencoder (MAE) and contrastive learning (CL) paradigms for graph self-supervised learning. By sharing a common encoder, GCMAE enables the MAE branch to leverage global structural information extracted by the CL branch, while the CL branch benefits from local feature details captured by MAE. The framework reconstructs the full adjacency matrix instead of masked edges, and introduces a discrimination loss to mitigate feature smoothing by enhancing node embedding disparity, leading to up to 3.2% accuracy gains across node classification, link prediction, and graph classification tasks.",
+      "abstract": "For graph self-supervised learning (GSSL), masked autoencoder (MAE) follows the generative paradigm and learns to reconstruct masked graph edges or node features. Contrastive Learning (CL) maximizes the similarity between augmented views of the same graph and is widely used for GSSL. However, MAE and CL are considered separately in existing works for GSSL. We observe that the MAE and CL paradigms are complementary and propose the graph contrastive masked autoencoder (GCMAE) framework to unify them. Specifically, by focusing on local edges or node features, MAE cannot capture global information of the graph and is sensitive to particular edges and features. On the contrary, CL excels in extracting global information because it considers the relation between graphs. As such, we equip GCMAE with an MAE branch and a CL branch, and the two branches share a common encoder, which allows the MAE branch to exploit the global information extracted by the CL branch. To force GCMAE to capture global graph structures, we train it to reconstruct the entire adjacency matrix instead of only the masked edges as in existing works. Moreover, a discrimination loss is proposed for feature reconstruction, which improves the disparity between node embeddings rather than reducing the reconstruction error to tackle the feature smoothing problem of MAE. We evaluate GCMAE on four popular graph tasks (i.e., node classification, node clustering, link prediction, and graph classification) and compare with 14 state-of-the-art baselines. The results show that GCMAE consistently provides good accuracy across these tasks, and the maximum accuracy improvement is up to 3.2% compared with the best-performing baseline.",
+      "authors": [
+        {
+          "misc": {
+            "email": "nai.yxwang@whu.edu.cn"
+          },
+          "name": "Yuxiang Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yanxiaosunny@gmail.com"
+          },
+          "name": "Xiao Yan",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Chuang Hu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ccchengff@pku.edu.cn"
+          },
+          "name": "Fangcheng Fu",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wentao.zhang@pku.edu.cn"
+          },
+          "name": "Wentao Zhang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "Peking University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wanghao.cs@whu.edu.cn"
+          },
+          "name": "Hao Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jedi.shang@gmail.com"
+          },
+          "name": "Shuo Shang",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiawei.jiang@whu.edu.cn"
+          },
+          "name": "Jiawei Jiang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "University of Electronic Science and Technology of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.15523",
+      "date": "2023-10-24T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "IEEE International Conference on Data Engineering",
+      "venue_year": 2024,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.11776",
+      "score": 0.5833334,
+      "title": "Generative and Contrastive Graph Representation Learning",
+      "tldr": "[research paper] The paper proposes a unified graph self-supervised learning framework that synergizes community-aware node-level contrastive learning with graph-level contrastive learning, addressing the limitations of both pure contrastive and generative methods. It introduces a principled positive pair generation strategy via community structure awareness, reduces reliance on computationally expensive negative sampling, and employs a comprehensive augmentation pipeline (feature masking, node, and edge perturbation) to enhance representation robustness. Experimental results on benchmark datasets show consistent performance gains—up to 2.01%—across node classification, clustering, and link prediction, outperforming state-of-the-art contrastive and generative methods, including hybrid approaches like GCMAE.",
+      "abstract": "Self-supervised learning (SSL) on graphs generates node and graph representations (i.e., embeddings) that can be used for downstream tasks such as node classification, node clustering, and link prediction. Graph SSL is particularly useful in scenarios with limited or no labeled data. Existing SSL methods predominantly follow contrastive or generative paradigms, each excelling in different tasks: contrastive methods typically perform well on classification tasks, while generative methods often excel in link prediction. In this paper, we present a novel architecture for graph SSL that integrates the strengths of both approaches. Our framework introduces community-aware node-level contrastive learning, providing more robust and effective positive and negative node pairs generation, alongside graph-level contrastive learning to capture global semantic information. Additionally, we employ a comprehensive augmentation strategy that combines feature masking, node perturbation, and edge perturbation, enabling robust and diverse representation learning. By incorporating these enhancements, our model achieves superior performance across multiple tasks, including node classification, clustering, and link prediction. Evaluations on open benchmark datasets demonstrate that our model outperforms state-of-the-art methods, achieving a performance lift of 0.23%-2.01% depending on the task and dataset.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "jiali.chen2@apple.com"
+          },
+          "name": "Jiali Chen",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "avijit.mukherjee@apple.com"
+          },
+          "name": "Avijit Mukherjee",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.11776",
+      "date": "2025-05-17T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.11344",
+      "score": 0.5588235,
+      "title": "Contrastive Disentangled Learning on Graph for Node Classification",
+      "tldr": "[research paper] CDLG introduces a contrastive disentangled learning framework for graph node classification that uses a disentangled graph encoder with a neighborhood routing mechanism to separate latent factors in node representations. It designs two label-free self-supervision signals—node specificity and channel independence—to guide disentanglement without relying on labeled data, improving downstream classification performance on citation networks by reducing embedding entanglement and capturing finer semantic components of node neighborhoods.",
+      "abstract": "Contrastive learning methods have attracted considerable attention due to their remarkable success in analyzing graph-structured data. Inspired by the success of contrastive learning, we propose a novel framework for contrastive disentangled learning on graphs, employing a disentangled graph encoder and two carefully crafted self-supervision signals. Specifically, we introduce a disentangled graph encoder to enforce the framework to distinguish various latent factors corresponding to underlying semantic information and learn the disentangled node embeddings. Moreover, to overcome the heavy reliance on labels, we design two self-supervision signals, namely node specificity and channel independence, which capture informative knowledge without the need for labeled data, thereby guiding the automatic disentanglement of nodes. Finally, we perform node classification tasks on three citation networks by using the disentangled node embeddings, and the relevant analysis is provided. Experimental results validate the effectiveness of the proposed framework compared with various baselines.",
+      "authors": [
+        {
+          "misc": {
+            "email": "XiaojuanZhang123@gmail.com"
+          },
+          "name": "Xiaojuan Zhang",
+          "orgs": [
+            "State Key Laboratory of Synthetical Automation for Process Industries",
+            "Northeastern University",
+            "Shenyang, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "junfu@mail.neu.edu.cn"
+          },
+          "name": "Jun Fu",
+          "orgs": [
+            "State Key Laboratory of Synthetical Automation for Process Industries",
+            "Northeastern University",
+            "Shenyang, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shuangli@bit.edu.cn"
+          },
+          "name": "Shuang Li",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Beijing Institute of Technology",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.11344",
+      "date": "2023-06-20T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "Cyber ..",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2402.07225",
+      "score": 0.39583334,
+      "title": "Rethinking Graph Masked Autoencoders through Alignment and Uniformity",
+      "tldr": "[theoretical research paper] The paper establishes a theoretical bridge between Graph Masked Autoencoders (GraphMAE) and graph contrastive learning (GCL), proving that GraphMAE's node-level reconstruction implicitly performs context-level alignment via mutual information lower bounds. It identifies two key limitations: (1) alignment is constrained by random masking, which fails to generate hard-to-align samples, and (2) uniformity is not strictly enforced due to partial dimensional collapse. To address these, AUG-MAE introduces an easy-to-hard adversarial masking strategy to enhance alignment and an explicit uniformity regularizer to enforce representation uniformity across the hypersphere, resulting in superior downstream performance and improved representation quality.",
+      "abstract": "Self-supervised learning on graphs can be bifurcated into contrastive and generative methods. Contrastive methods, also known as graph contrastive learning (GCL), have dominated graph self-supervised learning in the past few years, but the recent advent of graph masked autoencoder (GraphMAE) rekindles the momentum behind generative methods. Despite the empirical success of GraphMAE, there is still a dearth of theoretical understanding regarding its efficacy. Moreover, while both generative and contrastive methods have been shown to be effective, their connections and differences have yet to be thoroughly investigated. Therefore, we theoretically build a bridge between GraphMAE and GCL, and prove that the node-level reconstruction objective in GraphMAE implicitly performs context-level GCL. Based on our theoretical analysis, we further identify the limitations of the GraphMAE from the perspectives of alignment and uniformity, which have been considered as two key properties of high-quality representations in GCL. We point out that GraphMAE's alignment performance is restricted by the masking strategy, and the uniformity is not strictly guaranteed. To remedy the aforementioned limitations, we propose an Alignment-Uniformity enhanced Graph Masked AutoEncoder, named AUG-MAE. Specifically, we propose an easy-to-hard adversarial masking strategy to provide hard-to-align samples, which improves the alignment performance. Meanwhile, we introduce an explicit uniformity regularizer to ensure the uniformity of the learned representations. Experimental results on benchmark datasets demonstrate the superiority of our model over existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liang.wang@cripac.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiang.tao@cripac.ia.ac.cn"
+          },
+          "name": "Xiang Tao",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiang.liu@nlpr.ia.ac.cn"
+          },
+          "name": "Qiang Liu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shu.wu@nlpr.ia.ac.cn"
+          },
+          "name": "Shu Wu",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wangliang@nlpr.ia.ac.cn"
+          },
+          "name": "Liang Wang",
+          "orgs": [
+            "Center for Research on Intelligent Perception and Computing",
+            "State Key Laboratory of Multimodal Artificial Intelligence Systems",
+            "Institute of Automation, Chinese Academy of Sciences",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.07225",
+      "date": "2024-02-11T00:00:00",
+      "citation_count": 40,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/AzureLeon1/AUG-MAE."
+    },
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.28333333,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    }
+  ]
+}

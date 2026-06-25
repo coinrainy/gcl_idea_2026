@@ -1,0 +1,279 @@
+notes/CLOSEST_WORK_DELTA_TABLE.md:9:| G3 MGM vs GCL identical evaluator | GraphMAE, GraphMAE2, MaskGAE | strong masked feature/edge/latent prediction | strict apples-to-apples GCL vs MGM under same split/evaluator/backbone | "masked reconstruction alone is a new GCL contribution" | objective choice may explain protocol-normalized differences | isolate objective difference with frozen evaluator and identical backbone | rerun GRACE/GCA/BGRL/GraphMAE variants on same split/seed/evaluator | MEDIUM-HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:26:- G3: MGM remains a valid comparison gap only if GRACE/GCA/BGRL/GraphMAE/GraphMAE2/MaskGAE are rerun under identical project protocol.
+notes/DEEPXIV_TARGETED_SEARCH.md:15:| masked graph modeling node classification | MaskGAE (`2205.10053`), MGAE (`2201.02534`), GraphMAE-adjacent prompting/pretraining (`2407.15431`) | Keep G3; compare MGM vs GCL only after protocol alignment. |
+notes/DEEPXIV_TARGETED_SEARCH.md:32:| GraphMAE (`2205.10803`) | brief/head/Experiments/Appendix available | masked feature reconstruction; public/OGB split evidence | test@best and exact evaluator alignment |
+notes/DEEPXIV_TARGETED_SEARCH.md:33:| GraphMAE2 (`2304.04779`) | brief/head/Experiments/Appendix available | OGB-style large-scale evaluation, linear probing/fine-tuning variants | Stage-2 GCL comparability requires rerun |
+notes/DEEPXIV_TARGETED_SEARCH.md:34:| MaskGAE (`2205.10053`) | brief/head/Experiments/Appendix available | Photo/Computer node classification uses 1:1:8; frozen linear classifier stated | exact seeds and test@best |
+notes/stage1_5_pdf_text/2205.10803.txt:4:GraphMAE: Self-Supervised Masked Graph Autoencoders
+notes/stage1_5_pdf_text/2205.10803.txt:38:error metric. We present a masked graph autoencoder GraphMAE1
+notes/stage1_5_pdf_text/2205.10803.txt:45:GraphMAE—a simple graph autoencoder with careful designs—can
+notes/stage1_5_pdf_text/2205.10803.txt:57:1The code is publicly available at https://github.com/THUDM/GraphMAE.
+notes/stage1_5_pdf_text/2205.10803.txt:66:Wang, and Jie Tang. 2022. GraphMAE: Self-Supervised Masked Graph Au-
+notes/stage1_5_pdf_text/2205.10803.txt:128:GraphMAE SCE ! ! ! ! ! O(𝑁)
+notes/stage1_5_pdf_text/2205.10803.txt:133:MLP →GNN+ Re-maskGraphMAE(full)
+notes/stage1_5_pdf_text/2205.10803.txt:142:Decoding (b) The effect of GraphMAE designs on the performance on Cora dataset.
+notes/stage1_5_pdf_text/2205.10803.txt:143:Figure 1: Comparison between generative SSL methods and the effect of GraphMAE design. AE: autoencoder methods; No Struct.:
+notes/stage1_5_pdf_text/2205.10803.txt:184:a masked graph autoencoder GraphMAE for self-supervised graph
+notes/stage1_5_pdf_text/2205.10803.txt:187:GraphMAE, unleashing the power of autoencoders for graph learn-
+notes/stage1_5_pdf_text/2205.10803.txt:189:GAEs and GraphMAE. Specifically, the performance of GraphMAE
+notes/stage1_5_pdf_text/2205.10803.txt:193:efforts in structure reconstruction, GraphMAE only focuses on
+notes/stage1_5_pdf_text/2205.10803.txt:199:GraphMAE employs the cosine error, which is beneficial when
+notes/stage1_5_pdf_text/2205.10803.txt:206:before they are fed into the decoder. In addition, GraphMAE pro-
+notes/stage1_5_pdf_text/2205.10803.txt:209:Overall, GraphMAE is a simple generative self-supervised
+notes/stage1_5_pdf_text/2205.10803.txt:214:designs above, GraphMAE can generate performance advantages
+notes/stage1_5_pdf_text/2205.10803.txt:219:GraphMAE: Self-Supervised Masked Graph Autoencoders KDD ’22, August 14–18, 2022, Washington, DC, USA
+notes/stage1_5_pdf_text/2205.10803.txt:220:Moreover, in many cases, GraphMAE can match or sometimes out-
+notes/stage1_5_pdf_text/2205.10803.txt:288:GraphMAE v.s. Attribute-Masking. Recently, some works [18,
+notes/stage1_5_pdf_text/2205.10803.txt:295:between GraphMAE and them in Appendix A.
+notes/stage1_5_pdf_text/2205.10803.txt:296:3 THE GraphMAE APPROACH
+notes/stage1_5_pdf_text/2205.10803.txt:298:toencoder framework—GraphMAE—to learn graph representations
+notes/stage1_5_pdf_text/2205.10803.txt:300:introduce the critical components that differ GraphMAE from pre-
+notes/stage1_5_pdf_text/2205.10803.txt:302:3.1 The GAE Problem and GraphMAE
+notes/stage1_5_pdf_text/2205.10803.txt:321:quently present the GraphMAE—a masked graph autoencoder—to
+notes/stage1_5_pdf_text/2205.10803.txt:323:GraphMAE. The overall architecture of GraphMAE is illustrated
+notes/stage1_5_pdf_text/2205.10803.txt:329:GraphMAE 
+notes/stage1_5_pdf_text/2205.10803.txt:365:Figure 2: Illustration of GraphMAE and the comparison with GAE. We underline the key operations in GraphMAE. During pre-
+notes/stage1_5_pdf_text/2205.10803.txt:366:training, GraphMAE first masks input node features with a mask token [MASK]. The corrupted graph is encoded into code by a GNN
+notes/stage1_5_pdf_text/2205.10803.txt:367:encoder. In the decoding, GraphMAE re-masks the code of selected nodes with another token [DMASK], and then employs a GNN, e.g., GAT,
+notes/stage1_5_pdf_text/2205.10803.txt:372:power GraphMAE. To have a robust reconstruction, we also propose
+notes/stage1_5_pdf_text/2205.10803.txt:374:the technical differences between GraphMAE and existing GAEs.
+notes/stage1_5_pdf_text/2205.10803.txt:379:(e.g., BERT and MAE), GraphMAE prefers a more expressive GNN
+notes/stage1_5_pdf_text/2205.10803.txt:383:3.2 The Design of GraphMAE
+notes/stage1_5_pdf_text/2205.10803.txt:394:answers to which enable us to develop GraphMAE.
+notes/stage1_5_pdf_text/2205.10803.txt:408:such tasks. Thus, to enable GraphMAE to achieve a good perfor-
+notes/stage1_5_pdf_text/2205.10803.txt:412:the downstream classification tasks in GraphMAE (See Figure 1b).
+notes/stage1_5_pdf_text/2205.10803.txt:428:as the backbone of GraphMAE.
+notes/stage1_5_pdf_text/2205.10803.txt:437:The objective of GraphMAE is to reconstruct the masked features
+notes/stage1_5_pdf_text/2205.10803.txt:447:GraphMAE: Self-Supervised Masked Graph Autoencoders KDD ’22, August 14–18, 2022, Washington, DC, USA
+notes/stage1_5_pdf_text/2205.10803.txt:460:ally harms GraphMAE’s learning, while the “random-substitution”
+notes/stage1_5_pdf_text/2205.10803.txt:476:meaningful compressed knowledge. Therefore, GraphMAE resorts
+notes/stage1_5_pdf_text/2205.10803.txt:508:In GraphMAE, we propose to directly reconstruct the raw fea-
+notes/stage1_5_pdf_text/2205.10803.txt:530:ducing the scaled cosine error (SCE) for GraphMAE. The intuition
+notes/stage1_5_pdf_text/2205.10803.txt:536:output 𝒁 = 𝑓𝐷(𝑨, e𝑯), we define SCE for GraphMAE as
+notes/stage1_5_pdf_text/2205.10803.txt:551:In summary, GraphMAE is a simple and scalable self-supervised
+notes/stage1_5_pdf_text/2205.10803.txt:554:GraphMAE framework. By identifying the negative components
+notes/stage1_5_pdf_text/2205.10803.txt:555:and designing new strategies, GraphMAE unleashes the power of
+notes/stage1_5_pdf_text/2205.10803.txt:558:The overall training flow of GraphMAE is summarized by Figure 2.
+notes/stage1_5_pdf_text/2205.10803.txt:578:GraphMAE also enables robust transfer of pre-trained GNN models
+notes/stage1_5_pdf_text/2205.10803.txt:580:GraphMAE achieves competitive performance in both node-level
+notes/stage1_5_pdf_text/2205.10803.txt:583:In this section, we demonstrate that GraphMAE is a general self-
+notes/stage1_5_pdf_text/2205.10803.txt:589:ate the performance of GraphMAE against state-of-the-art (SOTA)
+notes/stage1_5_pdf_text/2205.10803.txt:595:labels in networks. We test the performance of GraphMAE on 6
+notes/stage1_5_pdf_text/2205.10803.txt:602:GraphMAE without supervision. Then we freeze the parameters of
+notes/stage1_5_pdf_text/2205.10803.txt:609:Results. We compare GraphMAE with SOTA contrastive self-
+notes/stage1_5_pdf_text/2205.10803.txt:619:self-supervised approaches in all benchmarks. Notably, GraphMAE
+notes/stage1_5_pdf_text/2205.10803.txt:622:supervised GraphMAE technique provides strong generalization to
+notes/stage1_5_pdf_text/2205.10803.txt:632:with GraphMAE’s encoder and readout function, we feed encoded
+notes/stage1_5_pdf_text/2205.10803.txt:640:(DGK) [47], we also compare GraphMAE with SOTA unsupervised
+notes/stage1_5_pdf_text/2205.10803.txt:646:find that GraphMAE outperforms all self-supervised baselines on
+notes/stage1_5_pdf_text/2205.10803.txt:667:Results. We evaluate GraphMAE against methods including Info-
+notes/stage1_5_pdf_text/2205.10803.txt:671:parable to SOTA methods, in which GraphMAE achieves the best
+notes/stage1_5_pdf_text/2205.10803.txt:673:tasks. This demonstrates the robust transferability of GraphMAE.
+notes/stage1_5_pdf_text/2205.10803.txt:677:GraphMAE: Self-Supervised Masked Graph Autoencoders KDD ’22, August 14–18, 2022, Washington, DC, USA
+notes/stage1_5_pdf_text/2205.10803.txt:693:GraphMAE 84.2±0.4 73.4±0.4 81.1±0.4 71.75 ±0.17 74.50 ±0.29 96.01 ±0.08
+notes/stage1_5_pdf_text/2205.10803.txt:712:GraphMAE 75.52±0.66 51.63 ±0.52 75.30 ±0.39 80.32 ±0.46 88.19±1.26 88.01 ±0.19 80.40±0.30
+notes/stage1_5_pdf_text/2205.10803.txt:724:GraphMAE 72.0±0.6 75.5±0.6 64.1 ±0.3 60.3±1.1 82.3±1.2 76.3 ±2.4 77.2±1.0 83.1 ±0.9 73.8
+notes/stage1_5_pdf_text/2205.10803.txt:734:GraphMAE 84.2 81.1 71.75 88.19 75.52
+notes/stage1_5_pdf_text/2205.10803.txt:743:To summarize, the self-supervised GraphMAE method achieves
+notes/stage1_5_pdf_text/2205.10803.txt:746:not customize a dedicated GraphMAE for each task. The consistent
+notes/stage1_5_pdf_text/2205.10803.txt:747:results on the three tasks demonstrate that GraphMAE is an effec-
+notes/stage1_5_pdf_text/2205.10803.txt:751:To verify the effects of the main components in GraphMAE, we
+notes/stage1_5_pdf_text/2205.10803.txt:775:the proposed GraphMAE method. GraphMAE employs two mask-
+notes/stage1_5_pdf_text/2205.10803.txt:831:0.5 degrades the performance, while GraphMAE still works with a
+notes/stage1_5_pdf_text/2205.10803.txt:848:original features. MLP also works in GraphMAE, which might be
+notes/stage1_5_pdf_text/2205.10803.txt:859:autoencoders. We present GraphMAE—a simple masked graph
+notes/stage1_5_pdf_text/2205.10803.txt:862:GraphMAE, we design the masked feature reconstruction strategy
+notes/stage1_5_pdf_text/2205.10803.txt:866:tiveness and generalizability of GraphMAE. Our work shows that
+notes/stage1_5_pdf_text/2205.10803.txt:873:GraphMAE: Self-Supervised Masked Graph Autoencoders KDD ’22, August 14–18, 2022, Washington, DC, USA
+notes/stage1_5_pdf_text/2205.10803.txt:1038:GraphMAE 84.16 73.35 81.10 LP
+notes/stage1_5_pdf_text/2205.10803.txt:1046:As the hidden size reaches 2048×4, GraphMAE even outperforms
+notes/stage1_5_pdf_text/2205.10803.txt:1061:GraphMAE (GCN) 82.9±0.6 72.5 ±0.5 81.0 ±0.5 71.87±0.21
+notes/stage1_5_pdf_text/2205.10803.txt:1062:GraphMAE (GAT) 84.2±0.4 73.4±0.4 81.1±0.4 71.75±0.17
+notes/stage1_5_pdf_text/2205.10803.txt:1064:In node classification, GraphMAE uses GAT as the encoder. To have
+notes/stage1_5_pdf_text/2205.10803.txt:1068:The results are shown in Table 6. We observe that GraphMAE still
+notes/stage1_5_pdf_text/2205.10803.txt:1072:for instance, in (Cora, CCA-SSG) and (Ogbn-arxiv, GraphMAE).
+notes/stage1_5_pdf_text/2205.10803.txt:1073:Under the training setting of GraphMAE, GAT could be a better
+notes/stage1_5_pdf_text/2205.10803.txt:1096:GraphMAE
+notes/stage1_5_pdf_text/2205.10803.txt:1101:ods benefit much from larger model size, and GraphMAE
+notes/stage1_5_pdf_text/2205.10803.txt:1143:and https://github.com/THUDM/GraphMAE.
+notes/stage1_5_pdf_text/2205.10803.txt:1153:GraphMAE: Self-Supervised Masked Graph Autoencoders KDD ’22, August 14–18, 2022, Washington, DC, USA
+notes/stage1_5_pdf_text/2205.10803.txt:1202:same GNN backbone as GraphMAE. We conduct hyper-parameter
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:21:| GraphMAE | Cora/CiteSeer/PubMed/ogbn-Arxiv/PPI/Reddit | public splits for citation; OGB official | yes | no | no | official ogbn-Arxiv | no | linear classifier | frozen and some FT/LP variants | 20 init for node | classifier to convergence; early stopping UNCLEAR | final/UNCLEAR | yes | B/C | rerun frozen-evaluator GCL comparison |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:22:| GraphMAE2 | ogbn-Arxiv/Products/Papers100M/MAG-Scholar-F | OGB official; MAG 5/5/40 | no | no | no | official | no | linear probing and fine-tuning | both | 10 random seeds | UNCLEAR | UNCLEAR | yes | B/C | compare only after evaluator alignment |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:23:| MaskGAE | Photo/Computer for node; link datasets | node uses 1:1:8 random split for Photo/Computer | no | yes for Photo/Computer | no | no | no | GAE/classifier details UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | yes/UNCLEAR | D | need exact evaluator/seeds |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:25:| CM-GCL | real multimodal/imbalanced graphs | 70/10/20 | no | no | no | no | no | fine-tuned GNN encoder | fine-tuning | 10 runs | fixed epoch / UNCLEAR | final/UNCLEAR | yes | B/C | not frozen evaluator; rerun only if TAG/imbalance scope |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:37:GRACE, GCA, ProGCL, BGRL, AFGRL, GraphMAE/GraphMAE2 and HLCL, depending on selected Stage 2 gap.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:48:| MaskGAE | 1:1:8 for Photo/Computer node classification; frozen linear classifier | moves from D toward C/D, but exact seeds/test@best still missing |
+notes/stage1_5_pdf_text/2304.04779.txt:4:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised
+notes/stage1_5_pdf_text/2304.04779.txt:33:(e.g., GraphMAE)—one type of generative methods—have recently
+notes/stage1_5_pdf_text/2304.04779.txt:40:self-supervised learning framework 1 GraphMAE2 with the goal
+notes/stage1_5_pdf_text/2304.04779.txt:48:space. Extensive experiments show that GraphMAE2 can consis-
+notes/stage1_5_pdf_text/2304.04779.txt:57:1The code is available at: https://github.com/THUDM/GraphMAE2.
+notes/stage1_5_pdf_text/2304.04779.txt:72:lamov, Jie Tang. 2023. GraphMAE2: A Decoding-Enhanced Masked Self-
+notes/stage1_5_pdf_text/2304.04779.txt:93:introduces a masked graph autoencoder GraphMAE [18] for gen-
+notes/stage1_5_pdf_text/2304.04779.txt:99:tion criterion. The main idea of GraphMAE is to reconstruct the
+notes/stage1_5_pdf_text/2304.04779.txt:108:Random-Init BGRL GraphMAE GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:123:Figure 1: Linear probing results on ogbn-Products and ogbn-
+notes/stage1_5_pdf_text/2304.04779.txt:124:Papers100M. GraphMAE2 achieves a significant advantage over
+notes/stage1_5_pdf_text/2304.04779.txt:128:Despite GraphMAE’s promising performance, the reconstruc-
+notes/stage1_5_pdf_text/2304.04779.txt:138:Table 1 further shows that the performance of GraphMAE drops
+notes/stage1_5_pdf_text/2304.04779.txt:143:In this work, we present GraphMAE2 with the goal of improving
+notes/stage1_5_pdf_text/2304.04779.txt:149:First, instead of fixed re-mask decoding used in GraphMAE—re-
+notes/stage1_5_pdf_text/2304.04779.txt:161:Inherited from GraphMAE, GraphMAE2 is a simple yet more
+notes/stage1_5_pdf_text/2304.04779.txt:166:datasets. The results demonstrate that GraphMAE2 can consistently
+notes/stage1_5_pdf_text/2304.04779.txt:173:using PCA, relatively less discriminative. GraphMAE can be more
+notes/stage1_5_pdf_text/2304.04779.txt:179:GraphMAE 84.2 → 82.6 (↓ 1.6) 81.1 → 78.9 (↓ 2.2)
+notes/stage1_5_pdf_text/2304.04779.txt:180:GraphMAE2 84.5 → 83.5 (↓ 1.0) 81.4 → 80.1 (↓ 1.3)
+notes/stage1_5_pdf_text/2304.04779.txt:181:compared to GraphMAE. Excitingly, GraphMAE2 as an SSL method
+notes/stage1_5_pdf_text/2304.04779.txt:185:In addition, we extend GraphMAE2 to large-scale graphs with
+notes/stage1_5_pdf_text/2304.04779.txt:188:that can produce local and dense subgraphs to benefit GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:189:(and GraphMAE) with masked feature prediction. Experiments on
+notes/stage1_5_pdf_text/2304.04779.txt:191:ple GraphMAE2 framework can generate significant performance
+notes/stage1_5_pdf_text/2304.04779.txt:197:input node features. Then we present our GraphMAE2 to overcome
+notes/stage1_5_pdf_text/2304.04779.txt:222:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:249:GNN decoderGraphMAE
+notes/stage1_5_pdf_text/2304.04779.txt:280:Figure 2: Overview of GraphMAE2 framework. For large-scale graphs, we first run local clustering to produce local clusters for each
+notes/stage1_5_pdf_text/2304.04779.txt:281:node as the preprocessing step. During the pre-training, GraphMAE2 corrupts the graph by masking input node features with a mask token
+notes/stage1_5_pdf_text/2304.04779.txt:285:As a comparison, GraphMAE is trained through input feature reconstruction only with a fixed re-mask decoding strategy.
+notes/stage1_5_pdf_text/2304.04779.txt:317:results. We observe that the performance of GraphMAE degrades
+notes/stage1_5_pdf_text/2304.04779.txt:337:2.2 The GraphMAE2 Framework
+notes/stage1_5_pdf_text/2304.04779.txt:338:We present GraphMAE2 to overcome the aforementioned issue. It
+notes/stage1_5_pdf_text/2304.04779.txt:348:to the input features. Moreover, we extend GraphMAE2 to large
+notes/stage1_5_pdf_text/2304.04779.txt:350:commodate with GraphMAE2’s training, The overall framework of
+notes/stage1_5_pdf_text/2304.04779.txt:351:GraphMAE2 is illustrated in Figure 2.
+notes/stage1_5_pdf_text/2304.04779.txt:361:reconstruct 𝑿 for optimization. GraphMAE [18] shows that using a
+notes/stage1_5_pdf_text/2304.04779.txt:368:decoding used in GraphMAE, we propose a multi-view random
+notes/stage1_5_pdf_text/2304.04779.txt:455:tation: GraphMAE2 aims to direct the prediction of masked nodes
+notes/stage1_5_pdf_text/2304.04779.txt:462:Training and inference. The overall training flow of GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:475:Note that the time and space complexity of GraphMAE2 is linear
+notes/stage1_5_pdf_text/2304.04779.txt:486:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:499:(2) In the context of masked feature prediction, GraphMAE2 has a
+notes/stage1_5_pdf_text/2304.04779.txt:507:struct densely connected subgraphs for GraphMAE2 to tackle the
+notes/stage1_5_pdf_text/2304.04779.txt:529:conducted on the extracted subgraphs. In GraphMAE2, the self-
+notes/stage1_5_pdf_text/2304.04779.txt:538:predict unlabeled nodes. Note that GraphMAE2 is a general SSL
+notes/stage1_5_pdf_text/2304.04779.txt:549:Table 3: Linear probing results on large-scale datasets with
+notes/stage1_5_pdf_text/2304.04779.txt:561:GraphMAE 71.03±0.02 78.89±0.01 58.75±0.03 62.54±0.09
+notes/stage1_5_pdf_text/2304.04779.txt:562:GraphMAE2 71.89±0.03 81.59±0.02 59.24±0.01 64.89±0.04
+notes/stage1_5_pdf_text/2304.04779.txt:579:Baselines. We compare GraphMAE2 with state-of-the-art self-
+notes/stage1_5_pdf_text/2304.04779.txt:582:well as a generative method GraphMAE [18]. Other methods are
+notes/stage1_5_pdf_text/2304.04779.txt:602:GraphMAE 65.78±0.69 69.78±0.26 75.87±0.43 79.21±0.33 48.33±0.18 53.12±0.12 58.29±0.15 62.00±0.12
+notes/stage1_5_pdf_text/2304.04779.txt:603:GraphMAE2 66.86±0.53 70.16±0.28 76.98±0.36 80.52±0.23 49.01±0.15 53.58±0.11 58.69±0.38 62.87±0.64
+notes/stage1_5_pdf_text/2304.04779.txt:617:GraphMAE 84.2±0.4 73.4±0.4 81.1±0.4
+notes/stage1_5_pdf_text/2304.04779.txt:618:GraphMAE2 84.5±0.6 73.4±0.3 81.4±0.5
+notes/stage1_5_pdf_text/2304.04779.txt:624:adopted Neighborhood Sampling [13] in many cases. GraphMAE
+notes/stage1_5_pdf_text/2304.04779.txt:625:and GraphMAE2 are trained based on the presented local clustering
+notes/stage1_5_pdf_text/2304.04779.txt:630:probing and (ii) fine-tuning. For linear probing, we first generate
+notes/stage1_5_pdf_text/2304.04779.txt:641:Results. The results of linear probing are illustrated in Table 3. And
+notes/stage1_5_pdf_text/2304.04779.txt:642:we interpret the result from 3 aspects. First, GraphMAE2 achieves
+notes/stage1_5_pdf_text/2304.04779.txt:646:GraphMAE2 improves upon GraphMAE by a margin of 1.91% and
+notes/stage1_5_pdf_text/2304.04779.txt:656:GraphMAE2 consistently generates better performance than SGC.
+notes/stage1_5_pdf_text/2304.04779.txt:664:self-supervised pretraining of GraphMAE2 benefits downstream
+notes/stage1_5_pdf_text/2304.04779.txt:673:dataset with 1% training data, where GraphMAE2 slightly underper-
+notes/stage1_5_pdf_text/2304.04779.txt:675:noted that in ogbn-Papers100M, only GraphMAE2 and GraphMAE
+notes/stage1_5_pdf_text/2304.04779.txt:684:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:685:Table 6: Ablation studies of GraphMAE2 key components.
+notes/stage1_5_pdf_text/2304.04779.txt:687:GraphMAE2 81.59±0.02 59.24±0.01 64.89±0.04
+notes/stage1_5_pdf_text/2304.04779.txt:691:GraphMAE 78.89±0.01 58.75±0.03 62.54±0.09
+notes/stage1_5_pdf_text/2304.04779.txt:698:GraphMAE2 SAINT 80.96±0.03 58.75±0.03 64.21±0.11
+notes/stage1_5_pdf_text/2304.04779.txt:699:GraphMAE2 Cluster 79.35±0.05 58.05±0.02 63.77±0.11
+notes/stage1_5_pdf_text/2304.04779.txt:700:GraphMAE2 LC 81.59±0.02 59.24±0.01 64.89±0.12
+notes/stage1_5_pdf_text/2304.04779.txt:705:We compare GraphMAE2 with state-of-the-art self-supervised
+notes/stage1_5_pdf_text/2304.04779.txt:709:MAE [18]. For the evaluation, we employ the linear probing men-
+notes/stage1_5_pdf_text/2304.04779.txt:718:improvement over GraphMAE is not as significant as that in the
+notes/stage1_5_pdf_text/2304.04779.txt:723:support our assumption that GraphMAE2 is more advantageous
+notes/stage1_5_pdf_text/2304.04779.txt:724:than GraphMAE when there is more noise in the data.
+notes/stage1_5_pdf_text/2304.04779.txt:727:the designs in GraphMAE2. We choose linear probing for evalua-
+notes/stage1_5_pdf_text/2304.04779.txt:733:fixed re-masking strategy as GraphMAE. It is observed that the
+notes/stage1_5_pdf_text/2304.04779.txt:748:worse than GraphMAE or even worse than the random-initialized
+notes/stage1_5_pdf_text/2304.04779.txt:753:of GraphMAE2 comes from the design rather than any individual
+notes/stage1_5_pdf_text/2304.04779.txt:761:performance of GraphMAE2, as our algorithm shows an advan-
+notes/stage1_5_pdf_text/2304.04779.txt:770:same sampling strategy. And GraphMAE2 still generates a 1.49%
+notes/stage1_5_pdf_text/2304.04779.txt:863:the performance gap, GraphMAE [ 18] leverages masked feature
+notes/stage1_5_pdf_text/2304.04779.txt:894:GraphMAE2 to address this issue by imposing regularization on
+notes/stage1_5_pdf_text/2304.04779.txt:907:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:954:and Jie Tang. 2022. GraphMAE: Self-Supervised Masked Graph Autoencoders. In
+notes/stage1_5_pdf_text/2304.04779.txt:1107:GraphMAE 72.38 81.89 59.77 66.64
+notes/stage1_5_pdf_text/2304.04779.txt:1108:GraphMAE2 72.69 83.65 60.01 66.66
+notes/stage1_5_pdf_text/2304.04779.txt:1112:GraphMAE2 can bring 1.22%-3.17% improvement compared to the
+notes/stage1_5_pdf_text/2304.04779.txt:1118:A.3 Linear Probing Results on ogbn-Arxiv with
+notes/stage1_5_pdf_text/2304.04779.txt:1121:training and inference. Table 9 shows the results of GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:1123:MAE, GraphMAE2 has a 0.2% improvement. It is worth noting that
+notes/stage1_5_pdf_text/2304.04779.txt:1124:GraphMAE results are better when trained with full-batch than
+notes/stage1_5_pdf_text/2304.04779.txt:1127:Table 9: Linear probing results on ogbn-Arxiv with full-
+notes/stage1_5_pdf_text/2304.04779.txt:1136:GraphMAE 71.75±0.17
+notes/stage1_5_pdf_text/2304.04779.txt:1137:GraphMAE2 71.95±0.08
+notes/stage1_5_pdf_text/2304.04779.txt:1161:CCA-SSG [54] and GraphMAE [18]. To have a fair comparison, we
+notes/stage1_5_pdf_text/2304.04779.txt:1170:• GraphMAE:https://github.com/THUDM/GraphMAE
+notes/GCL_BENCHMARK_PROTOCOLS.md:24:| GraphMAE | citation/coauthor/OGB etc. | UNCLEAR in current pass | likely standard for citation | UNCLEAR | possible | yes in graph SSL line | no | Accuracy | UNCLEAR | UNCLEAR | linear/evaluator varies | UNCLEAR | mean±std likely | not always same with GCL | Historical unless re-run |
+notes/GCL_BENCHMARK_PROTOCOLS.md:25:| GraphMAE2 | larger OGB + standard graph SSL | partly explicit in abstract for OGB-Papers100M; exact split requires PDF | no for OGB | no | possible | official split likely | no | Accuracy | UNCLEAR | UNCLEAR | decoder/evaluator protocol varies | UNCLEAR | mean±std likely | not always same | Must re-run or exact-check |
+notes/GCL_BENCHMARK_PROTOCOLS.md:26:| MaskGAE | link prediction + node classification | UNCLEAR | UNCLEAR | UNCLEAR | no | maybe no | no | Accuracy/AUC | UNCLEAR | UNCLEAR | GAE SSL evaluator | UNCLEAR | UNCLEAR | UNCLEAR | Historical reference unless exact protocol found |
+notes/GCL_BENCHMARK_PROTOCOLS.md:42:DGI, MVGRL, GRACE, GCA, BGRL, CCA-SSG, GraphMAE, GraphMAE2 and MaskGAE are essential historical or closest baselines, but their published numbers should not be copied into our main table without confirming or re-running the exact protocol.
+notes/GCL_BENCHMARK_PROTOCOLS.md:51:2. Some graph SSL papers report linear probing; others fine-tune the encoder. These must be separate tables.
+notes/GCL_GAP_CANDIDATES.md:35:## G3: Masked Graph Modeling vs Contrastive Learning Under Identical Evaluator
+notes/GCL_GAP_CANDIDATES.md:39:- Existing shortcoming: GraphMAE/GraphMAE2/MaskGAE report strong results, but protocols often differ from GCL frozen-evaluator setups.
+notes/GCL_GAP_CANDIDATES.md:40:- Evidence: GraphMAE, GraphMAE2, MaskGAE.
+notes/GCL_GAP_CANDIDATES.md:42:- Closest work: GraphMAE2.
+notes/GCL_GAP_CANDIDATES.md:44:- Minimum falsification experiment: same split/evaluator/backbone comparing GRACE/GCA/BGRL/GraphMAE variants.
+notes/GCL_GAP_CANDIDATES.md:89:- Minimum falsification experiment: compare frozen text embeddings, LLM pseudo-labels and graph-only SSL under same split.
+notes/GCL_LITERATURE_MAP.md:28:| Masked graph | GraphMAE | 2022 | KDD, peer-reviewed | yes | node classification | masked feature reconstruction | directly targeted | strong non-contrastive SSL competitor | masked reconstruction may outperform GCL |
+notes/GCL_LITERATURE_MAP.md:29:| Masked graph | MaskGAE | 2022 | arXiv / CoRR | yes/unclear | link prediction, node classification | masked edge modeling in GAE | relevant | connects GAE and CL | edge masking may already cover structure prediction |
+notes/GCL_LITERATURE_MAP.md:30:| Masked graph | GraphMAE2 | 2023 | WWW, peer-reviewed | yes | node classification, OGB | remask decoding + latent prediction | directly targeted | strongest masked SSL competitor | latent prediction primitive already used |
+notes/GCL_LITERATURE_MAP.md:44:2. 近三年节点分类：AFGRL、GraphMAE2、HLCL、CM-GCL、LangGSL、Khan-GCL、SPGCL 是重点风险池。
+notes/GCL_LITERATURE_MAP.md:49:7. Masked graph modeling：GraphMAE/GraphMAE2/MaskGAE 是非对比 SSL 的强竞争簇。
+notes/GCL_LITERATURE_MAP.md:66:| Transductive Linear Probing | 2022 | LoG Oral | https://openreview.net/forum?id=dK8vOIBENa3 | unclear | reviews not extracted | few-shot node classification with GCL pretraining | medium |
+notes/GCL_LITERATURE_MAP.md:74:- Any masked/predictive claim must benchmark GraphMAE2 and MaskGAE under identical evaluator/split.
+notes/CORE_CLOSEST_WORK_READING.md:187:## GraphMAE
+notes/CORE_CLOSEST_WORK_READING.md:189:- Paper: GraphMAE
+notes/CORE_CLOSEST_WORK_READING.md:193:- Core problem: contrastive SSL can be unstable; masked graph reconstruction is strong
+notes/CORE_CLOSEST_WORK_READING.md:213:## GraphMAE2
+notes/CORE_CLOSEST_WORK_READING.md:215:- Paper: GraphMAE2
+notes/CORE_CLOSEST_WORK_READING.md:223:- Encoder and evaluator: linear probing and fine-tuning settings
+notes/CORE_CLOSEST_WORK_READING.md:239:## MaskGAE
+notes/CORE_CLOSEST_WORK_READING.md:311:- Observed limitations: not same frozen evaluator; not directly comparable
+notes/CORE_CLOSEST_WORK_READING.md:430:- MaskGAE: node classification on Photo/Computer uses 1:1:8 random splits and frozen linear classifier on embeddings; exact seeds/test@best remain unclear.
+research-wiki/query_pack.md:18:- GraphMAE / GraphMAE2 / MaskGAE: masked graph modeling; strong but evaluator/protocol differs from GCL.
+research-wiki/query_pack.md:20:- CM-GCL: NeurIPS 2022, multimodal imbalanced node classification; 70/10/20, fine-tuning, not frozen evaluator.
+research-wiki/query_pack.md:53:- Do not claim masked SSL novelty unless separated from GraphMAE2/MaskGAE.
+research-wiki/papers/li2022_whats_behind_mask.md:12:tags: ["masked-graph-modeling", "maskgae", "node-classification", "closest-work"]
+research-wiki/papers/li2022_whats_behind_mask.md:19:MaskGAE studies masked edge modeling and connects masked graph autoencoding with contrastive learning.
+research-wiki/papers/li2022_whats_behind_mask.md:53:> The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.
+notes/STAGE2_RAW_IDEAS.md:21:- Why current methods fail: GRACE/GCA tune augmentation; AFGRL/SPGCL discover positives; G-Censor proposes task-oriented views. None gives a protocol-aligned positive semantic-validity audit under this project's frozen evaluator.
+notes/STAGE2_RAW_IDEAS.md:70:- Core problem: GraphMAE/GraphMAE2/MaskGAE and GCL results are hard to compare because split/evaluator/backbone/training budgets differ.
+notes/STAGE2_RAW_IDEAS.md:72:- Closest works: GraphMAE, GraphMAE2, MaskGAE, GRACE, GCA, BGRL.
+notes/STAGE2_RAW_IDEAS.md:74:- What remains open: a predictive boundary for when masked modeling beats contrastive learning.
+notes/STAGE2_RAW_IDEAS.md:75:- Core hypothesis: feature-label predictability, edge homophily and context reconstruction difficulty predict whether MGM or GCL is better.
+notes/STAGE2_RAW_IDEAS.md:76:- Method sketch: implement comparable InfoNCE/bootstrap/masked-feature/masked-latent objectives; lock backbone/splits/seeds/evaluator/budget; compute graph-regime metrics; learn a protocol-level objective selector; report failure cases.
+notes/STAGE2_RAW_IDEAS.md:78:- Mechanism: benchmark-mechanism hybrid; masked + contrastive comparison.
+notes/STAGE2_RAW_IDEAS.md:79:- Not a simple trick: no objective gate in a final method; contribution is a protocol-aligned regime boundary.
+notes/STAGE2_RAW_IDEAS.md:80:- Minimum novelty condition: beyond rerunning GraphMAE; must predict objective ranking from graph properties.
+notes/STAGE2_RAW_IDEAS.md:81:- Minimum falsification experiment: rerun GRACE/GCA/BGRL/GraphMAE-style variants under identical evaluator and test if metrics predict objective ranking.
+notes/STAGE2_RAW_IDEAS.md:82:- Kill condition: objective ranking is unrelated to regime metrics.
+notes/STAGE2_RAW_IDEAS.md:121:- Why current methods fail: GCA avoids important perturbations; GraphMAE reconstructs random masks; neither learns from positive-pair failure.
+notes/STAGE2_RAW_IDEAS.md:122:- Closest works: GCA, G-Censor, GraphMAE2, MaskGAE.
+notes/STAGE2_RAW_IDEAS.md:130:- Minimum novelty condition: distinct from GCA avoidance and GraphMAE random masking.
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:3:node_id: paper:hou2023_graphmae2_decodingenhanced_masked
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:4:title: "GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner"
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:12:tags: ["masked-graph-modeling", "node-classification", "graphmae2", "closest-work"]
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:16:# GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:19:GraphMAE2 improves masked graph autoencoding with re-mask decoding and latent prediction on large node-classification benchmarks.
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:53:> Graph self-supervised learning (SSL), including contrastive and generative approaches, offers great potential to address the fundamental challenge of label scarcity in real-world graph data. Among both sets of graph SSL techniques, the masked graph autoencoders (e.g., GraphMAE)--one type of generative method--have recently produced promising results. The idea behind this is to reconstruct the node features (or structures)--that are randomly masked from the input--with the autoencoder architecture. However, the performance of masked feature reconstruction naturally relies on the discriminability of the input features and is usually vulnerable to disturbance in the features. In this paper, we present a masked self-supervised learning framework GraphMAE2 with the goal of overcoming this issue. The idea is to impose regularization on feature reconstruction for graph SSL. Specifically, we design the strategies of multi-view random re-mask decoding and latent representation prediction to regularize the feature reconstruction. The multi-view random re-mask decoding is to introduce randomness into reconstruction in the feature space, while the latent representation prediction is to enforce the reconstruction in the embedding space. Extensive experiments show that GraphMAE2 can consistently generate top results on various public datasets, including at least 2.45% improvements over state-of-the-art baselines on ogbn-Papers100M with 111M nodes and 1.6B edges.
+research-wiki/log.md:14:- `2026-06-25T13:19:49Z` ingest_paper: ingested paper:hou2022_graphmae_selfsupervised_masked (arxiv:2205.10803)
+research-wiki/log.md:25:- `2026-06-25T13:48:10Z` ingest_paper: ingested paper:hou2023_graphmae2_decodingenhanced_masked (arxiv:2304.04779)
+research-wiki/index.md:11:- `paper:hou2022_graphmae_selfsupervised_masked` — GraphMAE: Self-Supervised Masked Graph Autoencoders (2022)
+research-wiki/index.md:12:- `paper:hou2023_graphmae2_decodingenhanced_masked` — GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner (2023)
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:14:| GraphMAE | `hou2022_graphmae_selfsupervised_masked` | KDD 2022 | yes | public citation splits; OGB official; frozen linear classifier; 20 random initializations | test@best | no | strong MGM baseline |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:15:| GraphMAE2 | `hou2023_graphmae2_decodingenhanced_masked` | WWW 2023 | yes | OGB official; MAG 5/5/40; 10 trials | early stopping, frozen/fine-tune separation | no | latent prediction risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:16:| MaskGAE | `li2022_whats_behind_mask` | arXiv/CoRR | yes/UNCLEAR | Photo/Computer node classification uses 1:1:8 random split | evaluator/seeds/test@best | no | more link-prediction centered |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:18:| CM-GCL | audit-only | NeurIPS 2022 | yes | 70/10/20; ten runs; fine-tunes GNN; Macro-F1/AUC | exact early stopping | no | not frozen evaluator |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:30:CM-GCL: accepted NeurIPS 2022. InfoGCL: NeurIPS 2021 Poster. Transductive Linear Probing: LoG 2022 Oral. Directed GCL: NeurIPS 2021 Poster. HLCL and G-Censor remain `UNCLEAR` for final acceptance status in this pass.
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:40:- MaskGAE (`2205.10053`): node classification protocol is clearer for Photo/Computer 1:1:8 and frozen linear classifier, but still not directly comparable.
+research-wiki/papers/hou2022_graphmae_selfsupervised_masked.md:3:node_id: paper:hou2022_graphmae_selfsupervised_masked
+research-wiki/papers/hou2022_graphmae_selfsupervised_masked.md:4:title: "GraphMAE: Self-Supervised Masked Graph Autoencoders"
+research-wiki/papers/hou2022_graphmae_selfsupervised_masked.md:16:# GraphMAE: Self-Supervised Masked Graph Autoencoders
+research-wiki/papers/hou2022_graphmae_selfsupervised_masked.md:19:GraphMAE demonstrates masked feature reconstruction as a strong graph SSL alternative to contrastive objectives.
+research-wiki/papers/hou2022_graphmae_selfsupervised_masked.md:53:> Self-supervised learning (SSL) has been extensively explored in recent years. Particularly, generative SSL has seen emerging success in natural language processing and other AI fields, such as the wide adoption of BERT and GPT. Despite this, contrastive learning-which heavily relies on structural data augmentation and complicated training strategies-has been the dominant approach in graph SSL, while the progress of generative SSL on graphs, especially graph autoencoders (GAEs), has thus far not reached the potential as promised in other fields. In this paper, we identify and examine the issues that negatively impact the development of GAEs, including their reconstruction objective, training robustness, and error metric. We present a masked graph autoencoder GraphMAE that mitigates these issues for generative self-supervised graph pretraining. Instead of reconstructing graph structures, we propose to focus on feature reconstruction with both a masking strategy and scaled cosine error that benefit the robust training of GraphMAE. We conduct extensive experiments on 21 public datasets for three different graph learning tasks. The results manifest that GraphMAE-a simple graph autoencoder with careful designs-can consistently generate outperformance over both contrastive and generative state-of-the-art baselines. This study provides an understanding of graph autoencoders and demonstrates the potential of generative self-supervised pre-training on graphs.
+research-wiki/gap_map.md:29:## G3: Masked Graph Modeling vs Contrastive Learning Under Identical Evaluator
+research-wiki/gap_map.md:32:- Closest works: GraphMAE, GraphMAE2, MaskGAE.
+research-wiki/gap_map.md:34:- Not solved: apples-to-apples GCL vs MGM comparison under same split/evaluator/backbone.
+research-wiki/gap_map.md:37:- Must-run falsification: rerun GRACE/GCA/BGRL/GraphMAE variants under same split/seed/evaluator.
+research-wiki/gap_map.md:107:- G3 remains open because GraphMAE/GraphMAE2/MaskGAE report strong masked objectives, but DeepXiv still does not establish exact protocol equivalence with this project.

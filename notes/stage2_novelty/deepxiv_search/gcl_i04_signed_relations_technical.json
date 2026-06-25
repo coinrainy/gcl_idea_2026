@@ -1,0 +1,270 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2308.10077",
+      "score": 0.8333334,
+      "title": "Contrastive Learning for Non-Local Graphs with Multi-Resolution Structural Views",
+      "tldr": "[research paper] The paper proposes a multiview contrastive learning framework that leverages multi-resolution diffusion filters on graphs to capture higher-order structural hierarchies, specifically targeting structural equivalence in heterophilic graphs. By cascading dilated diffusion operators to generate coarse, bandpass-filtered views of the graph, the method learns node representations invariant to multiple resolutions, enabling the discovery of latent structural similarities missed by traditional local or random-walk-based augmentations. Empirical results show significant performance gains—up to 16.06% on Cornell—over state-of-the-art graph contrastive methods on synthetic and real-world heterophilic datasets, with consistent improvements in downstream tasks.",
+      "abstract": "Learning node-level representations of heterophilic graphs is crucial for various applications, including fraudster detection and protein function prediction. In such graphs, nodes share structural similarity identified by the equivalence of their connectivity which is implicitly encoded in the form of higher-order hierarchical information in the graphs. The contrastive methods are popular choices for learning the representation of nodes in a graph. However, existing contrastive methods struggle to capture higher-order graph structures. To address this limitation, we propose a novel multiview contrastive learning approach that integrates diffusion filters on graphs. By incorporating multiple graph views as augmentations, our method captures the structural equivalence in heterophilic graphs, enabling the discovery of hidden relationships and similarities not apparent in traditional node representations. Our approach outperforms baselines on synthetic and real structural datasets, surpassing the best baseline by $16.06\\\\%$ on Cornell, $3.27\\\\%$ on Texas, and $8.04\\\\%$ on Wisconsin. Additionally, it consistently achieves superior performance on proximal tasks, demonstrating its effectiveness in uncovering structural information and improving downstream applications.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Asif Khan",
+          "orgs": [
+            "School of Informatics",
+            "University of Edinburgh",
+            "UK"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Amos Storkey",
+          "orgs": [
+            "School of Informatics",
+            "University of Edinburgh",
+            "UK"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2308.10077",
+      "date": "2023-08-19T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2506.20980",
+      "score": 0.75,
+      "title": "Enhancing Homophily-Heterophily Separation: Relation-Aware Learning in Heterogeneous Graphs",
+      "tldr": "[research paper] RASH introduces a dual heterogeneous hypergraph framework to explicitly model high-order semantics of multi-relational interactions in heterogeneous graphs, dynamically constructing homophilic and heterophilic subgraphs based on relation importance scores. By avoiding homogeneous graph conversion, it preserves structural heterogeneity while enabling fine-grained separation of homophily and heterophily per node type through a multi-relation contrastive loss that maximizes mutual information across views.",
+      "abstract": "Real-world networks usually have a property of node heterophily, that is, the connected nodes usually have different features or different labels. This heterophily issue has been extensively studied in homogeneous graphs but remains under-explored in heterogeneous graphs, where there are multiple types of nodes and edges. Capturing node heterophily in heterogeneous graphs is very challenging since both node/edge heterogeneity and node heterophily should be carefully taken into consideration. Existing methods typically convert heterogeneous graphs into homogeneous ones to learn node heterophily, which will inevitably lose the potential heterophily conveyed by heterogeneous relations. To bridge this gap, we propose Relation-Aware Separation of Homophily and Heterophily (RASH), a novel contrastive learning framework that explicitly models high-order semantics of heterogeneous interactions and adaptively separates homophilic and heterophilic patterns. Particularly, RASH introduces dual heterogeneous hypergraphs to encode multi-relational bipartite subgraphs and dynamically constructs homophilic graphs and heterophilic graphs based on relation importance. A multi-relation contrastive loss is designed to align heterogeneous and homophilic/heterophilic views by maximizing mutual information. In this way, RASH simultaneously resolves the challenges of heterogeneity and heterophily in heterogeneous graphs. Extensive experiments on benchmark datasets demonstrate the effectiveness of RASH across various downstream tasks. The code is available at: https://github.com/zhengziyu77/RASH.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhengziyu@stu.xidian.edu.cn",
+            "orcid": "https://orcid.org/0009-0000-3662-0832"
+          },
+          "name": "Ziyu Zheng",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yym@xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0002-8186-0648"
+          },
+          "name": "Yaming Yang",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zyguan@xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0003-2413-4698"
+          },
+          "name": "Ziyu Guan",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ywzhao@mail.xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0002-9767-1323"
+          },
+          "name": "Wei Zhao",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wglu@stu.xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0003-4855-7070"
+          },
+          "name": "Weigang Lu",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2506.20980",
+      "date": "2025-06-26T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "cs.SI",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/zhengziyu77/RASH"
+    },
+    {
+      "arxiv_id": "2511.18783",
+      "score": 0.33333334,
+      "title": "Hypergraph Contrastive Learning for both Homophilic and Heterophilic Hypergraphs",
+      "tldr": "[research paper] HONOR introduces the first unsupervised hypergraph contrastive learning framework that explicitly models heterophilic relationships in hypergraphs by combining a prompt-based hyperedge feature construction strategy—using central pattern features and cosine similarity to preserve global semantics and suppress local noise—and an adaptive attention aggregation module that dynamically weights node contributions. These mechanisms enable high-pass filtering to amplify heterophilic distinctions without introducing instability, resulting in more discriminative and robust node and hyperedge representations under both homophilic and heterophilic conditions, with theoretical and empirical validation of superior generalization and robustness.",
+      "abstract": "Hypergraphs, as a generalization of traditional graphs, naturally capture high-order relationships. In recent years, hypergraph neural networks (HNNs) have been widely used to capture complex high-order relationships. However, most existing hypergraph neural network methods inherently rely on the homophily assumption, which often does not hold in real-world scenarios that exhibit significant heterophilic structures. To address this limitation, we propose \\\\textbf{HONOR}, a novel unsupervised \\\\textbf{H}ypergraph c\\\\textbf{ON}trastive learning framework suitable for both hom\\\\textbf{O}philic and hete\\\\textbf{R}ophilic hypergraphs. Specifically, HONOR explicitly models the heterophilic relationships between hyperedges and nodes through two complementary mechanisms: a prompt-based hyperedge feature construction strategy that maintains global semantic consistency while suppressing local noise, and an adaptive attention aggregation module that dynamically captures the diverse local contributions of nodes to hyperedges. Combined with high-pass filtering, these designs enable HONOR to fully exploit heterophilic connection patterns, yielding more discriminative and robust node and hyperedge representations. Theoretically, we demonstrate the superior generalization ability and robustness of HONOR. Empirically, extensive experiments further validate that HONOR consistently outperforms state-of-the-art baselines under both homophilic and heterophilic datasets.",
+      "authors": [
+        "Renchu Guan",
+        "Xuyang Li",
+        "Yachao Zhang",
+        "Wei Pang",
+        "Fausto Giunchiglia",
+        "Ximing Li",
+        "Yonghao Liu",
+        "Xiaoyue Feng"
+      ],
+      "url": "https://arxiv.org/abs/2511.18783",
+      "date": "2025-11-24T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2307.16026",
+      "score": 0.3,
+      "title": "MUSE: Multi-View Contrastive Learning for Heterophilic Graphs",
+      "tldr": "[research paper] MUSE introduces a multi-view contrastive learning framework specifically designed for heterophilic graphs, where nodes are dissimilar to their neighbors. It constructs semantic and contextual views via GNNs with contrastive learning, then fuses them through an information fusion controller that adapts to local (node-level) and global (graph-level) diversity in node-neighborhood similarity. An alternating training scheme enables mutual refinement between representation learning and fusion control, improving node representation quality in real-world graphs with high heterophily.",
+      "abstract": "In recent years, self-supervised learning has emerged as a promising approach in addressing the issues of label dependency and poor generalization performance in traditional GNNs. However, existing self-supervised methods have limited effectiveness on heterophilic graphs, due to the homophily assumption that results in similar node representations for connected nodes. In this work, we propose a multi-view contrastive learning model for heterophilic graphs, namely, MUSE. Specifically, we construct two views to capture the information of the ego node and its neighborhood by GNNs enhanced with contrastive learning, respectively. Then we integrate the information from these two views to fuse the node representations. Fusion contrast is utilized to enhance the effectiveness of fused node representations. Further, considering that the influence of neighboring contextual information on information fusion may vary across different ego nodes, we employ an information fusion controller to model the diversity of node-neighborhood similarity at both the local and global levels. Finally, an alternating training scheme is adopted to ensure that unsupervised node representation learning and information fusion controller can mutually reinforce each other. We conduct extensive experiments to evaluate the performance of MUSE on 9 benchmark datasets. Our results show the effectiveness of MUSE on both node classification and clustering tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "mengyiyuan@stu.ecnu.edu.cn"
+          },
+          "name": "Mengyi Yuan",
+          "orgs": [
+            "School of Data Science and Engineering",
+            "East China Normal University",
+            "Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "minjiechen@stu.ecnu.edu.cn"
+          },
+          "name": "Minjie Chen",
+          "orgs": [
+            "School of Data Science and Engineering",
+            "East China Normal University",
+            "Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangli@dase.ecnu.edu.cn"
+          },
+          "name": "Xiang Li",
+          "orgs": [
+            "School of Data Science and Engineering",
+            "East China Normal University",
+            "Shanghai, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2307.16026",
+      "date": "2023-07-29T00:00:00",
+      "citation_count": 16,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "International Conference on Information and Knowledge Management",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2203.00186",
+      "score": 0.25,
+      "title": "ACTIVE:Augmentation-Free Graph Contrastive Learning for Partial Multi-View Clustering",
+      "tldr": "[research paper] ACTIVE introduces an augmentation-free graph contrastive learning framework for partial multi-view clustering that shifts focus from instance-level to cluster-level inter-view consistency. By constructing relation graphs via nearest neighbors on complete views and transferring them to missing views, it enables missing data inference while preserving cluster-level semantic alignment. The method combines within-view graph contrastive learning and cross-view graph consistency learning to maximize intra-cluster similarity and inter-view consistency, effectively reducing the impact of missing data without data augmentation or imputation.",
+      "abstract": "In this paper, we propose an augmentation-free graph contrastive learning framework, namely ACTIVE, to solve the problem of partial multi-view clustering. Notably, we suppose that the representations of similar samples (i.e., belonging to the same cluster) and their multiply views features should be similar. This is distinct from the general unsupervised contrastive learning that assumes an image and its augmentations share a similar representation. Specifically, relation graphs are constructed using the nearest neighbours to identify existing similar samples, then the constructed inter-instance relation graphs are transferred to the missing views to build graphs on the corresponding missing data. Subsequently, two main components, within-view graph contrastive learning (WGC) and cross-view graph consistency learning (CGC), are devised to maximize the mutual information of different views within a cluster. The proposed approach elevates instance-level contrastive learning and missing data inference to the cluster-level, effectively mitigating the impact of individual missing data on clustering. Experiments on several challenging datasets demonstrate the superiority of our proposed methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wangym@bjtu.edu.cn"
+          },
+          "name": "Yiming Wang",
+          "orgs": [
+            "Beijing Jiaotong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dxchang@bjtu.edu.cn"
+          },
+          "name": "Dongxia Chang",
+          "orgs": [
+            "Beijing Jiaotong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhiqiangfu@bjtu.edu.cn"
+          },
+          "name": "Zhiqiang Fu",
+          "orgs": [
+            "Beijing Jiaotong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiewen_pr@126.com"
+          },
+          "name": "Jie Wen",
+          "orgs": [
+            "Beijing Jiaotong University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yzhao@bjtu.edu.cn"
+          },
+          "name": "Yao Zhao",
+          "orgs": [
+            "Beijing Jiaotong University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2203.00186",
+      "date": "2022-03-01T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.CV"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

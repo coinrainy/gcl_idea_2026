@@ -1,0 +1,275 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2506.20980",
+      "score": 0.8333334,
+      "title": "Enhancing Homophily-Heterophily Separation: Relation-Aware Learning in Heterogeneous Graphs",
+      "tldr": "[research paper] RASH introduces a dual heterogeneous hypergraph framework to explicitly model high-order semantics of multi-relational interactions in heterogeneous graphs, dynamically constructing homophilic and heterophilic subgraphs based on relation importance scores. By avoiding homogeneous graph conversion, it preserves structural heterogeneity while enabling fine-grained separation of homophily and heterophily per node type through a multi-relation contrastive loss that maximizes mutual information across views.",
+      "abstract": "Real-world networks usually have a property of node heterophily, that is, the connected nodes usually have different features or different labels. This heterophily issue has been extensively studied in homogeneous graphs but remains under-explored in heterogeneous graphs, where there are multiple types of nodes and edges. Capturing node heterophily in heterogeneous graphs is very challenging since both node/edge heterogeneity and node heterophily should be carefully taken into consideration. Existing methods typically convert heterogeneous graphs into homogeneous ones to learn node heterophily, which will inevitably lose the potential heterophily conveyed by heterogeneous relations. To bridge this gap, we propose Relation-Aware Separation of Homophily and Heterophily (RASH), a novel contrastive learning framework that explicitly models high-order semantics of heterogeneous interactions and adaptively separates homophilic and heterophilic patterns. Particularly, RASH introduces dual heterogeneous hypergraphs to encode multi-relational bipartite subgraphs and dynamically constructs homophilic graphs and heterophilic graphs based on relation importance. A multi-relation contrastive loss is designed to align heterogeneous and homophilic/heterophilic views by maximizing mutual information. In this way, RASH simultaneously resolves the challenges of heterogeneity and heterophily in heterogeneous graphs. Extensive experiments on benchmark datasets demonstrate the effectiveness of RASH across various downstream tasks. The code is available at: https://github.com/zhengziyu77/RASH.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhengziyu@stu.xidian.edu.cn",
+            "orcid": "https://orcid.org/0009-0000-3662-0832"
+          },
+          "name": "Ziyu Zheng",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yym@xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0002-8186-0648"
+          },
+          "name": "Yaming Yang",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zyguan@xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0003-2413-4698"
+          },
+          "name": "Ziyu Guan",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ywzhao@mail.xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0002-9767-1323"
+          },
+          "name": "Wei Zhao",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wglu@stu.xidian.edu.cn",
+            "orcid": "https://orcid.org/0000-0003-4855-7070"
+          },
+          "name": "Weigang Lu",
+          "orgs": [
+            "School of Computer Science and Technology",
+            "Xidian University",
+            "Xi’an",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2506.20980",
+      "date": "2025-06-26T00:00:00",
+      "citation_count": 3,
+      "categories": [
+        "cs.SI",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/zhengziyu77/RASH"
+    },
+    {
+      "arxiv_id": "2304.04935",
+      "score": 0.5,
+      "title": "Sentence-Level Relation Extraction via Contrastive Learning with Descriptive Relation Prompts",
+      "tldr": "[research paper] CTL-DRP introduces a novel paradigm for sentence-level relation extraction that jointly integrates entity type constraints and relational knowledge via descriptive relation prompts (DRP) and improved entity markers. By generating entity-relation-aware contextual embeddings using typed markers and narrative prompts, the method embeds semantic relation descriptions directly into the input text. A contrastive learning objective then ranks candidate relations under type restrictions, enabling a unified ranking model that outperforms prior methods on TACRED, TACREV, and Re-TACRED with F1 scores reaching 91.6% and 85.8% respectively.",
+      "abstract": "Sentence-level relation extraction aims to identify the relation between two entities for a given sentence. The existing works mostly focus on obtaining a better entity representation and adopting a multi-label classifier for relation extraction. A major limitation of these works is that they ignore background relational knowledge and the interrelation between entity types and candidate relations. In this work, we propose a new paradigm, Contrastive Learning with Descriptive Relation Prompts(CTL-DRP), to jointly consider entity information, relational knowledge and entity type restrictions. In particular, we introduce an improved entity marker and descriptive relation prompts when generating contextual embedding, and utilize contrastive learning to rank the restricted candidate relations. The CTL-DRP obtains a competitive F1-score of 76.7% on TACRED. Furthermore, the new presented paradigm achieves F1-scores of 85.8% and 91.6% on TACREV and Re-TACRED respectively, which are both the state-of-the-art performance.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhengjiewen02@corp.netease.com"
+          },
+          "name": "Jiewen Zheng",
+          "orgs": [
+            "Interactive Entertainment Group of Netease Inc.",
+            "Guangzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jackchen@corp.netease.com"
+          },
+          "name": "Ze Chen",
+          "orgs": [
+            "Interactive Entertainment Group of Netease Inc.",
+            "Guangzhou, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2304.04935",
+      "date": "2023-04-11T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.CL"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2512.15027",
+      "score": 0.33333334,
+      "title": "Trustworthy Neighborhoods Mining: Homophily-Aware Neutral Contrastive Learning for Graph Clustering",
+      "tldr": "[research paper] NeuCGC introduces neutral pairs—weighted positive sample pairs in contrastive learning—that dynamically adapt to a graph's homophily level, enabling robust neighborhood mining in both homophilic and heterophilic graphs. The method combines an adaptive neutral contrastive alignment loss to adjust positive/negative pair weights based on homophily estimation and a feature consistency module that leverages reliable neighborhood information from high-confidence graphs to stabilize node representation learning, achieving a 13% average ARI improvement over baselines in heterogeneous datasets.",
+      "abstract": "Recently, neighbor-based contrastive learning has been introduced to effectively exploit neighborhood information for clustering. However, these methods rely on the homophily assumption-that connected nodes share similar class labels and should therefore be close in feature space-which fails to account for the varying homophily levels in real-world graphs. As a result, applying contrastive learning to low-homophily graphs may lead to indistinguishable node representations due to unreliable neighborhood information, making it challenging to identify trustworthy neighborhoods with varying homophily levels in graph clustering. To tackle this, we introduce a novel neighborhood Neutral Contrastive Graph Clustering method, NeuCGC, that extends traditional contrastive learning by incorporating neutral pairs-node pairs treated as weighted positive pairs, rather than strictly positive or negative. These neutral pairs are dynamically adjusted based on the graph's homophily level, enabling a more flexible and robust learning process. Leveraging neutral pairs in contrastive learning, our method incorporates two key components: (1) an adaptive contrastive neighborhood distribution alignment that adjusts based on the homophily level of the given attribute graph, ensuring effective alignment of neighborhood distributions, and (2) a contrastive neighborhood node feature consistency learning mechanism that leverages reliable neighborhood information from high-confidence graphs to learn robust node representations, mitigating the adverse effects of varying homophily levels and effectively exploiting highly trustworthy neighborhood information. Experimental results demonstrate the effectiveness and robustness of our approach, outperforming other state-of-the-art graph clustering methods. Our code is available at https://github.com/THPengL/NeuCGC.",
+      "authors": [
+        {
+          "misc": {
+            "email": "23lpeng@stu.edu.cn"
+          },
+          "name": "Liang Peng",
+          "orgs": [
+            "Department of Computer Science, Shantou University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "22yxye2@stu.edu.cn"
+          },
+          "name": "Yixuan Ye",
+          "orgs": [
+            "Department of Computer Science, Shantou University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chengliu10@gmail.com"
+          },
+          "name": "Cheng Liu",
+          "orgs": [
+            "College of Computer Science and Technology, Huaqiao University",
+            "Department of Computer Science, Shantou University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hjche123@swu.edu.cn"
+          },
+          "name": "Hangjun Che",
+          "orgs": [
+            "Chongqing Key Laboratory of Nonlinear Circuits and Intelligent Information Processing",
+            "College of Electronic and Information Engineering, Southwest University, Chongqing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "man-fai.leung@aru.ac.uk"
+          },
+          "name": "Man-Fai Leung",
+          "orgs": [
+            "School of Computing and Information Science, Faculty of Science and Engineering, Anglia Ruskin University, Cambridge, U.K."
+          ]
+        },
+        {
+          "misc": {
+            "email": "cswusi@scut.edu.cn"
+          },
+          "name": "Si Wu",
+          "orgs": [
+            "School of Computer Science and Engineering, South China University of Technology"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cshswong@cityu.edu.hk"
+          },
+          "name": "Hau-San Wong",
+          "orgs": [
+            "Department of Computer Science, City University of Hong Kong"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2512.15027",
+      "date": "2025-12-17T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "cs.SI"
+      ],
+      "venue": "IEEE Transactions on Knowledge and Data Engineering",
+      "venue_year": null,
+      "github_url": "https://github.com/THPengL/NeuCGC"
+    },
+    {
+      "arxiv_id": "2303.06344",
+      "score": 0.27702704,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2511.18783",
+      "score": 0.25,
+      "title": "Hypergraph Contrastive Learning for both Homophilic and Heterophilic Hypergraphs",
+      "tldr": "[research paper] HONOR introduces the first unsupervised hypergraph contrastive learning framework that explicitly models heterophilic relationships in hypergraphs by combining a prompt-based hyperedge feature construction strategy—using central pattern features and cosine similarity to preserve global semantics and suppress local noise—and an adaptive attention aggregation module that dynamically weights node contributions. These mechanisms enable high-pass filtering to amplify heterophilic distinctions without introducing instability, resulting in more discriminative and robust node and hyperedge representations under both homophilic and heterophilic conditions, with theoretical and empirical validation of superior generalization and robustness.",
+      "abstract": "Hypergraphs, as a generalization of traditional graphs, naturally capture high-order relationships. In recent years, hypergraph neural networks (HNNs) have been widely used to capture complex high-order relationships. However, most existing hypergraph neural network methods inherently rely on the homophily assumption, which often does not hold in real-world scenarios that exhibit significant heterophilic structures. To address this limitation, we propose \\\\textbf{HONOR}, a novel unsupervised \\\\textbf{H}ypergraph c\\\\textbf{ON}trastive learning framework suitable for both hom\\\\textbf{O}philic and hete\\\\textbf{R}ophilic hypergraphs. Specifically, HONOR explicitly models the heterophilic relationships between hyperedges and nodes through two complementary mechanisms: a prompt-based hyperedge feature construction strategy that maintains global semantic consistency while suppressing local noise, and an adaptive attention aggregation module that dynamically captures the diverse local contributions of nodes to hyperedges. Combined with high-pass filtering, these designs enable HONOR to fully exploit heterophilic connection patterns, yielding more discriminative and robust node and hyperedge representations. Theoretically, we demonstrate the superior generalization ability and robustness of HONOR. Empirically, extensive experiments further validate that HONOR consistently outperforms state-of-the-art baselines under both homophilic and heterophilic datasets.",
+      "authors": [
+        "Renchu Guan",
+        "Xuyang Li",
+        "Yachao Zhang",
+        "Wei Pang",
+        "Fausto Giunchiglia",
+        "Ximing Li",
+        "Yonghao Liu",
+        "Xiaoyue Feng"
+      ],
+      "url": "https://arxiv.org/abs/2511.18783",
+      "date": "2025-11-24T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "1412.3100",
+      "score": 0.5,
+      "title": "Semi-Supervised Learning with Heterophily",
+      "tldr": "[research paper] The paper introduces Semi-Supervised Learning with Heterophily (SSL-H), a framework that generalizes traditional graph-based label propagation methods by allowing propagation of heterophily—'opposites attract' relationships—between node classes. It leverages the row-sum-constant property of stochastic matrices to model class compatibilities via a compatibility matrix H, enabling linear inference of node labels under arbitrary class-level affinities. A key technical contribution is a computationally efficient algorithm for learning H from partially labeled graphs, inspired by Locally Linear Embedding (LLE), which reduces the problem to a fast optimization step without requiring prior knowledge of class compatibilities.",
+      "abstract": "We derive a family of linear inference algorithms that generalize existing graph-based label propagation algorithms by allowing them to propagate generalized assumptions about \"attraction\" or \"compatibility\" between classes of neighboring nodes (in particular those that involve heterophily between nodes where \"opposites attract\"). We thus call this formulation Semi-Supervised Learning with Heterophily (SSLH) and show how it generalizes and improves upon a recently proposed approach called Linearized Belief Propagation (LinBP). Importantly, our framework allows us to reduce the problem of estimating the relative compatibility between nodes from partially labeled graph to a simple optimization problem. The result is a very fast algorithm that -- despite its simplicity -- is surprisingly effective: we can classify unlabeled nodes within the same graph in the same time as LinBP but with a superior accuracy and despite our algorithm not knowing the compatibilities.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Wolfgang Gatterbauer",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/1412.3100",
+      "date": "2014-12-09T00:00:00",
+      "citation_count": 15,
+      "categories": [
+        "cs.LG",
+        "cs.DB"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2012.03573",
+      "score": 0.5,
+      "title": "PPKE: Knowledge Representation Learning by Path-based Pre-training",
+      "tldr": "[research paper] PPKE introduces a path-based pre-training framework that leverages multi-step relation paths in knowledge graphs as contextual signals, treating them as graph-level analogs to word contexts in language models. By masking entities within path sequences and using a Transformer encoder to predict them, the model learns rich graph contextual representations that outperform baseline methods on link and relation prediction tasks, demonstrating that topological path structures contain exploitable semantic information beyond single triples.",
+      "abstract": "Entities may have complex interactions in a knowledge graph (KG), such as multi-step relationships, which can be viewed as graph contextual information of the entities. Traditional knowledge representation learning (KRL) methods usually treat a single triple as a training unit, and neglect most of the graph contextual information exists in the topological structure of KGs. In this study, we propose a Path-based Pre-training model to learn Knowledge Embeddings, called PPKE, which aims to integrate more graph contextual information between entities into the KRL model. Experiments demonstrate that our model achieves state-of-the-art results on several benchmark datasets for link prediction and relation prediction tasks, indicating that our model provides a feasible way to take advantage of graph contextual information in KGs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hebin.nlp@huawei.com"
+          },
+          "name": "Bin He",
+          "orgs": [
+            "Huawei Noah's Ark Lab"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhoudi7@huawei.com"
+          },
+          "name": "Di Zhou",
+          "orgs": [
+            "Huawei Noah's Ark Lab"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiejing-hit@gmail.com"
+          },
+          "name": "Jing Xie",
+          "orgs": [
+            "School of Computer Science, Harbin Institute of Technology"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaojinghui4@huawei.com"
+          },
+          "name": "Jinghui Xiao",
+          "orgs": [
+            "Huawei Noah's Ark Lab"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiang.xin@huawei.com"
+          },
+          "name": "Xin Jiang",
+          "orgs": [
+            "Huawei Noah's Ark Lab"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qun.liu@huawei.com"
+          },
+          "name": "Qun Liu",
+          "orgs": [
+            "Huawei Noah's Ark Lab"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2012.03573",
+      "date": "2020-12-07T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2203.03982",
+      "score": 0.33333334,
+      "title": "Predictive and Contrastive: Dual-Auxiliary Learning for Recommendation",
+      "tldr": "[research paper] The paper introduces a recommendation-specific self-supervised learning framework (DUAL) that leverages the strong positive correlation between user-item interactions and the number of paths induced by meta-paths in heterogeneous graphs. It designs a path-regression predictive task to model link-scores from meta-path counts and a contrastive task to align and refine node representations from the two tasks, using a gate-controlled architecture to mitigate negative transfer. Experimental results on real-world datasets show that DUAL achieves state-of-the-art performance by effectively integrating semantic information from social and categorical relationships in heterogeneous graphs.",
+      "abstract": "Self-supervised learning (SSL) recently has achieved outstanding success on recommendation. By setting up an auxiliary task (either predictive or contrastive), SSL can discover supervisory signals from the raw data without human annotation, which greatly mitigates the problem of sparse user-item interactions. However, most SSL-based recommendation models rely on general-purpose auxiliary tasks, e.g., maximizing correspondence between node representations learned from the original and perturbed interaction graphs, which are explicitly irrelevant to the recommendation task. Accordingly, the rich semantics reflected by social relationships and item categories, which lie in the recommendation data-based heterogeneous graphs, are not fully exploited. To explore recommendation-specific auxiliary tasks, we first quantitatively analyze the heterogeneous interaction data and find a strong positive correlation between the interactions and the number of user-item paths induced by meta-paths. Based on the finding, we design two auxiliary tasks that are tightly coupled with the target task (one is predictive and the other one is contrastive) towards connecting recommendation with the self-supervision signals hiding in the positive correlation. Finally, a model-agnostic DUal-Auxiliary Learning (DUAL) framework which unifies the SSL and recommendation tasks is developed. The extensive experiments conducted on three real-world datasets demonstrate that DUAL can significantly improve recommendation, reaching the state-of-the-art performance.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yinghui Tao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Min Gao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Junliang Yu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zongwei Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Qingyu Xiong",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xu Wang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2203.03982",
+      "date": "2022-03-08T00:00:00",
+      "citation_count": 9,
+      "categories": [
+        "cs.IR"
+      ],
+      "venue": "IEEE Transactions on Computational Social Systems",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2102.10826",
+      "score": 0.33333334,
+      "title": "LightCAKE: A Lightweight Framework for Context-Aware Knowledge Graph Embedding",
+      "tldr": "[research paper] LightCAKE introduces a lightweight, parameter-free framework that explicitly models both entity and relation context in knowledge graph embedding by constructing context star graphs and applying non-parametric operations (e.g., subtraction, multiplication) to encode contextual neighbors. It aggregates context information via weighted summation without introducing new trainable parameters, enabling efficient integration of structural graph context into simple KGE models like TransE and DistMult while preserving scalability and avoiding overparameterization inherent in GNN-based approaches.",
+      "abstract": "Knowledge graph embedding (KGE) models learn to project symbolic entities and relations into a continuous vector space based on the observed triplets. However, existing KGE models cannot make a proper trade-off between the graph context and the model complexity, which makes them still far from satisfactory. In this paper, we propose a lightweight framework named LightCAKE for context-aware KGE. LightCAKE explicitly models the graph context without introducing redundant trainable parameters, and uses an iterative aggregation strategy to integrate the context information into the entity/relation embeddings. As a generic framework, it can be used with many simple KGE models to achieve excellent results. Finally, extensive experiments on public benchmarks demonstrate the efficiency and effectiveness of our framework.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ningzhiyuan@cnic.cn"
+          },
+          "name": "Zhiyuan Ning",
+          "orgs": [
+            "Computer Network Information Center, Chinese Academy of Sciences, Beijing, China",
+            "University of Chinese Academy of Sciences, Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qiaoziyue@cnic.cn"
+          },
+          "name": "Ziyue Qiao",
+          "orgs": [
+            "Computer Network Information Center, Chinese Academy of Sciences, Beijing, China",
+            "University of Chinese Academy of Sciences, Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "donghao@cnic.cn"
+          },
+          "name": "Hao Dong",
+          "orgs": [
+            "Computer Network Information Center, Chinese Academy of Sciences, Beijing, China",
+            "University of Chinese Academy of Sciences, Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "duyi@cnic.cn"
+          },
+          "name": "Yi Du",
+          "orgs": [
+            "Computer Network Information Center, Chinese Academy of Sciences, Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zyc@cnic.cn"
+          },
+          "name": "Yuanchun Zhou",
+          "orgs": [
+            "Computer Network Information Center, Chinese Academy of Sciences, Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2102.10826",
+      "date": "2021-02-22T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "venue": "Pacific-Asia Conference on Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2410.03596",
+      "score": 0.25,
+      "title": "SiMilarity-Enhanced Homophily for Multi-View Heterophilous Graph Clustering",
+      "tldr": "[research paper] SMHGC introduces a data-centric, label-free approach to multi-view graph clustering in heterophilous settings by leveraging intrinsic similarity signals—neighbor pattern similarity, node feature similarity, and multi-view global similarity—to implicitly enhance graph homophily without relying on pseudo-labels or graph filters. The framework improves homophily in heterophilous graphs through similarity-based graph construction, enabling robust clustering performance even as heterophilous ratios increase, outperforming state-of-the-art methods across both real and semi-synthetic datasets.",
+      "abstract": "With the increasing prevalence of graph-structured data, multi-view graph clustering has been widely used in various downstream applications. Existing approaches primarily rely on a unified message passing mechanism, which significantly enhances clustering performance. Nevertheless, this mechanism limits its applicability to heterophilous situations, as it is fundamentally predicated on the assumption of homophily, i.e., the connected nodes often belong to the same class. In reality, this assumption does not always hold; a moderately or even mildly homophilous graph is more common than a fully homophilous one due to inevitable heterophilous information in the graph. To address this issue, in this paper, we propose a novel SiMilarity-enhanced Homophily for Multi-view Heterophilous Graph Clustering (SMHGC) approach. By analyzing the relationship between similarity and graph homophily, we propose to enhance the homophily by introducing three similarity terms, i.e., neighbor pattern similarity, node feature similarity, and multi-view global similarity, in a label-free manner. Then, a consensus-based inter- and intra-view fusion paradigm is proposed to fuse the improved homophilous graph from different views and utilize them for clustering. The state-of-the-art experimental results on both multi-view heterophilous and homophilous datasets collectively demonstrate the strong capacity of similarity for unsupervised multi-view heterophilous graph learning. Additionally, the consistent performance across semi-synthetic datasets with varying levels of homophily serves as further evidence of SMHGC's resilience to heterophily.",
+      "authors": [
+        {
+          "misc": {
+            "email": "jianpengc@vt.edu"
+          },
+          "name": "Jianpeng Chen",
+          "orgs": [
+            "Virginia Polytechnic Institute and State University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yawen.ling@outlook.com"
+          },
+          "name": "Yawen Ling",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yazhou.ren@uestc.edu.cn"
+          },
+          "name": "Yazhou Ren",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Zichen.Wen@outlook.com"
+          },
+          "name": "Zichen Wen",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "TianYi-Wu@outlook.com"
+          },
+          "name": "Tianyi Wu",
+          "orgs": [
+            "University of Electronic Science and Technology of China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhangshufei@pjlab.org.cn"
+          },
+          "name": "Shufei Zhang",
+          "orgs": [
+            "Shanghai AI Lab"
+          ]
+        },
+        {
+          "misc": {
+            "email": "lih319@lehigh.edu"
+          },
+          "name": "Lifang He",
+          "orgs": [
+            "Lehigh University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2410.03596",
+      "date": "2024-10-04T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

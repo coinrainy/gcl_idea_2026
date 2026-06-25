@@ -1,0 +1,392 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2505.06282",
+      "score": 0.6,
+      "title": "InfoNCE is a Free Lunch for Semantically guided Graph Contrastive Learning",
+      "tldr": "[research paper] The paper redefines graph contrastive learning (GCL) as a Positive-Unlabeled (PU) learning problem, where semantic similarity replaces augmentation-based sampling as the basis for positive samples. It proposes IFL-GCL, which leverages InfoNCE's representation similarity to extract semantic information and derive a theoretically grounded, bias-corrected InfoNCE loss function—without heuristic sample modification—resulting in up to 9.05% accuracy gains in both in-distribution and out-of-distribution settings across graph pretraining and LLM-enhanced graph tasks.",
+      "abstract": "As an important graph pre-training method, Graph Contrastive Learning (GCL) continues to play a crucial role in the ongoing surge of research on graph foundation models or LLM as enhancer for graphs. Traditional GCL optimizes InfoNCE by using augmentations to define self-supervised tasks, treating augmented pairs as positive samples and others as negative. However, this leads to semantically similar pairs being classified as negative, causing significant sampling bias and limiting performance. In this paper, we argue that GCL is essentially a Positive-Unlabeled (PU) learning problem, where the definition of self-supervised tasks should be semantically guided, i.e., augmented samples with similar semantics are considered positive, while others, with unknown semantics, are treated as unlabeled. From this perspective, the key lies in how to extract semantic information. To achieve this, we propose IFL-GCL, using InfoNCE as a \"free lunch\" to extract semantic information. Specifically, We first prove that under InfoNCE, the representation similarity of node pairs aligns with the probability that the corresponding contrastive sample is positive. Then we redefine the maximum likelihood objective based on the corrected samples, leading to a new InfoNCE loss function. Extensive experiments on both the graph pretraining framework and LLM as an enhancer show significantly improvements of IFL-GCL in both IID and OOD scenarios, achieving up to a 9.05% improvement, validating the effectiveness of semantically guided. Code for IFL-GCL is publicly available at: https://github.com/Camel-Prince/IFL-GCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wangzixu22s@ict.ac.cn"
+          },
+          "name": "Zixu Wang",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "University of Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xubingbing@ict.ac.cn"
+          },
+          "name": "Bingbing Xu",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuanyige20z@ict.ac.cn"
+          },
+          "name": "Yige Yuan",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "University of Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shenhuawei@ict.ac.cn"
+          },
+          "name": "Huawei Shen",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.06282",
+      "date": "2025-05-07T00:00:00",
+      "citation_count": 4,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+      "venue_year": null,
+      "github_url": "https://github.com/Camel-Prince/IFL-GCL."
+    },
+    {
+      "arxiv_id": "2204.04813",
+      "score": 0.5,
+      "title": "Explanation Graph Generation via Pre-trained Language Models: An Empirical Study with Contrastive Learning",
+      "tldr": "[empirical study] Pre-trained language models fail to learn structural and semantic constraints in explanation graph generation, often producing disconnected or semantically incoherent graphs. The authors introduce graph perturbation techniques—node/edge edits—to create synthetic and human-error-based positive and negative graphs, then apply contrastive learning (Max-Margin, InfoNCE) to improve structural validity and commonsense coherence. Human-created errors emerge as the most effective negative samples, and automated generation of human-like semantic errors further boosts model performance across explanation and temporal graph tasks.",
+      "abstract": "Pre-trained sequence-to-sequence language models have led to widespread success in many natural language generation tasks. However, there has been relatively less work on analyzing their ability to generate structured outputs such as graphs. Unlike natural language, graphs have distinct structural and semantic properties in the context of a downstream NLP task, e.g., generating a graph that is connected and acyclic can be attributed to its structural constraints, while the semantics of a graph can refer to how meaningfully an edge represents the relation between two node concepts. In this work, we study pre-trained language models that generate explanation graphs in an end-to-end manner and analyze their ability to learn the structural constraints and semantics of such graphs. We first show that with limited supervision, pre-trained language models often generate graphs that either violate these constraints or are semantically incoherent. Since curating large amount of human-annotated graphs is expensive and tedious, we propose simple yet effective ways of graph perturbations via node and edge edit operations that lead to structurally and semantically positive and negative graphs. Next, we leverage these graphs in different contrastive learning models with Max-Margin and InfoNCE losses. Our methods lead to significant improvements in both structural and semantic accuracy of explanation graphs and also generalize to other similar graph generation tasks. Lastly, we show that human errors are the best negatives for contrastive learning and also that automatically generating more such human-like negative graphs can lead to further improvements. Our code and models are publicly available at https://github.com/swarnaHub/ExplagraphGen",
+      "authors": [
+        {
+          "misc": {
+            "email": "swarna@cs.unc.edu"
+          },
+          "name": "Swarnadeep Saha",
+          "orgs": [
+            "UNC Chapel Hill"
+          ]
+        },
+        {
+          "misc": {
+            "email": "prateek@cs.unc.edu"
+          },
+          "name": "Prateek Yadav",
+          "orgs": [
+            "UNC Chapel Hill"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mbansal@cs.unc.edu"
+          },
+          "name": "Mohit Bansal",
+          "orgs": [
+            "UNC Chapel Hill"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2204.04813",
+      "date": "2022-04-11T00:00:00",
+      "citation_count": 10,
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "venue": "Annual Meeting of the Association for Computational Linguistics",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.08168",
+      "score": 0.4761905,
+      "title": "Exploiting Text Semantics for Few and Zero Shot Node Classification on Text-attributed Graph",
+      "tldr": "[research paper] The paper proposes Text Semantics Augmentation (TSA) to enhance few- and zero-shot node classification on text-attributed graphs (TAGs) by introducing semantic supervision beyond raw node-text pairs. TSA introduces two novel text-based augmentation techniques: positive semantics matching, which retrieves semantically similar texts to align node and text embeddings, and negative semantics contrast, which generates semantically opposite texts via negative prompts to enforce dissimilarity and improve robustness. Experiments on five datasets show TSA consistently outperforms state-of-the-art baselines, achieving average accuracy gains of 4.6% in few-shot and 8.8% in zero-shot settings, demonstrating superior semantic understanding and classification performance.",
+      "abstract": "Text-attributed graph (TAG) provides a text description for each graph node, and few- and zero-shot node classification on TAGs have many applications in fields such as academia and social networks. Existing work utilizes various graph-based augmentation techniques to train the node and text embeddings, while text-based augmentations are largely unexplored. In this paper, we propose Text Semantics Augmentation (TSA) to improve accuracy by introducing more text semantic supervision signals. Specifically, we design two augmentation techniques, i.e., positive semantics matching and negative semantics contrast, to provide more reference texts for each graph node or text description. Positive semantic matching retrieves texts with similar embeddings to match with a graph node. Negative semantic contrast adds a negative prompt to construct a text description with the opposite semantics, which is contrasted with the original node and text. We evaluate TSA on 5 datasets and compare with 13 state-of-the-art baselines. The results show that TSA consistently outperforms all baselines, and its accuracy improvements over the best-performing baseline are usually over 5%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "nai.yxwang@whu.edu.cn"
+          },
+          "name": "Yuxiang Wang",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yanxiaosunny@gmail.com"
+          },
+          "name": "Xiao Yan",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "syjin@whu.edu.cn"
+          },
+          "name": "Shiyu Jin",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xuquanqing.xqq@oceanbase.com"
+          },
+          "name": "Quanqing Xu",
+          "orgs": [
+            "OceanBase"
+          ]
+        },
+        {
+          "misc": {
+            "email": "handc@whu.edu.cn"
+          },
+          "name": "Chuang Hu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yyzhu@whu.edu.cn"
+          },
+          "name": "Yuanyuan Zhu",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "dubo@whu.edu.cn"
+          },
+          "name": "Bo Du",
+          "orgs": [
+            "School of Computer Science, Wuhan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jia.wu@mq.edu.au"
+          },
+          "name": "Jia Wu",
+          "orgs": [
+            "School of Computing, Macquarie University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jiawei.jiang@whu.edu.cn"
+          },
+          "name": "Jiawei Jiang",
+          "orgs": [
+            "School of Computer Science, Wuhan University",
+            "School of Computing, Macquarie University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.08168",
+      "date": "2025-05-13T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2308.12083",
+      "score": 0.33333334,
+      "title": "Counterfactual Graph Augmentation for Consumer Unfairness Mitigation in Recommender Systems",
+      "tldr": "[research paper] This paper introduces a counterfactual graph augmentation method that leverages explainability to mitigate consumer unfairness in recommender systems by dynamically adding user-item edges to a bipartite interaction graph. The approach uses a two-term loss function to minimize demographic disparity in top-k recommendations while preserving utility, where added edges serve both as explanations of unfairness patterns and as actionable mitigation steps. Experiments on real-world datasets show superior fairness-utility trade-offs compared to state-of-the-art methods, with added edges revealing structural biases tied to demographic groups.",
+      "abstract": "In recommendation literature, explainability and fairness are becoming two prominent perspectives to consider. However, prior works have mostly addressed them separately, for instance by explaining to consumers why a certain item was recommended or mitigating disparate impacts in recommendation utility. None of them has leveraged explainability techniques to inform unfairness mitigation. In this paper, we propose an approach that relies on counterfactual explanations to augment the set of user-item interactions, such that using them while inferring recommendations leads to fairer outcomes. Modeling user-item interactions as a bipartite graph, our approach augments the latter by identifying new user-item edges that not only can explain the original unfairness by design, but can also mitigate it. Experiments on two public data sets show that our approach effectively leads to a better trade-off between fairness and recommendation utility compared with state-of-the-art mitigation procedures. We further analyze the characteristics of added edges to highlight key unfairness patterns. Source code available at https://github.com/jackmedda/RS-BGExplainer/tree/cikm2023.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ludovico.boratto@acm.org"
+          },
+          "name": "Ludovico Boratto",
+          "orgs": [
+            "University of Cagliari",
+            "Cagliari, Italy"
+          ]
+        },
+        {
+          "misc": {
+            "email": "francescof@spotify.com"
+          },
+          "name": "Francesco Fabbri",
+          "orgs": [
+            "Spotify",
+            "Barcelona, Spain"
+          ]
+        },
+        {
+          "misc": {
+            "email": "fenu@unica.it"
+          },
+          "name": "Gianni Fenu",
+          "orgs": [
+            "University of Cagliari",
+            "Cagliari, Italy"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mirko.marras@acm.org"
+          },
+          "name": "Mirko Marras",
+          "orgs": [
+            "University of Cagliari",
+            "Cagliari, Italy"
+          ]
+        },
+        {
+          "misc": {
+            "email": "giacomo.medda@unica.it"
+          },
+          "name": "Giacomo Medda",
+          "orgs": [
+            "University of Cagliari",
+            "Cagliari, Italy"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2308.12083",
+      "date": "2023-08-23T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.IR"
+      ],
+      "venue": "International Conference on Information and Knowledge Management",
+      "venue_year": null,
+      "github_url": "https://github.com/jackmedda/RS-BGExplainer"
+    },
+    {
+      "arxiv_id": "2409.05633",
+      "score": 0.25263157,
+      "title": "Enhancing Graph Contrastive Learning with Reliable and Informative Augmentation for Recommendation",
+      "tldr": "[research paper] CoGCL introduces a discrete code-based augmentation framework to enhance graph contrastive learning in recommendation systems by preserving collaborative semantics. It employs a multi-level vector quantizer to map users and items into discrete codes rich in collaborative information, then uses these codes for virtual neighbor augmentation (to expand neighborhood structure) and semantic relevance-based positive sampling (to align semantically similar users/items). This results in contrastive views that maintain reliable and informative interactions, improving positive alignment and mitigating the disruptive effects of random perturbations in existing methods.",
+      "abstract": "Graph neural network(GNN) has been a powerful approach in collaborative filtering(CF) due to its ability to model high-order user-item relationships. Recently, to alleviate the data sparsity and enhance representation learning, many efforts have been conducted to integrate contrastive learning(CL) with GNNs. Despite the promising improvements, the contrastive view generation based on structure and representation perturbations in existing methods potentially disrupts the collaborative information in contrastive views, resulting in limited effectiveness of positive alignment. To overcome this issue, we propose CoGCL, a novel framework that aims to enhance graph contrastive learning by constructing contrastive views with stronger collaborative information via discrete codes. The core idea is to map users and items into discrete codes rich in collaborative information for reliable and informative contrastive view generation. To this end, we initially introduce a multi-level vector quantizer in an end-to-end manner to quantize user and item representations into discrete codes. Based on these discrete codes, we enhance the collaborative information of contrastive views by considering neighborhood structure and semantic relevance respectively. For neighborhood structure, we propose virtual neighbor augmentation by treating discrete codes as virtual neighbors, which expands an observed user-item interaction into multiple edges involving discrete codes. Regarding semantic relevance, we identify similar users/items based on shared discrete codes and interaction targets to generate the semantically relevant view. Through these strategies, we construct contrastive views with stronger collaborative information and develop a triple-view graph contrastive learning approach. Extensive experiments on four public datasets demonstrate the effectiveness of our proposed approach.",
+      "authors": [
+        {
+          "misc": {
+            "email": "bwzheng0324@ruc.edu.cn",
+            "orcid": "0009-0002-3010-7899"
+          },
+          "name": "Bowen Zheng",
+          "orgs": [
+            "Renmin University of China",
+            "Beijing",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "junjie.zhang@ruc.edu.cn"
+          },
+          "name": "Junjie Zhang",
+          "orgs": [
+            "Renmin University of China",
+            "Beijing",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "luhy94@gmail.com"
+          },
+          "name": "Hongyu Lu",
+          "orgs": [
+            "WeChat",
+            "Tencent",
+            "Guangzhou",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "nealcui@tencent.com"
+          },
+          "name": "Yu Chen",
+          "orgs": [
+            "WeChat",
+            "Tencent",
+            "Beijing",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mingchen@tencent.com"
+          },
+          "name": "Ming Chen",
+          "orgs": [
+            "WeChat",
+            "Tencent",
+            "Guangzhou",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "batmanfly@gmail.com",
+            "orcid": "0000-0002-8333-6196"
+          },
+          "name": "Wayne Xin Zhao",
+          "orgs": [
+            "Renmin University of China",
+            "Beijing",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jrwen@ruc.edu.cn",
+            "orcid": "0000-0002-9777-9676"
+          },
+          "name": "Ji-Rong Wen",
+          "orgs": [
+            "Renmin University of China",
+            "Beijing",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2409.05633",
+      "date": "2024-09-09T00:00:00",
+      "citation_count": 10,
+      "categories": [
+        "cs.IR"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/RUCAIBox/CoGCL"
+    }
+  ]
+}

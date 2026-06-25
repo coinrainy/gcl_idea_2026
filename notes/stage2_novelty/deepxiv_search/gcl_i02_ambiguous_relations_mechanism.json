@@ -1,0 +1,238 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2506.05214",
+      "score": 0.5909091,
+      "title": "Mitigating Degree Bias Adaptively with Hard-to-Learn Nodes in Graph Contrastive Learning",
+      "tldr": "[research paper] The paper proposes Hardness Adaptive Reweighted (HAR) contrastive loss to mitigate degree bias in graph contrastive learning by introducing more positive pairs via class-based supervision and adaptively weighting positive and negative samples based on learning hardness—defined as the difficulty of learning a node’s representation due to noisy or sparse neighborhood information. HAR prioritizes hard-to-learn nodes (e.g., low-degree nodes with noisy or imbalanced neighbors) by assigning higher weights, improving representation quality for underrepresented nodes. The method is extended to a semi-supervised setting via SHARP, which uses pseudo-labeling for unlabelled data and demonstrates bounded misclassification risk theoretically, outperforming baselines in both global and degree-level node classification across four datasets with improved class separation in latent space.",
+      "abstract": "Graph Neural Networks (GNNs) often suffer from degree bias in node classification tasks, where prediction performance varies across nodes with different degrees. Several approaches, which adopt Graph Contrastive Learning (GCL), have been proposed to mitigate this bias. However, the limited number of positive pairs and the equal weighting of all positives and negatives in GCL still lead to low-degree nodes acquiring insufficient and noisy information. This paper proposes the Hardness Adaptive Reweighted (HAR) contrastive loss to mitigate degree bias. It adds more positive pairs by leveraging node labels and adaptively weights positive and negative pairs based on their learning hardness. In addition, we develop an experimental framework named SHARP to extend HAR to a broader range of scenarios. Both our theoretical analysis and experiments validate the effectiveness of SHARP. The experimental results across four datasets show that SHARP achieves better performance against baselines at both global and degree levels.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ym21669@bristol.ac.uk"
+          },
+          "name": "Jingyu Hu",
+          "orgs": [
+            "University of Bristol"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongbo.bo@bristol.ac.uk"
+          },
+          "name": "Hongbo Bo",
+          "orgs": [
+            "University of Bristol"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jun.hong@uwe.ac.uk"
+          },
+          "name": "Jun Hong",
+          "orgs": [
+            "University of the West of England"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaowei.liu@bristol.ac.uk"
+          },
+          "name": "Xiaowei Liu",
+          "orgs": [
+            "University of Bristol"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiru.liu@bristol.ac.uk"
+          },
+          "name": "Weiru Liu",
+          "orgs": [
+            "University of Bristol"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2506.05214",
+      "date": "2025-06-05T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2006.05582",
+      "score": 0.5,
+      "title": "Contrastive Multi-View Representation Learning on Graphs",
+      "tldr": "[research paper] The paper proposes a self-supervised contrastive learning framework for graph representations by contrasting structural views derived from first-order neighbors and graph diffusion, demonstrating that increasing view count beyond two or using multi-scale encodings does not improve performance. It achieves state-of-the-art results on 8 out of 8 node and graph classification benchmarks via a simple architecture without specialized encoders, outperforming prior contrastive methods and supervised baselines on 4 benchmarks, with key findings showing that graph readout outperforms hierarchical pooling and that regularization or normalization degrades performance.",
+      "abstract": "We introduce a self-supervised approach for learning node and graph level representations by contrasting structural views of graphs. We show that unlike visual representation learning, increasing the number of views to more than two or contrasting multi-scale encodings do not improve performance, and the best performance is achieved by contrasting encodings from first-order neighbors and a graph diffusion. We achieve new state-of-the-art results in self-supervised learning on 8 out of 8 node and graph classification benchmarks under the linear evaluation protocol. For example, on Cora (node) and Reddit-Binary (graph) classification benchmarks, we achieve 86.8% and 84.5% accuracy, which are 5.5% and 2.4% relative improvements over previous state-of-the-art. When compared to supervised baselines, our approach outperforms them in 4 out of 8 benchmarks. Source code is released at: https://github.com/kavehhassani/mvgrl",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2006.05582",
+      "date": "2020-06-10T00:00:00",
+      "citation_count": 1664,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2110.02027",
+      "score": 0.44444445,
+      "title": "ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning",
+      "tldr": "[research paper] Graph Contrastive Learning (GCL) suffers from poor performance when applying existing hard negative mining techniques due to the prevalence of false negatives—samples that are semantically similar to anchors but are incorrectly classified as negatives. The root cause lies in the bimodal distribution of negative similarities in GCL, which arises from GNN message passing, leading to sampling bias. ProGCL addresses this by modeling negative hardness using a two-component beta mixture model to estimate the probability of a negative being true (i.e., not sharing the same class), combining this probability with similarity to form a more reliable hardness metric. Two schemes—ProGCL-weight and ProGCL-mix—are proposed to leverage this improved measure, resulting in consistent performance gains, state-of-the-art results on unsupervised benchmarks, and superior performance compared to supervised baselines.",
+      "abstract": "Contrastive Learning (CL) has emerged as a dominant technique for unsupervised representation learning which embeds augmented versions of the anchor close to each other (positive samples) and pushes the embeddings of other samples (negatives) apart. As revealed in recent studies, CL can benefit from hard negatives (negatives that are most similar to the anchor). However, we observe limited benefits when we adopt existing hard negative mining techniques of other domains in Graph Contrastive Learning (GCL). We perform both experimental and theoretical analysis on this phenomenon and find it can be attributed to the message passing of Graph Neural Networks (GNNs). Unlike CL in other domains, most hard negatives are potentially false negatives (negatives that share the same class with the anchor) if they are selected merely according to the similarities between anchor and themselves, which will undesirably push away the samples of the same class. To remedy this deficiency, we propose an effective method, dubbed \\\\textbf{ProGCL}, to estimate the probability of a negative being true one, which constitutes a more suitable measure for negatives' hardness together with similarity. Additionally, we devise two schemes (i.e., \\\\textbf{ProGCL-weight} and \\\\textbf{ProGCL-mix}) to boost the performance of GCL. Extensive experiments demonstrate that ProGCL brings notable and consistent improvements over base GCL methods and yields multiple state-of-the-art results on several unsupervised benchmarks or even exceeds the performance of supervised ones. Also, ProGCL is readily pluggable into various negatives-based GCL methods for performance improvement. We release the code at \\\\textcolor{magenta}{\\\\url{https://github.com/junxia97/ProGCL}}.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jun Xia",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Lirong Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ge Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jintao Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Stan Z. Li",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2110.02027",
+      "date": "2021-10-05T00:00:00",
+      "citation_count": 174,
+      "categories": [
+        "cs.AI"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": "https://github.com/junxia97/ProGCL."
+    },
+    {
+      "arxiv_id": "2301.13340",
+      "score": 0.35897437,
+      "title": "Affinity Uncertainty-based Hard Negative Mining in Graph Contrastive Learning",
+      "tldr": "[research paper] AUGCL introduces a data-driven uncertainty estimation framework that evaluates the hardness of negative instances in graph contrastive learning by modeling collective affinity information between anchors and negatives. Instead of relying on predefined similarity thresholds or bimodal distribution priors, it learns an uncertainty score per negative instance relative to an anchor, where high uncertainty indicates a hard negative. This uncertainty is directly incorporated into the contrastive loss as an adaptive weighting term, theoretically equivalent to a triplet loss with margin proportional to uncertainty, enabling robust feature learning on non-i.i.d. graph data with improved performance and adversarial robustness across 10 datasets.",
+      "abstract": "Hard negative mining has shown effective in enhancing self-supervised contrastive learning (CL) on diverse data types, including graph CL (GCL). The existing hardness-aware CL methods typically treat negative instances that are most similar to the anchor instance as hard negatives, which helps improve the CL performance, especially on image data. However, this approach often fails to identify the hard negatives but leads to many false negatives on graph data. This is mainly due to that the learned graph representations are not sufficiently discriminative due to oversmooth representations and/or non-independent and identically distributed (non-i.i.d.) issues in graph data. To tackle this problem, this article proposes a novel approach that builds a discriminative model on collective affinity information (i.e., two sets of pairwise affinities between the negative instances and the anchor instance) to mine hard negatives in GCL. In particular, the proposed approach evaluates how confident/uncertain the discriminative model is about the affinity of each negative instance to an anchor instance to determine its hardness weight relative to the anchor instance. This uncertainty information is then incorporated into the existing GCL loss functions via a weighting term to enhance their performance. The enhanced GCL is theoretically grounded that the resulting GCL loss is equivalent to a triplet loss with an adaptive margin being exponentially proportional to the learned uncertainty of each negative instance. Extensive experiments on ten graph datasets show that our approach does the following: 1) consistently enhances different state-of-the-art (SOTA) GCL methods in both graph and node classification tasks and 2) significantly improves their robustness against adversarial attacks. Code is available at https://github.com/mala-lab/AUGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "Chaoxi.Niu@student.uts.edu.au"
+          },
+          "name": "Chaoxi Niu",
+          "orgs": [
+            "Australian Artificial Intelligence Institute",
+            "University of Technology Sydney",
+            "Sydney, NSW 2007",
+            "Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "pangguansong@gmail.com"
+          },
+          "name": "Guansong Pang",
+          "orgs": [
+            "School of Computing and Information Systems",
+            "Singapore Management University",
+            "178902",
+            "Singapore"
+          ]
+        },
+        {
+          "misc": {
+            "email": "Ling.Chen@uts.edu.au"
+          },
+          "name": "Ling Chen",
+          "orgs": [
+            "Australian Artificial Intelligence Institute",
+            "University of Technology Sydney",
+            "Sydney, NSW 2007",
+            "Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2301.13340",
+      "date": "2023-01-31T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+      "venue_year": null,
+      "github_url": "https://github.com/mala-lab/AUGCL"
+    },
+    {
+      "arxiv_id": "2410.20310",
+      "score": 0.25,
+      "title": "ANOMIX: A Simple yet Effective Hard Negative Generation via Mixing for Graph Anomaly Detection",
+      "tldr": "[research paper] ANOMIX introduces ANOMIX-M, the first graph mixing method specifically designed for graph anomaly detection (GAD), by generating hard negatives through label-guided mixing of normal and abnormal subgraphs. The method leverages node- and subgraph-level contrasts to enhance anomaly discrimination, achieving up to 5.49% higher AUC and 1.76× faster training while reducing sample requirements by nearly 80% through effective hard negative synthesis that preserves structural and feature-level distinctions critical for detecting rare anomalies.",
+      "abstract": "Graph contrastive learning (GCL) generally requires a large number of samples. The one of the effective ways to reduce the number of samples is using hard negatives (e.g., Mixup). Designing mixing-based approach for GAD can be difficult due to imbalanced data or limited number of anomalies. We propose ANOMIX, a framework that consists of a novel graph mixing approach, ANOMIX-M, and multi-level contrasts for GAD. ANOMIX-M can effectively mix abnormality and normality from input graph to generate hard negatives, which are important for efficient GCL. ANOMIX is (a) A first mixing approach: firstly attempting graph mixing to generate hard negatives for GAD task and node- and subgraph-level contrasts to distinguish underlying anomalies. (b) Accurate: winning the highest AUC, up to 5.49% higher and 1.76% faster. (c) Effective: reducing the number of samples nearly 80% in GCL. Code is available at https://github.com/missinghwan/ANOMIX.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Hwan Kim",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Junghoon Kim",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Sungsu Lim",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2410.20310",
+      "date": "2024-10-27T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": "https://github.com/missinghwan/ANOMIX."
+    }
+  ]
+}

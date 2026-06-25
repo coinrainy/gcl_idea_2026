@@ -1,0 +1,262 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2211.07719",
+      "score": 0.5,
+      "title": "(When) Are Contrastive Explanations of Reinforcement Learning Helpful?",
+      "tldr": "[empirical user study] A user study reveals that complete explanations of reinforcement learning policies are generally more effective than contrastive explanations—especially when they are the same size or smaller—suggesting that contrastive explanations do not inherently reduce cognitive load or improve understanding. The findings indicate that contrastive explanations only offer marginal benefits when significantly shorter, and that the effectiveness of policy explanations depends more on comprehensibility and completeness than on contrastive framing.",
+      "abstract": "Global explanations of a reinforcement learning (RL) agent's expected behavior can make it safer to deploy. However, such explanations are often difficult to understand because of the complicated nature of many RL policies. Effective human explanations are often contrastive, referencing a known contrast (policy) to reduce redundancy. At the same time, these explanations also require the additional effort of referencing that contrast when evaluating an explanation. We conduct a user study to understand whether and when contrastive explanations might be preferable to complete explanations that do not require referencing a contrast. We find that complete explanations are generally more effective when they are the same size or smaller than a contrastive explanation of the same policy, and no worse when they are larger. This suggests that contrastive explanations are not sufficient to solve the problem of effectively explaining reinforcement learning policies, and require additional careful study for use in this context.",
+      "authors": [
+        {
+          "misc": {
+            "email": "sanjana_narayanan@college.harvard.edu"
+          },
+          "name": "Sanjana Narayanan",
+          "orgs": [
+            "Harvard University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "isaaclage@g.harvard.edu"
+          },
+          "name": "Isaac Lage",
+          "orgs": [
+            "Harvard University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "finale@seas.harvard.edu"
+          },
+          "name": "Finale Doshi-Velez",
+          "orgs": [
+            "Harvard University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2211.07719",
+      "date": "2022-11-14T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG",
+        "cs.HC"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2512.15027",
+      "score": 0.5,
+      "title": "Trustworthy Neighborhoods Mining: Homophily-Aware Neutral Contrastive Learning for Graph Clustering",
+      "tldr": "[research paper] NeuCGC introduces neutral pairs—weighted positive sample pairs in contrastive learning—that dynamically adapt to a graph's homophily level, enabling robust neighborhood mining in both homophilic and heterophilic graphs. The method combines an adaptive neutral contrastive alignment loss to adjust positive/negative pair weights based on homophily estimation and a feature consistency module that leverages reliable neighborhood information from high-confidence graphs to stabilize node representation learning, achieving a 13% average ARI improvement over baselines in heterogeneous datasets.",
+      "abstract": "Recently, neighbor-based contrastive learning has been introduced to effectively exploit neighborhood information for clustering. However, these methods rely on the homophily assumption-that connected nodes share similar class labels and should therefore be close in feature space-which fails to account for the varying homophily levels in real-world graphs. As a result, applying contrastive learning to low-homophily graphs may lead to indistinguishable node representations due to unreliable neighborhood information, making it challenging to identify trustworthy neighborhoods with varying homophily levels in graph clustering. To tackle this, we introduce a novel neighborhood Neutral Contrastive Graph Clustering method, NeuCGC, that extends traditional contrastive learning by incorporating neutral pairs-node pairs treated as weighted positive pairs, rather than strictly positive or negative. These neutral pairs are dynamically adjusted based on the graph's homophily level, enabling a more flexible and robust learning process. Leveraging neutral pairs in contrastive learning, our method incorporates two key components: (1) an adaptive contrastive neighborhood distribution alignment that adjusts based on the homophily level of the given attribute graph, ensuring effective alignment of neighborhood distributions, and (2) a contrastive neighborhood node feature consistency learning mechanism that leverages reliable neighborhood information from high-confidence graphs to learn robust node representations, mitigating the adverse effects of varying homophily levels and effectively exploiting highly trustworthy neighborhood information. Experimental results demonstrate the effectiveness and robustness of our approach, outperforming other state-of-the-art graph clustering methods. Our code is available at https://github.com/THPengL/NeuCGC.",
+      "authors": [
+        {
+          "misc": {
+            "email": "23lpeng@stu.edu.cn"
+          },
+          "name": "Liang Peng",
+          "orgs": [
+            "Department of Computer Science, Shantou University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "22yxye2@stu.edu.cn"
+          },
+          "name": "Yixuan Ye",
+          "orgs": [
+            "Department of Computer Science, Shantou University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chengliu10@gmail.com"
+          },
+          "name": "Cheng Liu",
+          "orgs": [
+            "College of Computer Science and Technology, Huaqiao University",
+            "Department of Computer Science, Shantou University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hjche123@swu.edu.cn"
+          },
+          "name": "Hangjun Che",
+          "orgs": [
+            "Chongqing Key Laboratory of Nonlinear Circuits and Intelligent Information Processing",
+            "College of Electronic and Information Engineering, Southwest University, Chongqing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "man-fai.leung@aru.ac.uk"
+          },
+          "name": "Man-Fai Leung",
+          "orgs": [
+            "School of Computing and Information Science, Faculty of Science and Engineering, Anglia Ruskin University, Cambridge, U.K."
+          ]
+        },
+        {
+          "misc": {
+            "email": "cswusi@scut.edu.cn"
+          },
+          "name": "Si Wu",
+          "orgs": [
+            "School of Computer Science and Engineering, South China University of Technology"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cshswong@cityu.edu.hk"
+          },
+          "name": "Hau-San Wong",
+          "orgs": [
+            "Department of Computer Science, City University of Hong Kong"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2512.15027",
+      "date": "2025-12-17T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "cs.SI"
+      ],
+      "venue": "IEEE Transactions on Knowledge and Data Engineering",
+      "venue_year": null,
+      "github_url": "https://github.com/THPengL/NeuCGC"
+    },
+    {
+      "arxiv_id": "2511.16778",
+      "score": 0.33333334,
+      "title": "GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs",
+      "tldr": "[research paper] GCL-OT introduces optimal transport (OT)-based graph contrastive learning for text-attributed graphs (TAGs) to address multi-granular heterophily—partial, complete, and latent homophily—by enabling flexible, bidirectional alignment between structural and textual representations. It proposes three tailored mechanisms: (1) RealSoftMax for partial heterophily to emphasize key word-neighbor interactions, (2) a prompt-based filter to exclude irrelevant noise in complete heterophily, and (3) OT-guided soft supervision to discover latent semantic neighbors. Theoretical analysis shows improved mutual information bounds and reduced Bayes error, with empirical validation on nine benchmarks confirming superior performance over state-of-the-art methods in both homophilic and heterophilic settings.",
+      "abstract": "Recently, structure-text contrastive learning has shown promising performance on text-attributed graphs by leveraging the complementary strengths of graph neural networks and language models. However, existing methods typically rely on homophily assumptions in similarity estimation and hard optimization objectives, which limit their applicability to heterophilic graphs. Although existing methods can mitigate heterophily through structural adjustments or neighbor aggregation, they usually treat textual embeddings as static targets, leading to suboptimal alignment. In this work, we identify the multi-granular heterophily in text-attributed graphs, including complete heterophily, partial heterophily, and latent homophily, which makes structure-text alignment particularly challenging due to mixed, noisy, and missing semantic correlations. To achieve flexible and bidirectional alignment, we propose GCL-OT, a novel graph contrastive learning framework with optimal transport, equipped with tailored mechanisms for each type of heterophily. Specifically, for partial heterophily, we design a RealSoftMax-based similarity estimator to emphasize key neighbor-word interactions while easing background noise. For complete heterophily, we introduce a prompt-based filter that adaptively excludes irrelevant noise during optimal transport alignment. Furthermore, we incorporate OT-guided soft supervision to uncover potential neighbors with similar semantics, enhancing the learning of latent homophily. Theoretical analysis shows that GCL-OT can improve the mutual information bound and Bayes error guarantees. Extensive experiments on nine benchmarks show that GCL-OT consistently outperforms state-of-the-art methods, verifying its effectiveness and robustness.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yating Ren",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yikun Ban",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Huobin Tan",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2511.16778",
+      "date": "2025-11-20T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.09614",
+      "score": 0.33333334,
+      "title": "HomoGCL: Rethinking Homophily in Graph Contrastive Learning",
+      "tldr": "[research paper] HomoGCL challenges the necessity of data augmentation in graph contrastive learning by identifying homophily—'like attracts like'—as a fundamental inductive bias in real-world graphs. It proposes a model-agnostic framework that explicitly expands positive pairs using neighbor nodes weighted by neighbor-specific significance, introducing a stricter mutual information lower bound and enabling plug-and-play integration with existing GCL methods. Experiments across six datasets show consistent performance gains, demonstrating that homophily alone can drive effective representation learning without augmentation.",
+      "abstract": "Contrastive learning (CL) has become the de-facto learning paradigm in self-supervised learning on graphs, which generally follows the \"augmenting-contrasting\" learning scheme. However, we observe that unlike CL in computer vision domain, CL in graph domain performs decently even without augmentation. We conduct a systematic analysis of this phenomenon and argue that homophily, i.e., the principle that \"like attracts like\", plays a key role in the success of graph CL. Inspired to leverage this property explicitly, we propose HomoGCL, a model-agnostic framework to expand the positive set using neighbor nodes with neighbor-specific significances. Theoretically, HomoGCL introduces a stricter lower bound of the mutual information between raw node features and node embeddings in augmented views. Furthermore, HomoGCL can be combined with existing graph CL models in a plug-and-play way with light extra computational overhead. Extensive experiments demonstrate that HomoGCL yields multiple state-of-the-art results across six public datasets and consistently brings notable performance improvements when applied to various graph CL methods. Code is avilable at https://github.com/wenzhilics/HomoGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "liwzh63@mail2.sysu.edu.cn"
+          },
+          "name": "Wen-Zhi Li",
+          "orgs": [
+            "CSE, Sun Yat-sen University, Guangzhou, China",
+            "AI Thrust, HKUST (GZ), Guangzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changdongwang@hotmail.com"
+          },
+          "name": "Chang-Dong Wang",
+          "orgs": [
+            "CSE, Sun Yat-sen University, Guangzhou, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xionghui@ust.hk"
+          },
+          "name": "Hui Xiong",
+          "orgs": [
+            "AI Thrust, HKUST (GZ), Guangzhou, China",
+            "CSE, HKUST, Hong Kong, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "stsljh@mail.sysu.edu.cn"
+          },
+          "name": "Jian-Huang Lai",
+          "orgs": [
+            "CSE, Sun Yat-sen University, Guangzhou, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.09614",
+      "date": "2023-06-16T00:00:00",
+      "citation_count": 52,
+      "categories": [
+        "cs.LG",
+        "cs.SI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/wenzhilics/HomoGCL"
+    },
+    {
+      "arxiv_id": "2303.06344",
+      "score": 0.2909091,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

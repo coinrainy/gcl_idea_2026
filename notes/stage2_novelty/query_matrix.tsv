@@ -1,0 +1,46 @@
+idea	claim	formulation	query
+GCL-I03	objective_boundary	technical	graph masked modeling contrastive learning objective regime node classification
+GCL-I03	objective_boundary	closest_work	GraphMAE GRACE GCA BGRL identical evaluator node classification
+GCL-I03	objective_boundary	mechanism	feature label predictability edge homophily predicts masked graph modeling vs contrastive learning
+GCL-I03	protocol_alignment	technical	protocol aligned graph self-supervised learning frozen evaluator split seed benchmark
+GCL-I03	protocol_alignment	closest_work	GraphMAE2 MaskGAE GCL same backbone same split linear probing
+GCL-I03	protocol_alignment	mechanism	graph SSL evaluator bias split protocol objective comparison
+GCL-I03	regime_selector	technical	graph regime selector masked autoencoder contrastive learning node classification
+GCL-I03	regime_selector	closest_work	when does GraphMAE outperform graph contrastive learning
+GCL-I03	regime_selector	mechanism	reconstruction difficulty alignment uniformity predicts graph SSL performance
+GCL-I02	negative_boundary	technical	regime conditioned false negative graph contrastive learning homophily heterophily
+GCL-I02	negative_boundary	closest_work	ProGCL false negative homophily heterophily hard negative graph contrastive learning
+GCL-I02	negative_boundary	mechanism	feature similarity structural role similarity harmful negatives graph contrastive learning
+GCL-I02	ambiguous_relations	technical	ambiguous negative samples prototype separation graph contrastive learning
+GCL-I02	ambiguous_relations	closest_work	negative metric learning counterfactual hard negative samples graph contrastive learning
+GCL-I02	ambiguous_relations	mechanism	when hard negatives hurt graph contrastive learning node classification
+GCL-I02	validation_audit	technical	validation label agreement audit false negatives graph contrastive learning
+GCL-I02	validation_audit	closest_work	ProGCL beta mixture false negative validation analysis
+GCL-I02	validation_audit	mechanism	local homophily proxy false negative detection graph neural networks
+GCL-I01	positive_validity	technical	semantic positive pair validity graph contrastive learning node classification
+GCL-I01	positive_validity	closest_work	GCA AFGRL G-Censor semantic positive graph contrastive learning
+GCL-I01	positive_validity	mechanism	masked latent context predicts positive augmentation validity graphs
+GCL-I01	failed_views	technical	graph augmentation semantic consistency audit positive pairs
+GCL-I01	failed_views	closest_work	task oriented counterfactual views graph contrastive learning positive
+GCL-I01	failed_views	mechanism	structural consistency feature stability positive pair graph SSL
+GCL-I01	alignment_constraint	technical	InfoNCE alignment semantic validity positive graph augmentation
+GCL-I01	alignment_constraint	closest_work	GRACE GCA AFGRL positive pair semantic consistency
+GCL-I01	alignment_constraint	mechanism	alignment uniformity false positives graph contrastive learning
+GCL-I04	heterophily_types	technical	heterophily type aware graph contrastive learning signed relation
+GCL-I04	heterophily_types	closest_work	HLCL graph filters heterophily SPGCL signed relation contrast
+GCL-I04	heterophily_types	mechanism	label heterophily feature heterophily role heterophily contrastive learning
+GCL-I04	signed_relations	technical	signed multi relation contrastive learning heterophilic graphs
+GCL-I04	signed_relations	closest_work	directed graph contrastive learning heterophily high low pass filters
+GCL-I04	signed_relations	mechanism	role equivalent nodes prototype alignment heterophily graph SSL
+GCL-I04	context_prediction	technical	heterophilic complement relation masked context prediction graph SSL
+GCL-I04	context_prediction	closest_work	GraphACL DSSL HGRL heterophily graph self-supervised learning
+GCL-I04	context_prediction	mechanism	when not to align neighbors heterophily contrastive learning
+GCL-I05	failure_as_signal	technical	positive pair failure masked counter evidence graph contrastive learning
+GCL-I05	failure_as_signal	closest_work	GCA GraphMAE G-Censor failed augmentations masked graph modeling
+GCL-I05	failure_as_signal	mechanism	bad positive views predict label relevant context graph SSL
+GCL-I05	failure_driven_masking	technical	failure driven masking graph self supervised learning augmentation failure
+GCL-I05	failure_driven_masking	closest_work	GraphMAE2 latent prediction adaptive augmentation graph contrastive learning
+GCL-I05	failure_driven_masking	mechanism	view consistency masked latent prediction graph contrastive learning
+GCL-I05	counter_evidence	technical	counter evidence graph contrastive learning masked modeling
+GCL-I05	counter_evidence	closest_work	task oriented counterfactual graph views masked autoencoder
+GCL-I05	counter_evidence	mechanism	learn from failed augmentations self supervised graph representation

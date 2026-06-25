@@ -1,0 +1,310 @@
+notes/DEEPXIV_TARGETED_SEARCH.md:12:| graph contrastive learning false negatives | Negative Metric Learning for Graphs (`2505.10307`), counterfactual hard negatives (`2207.00148`), graph ranking CL (`2310.14525`) | Extend G2 risk list; do not claim generic hard-negative novelty. |
+notes/DEEPXIV_TARGETED_SEARCH.md:13:| graph contrastive learning positive samples | node similarity positives (`2208.06743`), counterfactual hard negatives (`2207.00148`), implicit mechanisms (`2311.02687`), pair-wise augmentation (`2402.10468`), SPGCL-related positive sampling (`2206.11959`) | Keep G1/G2 high risk; SPGCL remains the strongest recent blocker. |
+notes/DEEPXIV_TARGETED_SEARCH.md:16:| graph contrastive learning heterophily | HLCL (`2303.06344`), robust GCL/GROC (`2102.13085`), heterophilic hypergraph CL (`2511.18783`), homophily-aware heterogeneous GCL (`2501.08538`), GCL-OT (`2511.16778`) | Keep G5/G2 high risk; add GCL-OT and hypergraph items as Stage 2 checks if heterophily is selected. |
+notes/DEEPXIV_TARGETED_SEARCH.md:28:| ProGCL (`2110.02027`) | brief/head/Experiments available | false-negative-aware hard negative mining confirmed | exact split/seed/test@best details |
+notes/DEEPXIV_TARGETED_SEARCH.md:35:| HLCL (`2303.06344`) | brief/head/Experiments available | heterophily graph-filter risk confirmed | acceptance status, exact split/evaluator/seeds |
+notes/DEEPXIV_TARGETED_SEARCH.md:37:| SPGCL (`2606.10284`) | brief/head/Experiments/Appendix available | homophily/heterophily node classification, frozen linear classifier, ten repeats, ablation table | exact saved splits, seed identities, test@best |
+notes/CLOSEST_WORK_DELTA_TABLE.md:8:| G2 false negatives under homophily/heterophily | ProGCL, HLCL, SPGCL, homophily-aware heterogeneous GCL | false-negative-aware hard mining; graph-filter heterophily views; positive sampling | unified regime-conditioned false negative/positive boundary | "hard negative reweighting solves GCL negatives" | negative validity may depend on homophily/feature/text regime | separate from ProGCL by predicting when negative mining is harmful/helpful | validation-only false-negative estimates vs label agreement by homophily bin | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:11:| G5 heterophily boundary conditions | HLCL, directed GCL, supervised heterophily GNNs | filters/augmentation for heterophily and directed structure | boundaries of heterophily types and failure modes | "add high-pass/low-pass filter for heterophily" | different heterophily types may require different SSL assumptions | taxonomy + evidence of failure not explained by HLCL filters | evaluate same SSL objectives across Actor/Chameleon/Squirrel/Penn94/Twitch/Genius with fixed splits | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:13:| G7 worst-group robustness | HLCL, robust GNNs, GroupDRO-style reporting | improves some heterophily/noise settings | worst-group reporting for GCL claims | "mean accuracy proves robustness" | robust GCL may fail on minority graph regimes | define groups without test leakage and report worst-bin effects | bin by homophily/noise/degree/label scarcity and report worst-bin accuracy | MEDIUM |
+notes/CLOSEST_WORK_DELTA_TABLE.md:25:- G2: generic negative reweighting is more strongly blocked by ProGCL, SPGCL, negative metric learning and counterfactual hard negatives.
+notes/CLOSEST_WORK_DELTA_TABLE.md:27:- G5: heterophily claims must separate from HLCL, GCL-OT, GraphACL/DSSL/HGRL-style baselines and SPGCL heterophily tables.
+notes/CORE_CLOSEST_WORK_READING.md:57:## ProGCL
+notes/CORE_CLOSEST_WORK_READING.md:59:- Paper: ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/CORE_CLOSEST_WORK_READING.md:63:- Core problem: hard negative mining can select false negatives
+notes/CORE_CLOSEST_WORK_READING.md:64:- Core mechanism: estimate true/false negative distributions and reweight/mix negatives
+notes/CORE_CLOSEST_WORK_READING.md:65:- Strategy: probability-aware hard negatives
+notes/CORE_CLOSEST_WORK_READING.md:80:- Remaining gap: regime-conditioned false negatives and semantic positives
+notes/CORE_CLOSEST_WORK_READING.md:267:- Paper: Graph Contrastive Learning under Heterophily via Graph Filters
+notes/CORE_CLOSEST_WORK_READING.md:270:- Main task: homophily and heterophily node classification
+notes/CORE_CLOSEST_WORK_READING.md:273:- Strategy: heterophily-aware positives/views
+notes/CORE_CLOSEST_WORK_READING.md:282:- Main result: reported gains under heterophily
+notes/CORE_CLOSEST_WORK_READING.md:285:- Observed limitations: boundary conditions of heterophily types remain open
+notes/CORE_CLOSEST_WORK_READING.md:286:- Closest-work risk: very high for heterophily-aware GCL
+notes/CORE_CLOSEST_WORK_READING.md:374:- Main task: node classification across homophily/heterophily
+notes/CORE_CLOSEST_WORK_READING.md:381:- Split protocol: uses geom-gcn splits for some heterophily datasets; other exact splits UNCLEAR
+notes/CORE_CLOSEST_WORK_READING.md:401:- Core problem: MLP encoder capacity and hard negative quality
+notes/CORE_CLOSEST_WORK_READING.md:402:- Core mechanism: KAN encoder and coefficient-derived hard negatives
+notes/CORE_CLOSEST_WORK_READING.md:403:- Strategy: hard negatives
+notes/CORE_CLOSEST_WORK_READING.md:404:- Augmentation: semantically meaningful hard negative construction
+notes/CORE_CLOSEST_WORK_READING.md:413:- Ablations: KAN and hard negative components
+notes/CORE_CLOSEST_WORK_READING.md:417:- Blocked idea: KAN + hard negatives as main novelty
+notes/CORE_CLOSEST_WORK_READING.md:419:- Need further reading: no unless Stage 2 targets hard negatives
+notes/CORE_CLOSEST_WORK_READING.md:431:- SPGCL: uses homophily and heterophily node classification, standard GCN backbone for SSL baselines, frozen linear classifier, ten repeats, and ablations for energy-aware propagation / energy-guided positive sampling. Exact saved splits and seed identities remain unclear.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:12:| Paper | Datasets | Split | Planetoid public? | 1:1:8? | Wiki-CS? | OGB? | Heterophily fixed? | Evaluator | Frozen/fine-tune | Seeds | Early stopping | test@best/final | Code | Class | Must rerun / missing |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:16:| ProGCL | Amazon, Wiki-CS, Coauthor, Reddit, Flickr, ogbn-Arxiv | follows GCA/BGRL; OGB for ogbn-Arxiv | no | yes for some | likely/follows GCA | official for ogbn-Arxiv | no | logistic classifier | frozen | 20 random for reproduced baselines | UNCLEAR | UNCLEAR | yes | C/D | rerun; exact seeds and early stopping unclear |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:24:| HLCL | Cora/CiteSeer/PubMed/Actor/Chameleon/Squirrel/Penn94/Twitch/Genius | exact split UNCLEAR | UNCLEAR | UNCLEAR | no | no | likely benchmark fixed for heterophily, but not confirmed | GCL/classifier UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | D | need exact splits/evaluator |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:28:| SPGCL | homophily + heterophily node datasets | geom-gcn splits for some; others UNCLEAR | UNCLEAR | UNCLEAR | no | no | yes for some heterophily | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | D | recent preprint; exact protocol needed |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:37:GRACE, GCA, ProGCL, BGRL, AFGRL, GraphMAE/GraphMAE2 and HLCL, depending on selected Stage 2 gap.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:49:| SPGCL | Frozen linear classifier, ten repeats, homophily/heterophily tables, ablations | remains D/C because exact split files, seed identities and test@best are not confirmed |
+notes/GCL_LITERATURE_MAP.md:8:- arXiv: 成功；用于核心 GCL、masked graph、LLM/TAG、heterophily 查询。
+notes/GCL_LITERATURE_MAP.md:23:| False negatives | ProGCL | 2021/2022 | ICML, peer-reviewed | yes | node/graph classification | probability-aware hard negative mining | directly relevant to node contrast | closest false-negative risk | any negative mining idea must beat or differ from ProGCL |
+notes/GCL_LITERATURE_MAP.md:31:| Heterophily | HLCL: Graph CL under Heterophily via Graph Filters | 2023 | ICLR submission / arXiv, status unclear from search | unclear | node classification | high/low-pass graph filters | directly targeted for heterophily | closest heterophily-aware GCL | graph filters may cover spectral heterophily gap |
+notes/GCL_LITERATURE_MAP.md:32:| Heterogeneous/false negative | Homophily-aware Heterogeneous GCL | 2025 | arXiv preprint | unclear | heterogeneous node representation | homophily-aware false-negative mitigation | relevant but heterogeneous | recent parallel risk | may overlap false-negative + homophily axis |
+notes/GCL_LITERATURE_MAP.md:38:| Recent hard negative | Khan-GCL | 2025 | arXiv preprint | unclear | graph/node tasks unclear | KAN + semantic hard negatives | relevant but not enough protocol clarity | recent parallel hard-negative risk | recent arXiv, not peer-confirmed |
+notes/GCL_LITERATURE_MAP.md:46:4. Positive / negative construction：ProGCL、SPGCL、CM-GCL、counterfactual views 是高风险 closest works。
+notes/GCL_LITERATURE_MAP.md:47:5. False positive / false negative：false negative 已有 ProGCL；false positive、semantic-positive 仍缺系统协议。
+notes/GCL_LITERATURE_MAP.md:51:9. Homophily / heterophily：HLCL 是核心风险；需要按 graph regime 分析而非只加 spectral filter。
+notes/GCL_LITERATURE_MAP.md:64:| HLCL | 2023 | Submitted to ICLR 2023 / UNCLEAR acceptance | https://openreview.net/forum?id=NzcUQuhEGef | unclear | reviews not extracted | heterophily-aware GCL | high |
+notes/GCL_LITERATURE_MAP.md:71:- Any positive/negative construction claim must be separated from ProGCL, SPGCL, CM-GCL, and G-Censor.
+notes/GCL_LITERATURE_MAP.md:72:- Any heterophily claim must be separated from HLCL and supervised heterophily GNN baselines.
+notes/GCL_BENCHMARK_PROTOCOLS.md:13:| Paper | Datasets | Split protocol | Planetoid public | 1:1:8 | Wiki-CS | OGB | Heterophily fixed split | Metric | test@best/final | Early stopping | Evaluator | Seeds | Report | Baseline evaluator same? | Comparable under our protocol |
+notes/GCL_BENCHMARK_PROTOCOLS.md:19:| ProGCL | node + graph benchmarks | UNCLEAR | likely standard citation splits | UNCLEAR | no | maybe no | no | Accuracy | UNCLEAR | UNCLEAR | GCL evaluator likely | UNCLEAR | mean±std likely | yes likely | Protocol unclear; closest baseline to reproduce |
+notes/GCL_BENCHMARK_PROTOCOLS.md:27:| HLCL | heterophily benchmark graphs | UNCLEAR from OpenReview/arXiv snippets | no | maybe no | no | maybe large graphs | yes likely for heterophily | Accuracy | UNCLEAR | UNCLEAR | GCL evaluator | UNCLEAR | mean±std likely | yes likely | Need exact fixed splits before comparison |
+notes/GCL_BENCHMARK_PROTOCOLS.md:53:4. OGB official splits and heterophily fixed splits should not be collapsed into the random split table.
+notes/stage1_5_pdf_text/2505.15103.txt:5:Hard Negatives
+notes/stage1_5_pdf_text/2505.15103.txt:17:atives’—or hard negatives crafted without addressing the se-
+notes/stage1_5_pdf_text/2505.15103.txt:25:generation of semantically meaningful hard negative samples
+notes/stage1_5_pdf_text/2505.15103.txt:27:hard negatives guide the encoder to learn more discriminative
+notes/stage1_5_pdf_text/2505.15103.txt:68:Xia et al. 2021). In the CL literature, hard negatives refer
+notes/stage1_5_pdf_text/2505.15103.txt:79:of more hard negatives, this can lead to performance degra-
+notes/stage1_5_pdf_text/2505.15103.txt:82:of ‘false negatives’, formed by pairs of samples belonging
+notes/stage1_5_pdf_text/2505.15103.txt:88:effective methods are desired for generating hard negative
+notes/stage1_5_pdf_text/2505.15103.txt:94:Khan-GCL: KAN-based hard negative generation for GCL.
+notes/stage1_5_pdf_text/2505.15103.txt:126:small perturbations to these identified dimensions, we generate hard negative samples for each graph, thereby improving the
+notes/stage1_5_pdf_text/2505.15103.txt:148:hard negatives in the output representation space of KAN en-
+notes/stage1_5_pdf_text/2505.15103.txt:155:to the original graph, hence generates hard negative pairs.
+notes/stage1_5_pdf_text/2505.15103.txt:156:Such high-quality hard negatives improve the encoder’s abil-
+notes/stage1_5_pdf_text/2505.15103.txt:171:generate semantically meaningful hard negatives, thereby
+notes/stage1_5_pdf_text/2505.15103.txt:190:2021) emphasize the significance of hard negatives, demon-
+notes/stage1_5_pdf_text/2505.15103.txt:225:introduce hard negatives, (Kalantidis et al. 2020; Xia et al.
+notes/stage1_5_pdf_text/2505.15103.txt:228:produce hard negatives. However, the absence of labels in un-
+notes/stage1_5_pdf_text/2505.15103.txt:229:supervised pre-training may introduce false negatives. More
+notes/stage1_5_pdf_text/2505.15103.txt:230:recent approaches frame hard negative generation in GCL as
+notes/stage1_5_pdf_text/2505.15103.txt:332:tions applied to these features generate hard negatives that
+notes/stage1_5_pdf_text/2505.15103.txt:334:ity (Section 4.3). Incorporating these hard negatives during
+notes/stage1_5_pdf_text/2505.15103.txt:489:4.3 Hard Negatives in Khan-GCL
+notes/stage1_5_pdf_text/2505.15103.txt:495:to generate an effective hard negative for a graph, we aim
+notes/stage1_5_pdf_text/2505.15103.txt:543:j and produce the hard negative of zj as:
+notes/stage1_5_pdf_text/2505.15103.txt:548:The generated hard negative zhard
+notes/stage1_5_pdf_text/2505.15103.txt:552:hard negative loss:
+notes/stage1_5_pdf_text/2505.15103.txt:560:sg(·) to hard negatives vhard
+notes/stage1_5_pdf_text/2505.15103.txt:607:against existing hard negative integrated GCL methods. Benchmark results are from their corresponding original publications.
+notes/stage1_5_pdf_text/2505.15103.txt:627:bility over MLPs and our introduced hard negative generation
+notes/stage1_5_pdf_text/2505.15103.txt:639:OriginalNearest Neighbors of Hard Negative
+notes/stage1_5_pdf_text/2505.15103.txt:661:ple’s hard negatives are typically similar to the sample while
+notes/stage1_5_pdf_text/2505.15103.txt:667:encoder and effective generation of hard negatives. Further-
+notes/stage1_5_pdf_text/2505.15103.txt:669:existing hard negative integrated GCL methods, where our
+notes/stage1_5_pdf_text/2505.15103.txt:674:to existing hard negative integrated methods.
+notes/stage1_5_pdf_text/2505.15103.txt:695:hard negatives, we pre-train an encoder using Khan-GCL on
+notes/stage1_5_pdf_text/2505.15103.txt:700:of each hard negative in the feature space across the entire
+notes/stage1_5_pdf_text/2505.15103.txt:706:est neighbors of a sample’s hard negatives typically exhibit
+notes/stage1_5_pdf_text/2505.15103.txt:717:ants without CKFI and hard negative generation (‘GraphCL
+notes/stage1_5_pdf_text/2505.15103.txt:722:without hard negatives, demonstrating KAN’s superior abil-
+notes/stage1_5_pdf_text/2505.15103.txt:723:ity in modeling non-linearity. Adding hard negatives yields
+notes/stage1_5_pdf_text/2505.15103.txt:727:hard negative generation. In this section, we evaluate the
+notes/stage1_5_pdf_text/2505.15103.txt:729:tion techniques in hard negative generation. We introduce
+notes/stage1_5_pdf_text/2505.15103.txt:740:with KAN encoder but without hard negative generation)
+notes/stage1_5_pdf_text/2505.15103.txt:756:tion of hard negatives through minimal perturbations. These
+notes/stage1_5_pdf_text/2505.15103.txt:757:hard negatives guide the encoder to learn critical semantics
+notes/stage1_5_pdf_text/2505.15103.txt:829:and Larlus, D. 2020. Hard negative mixing for contrastive
+notes/stage1_5_pdf_text/2505.15103.txt:949:Progcl: Rethinking hard negative mining in graph contrastive
+notes/stage1_5_pdf_text/2505.15103.txt:1335:CKFI and the hard negative generation approach, we intro-
+notes/stage1_5_pdf_text/2505.15103.txt:1411:τ in contrastive loss is 0.1. In hard negative generation, we
+notes/STAGE2_FILTERED_IDEAS.md:31:4. GCL-I04: Heterophily-type signed relation contrast.
+notes/GCL_GAP_CANDIDATES.md:14:- Minimum falsification experiment: measure downstream accuracy vs estimated positive-pair consistency across homophily bins under fixed evaluator.
+notes/GCL_GAP_CANDIDATES.md:20:## G2: False Negatives Under Homophily and Heterophily Shift
+notes/GCL_GAP_CANDIDATES.md:24:- Existing shortcoming: ProGCL handles false negatives probabilistically, but regime-specific failure under homophily/heterophily remains under-characterized.
+notes/GCL_GAP_CANDIDATES.md:25:- Evidence: ProGCL; HLCL; homophily-aware heterogeneous GCL.
+notes/GCL_GAP_CANDIDATES.md:27:- Closest work: ProGCL, HLCL, SPGCL.
+notes/GCL_GAP_CANDIDATES.md:28:- Technical opening: split false-negative analysis by structural homophily, feature similarity and text semantics.
+notes/GCL_GAP_CANDIDATES.md:30:- Negative-result value: proves false negatives are not the decisive failure mode under target protocol.
+notes/GCL_GAP_CANDIDATES.md:65:## G5: Heterophily-Aware GCL Lacks Clear Boundary Conditions
+notes/GCL_GAP_CANDIDATES.md:68:- Gap name: spectral/filter solutions may not generalize across heterophily types
+notes/GCL_GAP_CANDIDATES.md:69:- Existing shortcoming: HLCL uses graph filters, but heterophily can arise from labels, features, directedness, or roles.
+notes/GCL_GAP_CANDIDATES.md:70:- Evidence: HLCL; supervised heterophily GNN literature; Directed GCL OpenReview hit.
+notes/GCL_GAP_CANDIDATES.md:73:- Technical opening: categorize heterophily failure types before designing methods.
+notes/GCL_GAP_CANDIDATES.md:74:- Minimum falsification experiment: fixed split evaluation over multiple heterophily benchmark families.
+notes/GCL_GAP_CANDIDATES.md:75:- Negative-result value: identifies which heterophily subtype matters for GCL.
+notes/GCL_GAP_CANDIDATES.md:99:- Existing shortcoming: GCL papers mostly report mean over datasets/seeds, not worst homophily/noise/label-scarcity group.
+notes/GCL_GAP_CANDIDATES.md:102:- Closest work: robust GNN / heterophily-aware GCL.
+notes/GCL_GAP_CANDIDATES.md:104:- Minimum falsification experiment: bin nodes/datasets by homophily/noise and compute worst-bin accuracy.
+notes/stage1_5_pdf_text/2110.02027.txt:4:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:13:can beneﬁt from hard negatives (negatives that
+notes/stage1_5_pdf_text/2110.02027.txt:16:hard negative mining techniques of other domains
+notes/stage1_5_pdf_text/2110.02027.txt:22:negatives are potentially false negatives (nega-
+notes/stage1_5_pdf_text/2110.02027.txt:28:pose an effective method, dubbed ProGCL, to
+notes/stage1_5_pdf_text/2110.02027.txt:32:ditionally, we devise two schemes (i.e., ProGCL-
+notes/stage1_5_pdf_text/2110.02027.txt:33:weight and ProGCL-mix) to boost the perfor-
+notes/stage1_5_pdf_text/2110.02027.txt:35:strate that ProGCL brings notable and consis-
+notes/stage1_5_pdf_text/2110.02027.txt:39:performance of supervised ones. Also, ProGCL
+notes/stage1_5_pdf_text/2110.02027.txt:43:junxia97/ProGCL.
+notes/stage1_5_pdf_text/2110.02027.txt:67:cally validate that hard negatives contribute more to CL. For
+notes/stage1_5_pdf_text/2110.02027.txt:69:unsupervised sampling methods for selecting hard negatives
+notes/stage1_5_pdf_text/2110.02027.txt:71:tives to synthesize more hard negative ones. However, we
+notes/stage1_5_pdf_text/2110.02027.txt:89:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:102:way are false negatives for GCL indeed, which will undesir-
+notes/stage1_5_pdf_text/2110.02027.txt:104:degrade the performance. The existence of false negatives is
+notes/stage1_5_pdf_text/2110.02027.txt:119:sure, we devise two schemes (ProGCL-weight and ProGCL-
+notes/stage1_5_pdf_text/2110.02027.txt:122:the pioneering attempts to study hard negative mining in
+notes/stage1_5_pdf_text/2110.02027.txt:126:hard negative mining techniques can not work well in
+notes/stage1_5_pdf_text/2110.02027.txt:132:• We devise two schemes (i.e., ProGCL-weight and
+notes/stage1_5_pdf_text/2110.02027.txt:133:ProGCL-mix) that are more suitable for hard negative
+notes/stage1_5_pdf_text/2110.02027.txt:135:• ProGCL brings notable and consistent improvements
+notes/stage1_5_pdf_text/2110.02027.txt:170:hard negatives mining to further boost GCL on node-level
+notes/stage1_5_pdf_text/2110.02027.txt:174:2.2. Hard Negative Mining in Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:177:or synthetize hard negatives. Additionally, Ring (Wu et al.,
+notes/stage1_5_pdf_text/2110.02027.txt:181:hard negatives don’t work well in GCL. For GCL, Zhao et
+notes/stage1_5_pdf_text/2110.02027.txt:183:to alleviate false negative issue, which suffers from heavy
+notes/stage1_5_pdf_text/2110.02027.txt:195:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:196:which discovers hard negatives in each metapath-induced
+notes/stage1_5_pdf_text/2110.02027.txt:260:which motivates us to study hard negative mining on it.
+notes/stage1_5_pdf_text/2110.02027.txt:305:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:360:3.3. ProGCL
+notes/stage1_5_pdf_text/2110.02027.txt:363:difference between the false negatives and true negatives’
+notes/stage1_5_pdf_text/2110.02027.txt:369:distribution of false negatives is skew and thus symmetric
+notes/stage1_5_pdf_text/2110.02027.txt:377:ProGCL with BMM and GMM in Table 4 and ﬁnd that
+notes/stage1_5_pdf_text/2110.02027.txt:400:true and false negatives. We then utilize Expectation Maxi-
+notes/stage1_5_pdf_text/2110.02027.txt:449:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:460:the anchor and false negatives share the same class and
+notes/stage1_5_pdf_text/2110.02027.txt:464:3.4. Scheme 1: ProGCL-weight
+notes/stage1_5_pdf_text/2110.02027.txt:514:3.5. Scheme 2: ProGCL-mix
+notes/stage1_5_pdf_text/2110.02027.txt:518:sized hard negatives in GCL are positive samples indeed,
+notes/stage1_5_pdf_text/2110.02027.txt:520:ciency, we propose ProGCL-mix which synthesizes more
+notes/stage1_5_pdf_text/2110.02027.txt:521:hard negatives considering the probability of a negative be-
+notes/stage1_5_pdf_text/2110.02027.txt:522:ing true one. The comparison between MoCHi and ProGCL-
+notes/stage1_5_pdf_text/2110.02027.txt:524:Anchor Selected hard negativesSynthetic negatives
+notes/stage1_5_pdf_text/2110.02027.txt:525:(a) MoCHi (b) ProGCL-mix
+notes/stage1_5_pdf_text/2110.02027.txt:526:Figure 5. Comparison between MoCHi and ProGCL-mix. Gray
+notes/stage1_5_pdf_text/2110.02027.txt:528:color of samples. ProGCL-mix synthesizes more true negatives.
+notes/stage1_5_pdf_text/2110.02027.txt:529:anchor point ui, we synthesize m hard negatives by con-
+notes/stage1_5_pdf_text/2110.02027.txt:580:hard negatives. Finally, we can deﬁne the new overall loss,
+notes/stage1_5_pdf_text/2110.02027.txt:595:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:596:the time complexity of EM algorithm for ﬁtting in ProGCL
+notes/stage1_5_pdf_text/2110.02027.txt:602:ProGCL-weight and ProGCL-mix for transductive tasks are
+notes/stage1_5_pdf_text/2110.02027.txt:605:Algorithm 1 ProGCL-weight & -mix (Transductive)
+notes/stage1_5_pdf_text/2110.02027.txt:646:Zhu et al., 2020). We consider our ProGCL with multi-
+notes/stage1_5_pdf_text/2110.02027.txt:653:GCA. We also compare ProGCL with supervised counter-
+notes/stage1_5_pdf_text/2110.02027.txt:671:and GMI as baselines. To compare ProGCL with supervised
+notes/stage1_5_pdf_text/2110.02027.txt:688:ble 1, ProGCL consistently performs better than previous
+notes/stage1_5_pdf_text/2110.02027.txt:690:which validates the superiority of our ProGCL. We provide
+notes/stage1_5_pdf_text/2110.02027.txt:698:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:701:GPU. We highlight the performance of ProGCL with gray background. The highest performance of unsupervised models is highlighted
+notes/stage1_5_pdf_text/2110.02027.txt:717:ProGCL-weight X, A 93.30± 0.09 89.28± 0.15 93.51± 0.06 78.68± 0.12
+notes/stage1_5_pdf_text/2110.02027.txt:718:ProGCL-mix X, A 93.64± 0.13 89.55± 0.16 93.67± 0.12 78.45± 0.04
+notes/stage1_5_pdf_text/2110.02027.txt:731:ProGCL-weight X, A 49.2±0.6 95.1±0.2
+notes/stage1_5_pdf_text/2110.02027.txt:732:ProGCL-mix X, A 50.0±0.3 95.6±0.1
+notes/stage1_5_pdf_text/2110.02027.txt:738:our ProGCL emphasize the hard negatives or remove sam-
+notes/stage1_5_pdf_text/2110.02027.txt:740:ProGCL-mix performs better than ProGCL-weight in gen-
+notes/stage1_5_pdf_text/2110.02027.txt:741:eral. For inductive tasks, ProGCL also achieves competitive
+notes/stage1_5_pdf_text/2110.02027.txt:754:ProGCL-weight 72.45± 0.21 72.18± 0.09
+notes/stage1_5_pdf_text/2110.02027.txt:755:ProGCL-mix 72.82± 0.08 72.56± 0.20
+notes/stage1_5_pdf_text/2110.02027.txt:762:As can observed in Table 3, ProGCL outperforms other
+notes/stage1_5_pdf_text/2110.02027.txt:763:unsupervised baselines, which veriﬁes that ProGCL can
+notes/stage1_5_pdf_text/2110.02027.txt:771:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:780:MERIT+ProGCL-weight
+notes/stage1_5_pdf_text/2110.02027.txt:781:MERIT+ProGCL-mix
+notes/stage1_5_pdf_text/2110.02027.txt:782:Figure 6. The performance of ProGCL for another graph con-
+notes/stage1_5_pdf_text/2110.02027.txt:785:mance of ProGCL on another GCL method MERIT. The re-
+notes/stage1_5_pdf_text/2110.02027.txt:786:sults shown in Figure 6 demonstrate that ProGCL brings con-
+notes/stage1_5_pdf_text/2110.02027.txt:788:that our ProGCL is readily pluggable into various negatives-
+notes/stage1_5_pdf_text/2110.02027.txt:790:4.6. Why ProGCL Can Alleviate the Bias?
+notes/stage1_5_pdf_text/2110.02027.txt:794:To verify that our ProGCL can alleviate the sampling bias,
+notes/stage1_5_pdf_text/2110.02027.txt:798:and false negatives, which can help us select hard and true
+notes/stage1_5_pdf_text/2110.02027.txt:802:ProGCL to study the impact of each component.
+notes/stage1_5_pdf_text/2110.02027.txt:808:BMM vs. GMM. We replace BMM in our ProGCL with
+notes/stage1_5_pdf_text/2110.02027.txt:813:Table 5. Comparison between ProGCL and other hard nagative
+notes/stage1_5_pdf_text/2110.02027.txt:822:+ProGCL-mix93.64(↑1.09) 89.55(↑1.73) 93.67(↑1.27)
+notes/stage1_5_pdf_text/2110.02027.txt:823:ProGCL vs. Negative mining techniques. To study
+notes/stage1_5_pdf_text/2110.02027.txt:824:whether ProGCL can better utilize hard negatives and
+notes/stage1_5_pdf_text/2110.02027.txt:830:GCA. Instead, ProGCL introduces consistent and signif-
+notes/stage1_5_pdf_text/2110.02027.txt:832:our ProGCL is more suitable for GCL.
+notes/stage1_5_pdf_text/2110.02027.txt:839:Performance attributable to ProGCL. We substitute the
+notes/stage1_5_pdf_text/2110.02027.txt:840:estimated probabilityp(ct|s) of ProGCL with random prob-
+notes/stage1_5_pdf_text/2110.02027.txt:846:Here we study the number of most hard negativesN′ and
+notes/stage1_5_pdf_text/2110.02027.txt:847:synthetic negativesm of ProGCL-mix. The results shown
+notes/stage1_5_pdf_text/2110.02027.txt:855:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:872:In this paper, we explain why existing hard negative mining
+notes/stage1_5_pdf_text/2110.02027.txt:944:and Larlus, D. Hard negative mixing for contrastive learn-
+notes/stage1_5_pdf_text/2110.02027.txt:952:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:993:Contrastive learning with hard negative samples. In
+notes/stage1_5_pdf_text/2110.02027.txt:1050:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:1134:Appendix of ProGCL
+notes/stage1_5_pdf_text/2110.02027.txt:1176:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:1186:phenomena provide explainations for the failure of existing techniques that emphasize hard negatives in GCL. More
+notes/stage1_5_pdf_text/2110.02027.txt:1188:for graph-structured data (see Figure 9(a), Figure 9(b) and Figure 9(c)), many “hard” ones are false negatives indeed, which
+notes/stage1_5_pdf_text/2110.02027.txt:1238:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:1240:for false negative component of mixture distribution; “Iterations” is the iterationsI of EM algorithm.
+notes/stage1_5_pdf_text/2110.02027.txt:1308:same as GRACE and GCA. Other hyper-parameters of ProGCL can be seen in Table 8. For transductive task, the two hyper-
+notes/stage1_5_pdf_text/2110.02027.txt:1312:varies across datasets. However, generally speaking, ProGCL’s performance does not see sharp drop when varyingE. This
+notes/stage1_5_pdf_text/2110.02027.txt:1322:Thus, we extend ProGCL to inductive setting. The algorithm of ProGCL for inductive learning can be seen as follows. The
+notes/stage1_5_pdf_text/2110.02027.txt:1327:ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+notes/stage1_5_pdf_text/2110.02027.txt:1328:Algorithm 2 ProGCL-weight & ProGCL-mix (Inductive)
+notes/STAGE2_RAW_IDEAS.md:9:Primary: G1 semantic false positives, G2 false negatives under homophily/heterophily, G3 MGM vs GCL under identical evaluator, G5 heterophily boundary conditions.
+notes/STAGE2_RAW_IDEAS.md:45:- Core problem: hard negatives can be useful in homophilic regimes but harmful false negatives in heterophilic or role-based regimes.
+notes/STAGE2_RAW_IDEAS.md:46:- Why current methods fail: ProGCL estimates false-negative probabilities but does not characterize graph-regime boundaries; HLCL focuses on filters; SPGCL focuses positives.
+notes/STAGE2_RAW_IDEAS.md:47:- Closest works: ProGCL, HLCL, SPGCL, negative metric learning for graphs, counterfactual hard negatives.
+notes/STAGE2_RAW_IDEAS.md:48:- What closest works already solve: hard-negative risk, heterophily filters, positive sampling, some counterfactual negative construction.
+notes/STAGE2_RAW_IDEAS.md:49:- What remains open: predicting when hard negatives help or hurt.
+notes/STAGE2_RAW_IDEAS.md:50:- Core hypothesis: local homophily proxy, feature similarity and structural role similarity jointly predict negative validity.
+notes/STAGE2_RAW_IDEAS.md:51:- Method sketch: compute relation signatures for node pairs; partition pairs into confident negative/ambiguous/likely false negative; use confident negatives in InfoNCE; route ambiguous pairs to prototype-level separation; audit with validation-only label agreement.
+notes/STAGE2_RAW_IDEAS.md:55:- Minimum novelty condition: explains ProGCL success/failure across homophily bins rather than replacing it with another weight.
+notes/STAGE2_RAW_IDEAS.md:58:- Support condition: reduces false-negative rate and explains/improves ProGCL failures.
+notes/STAGE2_RAW_IDEAS.md:75:- Core hypothesis: feature-label predictability, edge homophily and context reconstruction difficulty predict whether MGM or GCL is better.
+notes/STAGE2_RAW_IDEAS.md:90:## Idea GCL-I04: Heterophily-Type Signed Relation Contrast
+notes/STAGE2_RAW_IDEAS.md:95:- Core problem: heterophily is not one phenomenon; label, feature, role and directed heterophily imply different SSL relations.
+notes/STAGE2_RAW_IDEAS.md:97:- Closest works: HLCL, SPGCL, directed GCL, supervised heterophily GNNs.
+notes/STAGE2_RAW_IDEAS.md:98:- What closest works already solve: heterophily filters, positive sampling, performance on several heterophily benchmarks.
+notes/STAGE2_RAW_IDEAS.md:99:- What remains open: which relation should be aligned, separated or predicted under each heterophily type.
+notes/STAGE2_RAW_IDEAS.md:100:- Core hypothesis: signed multi-relation contrast better matches heterophily subtypes than binary positive/negative or universal filters.
+notes/STAGE2_RAW_IDEAS.md:106:- Minimum falsification experiment: compare signed relation contrast to HLCL-style filters on heterophily subtypes.
+notes/STAGE2_RAW_IDEAS.md:108:- Support condition: clear improvement on at least one heterophily subtype and honest explanation of non-improving subtypes.
+notes/STAGE2_RAW_IDEAS.md:109:- Expected datasets/splits: Actor, Chameleon, Squirrel, Penn94, Twitch, Genius plus homophily sanity checks.
+notes/STAGE2_RAW_IDEAS.md:145:- Core problem: mean accuracy hides low-degree, boundary, noisy or minority homophily-regime failures.
+notes/STAGE2_RAW_IDEAS.md:147:- Closest works: GroupDRO, robust GNNs, HLCL, ProGCL.
+notes/STAGE2_RAW_IDEAS.md:150:- Method sketch: define degree/homophily/noise/boundary bins without test labels; estimate bin-wise alignment/uniformity; repair relations in worst bins; report mean and worst-bin; test tradeoff.
+notes/STAGE2_RAW_IDEAS.md:154:- Falsification: bin GRACE/GCA/BGRL/ProGCL and compare worst-bin vs mean.
+notes/STAGE2_RAW_IDEAS.md:166:- Hypothesis: balancing prototypes by feature diversity, degree distribution and homophily diversity reduces false positives/negatives.
+notes/STAGE2_RAW_IDEAS.md:170:- Falsification: compare ordinary, degree-balanced and degree+feature+homophily-balanced prototypes.
+notes/STAGE2_RAW_IDEAS.md:214:- Hypothesis: relations stable across degree/homophily/noise/ego-density environments generalize better.
+research-wiki/query_pack.md:15:- ProGCL: probability-aware hard negatives; follows GCA/BGRL-style splits; 20 random splits/initializations for reproduced baselines.
+research-wiki/query_pack.md:19:- HLCL: heterophily-aware graph filters; acceptance/protocol details still `UNCLEAR`.
+research-wiki/query_pack.md:34:- G2 false negatives under homophily/heterophily;
+research-wiki/query_pack.md:36:- G5 heterophily boundary conditions.
+research-wiki/query_pack.md:51:- Do not claim false-negative handling unless separated from ProGCL/SPGCL/HLCL.
+research-wiki/query_pack.md:64:- Whether Stage 2 wants a main gap around positives/negatives, MGM comparison, or heterophily boundary conditions.
+research-wiki/query_pack.md:73:- Negative Metric Learning for Graphs (`2505.10307`), counterfactual hard negatives (`2207.00148`) and graph ranking CL (`2310.14525`) extend G2 false-negative risk.
+research-wiki/query_pack.md:74:- GCL-OT (`2511.16778`) and heterophilic hypergraph CL (`2511.18783`) should be checked if Stage 2 selects heterophily.
+research-wiki/papers/chuang2020_debiased_contrastive_learning.md:19:Debiased contrastive learning corrects same-class false negative bias without labels.
+research-wiki/papers/xia2021_progcl_rethinking_hard.md:3:node_id: paper:xia2021_progcl_rethinking_hard
+research-wiki/papers/xia2021_progcl_rethinking_hard.md:4:title: "ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning"
+research-wiki/papers/xia2021_progcl_rethinking_hard.md:16:# ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning
+research-wiki/papers/xia2021_progcl_rethinking_hard.md:19:ProGCL shows hard negatives in GCL are often false negatives and proposes probability-aware hard negative mining.
+research-wiki/papers/xia2021_progcl_rethinking_hard.md:53:> Contrastive Learning (CL) has emerged as a dominant technique for unsupervised representation learning which embeds augmented versions of the anchor close to each other (positive samples) and pushes the embeddings of other samples (negatives) apart. As revealed in recent studies, CL can benefit from hard negatives (negatives that are most similar to the anchor). However, we observe limited benefits when we adopt existing hard negative mining techniques of other domains in Graph Contrastive Learning (GCL). We perform both experimental and theoretical analysis on this phenomenon and find it can be attributed to the message passing of Graph Neural Networks (GNNs). Unlike CL in other domains, most hard negatives are potentially false negatives (negatives that share the same class with the anchor) if they are selected merely according to the similarities between anchor and themselves, which will undesirably push away the samples of the same class. To remedy this deficiency, we propose an effective method, dubbed \textbf{ProGCL}, to estimate the probability of a negative being true one, which constitutes a more suitable measure for negatives' hardness together with similarity. Additionally, we devise two schemes (i.e., \textbf{ProGCL-weight} and \textbf{ProGCL-mix}) to boost the performance of GCL. Extensive experiments demonstrate that ProGCL brings notable and consistent improvements over base GCL methods and yields multiple state-of-the-art results on several unsupervised benchmarks or even exceeds the performance of supervised ones. Also, ProGCL is readily pluggable into various negatives-based GCL methods for performance improvement. We release the code at \textcolor{magenta}{\url{https://github.com/junxia97/ProGCL}}.
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:3:node_id: paper:wang2025_homophilyaware_heterogeneous_graph
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:4:title: "Homophily-aware Heterogeneous Graph Contrastive Learning"
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:12:tags: ["gcl", "heterophily", "heterogeneous", "false-negative"]
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:16:# Homophily-aware Heterogeneous Graph Contrastive Learning
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:19:Homophily-aware heterogeneous GCL highlights persistent false-negative issues in heterogeneous graph contrastive learning.
+research-wiki/papers/wang2025_homophilyaware_heterogeneous_graph.md:53:> Heterogeneous graph pre-training (HGP) has demonstrated remarkable performance across various domains. However, the issue of heterophily in real-world heterogeneous graphs (HGs) has been largely overlooked. To bridge this research gap, we proposed a novel heterogeneous graph contrastive learning framework, termed HGMS, which leverages connection strength and multi-view self-expression to learn homophilous node representations. Specifically, we design a heterogeneous edge dropping augmentation strategy that enhances the homophily of augmented views. Moreover, we introduce a multi-view self-expressive learning method to infer the homophily between nodes. In practice, we develop two approaches to solve the self-expressive matrix. The solved self-expressive matrix serves as an additional augmented view to provide homophilous information and is used to identify false negatives in contrastive loss. Extensive experimental results demonstrate the superiority of HGMS across different downstream tasks.
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:9:| ProGCL | `xia2021_progcl_rethinking_hard` | ICML 2022 | yes | follows GCA/BGRL style; 20 random splits/model initializations for reproduced baselines | exact seed list, early stopping, test@best | no | high false-negative risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:17:| HLCL | `yang2023_graph_contrastive_learning` | arXiv/OpenReview UNCLEAR | UNCLEAR | datasets recovered | exact splits/evaluator/seeds/status | no | high heterophily risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:21:| SPGCL | `shan2026_revisiting_positive_samples` | arXiv 2026 | UNCLEAR | some heterophily split sources recovered | evaluator/seeds/early stopping | no | recent positive-sample risk |
+research-wiki/papers/wang2025_khangcl_kolmogorovarnold_network.md:4:title: "Khan-GCL: Kolmogorov-Arnold Network Based Graph Contrastive Learning with Hard Negatives"
+research-wiki/papers/wang2025_khangcl_kolmogorovarnold_network.md:16:# Khan-GCL: Kolmogorov-Arnold Network Based Graph Contrastive Learning with Hard Negatives
+research-wiki/papers/wang2025_khangcl_kolmogorovarnold_network.md:19:Khan-GCL combines KAN encoders with semantically motivated hard negatives, but is recent arXiv evidence.
+research-wiki/papers/wang2025_khangcl_kolmogorovarnold_network.md:53:> Graph contrastive learning (GCL) has demonstrated great promise for learning generalizable graph representations from unlabeled data. However, conventional GCL approaches face two critical limitations: (1) the restricted expressive capacity of multilayer perceptron (MLP) based encoders, and (2) suboptimal negative samples that either from random augmentations-failing to provide effective 'hard negatives'-or generated hard negatives without addressing the semantic distinctions crucial for discriminating graph data. To this end, we propose Khan-GCL, a novel framework that integrates the Kolmogorov-Arnold Network (KAN) into the GCL encoder architecture, substantially enhancing its representational capacity. Furthermore, we exploit the rich information embedded within KAN coefficient parameters to develop two novel critical feature identification techniques that enable the generation of semantically meaningful hard negative samples for each graph representation. These strategically constructed hard negatives guide the encoder to learn more discriminative features by emphasizing critical semantic differences between graphs. Extensive experiments demonstrate that our approach achieves state-of-the-art performance compared to existing GCL methods across a variety of datasets and tasks.
+research-wiki/log.md:12:- `2026-06-25T13:19:42Z` ingest_paper: ingested paper:xia2021_progcl_rethinking_hard (arxiv:2110.02027)
+research-wiki/log.md:18:- `2026-06-25T13:19:56Z` ingest_paper: ingested paper:wang2025_homophilyaware_heterogeneous_graph (arxiv:2501.08538)
+research-wiki/papers/yang2023_graph_contrastive_learning.md:4:title: "Graph Contrastive Learning under Heterophily via Graph Filters"
+research-wiki/papers/yang2023_graph_contrastive_learning.md:12:tags: ["gcl", "heterophily", "graph-filters", "node-classification", "closest-work"]
+research-wiki/papers/yang2023_graph_contrastive_learning.md:16:# Graph Contrastive Learning under Heterophily via Graph Filters
+research-wiki/papers/yang2023_graph_contrastive_learning.md:19:HLCL uses graph filters to construct homophily/heterophily-aware views for graph contrastive learning.
+research-wiki/papers/yang2023_graph_contrastive_learning.md:53:> Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.
+research-wiki/index.md:18:- `paper:wang2025_homophilyaware_heterogeneous_graph` — Homophily-aware Heterogeneous Graph Contrastive Learning (2025)
+research-wiki/index.md:19:- `paper:wang2025_khangcl_kolmogorovarnold_network` — Khan-GCL: Kolmogorov-Arnold Network Based Graph Contrastive Learning with Hard Negatives (2025)
+research-wiki/index.md:20:- `paper:xia2021_progcl_rethinking_hard` — ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning (2021)
+research-wiki/index.md:22:- `paper:yang2023_graph_contrastive_learning` — Graph Contrastive Learning under Heterophily via Graph Filters (2023)
+research-wiki/gap_map.md:17:## G2: False Negatives Under Homophily and Heterophily Shift
+research-wiki/gap_map.md:20:- Closest works: ProGCL, HLCL, SPGCL, homophily-aware heterogeneous GCL.
+research-wiki/gap_map.md:21:- Already solved: probability-aware hard negatives, graph-filter heterophily views, positive sampling.
+research-wiki/gap_map.md:25:- Must-run falsification: validation-only false-negative estimates vs label agreement by homophily bin.
+research-wiki/gap_map.md:53:## G5: Heterophily-Aware GCL Lacks Clear Boundary Conditions
+research-wiki/gap_map.md:56:- Closest works: HLCL, directed GCL, supervised heterophily GNNs.
+research-wiki/gap_map.md:58:- Not solved: boundaries across heterophily subtypes.
+research-wiki/gap_map.md:59:- Blocked claim: high-/low-pass filter addition for heterophily.
+research-wiki/gap_map.md:61:- Must-run falsification: evaluate same SSL objectives across heterophily benchmarks with fixed splits.
+research-wiki/gap_map.md:81:- Already solved: some heterophily/noise improvements.
+research-wiki/gap_map.md:85:- Must-run falsification: bin by homophily/noise/degree/label scarcity and report worst-bin accuracy.
+research-wiki/gap_map.md:106:- G2 remains open and high risk because ProGCL/SPGCL plus newer negative-metric/counterfactual-hard-negative works cover generic negative refinement.
+research-wiki/gap_map.md:108:- G5 remains high risk because HLCL, GCL-OT and related heterophily papers already address filter/transport/heterophily variants.

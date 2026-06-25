@@ -1,0 +1,337 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2304.04779",
+      "score": 0.5,
+      "title": "GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner",
+      "tldr": "[research paper] GraphMAE2 introduces two regularization strategies—multi-view random re-mask decoding and latent representation prediction—to improve feature reconstruction in masked self-supervised graph learning. Multi-view re-mask decoding injects randomness into the decoding process by repeatedly masking and reconstructing encoded embeddings, reducing overfitting to noisy or low-discriminative input features. Latent representation prediction enforces reconstruction in the embedding space using graph-derived representations as targets, enhancing robustness and generalization. The method achieves at least 2.45% improvement over state-of-the-art on ogbn-Papers100M (111M nodes, 1.6B edges), demonstrating superior performance under feature disturbance and low discriminability.",
+      "abstract": "Graph self-supervised learning (SSL), including contrastive and generative approaches, offers great potential to address the fundamental challenge of label scarcity in real-world graph data. Among both sets of graph SSL techniques, the masked graph autoencoders (e.g., GraphMAE)--one type of generative method--have recently produced promising results. The idea behind this is to reconstruct the node features (or structures)--that are randomly masked from the input--with the autoencoder architecture. However, the performance of masked feature reconstruction naturally relies on the discriminability of the input features and is usually vulnerable to disturbance in the features. In this paper, we present a masked self-supervised learning framework GraphMAE2 with the goal of overcoming this issue. The idea is to impose regularization on feature reconstruction for graph SSL. Specifically, we design the strategies of multi-view random re-mask decoding and latent representation prediction to regularize the feature reconstruction. The multi-view random re-mask decoding is to introduce randomness into reconstruction in the feature space, while the latent representation prediction is to enforce the reconstruction in the embedding space. Extensive experiments show that GraphMAE2 can consistently generate top results on various public datasets, including at least 2.45% improvements over state-of-the-art baselines on ogbn-Papers100M with 111M nodes and 1.6B edges.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yufei.he@bit.edu.cn"
+          },
+          "name": "Yufei He",
+          "orgs": [
+            "Beijing Institute of Technology",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cyk20@mails.tsinghua.edu.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuxiao21@mails.tsinghua.edu.cn"
+          },
+          "name": "Xiao Liu",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "evgeny.kharlamov@de.bosch.com"
+          },
+          "name": "Evgeny Kharlamov",
+          "orgs": [
+            "Bosch Center for Artificial Intelligence",
+            "Germany"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2304.04779",
+      "date": "2023-04-10T00:00:00",
+      "citation_count": 183,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": "https://github.com/THUDM/GraphMAE2"
+    },
+    {
+      "arxiv_id": "2505.24134",
+      "score": 0.5,
+      "title": "A Mathematical Perspective On Contrastive Learning",
+      "tldr": "[research paper] The paper reinterprets multimodal contrastive learning as a probabilistic problem of optimizing parameterized encoders to model conditional distributions (u|v and v|u) in a shared latent space, grounded in a measurement-noise framework where modalities are noisy observations of a common latent variable. By framing the latent space alignment as a low-rank matrix approximation in the multivariate Gaussian setting, it derives novel probabilistic loss functions and alignment metrics that better capture conditional statistics, leading to improved variants for crossmodal retrieval, classification, and generative modeling—validated through Gaussian experiments, MNIST, and a real-world oceanographic data assimilation application.",
+      "abstract": "Multimodal contrastive learning is a methodology for linking different data modalities; the canonical example is linking image and text data. The methodology is typically framed as the identification of a set of encoders, one for each modality, that align representations within a common latent space. In this work, we focus on the bimodal setting and interpret contrastive learning as the optimization of (parameterized) encoders that define conditional probability distributions, for each modality conditioned on the other, consistent with the available data. This provides a framework for multimodal algorithms such as crossmodal retrieval, which identifies the mode of one of these conditional distributions, and crossmodal classification, which is similar to retrieval but includes a fine-tuning step to make it task specific.\\\n  The framework we adopt also gives rise to crossmodal generative models. This probabilistic perspective suggests two natural generalizations of contrastive learning: the introduction of novel probabilistic loss functions, and the use of alternative metrics for measuring alignment in the common latent space. We study these generalizations of the classical approach in the multivariate Gaussian setting. In this context we view the latent space identification as a low-rank matrix approximation problem. This allows us to characterize the capabilities of loss functions and alignment metrics to approximate natural statistics, such as conditional means and covariances; doing so yields novel variants on contrastive learning algorithms for specific mode-seeking and for generative tasks. The framework we introduce is also studied through numerical experiments on multivariate Gaussians, the labeled MNIST dataset, and on a data assimilation application arising in oceanography.",
+      "authors": [
+        "Ricardo Baptista",
+        "Andrew M. Stuart",
+        "Son Tran"
+      ],
+      "url": "https://arxiv.org/abs/2505.24134",
+      "date": "2025-05-30T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "stat.ML",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2205.10053",
+      "score": 0.33333334,
+      "title": "What's Behind the Mask: Understanding Masked Graph Modeling for Graph Autoencoders",
+      "tldr": "[research paper] The paper introduces MaskGAE, a self-supervised graph autoencoder that employs masked graph modeling (MGM) as a principled pretext task by masking edges and reconstructing them from visible graph structure. It establishes a theoretical link between GAEs and contrastive learning, showing that edge masking induces natural structural views for contrast, thereby reducing redundancy and improving representation quality. Empirical results on multiple graph benchmarks demonstrate that MaskGAE outperforms state-of-the-art methods in both link prediction and node classification tasks, offering a more effective and theoretically grounded alternative to standard graph reconstruction.",
+      "abstract": "The last years have witnessed the emergence of a promising self-supervised learning strategy, referred to as masked autoencoding. However, there is a lack of theoretical understanding of how masking matters on graph autoencoders (GAEs). In this work, we present masked graph autoencoder (MaskGAE), a self-supervised learning framework for graph-structured data. Different from standard GAEs, MaskGAE adopts masked graph modeling (MGM) as a principled pretext task - masking a portion of edges and attempting to reconstruct the missing part with partially visible, unmasked graph structure. To understand whether MGM can help GAEs learn better representations, we provide both theoretical and empirical evidence to comprehensively justify the benefits of this pretext task. Theoretically, we establish close connections between GAEs and contrastive learning, showing that MGM significantly improves the self-supervised learning scheme of GAEs. Empirically, we conduct extensive experiments on a variety of graph benchmarks, demonstrating the superiority of MaskGAE over several state-of-the-arts on both link prediction and node classification tasks.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tiansheng.ts@antgroup.com"
+          },
+          "name": "Sheng Tian",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "tailiang.zl@antgroup.com"
+          },
+          "name": "Liang Zhu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiqiang.wwq@antgroup.com"
+          },
+          "name": "Weiqiang Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10053",
+      "date": "2022-05-20T00:00:00",
+      "citation_count": 154,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/EdisonLeeeee/MaskGAE"
+    },
+    {
+      "arxiv_id": "2510.13368",
+      "score": 0.33333334,
+      "title": "Contrastive Learning-Based Dependency Modeling for Anomaly Detection in Cloud Services",
+      "tldr": "[research paper] Proposes a contrastive learning-based dependency modeling framework for cloud service anomaly detection that constructs service interaction graphs, uses graph convolution to capture temporal and structural dependencies, and introduces a contrastive loss with temporal consistency regularization to enhance normal-abnormal separability and stabilize representations across time steps. The method achieves superior performance in precision, recall, F1-score, and AUC while maintaining robustness under sparse labeling, noise, and traffic fluctuations by jointly optimizing feature discriminability and temporal stability.",
+      "abstract": "This paper addresses the challenges of complex dependencies and diverse anomaly patterns in cloud service environments by proposing a dependency modeling and anomaly detection method that integrates contrastive learning. The method abstracts service interactions into a dependency graph, extracts temporal and structural features through embedding functions, and employs a graph convolution mechanism to aggregate neighborhood information for context-aware service representations. A contrastive learning framework is then introduced, constructing positive and negative sample pairs to enhance the separability of normal and abnormal patterns in the representation space. Furthermore, a temporal consistency constraint is designed to maintain representation stability across time steps and reduce the impact of short-term fluctuations and noise. The overall optimization combines contrastive loss and temporal consistency loss to ensure stable and reliable detection across multi-dimensional features. Experiments on public datasets systematically evaluate the method from hyperparameter, environmental, and data sensitivity perspectives. Results show that the proposed approach significantly outperforms existing methods on key metrics such as Precision, Recall, F1-Score, and AUC, while maintaining robustness under conditions of sparse labeling, monitoring noise, and traffic fluctuations. This study verifies the effectiveness of integrating dependency modeling with contrastive learning, provides a complete technical solution for cloud service anomaly detection, and demonstrates strong adaptability and stability in complex environments.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yue Xing",
+          "orgs": [
+            "University of Pennsylvania",
+            "Philadelphia, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yingnan Deng",
+          "orgs": [
+            "Georgia Institute of Technology",
+            "Atlanta, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Heyao Liu",
+          "orgs": [
+            "Northeastern University",
+            "Boston, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ming Wang",
+          "orgs": [
+            "Trine University",
+            "Phoenix, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yun Zi",
+          "orgs": [
+            "Georgia Institute of Technology",
+            "Atlanta, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Xiaoxuan Sun",
+          "orgs": [
+            "Independent Researcher",
+            "Mountain View, USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2510.13368",
+      "date": "2025-10-15T00:00:00",
+      "citation_count": 16,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "2025 6th International Conference on Information Science, Parallel and Distributed Systems (ISPDS)",
+      "venue_year": 2025,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2501.08589",
+      "score": 0.28225806,
+      "title": "Molecular Graph Contrastive Learning with Line Graph",
+      "tldr": "[research paper] LEMON introduces a molecular graph contrastive learning framework that leverages line graph transformations to preserve intrinsic molecular semantics without relying on domain-specific knowledge or semantic distortion. By contrasting original molecular graphs with their corresponding line graphs via a dual-helix encoder with edge attribute fusion, the method ensures structural consistency and mitigates information loss. Novel intra-local and inter-local contrastive losses address over-smoothing and hard negative sample issues, achieving state-of-the-art performance across eight molecular property prediction benchmarks through unsupervised pre-training on ZINC15.",
+      "abstract": "Trapped by the label scarcity in molecular property prediction and drug design, graph contrastive learning (GCL) came forward. Leading contrastive learning works show two kinds of view generators, that is, random or learnable data corruption and domain knowledge incorporation. While effective, the two ways also lead to molecular semantics altering and limited generalization capability, respectively. To this end, we relate the \\\\textbf{L}in\\\\textbf{E} graph with \\\\textbf{MO}lecular graph co\\\\textbf{N}trastive learning and propose a novel method termed \\\\textit{LEMON}. Specifically, by contrasting the given graph with the corresponding line graph, the graph encoder can freely encode the molecular semantics without omission. Furthermore, we present a new patch with edge attribute fusion and two local contrastive losses enhance information transmission and tackle hard negative samples. Compared with state-of-the-art (SOTA) methods for view generation, superior performance on molecular property prediction suggests the effectiveness of our proposed framework.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Xueyuan Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Shangzhe Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ruomei Liu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Bowen Shi",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jiaheng Liu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Junran Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ke Xu",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2501.08589",
+      "date": "2025-01-15T00:00:00",
+      "citation_count": 7,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Pattern Recognition",
+      "venue_year": null,
+      "github_url": "https://github.com/RyanChen227/LEMON"
+    }
+  ]
+}

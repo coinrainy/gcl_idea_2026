@@ -1,0 +1,215 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2103.13125",
+      "score": 0.5,
+      "title": "Learning Graph Representation by Aggregating Subgraphs via Mutual Information Maximization",
+      "tldr": "[research paper] The paper proposes a self-supervised graph representation learning framework that aggregates information across three dimensions—node attributes, multi-scale node representations, and subgraphs—using learnable convolutional modules (attribute-conv, layer-conv, subgraph-conv). A novel autoregressive subgraph generation framework enables dynamic subgraph sampling, and a Head-Tail contrastive construction generates rich negative samples to maximize mutual information between the original and reconstructed graph representations. This approach achieves state-of-the-art results on graph classification benchmarks by providing a more comprehensive and structured constraint on representation learning, with all components designed as plug-and-play modules compatible with any GNN architecture.",
+      "abstract": "In this paper, we introduce a self-supervised learning method to enhance the graph-level representations with the help of a set of subgraphs. For this purpose, we propose a universal framework to generate subgraphs in an auto-regressive way and then using these subgraphs to guide the learning of graph representation by Graph Neural Networks. Under this framework, we can get a comprehensive understanding of the graph structure in a learnable way. And to fully capture enough information of original graphs, we design three information aggregators: \\\\textbf{attribute-conv}, \\\\textbf{layer-conv} and \\\\textbf{subgraph-conv} to gather information from different aspects. And to achieve efficient and effective contrastive learning, a Head-Tail contrastive construction is proposed to provide abundant negative samples. Under all proposed components which can be generalized to any Graph Neural Networks, in the unsupervised case, we achieve new state-of-the-art results in several benchmarks. We also evaluate our model on semi-supervised learning tasks and make a fair comparison to state-of-the-art semi-supervised methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wangchenguang19@mails.ucas.ac.cn"
+          },
+          "name": "Chenguang Wang",
+          "orgs": [
+            "University of Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuziwen18@mails.ucas.ac.cn"
+          },
+          "name": "Ziwen Liu",
+          "orgs": [
+            "University of Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2103.13125",
+      "date": "2021-03-24T00:00:00",
+      "citation_count": 22,
+      "categories": [
+        "cs.LG",
+        "cs.IT",
+        "math.IT"
+      ],
+      "venue": "Neurocomputing",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2201.09830",
+      "score": 0.5,
+      "title": "Learning Graph Augmentations to Learn Graph Representations",
+      "tldr": "[research paper] LG2AR introduces an end-to-end probabilistic framework for graph augmentation that learns dataset-specific augmentation policies and parameter distributions, enabling adaptive, data-driven augmentation strategies for both node and graph-level representations. Unlike prior methods that rely on hand-crafted or heuristic augmentations, LG2AR jointly optimizes a selection policy and augmentation heads to maximize representation consistency under diverse graph structures and distribution shifts, achieving state-of-the-art performance on 18 out of 20 benchmarks across linear and semi-supervised settings.",
+      "abstract": "Devising augmentations for graph contrastive learning is challenging due to their irregular structure, drastic distribution shifts, and nonequivalent feature spaces across datasets. We introduce LG2AR, Learning Graph Augmentations to Learn Graph Representations, which is an end-to-end automatic graph augmentation framework that helps encoders learn generalizable representations on both node and graph levels. LG2AR consists of a probabilistic policy that learns a distribution over augmentations and a set of probabilistic augmentation heads that learn distributions over augmentation parameters. We show that LG2AR achieves state-of-the-art results on 18 out of 20 graph-level and node-level benchmarks compared to previous unsupervised models under both linear and semi-supervised evaluation protocols. The source code will be released here: https://github.com/kavehhassani/lg2ar",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.09830",
+      "date": "2022-01-24T00:00:00",
+      "citation_count": 26,
+      "categories": [
+        "cs.LG",
+        "cs.NE"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2011.07267",
+      "score": 0.33333334,
+      "title": "Graph-Based Neural Network Models with Multiple Self-Supervised Auxiliary Tasks",
+      "tldr": "[research paper] The paper introduces three novel self-supervised auxiliary tasks—node autoencoding, corrupted features reconstruction, and corrupted embeddings reconstruction—to enhance graph-based neural networks (GCNs) via multi-task learning. These tasks improve representation robustness, mitigate over-smoothing in deep GCNs by leveraging intrinsic graph structure, and enable effective utilization of unlabeled data without requiring external labels. Empirical results on standard graph classification benchmarks demonstrate competitive performance and improved generalization over baseline GCNs.",
+      "abstract": "Self-supervised learning is currently gaining a lot of attention, as it allows neural networks to learn robust representations from large quantities of unlabeled data. Additionally, multi-task learning can further improve representation learning by training networks simultaneously on related tasks, leading to significant performance improvements. In this paper, we propose three novel self-supervised auxiliary tasks to train graph-based neural network models in a multi-task fashion. Since Graph Convolutional Networks are among the most promising approaches for capturing relationships among structured data points, we use them as a building block to achieve competitive results on standard semi-supervised graph classification tasks.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Franco Manessi",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Alessandro Rozza",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2011.07267",
+      "date": "2020-11-14T00:00:00",
+      "citation_count": 44,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Pattern Recognition Letters",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2011.05126",
+      "score": 0.33333334,
+      "title": "Self-supervised Graph Representation Learning via Bootstrapping",
+      "tldr": "[research paper] Deep Graph Bootstrapping (DGB) introduces a bootstrapping mechanism to graph representation learning, extending BYOL to graph-structured data by using online and target networks that learn from each other without requiring labels or negative samples. The method employs three types of graph augmentations—node-level (feature and node dropout), adjacency-level (PPR, heat kernel), and their combinations—to enhance representation quality, achieving state-of-the-art performance on benchmark datasets through unsupervised self-training via slow parameter averaging.",
+      "abstract": "Graph neural networks~(GNNs) apply deep learning techniques to graph-structured data and have achieved promising performance in graph representation learning. However, existing GNNs rely heavily on enough labels or well-designed negative samples. To address these issues, we propose a new self-supervised graph representation method: deep graph bootstrapping~(DGB). DGB consists of two neural networks: online and target networks, and the input of them are different augmented views of the initial graph. The online network is trained to predict the target network while the target network is updated with a slow-moving average of the online network, which means the online and target networks can learn from each other. As a result, the proposed DGB can learn graph representation without negative examples in an unsupervised manner. In addition, we summarize three kinds of augmentation methods for graph-structured data and apply them to the DGB. Experiments on the benchmark datasets show the DGB performs better than the current state-of-the-art methods and how the augmentation methods affect the performances.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Feihu Che",
+          "orgs": [
+            "National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China",
+            "CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Guohua Yang",
+          "orgs": [
+            "National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China",
+            "CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Dawei Zhang",
+          "orgs": [
+            "National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China",
+            "CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jianhua Tao",
+          "orgs": [
+            "National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China",
+            "CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Pengpeng Shao",
+          "orgs": [
+            "National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China",
+            "CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Tong Liu",
+          "orgs": [
+            "National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+            "School of Artificial Intelligence, University of Chinese Academy of Sciences, Beijing, China",
+            "CAS Center for Excellence in Brain Science and Intelligence Technology, Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2011.05126",
+      "date": "2020-11-10T00:00:00",
+      "citation_count": 25,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Neurocomputing",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2201.13025",
+      "score": 0.25,
+      "title": "Learning Robust Representation through Graph Adversarial Contrastive Learning",
+      "tldr": "[research paper] GraphACL introduces adversarial augmentations into self-supervised graph contrastive learning to enhance representation robustness. By maximizing mutual information between clean and adversarially perturbed graph representations—generated via supervised (e.g., Metattack) or unsupervised (via meta-gradient-driven contrastive loss) methods—the framework suppresses distortion caused by structural or feature perturbations. Theoretical analysis via Information Bottleneck Principle shows tighter bounds on representation compression, leading to provably more robust embeddings; empirical results on Cora, Citeseer, and Pubmed demonstrate superior performance under both evasive and poisoning attacks compared to DGI and baselines.",
+      "abstract": "Existing studies show that node representations generated by graph neural networks (GNNs) are vulnerable to adversarial attacks, such as unnoticeable perturbations of adjacent matrix and node features. Thus, it is requisite to learn robust representations in graph neural networks. To improve the robustness of graph representation learning, we propose a novel Graph Adversarial Contrastive Learning framework (GraphACL) by introducing adversarial augmentations into graph self-supervised learning. In this framework, we maximize the mutual information between local and global representations of a perturbed graph and its adversarial augmentations, where the adversarial graphs can be generated in either supervised or unsupervised approaches. Based on the Information Bottleneck Principle, we theoretically prove that our method could obtain a much tighter bound, thus improving the robustness of graph representation learning. Empirically, we evaluate several methods on a range of node classification benchmarks and the results demonstrate GraphACL could achieve comparable accuracy over previous supervised methods.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jiayan Guo",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Shangyang Li",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yue Zhao",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yan Zhang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.13025",
+      "date": "2022-01-31T00:00:00",
+      "citation_count": 11,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Database Systems for Advanced Applications",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

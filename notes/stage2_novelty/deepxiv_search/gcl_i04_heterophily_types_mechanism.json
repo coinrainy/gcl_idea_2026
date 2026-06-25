@@ -1,0 +1,275 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2201.12498",
+      "score": 0.5,
+      "title": "Investigating Why Contrastive Learning Benefits Robustness Against Label Noise",
+      "tldr": "[theoretical research paper] The paper provides a rigorous theoretical analysis showing that contrastive learning induces a representation matrix with distinct singular values per class (prominent singular values aligned with clean labels and suppressed noise components), enabling linear models to robustly learn clean labels even under high noise. This low-rank structure in the Jacobian of pre-trained networks delays overfitting during fine-tuning on noisy labels, leading to superior initial performance and enabling robust training methods to achieve state-of-the-art accuracy under extreme label noise (e.g., 80% symmetric noise on CIFAR-10/CIFAR-100).",
+      "abstract": "Self-supervised Contrastive Learning (CL) has been recently shown to be very effective in preventing deep networks from overfitting noisy labels. Despite its empirical success, the theoretical understanding of the effect of contrastive learning on boosting robustness is very limited. In this work, we rigorously prove that the representation matrix learned by contrastive learning boosts robustness, by having: (i) one prominent singular value corresponding to each sub-class in the data, and significantly smaller remaining singular values; and (ii) {a large alignment between the prominent singular vectors and the clean labels of each sub-class. The above properties enable a linear layer trained on such representations to effectively learn the clean labels without overfitting the noise.} We further show that the low-rank structure of the Jacobian of deep networks pre-trained with contrastive learning allows them to achieve a superior performance initially, when fine-tuned on noisy labels. Finally, we demonstrate that the initial robustness provided by contrastive learning enables robust training methods to achieve state-of-the-art performance under extreme noise levels, e.g., an average of 27.18\\\\% and 15.58\\\\% increase in accuracy on CIFAR-10 and CIFAR-100 with 80\\\\% symmetric noisy labels, and 4.11\\\\% increase in accuracy on WebVision.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yihao Xue",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Kyle Whitecross",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Baharan Mirzasoleiman",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.12498",
+      "date": "2022-01-29T00:00:00",
+      "citation_count": 70,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2303.06344",
+      "score": 0.5,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2511.16778",
+      "score": 0.33333334,
+      "title": "GCL-OT: Graph Contrastive Learning with Optimal Transport for Heterophilic Text-Attributed Graphs",
+      "tldr": "[research paper] GCL-OT introduces optimal transport (OT)-based graph contrastive learning for text-attributed graphs (TAGs) to address multi-granular heterophily—partial, complete, and latent homophily—by enabling flexible, bidirectional alignment between structural and textual representations. It proposes three tailored mechanisms: (1) RealSoftMax for partial heterophily to emphasize key word-neighbor interactions, (2) a prompt-based filter to exclude irrelevant noise in complete heterophily, and (3) OT-guided soft supervision to discover latent semantic neighbors. Theoretical analysis shows improved mutual information bounds and reduced Bayes error, with empirical validation on nine benchmarks confirming superior performance over state-of-the-art methods in both homophilic and heterophilic settings.",
+      "abstract": "Recently, structure-text contrastive learning has shown promising performance on text-attributed graphs by leveraging the complementary strengths of graph neural networks and language models. However, existing methods typically rely on homophily assumptions in similarity estimation and hard optimization objectives, which limit their applicability to heterophilic graphs. Although existing methods can mitigate heterophily through structural adjustments or neighbor aggregation, they usually treat textual embeddings as static targets, leading to suboptimal alignment. In this work, we identify the multi-granular heterophily in text-attributed graphs, including complete heterophily, partial heterophily, and latent homophily, which makes structure-text alignment particularly challenging due to mixed, noisy, and missing semantic correlations. To achieve flexible and bidirectional alignment, we propose GCL-OT, a novel graph contrastive learning framework with optimal transport, equipped with tailored mechanisms for each type of heterophily. Specifically, for partial heterophily, we design a RealSoftMax-based similarity estimator to emphasize key neighbor-word interactions while easing background noise. For complete heterophily, we introduce a prompt-based filter that adaptively excludes irrelevant noise during optimal transport alignment. Furthermore, we incorporate OT-guided soft supervision to uncover potential neighbors with similar semantics, enhancing the learning of latent homophily. Theoretical analysis shows that GCL-OT can improve the mutual information bound and Bayes error guarantees. Extensive experiments on nine benchmarks show that GCL-OT consistently outperforms state-of-the-art methods, verifying its effectiveness and robustness.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Yating Ren",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Yikun Ban",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Huobin Tan",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2511.16778",
+      "date": "2025-11-20T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2412.00101",
+      "score": 0.33333334,
+      "title": "Multi-Label Contrastive Learning : A Comprehensive Study",
+      "tldr": "[research paper] This paper conducts a comprehensive empirical study of contrastive learning loss functions in multi-label classification, revealing that performance gains stem not only from modeling label interactions but also from the robust optimization properties of contrastive losses. The authors demonstrate superior Macro-F1 performance on datasets with high label cardinality and complex label correlations, while identifying limitations in small-label and low-data regimes. Based on gradient analysis, they propose a novel contrastive loss that removes problematic gradient components (e.g., negative label dominance) to improve stability and accuracy, achieving state-of-the-art results in multi-label tasks.",
+      "abstract": "Multi-label classification, which involves assigning multiple labels to a single input, has emerged as a key area in both research and industry due to its wide-ranging applications. Designing effective loss functions is crucial for optimizing deep neural networks for this task, as they significantly influence model performance and efficiency. Traditional loss functions, which often maximize likelihood under the assumption of label independence, may struggle to capture complex label relationships. Recent research has turned to supervised contrastive learning, a method that aims to create a structured representation space by bringing similar instances closer together and pushing dissimilar ones apart. Although contrastive learning offers a promising approach, applying it to multi-label classification presents unique challenges, particularly in managing label interactions and data structure.\\\n  In this paper, we conduct an in-depth study of contrastive learning loss for multi-label classification across diverse settings. These include datasets with both small and large numbers of labels, datasets with varying amounts of training data, and applications in both computer vision and natural language processing.\\\n  Our empirical results indicate that the promising outcomes of contrastive learning are attributable not only to the consideration of label interactions but also to the robust optimization scheme of the contrastive loss. Furthermore, while the supervised contrastive loss function faces challenges with datasets containing a small number of labels and ranking-based metrics, it demonstrates excellent performance, particularly in terms of Macro-F1, on datasets with a large number of labels.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Alexandre Audibert",
+          "orgs": [
+            "Université Grenoble Alpes"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Aurélien Gauffre",
+          "orgs": [
+            "Université Grenoble Alpes"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Massih-Reza Amini",
+          "orgs": [
+            "Université Grenoble Alpes"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2412.00101",
+      "date": "2024-11-27T00:00:00",
+      "citation_count": 4,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": "https://github.com/audibert-alexandre-fra/Multi-label-contrastive-comprehensive"
+    },
+    {
+      "arxiv_id": "2310.11664",
+      "score": 0.25,
+      "title": "Hetero$^2$Net: Heterophily-aware Representation Learning on Heterogenerous Graphs",
+      "tldr": "[research paper] Hetero2Net introduces metapath-based heterophily metrics (MLH and MDE) to quantify label and feature dissimilarity in heterogeneous graphs, revealing that standard HGNNs fail on heterophilic graphs despite inheriting homogeneous GNN mechanisms. The model addresses this via masked metapath prediction for disentangled homophilic/heterophilic representation learning and masked label prediction to improve message propagation in label-diverse neighborhoods, outperforming baselines on real-world benchmarks with varying heterophily levels.",
+      "abstract": "Real-world graphs are typically complex, exhibiting heterogeneity in the global structure, as well as strong heterophily within local neighborhoods. While a growing body of literature has revealed the limitations of common graph neural networks (GNNs) in handling homogeneous graphs with heterophily, little work has been conducted on investigating the heterophily properties in the context of heterogeneous graphs. To bridge this research gap, we identify the heterophily in heterogeneous graphs using metapaths and propose two practical metrics to quantitatively describe the levels of heterophily. Through in-depth investigations on several real-world heterogeneous graphs exhibiting varying levels of heterophily, we have observed that heterogeneous graph neural networks (HGNNs), which inherit many mechanisms from GNNs designed for homogeneous graphs, fail to generalize to heterogeneous graphs with heterophily or low level of homophily. To address the challenge, we present Hetero$^2$Net, a heterophily-aware HGNN that incorporates both masked metapath prediction and masked label prediction tasks to effectively and flexibly handle both homophilic and heterophilic heterogeneous graphs. We evaluate the performance of Hetero$^2$Net on five real-world heterogeneous graph benchmarks with varying levels of heterophily. The results demonstrate that Hetero$^2$Net outperforms strong baselines in the semi-supervised node classification task, providing valuable insights into effectively handling more complex heterogeneous graphs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lijt55@mail2.sysu.edu.cn"
+          },
+          "name": "Jintang Li",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "frank.wz@antgroup.com"
+          },
+          "name": "Zheng Wei",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yancong.djw@antgroup.com"
+          },
+          "name": "Jiawang Dan",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "colin.zj@antgroup.com"
+          },
+          "name": "Jing Zhou",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhuych27@mail2.sysu.edu.cn"
+          },
+          "name": "Yuchang Zhu",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "ruofan.wrf@antgroup.com"
+          },
+          "name": "Ruofan Wu",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yike.wbk@antgroup.com"
+          },
+          "name": "Baokun Wang",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yilue.zz@antgroup.com"
+          },
+          "name": "Zhen Zhang",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "changhua.mch@antgroup.com"
+          },
+          "name": "Changhua Meng",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jinhong.jh@antgroup.com"
+          },
+          "name": "Hong Jin",
+          "orgs": [
+            "Ant Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.11664",
+      "date": "2023-10-18T00:00:00",
+      "citation_count": 7,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

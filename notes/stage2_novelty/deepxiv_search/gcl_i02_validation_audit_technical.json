@@ -1,0 +1,313 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2505.22028",
+      "score": 0.5217391,
+      "title": "Weakly-Supervised Contrastive Learning for Imprecise Class Labels",
+      "tldr": "[research paper] The paper proposes a graph-theoretic framework for weakly-supervised contrastive learning that replaces discrete positive/negative pairs with continuous semantic similarity, derived from noisy or partial labels. By modeling sample pairs via semantic similarity—computed from augmented views and weak supervision—the method constructs a similarity graph where edges reflect the likelihood of shared class membership, enabling robust representation learning under ambiguous labels. Theoretical analysis establishes an error bound showing convergence to supervised contrastive learning under mild conditions, with empirical gains of 6.8% and 7.8% in noisy and partial label settings, respectively.",
+      "abstract": "Contrastive learning has achieved remarkable success in learning effective representations, with supervised contrastive learning often outperforming self-supervised approaches. However, in real-world scenarios, data annotations are often ambiguous or inaccurate, meaning that class labels may not reliably indicate whether two examples belong to the same class. This limitation restricts the applicability of supervised contrastive learning. To address this challenge, we introduce the concept of ``continuous semantic similarity'' to define positive and negative pairs. Instead of directly relying on imprecise class labels, we measure the semantic similarity between example pairs, which quantifies how closely they belong to the same category by iteratively refining weak supervisory signals. Based on this concept, we propose a graph-theoretic framework for weakly-supervised contrastive learning, where semantic similarity serves as the graph weights. Our framework is highly versatile and can be applied to many weakly-supervised learning scenarios. We demonstrate its effectiveness through experiments in two common settings, i.e., noisy label and partial label learning, where existing methods can be easily integrated to significantly improve performance. Theoretically, we establish an error bound for our approach, showing that it can approximate supervised contrastive learning under mild conditions. The implementation code is available at https://github.com/Speechless-10308/WSC.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Zi-Hao Zhou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jun-Jie Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Tong Wei",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Min-Ling Zhang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.22028",
+      "date": "2025-05-28T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": "https://github.com/Speechless-10308/WSC."
+    },
+    {
+      "arxiv_id": "2505.10307",
+      "score": 0.5,
+      "title": "Negative Metric Learning for Graphs",
+      "tldr": "[research paper] NML-GCL introduces a learnable Negative Metric Network (NMN) to construct a negative metric space where false negatives are distinguished from true negatives via distance to anchor nodes. Instead of relying on heuristic priors, the method employs a bi-level optimization scheme that iteratively refines both the graph encoder and NMN using self-supervision from augmented views, enabling implicit soft-labeling. Theoretical analysis proves NML provides a tighter lower bound of mutual information than InfoNCE, leading to improved representation quality and false-negative suppression.",
+      "abstract": "Graph contrastive learning (GCL) often suffers from false negatives, which degrades the performance on downstream tasks. The existing methods addressing the false negative issue usually rely on human prior knowledge, still leading GCL to suboptimal results. In this paper, we propose a novel Negative Metric Learning (NML) enhanced GCL (NML-GCL). NML-GCL employs a learnable Negative Metric Network (NMN) to build a negative metric space, in which false negatives can be distinguished better from true negatives based on their distance to anchor node. To overcome the lack of explicit supervision signals for NML, we propose a joint training scheme with bi-level optimization objective, which implicitly utilizes the self-supervision signals to iteratively optimize the encoder and the negative metric network. The solid theoretical analysis and the extensive experiments conducted on widely used benchmarks verify the superiority of the proposed method.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhaoyiyang0258@stu.scu.edu.cn"
+          },
+          "name": "Yiyang Zhao",
+          "orgs": [
+            "Sichuan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wuchengpei@stu.scu.edu.cn"
+          },
+          "name": "Chengpei Wu",
+          "orgs": [
+            "Sichuan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhanglilin@stu.scu.edu.cn"
+          },
+          "name": "Lilin Zhang",
+          "orgs": [
+            "Sichuan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yangning@scu.edu.cn",
+            "corresponding_author": true
+          },
+          "name": "Ning Yang",
+          "orgs": [
+            "Sichuan University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.10307",
+      "date": "2025-05-15T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2310.14525",
+      "score": 0.3703704,
+      "title": "Graph Ranking Contrastive Learning: A Extremely Simple yet Efficient Method",
+      "tldr": "[research paper] GraphRank proposes a rank-based alternative to contrastive learning in graph representation, eliminating false negative samples by using arbitrary nodes as negatives and computing pairwise similarities without requiring class-labeled negatives. It reduces time complexity from O(N²) to O(N) by replacing negative sampling with ranking-based similarity optimization, while maintaining or outperforming state-of-the-art GCL methods across multiple graph tasks.",
+      "abstract": "Graph contrastive learning (GCL) has emerged as a representative graph self-supervised method, achieving significant success. The currently prevalent optimization objective for GCL is InfoNCE. Typically, it employs augmentation techniques to obtain two views, where a node in one view acts as the anchor, the corresponding node in the other view serves as the positive sample, and all other nodes are regarded as negative samples. The goal is to minimize the distance between the anchor node and positive samples and maximize the distance to negative samples. However, due to the lack of label information during training, InfoNCE inevitably treats samples from the same class as negative samples, leading to the issue of false negative samples. This can impair the learned node representations and subsequently hinder performance in downstream tasks. While numerous methods have been proposed to mitigate the impact of false negatives, they still face various challenges. For instance, while increasing the number of negative samples can dilute the impact of false negatives, it concurrently increases computational burden. Thus, we propose GraphRank, a simple yet efficient graph contrastive learning method that addresses the problem of false negative samples by redefining the concept of negative samples to a certain extent, thereby avoiding the issue of false negative samples. The effectiveness of GraphRank is empirically validated through experiments on the node, edge, and graph level tasks.",
+      "authors": [
+        {
+          "misc": {
+            "url": "mailto:huyulan@ruc.edu.cn",
+            "email": "huyulan@ruc.edu.cn"
+          },
+          "name": "Yulan Hu",
+          "orgs": [
+            "Renmin University of China",
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:ouyangsheng@ruc.edu.cn",
+            "email": "ouyangsheng@ruc.edu.cn"
+          },
+          "name": "Sheng Ouyang",
+          "orgs": [
+            "Renmin University of China",
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:liujingyu@ruc.edu.cn",
+            "email": "liujingyu@ruc.edu.cn"
+          },
+          "name": "Jingyu Liu",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:chenge221@mails.ucas.ac.cn",
+            "email": "chenge221@mails.ucas.ac.cn"
+          },
+          "name": "Ge Chen",
+          "orgs": [
+            "University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:yangzhirui@ruc.edu.cn",
+            "email": "yangzhirui@ruc.edu.cn"
+          },
+          "name": "Zhirui Yang",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:wanjunchen@kuaishou.com",
+            "email": "wanjunchen@kuaishou.com"
+          },
+          "name": "Junchen Wan",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:zhangfuzheng@kuaishou.com",
+            "email": "zhangfuzheng@kuaishou.com"
+          },
+          "name": "Fuzheng Zhang",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:wangzhongyuan@kuaishou.com",
+            "email": "wangzhongyuan@kuaishou.com"
+          },
+          "name": "Zhongyuan Wang",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:liuyonggsai@ruc.edu.cn",
+            "email": "liuyonggsai@ruc.edu.cn"
+          },
+          "name": "Yong Liu",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.14525",
+      "date": "2023-10-23T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2306.04160",
+      "score": 0.35658917,
+      "title": "Rethinking Weak Supervision in Helping Contrastive Learning",
+      "tldr": "[theoretical research paper] The paper establishes a unified theoretical framework for contrastive learning under weak supervision, showing that semi-supervised labels improve downstream classification error bounds by enhancing the augmentation graph via posterior probability-based similarity, while noisy labels have limited effect—joint training under noisy labels performs no better than the winner of supervised and unsupervised contrastive learning, indicating that noisy labels do not directly improve representation learning and that label denoising remains essential.",
+      "abstract": "Contrastive learning has shown outstanding performances in both supervised and unsupervised learning, and has recently been introduced to solve weakly supervised learning problems such as semi-supervised learning and noisy label learning. Despite the empirical evidence showing that semi-supervised labels improve the representations of contrastive learning, it remains unknown if noisy supervised information can be directly used in training instead of after manual denoising. Therefore, to explore the mechanical differences between semi-supervised and noisy-labeled information in helping contrastive learning, we establish a unified theoretical framework of contrastive learning under weak supervision. Specifically, we investigate the most intuitive paradigm of jointly training supervised and unsupervised contrastive losses. By translating the weakly supervised information into a similarity graph under the framework of spectral clustering based on the posterior probability of weak labels, we establish the downstream classification error bound. We prove that semi-supervised labels improve the downstream error bound whereas noisy labels have limited effects under such a paradigm. Our theoretical findings here provide new insights for the community to rethink the role of weak supervision in helping contrastive learning.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jingyi Cui",
+          "orgs": [
+            "1"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Weiran Huang",
+          "orgs": [
+            "2",
+            "3"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yifei Wang",
+          "orgs": [
+            "4"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yisen Wang",
+          "orgs": [
+            "1",
+            "5"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2306.04160",
+      "date": "2023-06-07T00:00:00",
+      "citation_count": 20,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2011.11765",
+      "score": 0.25555557,
+      "title": "Boosting Contrastive Self-Supervised Learning with False Negative Cancellation",
+      "tldr": "[research paper] The paper identifies false negatives—negative image pairs from the same semantic class—in contrastive self-supervised learning, which degrade representation quality by discarding semantic features and causing conflicting optimization signals. It proposes a label-free method to detect false negatives with ~40% accuracy on ImageNet and introduces two mitigation strategies: false negative elimination (removing such pairs from the loss) and attraction (pulling embeddings of semantically similar samples together). These strategies improve top-1 accuracy by 5.8% under 1% labels and synergize with multi-crop augmentation, doubling performance with minimal computational overhead.",
+      "abstract": "Self-supervised representation learning has made significant leaps fueled by progress in contrastive learning, which seeks to learn transformations that embed positive input pairs nearby, while pushing negative pairs far apart. While positive pairs can be generated reliably (e.g., as different views of the same image), it is difficult to accurately establish negative pairs, defined as samples from different images regardless of their semantic content or visual features. A fundamental problem in contrastive learning is mitigating the effects of false negatives. Contrasting false negatives induces two critical issues in representation learning: discarding semantic information and slow convergence. In this paper, we propose novel approaches to identify false negatives, as well as two strategies to mitigate their effect, i.e. false negative elimination and attraction, while systematically performing rigorous evaluations to study this problem in detail. Our method exhibits consistent improvements over existing contrastive learning-based methods. Without labels, we identify false negatives with 40% accuracy among 1000 semantic classes on ImageNet, and achieve 5.8% absolute improvement in top-1 accuracy over the previous state-of-the-art when finetuning with 1% labels. Our code is available at https://github.com/google-research/fnc.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Tri Huynh",
+          "orgs": [
+            "Google"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Simon Kornblith",
+          "orgs": [
+            "Google Research"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Matthew R. Walter",
+          "orgs": [
+            "TTI-Chicago"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Michael Maire",
+          "orgs": [
+            "University of Chicago"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Maryam Khademi",
+          "orgs": [
+            "Google"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2011.11765",
+      "date": "2020-11-23T00:00:00",
+      "citation_count": 215,
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "venue": "IEEE Workshop/Winter Conference on Applications of Computer Vision",
+      "venue_year": 2022,
+      "github_url": "https://github.com/google-research/fnc"
+    }
+  ]
+}

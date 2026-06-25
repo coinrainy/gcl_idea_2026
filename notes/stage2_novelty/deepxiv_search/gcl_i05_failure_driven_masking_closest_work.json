@@ -1,0 +1,320 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2304.04779",
+      "score": 0.5833334,
+      "title": "GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner",
+      "tldr": "[research paper] GraphMAE2 introduces two regularization strategies—multi-view random re-mask decoding and latent representation prediction—to improve feature reconstruction in masked self-supervised graph learning. Multi-view re-mask decoding injects randomness into the decoding process by repeatedly masking and reconstructing encoded embeddings, reducing overfitting to noisy or low-discriminative input features. Latent representation prediction enforces reconstruction in the embedding space using graph-derived representations as targets, enhancing robustness and generalization. The method achieves at least 2.45% improvement over state-of-the-art on ogbn-Papers100M (111M nodes, 1.6B edges), demonstrating superior performance under feature disturbance and low discriminability.",
+      "abstract": "Graph self-supervised learning (SSL), including contrastive and generative approaches, offers great potential to address the fundamental challenge of label scarcity in real-world graph data. Among both sets of graph SSL techniques, the masked graph autoencoders (e.g., GraphMAE)--one type of generative method--have recently produced promising results. The idea behind this is to reconstruct the node features (or structures)--that are randomly masked from the input--with the autoencoder architecture. However, the performance of masked feature reconstruction naturally relies on the discriminability of the input features and is usually vulnerable to disturbance in the features. In this paper, we present a masked self-supervised learning framework GraphMAE2 with the goal of overcoming this issue. The idea is to impose regularization on feature reconstruction for graph SSL. Specifically, we design the strategies of multi-view random re-mask decoding and latent representation prediction to regularize the feature reconstruction. The multi-view random re-mask decoding is to introduce randomness into reconstruction in the feature space, while the latent representation prediction is to enforce the reconstruction in the embedding space. Extensive experiments show that GraphMAE2 can consistently generate top results on various public datasets, including at least 2.45% improvements over state-of-the-art baselines on ogbn-Papers100M with 111M nodes and 1.6B edges.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yufei.he@bit.edu.cn"
+          },
+          "name": "Yufei He",
+          "orgs": [
+            "Beijing Institute of Technology",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cyk20@mails.tsinghua.edu.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuxiao21@mails.tsinghua.edu.cn"
+          },
+          "name": "Xiao Liu",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "evgeny.kharlamov@de.bosch.com"
+          },
+          "name": "Evgeny Kharlamov",
+          "orgs": [
+            "Bosch Center for Artificial Intelligence",
+            "Germany"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2304.04779",
+      "date": "2023-04-10T00:00:00",
+      "citation_count": 183,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": "https://github.com/THUDM/GraphMAE2"
+    },
+    {
+      "arxiv_id": "2201.09830",
+      "score": 0.5263158,
+      "title": "Learning Graph Augmentations to Learn Graph Representations",
+      "tldr": "[research paper] LG2AR introduces an end-to-end probabilistic framework for graph augmentation that learns dataset-specific augmentation policies and parameter distributions, enabling adaptive, data-driven augmentation strategies for both node and graph-level representations. Unlike prior methods that rely on hand-crafted or heuristic augmentations, LG2AR jointly optimizes a selection policy and augmentation heads to maximize representation consistency under diverse graph structures and distribution shifts, achieving state-of-the-art performance on 18 out of 20 benchmarks across linear and semi-supervised settings.",
+      "abstract": "Devising augmentations for graph contrastive learning is challenging due to their irregular structure, drastic distribution shifts, and nonequivalent feature spaces across datasets. We introduce LG2AR, Learning Graph Augmentations to Learn Graph Representations, which is an end-to-end automatic graph augmentation framework that helps encoders learn generalizable representations on both node and graph levels. LG2AR consists of a probabilistic policy that learns a distribution over augmentations and a set of probabilistic augmentation heads that learn distributions over augmentation parameters. We show that LG2AR achieves state-of-the-art results on 18 out of 20 graph-level and node-level benchmarks compared to previous unsupervised models under both linear and semi-supervised evaluation protocols. The source code will be released here: https://github.com/kavehhassani/lg2ar",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Kaveh Hassani",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Amir Hosein Khasahmadi",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2201.09830",
+      "date": "2022-01-24T00:00:00",
+      "citation_count": 26,
+      "categories": [
+        "cs.LG",
+        "cs.NE"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2311.03897",
+      "score": 0.5,
+      "title": "Temporal Graph Representation Learning with Adaptive Augmentation Contrastive",
+      "tldr": "[research paper] TGAC introduces a contrastive learning framework for temporal graph representation that integrates temporal edge generation dynamics into graph augmentation via adaptive perturbations. It employs edge centrality-based pruning to remove noisy topological links before augmentation, preserving critical temporal interactions. The model learns robust node embeddings through inter-view and intra-view contrastive objectives, outperforming existing methods in link prediction and node classification by effectively mitigating time-varying noise while preserving semantic evolution.",
+      "abstract": "Temporal graph representation learning aims to generate low-dimensional dynamic node embeddings to capture temporal information as well as structural and property information. Current representation learning methods for temporal networks often focus on capturing fine-grained information, which may lead to the model capturing random noise instead of essential semantic information. While graph contrastive learning has shown promise in dealing with noise, it only applies to static graphs or snapshots and may not be suitable for handling time-dependent noise. To alleviate the above challenge, we propose a novel Temporal Graph representation learning with Adaptive augmentation Contrastive (TGAC) model. The adaptive augmentation on the temporal graph is made by combining prior knowledge with temporal information, and the contrastive objective function is constructed by defining the augmented inter-view contrast and intra-view contrast. To complement TGAC, we propose three adaptive augmentation strategies that modify topological features to reduce noise from the network. Our extensive experiments on various real networks demonstrate that the proposed model outperforms other temporal graph representation learning methods.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Hongjiang Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Pengfei Jiao",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "corresponding_author": "✉"
+          },
+          "name": "Huijun Tang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Huaming Wu",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2311.03897",
+      "date": "2023-11-07T00:00:00",
+      "citation_count": 15,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "ECML/PKDD",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2211.03710",
+      "score": 0.4,
+      "title": "Graph Contrastive Learning with Implicit Augmentations",
+      "tldr": "[research paper] Implicit Graph Contrastive Learning (iGCL) introduces a latent-space augmentation strategy using Variational Graph Auto-Encoders (VGAEs) to generate semantically meaningful graph views, avoiding destructive random perturbations. Instead of manually tuning perturbation ratios, iGCL learns high-level topological semantics in the latent space and formulates an implicit contrastive loss with an entropy-based upper bound for efficient optimization, enabling automatic, data-agnostic augmentation that preserves graph structure while improving performance on both node-level and graph-level tasks.",
+      "abstract": "Existing graph contrastive learning methods rely on augmentation techniques based on random perturbations (e.g., randomly adding or dropping edges and nodes). Nevertheless, altering certain edges or nodes can unexpectedly change the graph characteristics, and choosing the optimal perturbing ratio for each dataset requires onerous manual tuning. In this paper, we introduce Implicit Graph Contrastive Learning (iGCL), which utilizes augmentations in the latent space learned from a Variational Graph Auto-Encoder by reconstructing graph topological structure. Importantly, instead of explicitly sampling augmentations from latent distributions, we further propose an upper bound for the expected contrastive loss to improve the efficiency of our learning algorithm. Thus, graph semantics can be preserved within the augmentations in an intelligent way without arbitrary manual design or prior human knowledge. Experimental results on both graph-level and node-level tasks show that the proposed method achieves state-of-the-art performance compared to other benchmarks, where ablation studies in the end demonstrate the effectiveness of modules in iGCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hlia0714@uni.sydney.edu.au"
+          },
+          "name": "Huidong Liang",
+          "orgs": [
+            "Discipline of Business Analytics, The University of Sydney Business School, The University of Sydney, Australia",
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "duxingjian.real@bytedance.com"
+          },
+          "name": "Xingjian Du",
+          "orgs": [
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhubilei@bytedance.com"
+          },
+          "name": "Bilei Zhu",
+          "orgs": [
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mazejun@bytedance.com"
+          },
+          "name": "Zejun Ma",
+          "orgs": [
+            "ByteDance AI Lab, Shanghai, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "knutchen@ucsd.edu"
+          },
+          "name": "Ke Chen",
+          "orgs": [
+            "University of California San Diego, San Diego, United States"
+          ]
+        },
+        {
+          "misc": {
+            "email": "junbin.gao@sydney.edu.au"
+          },
+          "name": "Junbin Gao",
+          "orgs": [
+            "Discipline of Business Analytics, The University of Sydney Business School, The University of Sydney, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2211.03710",
+      "date": "2022-11-07T00:00:00",
+      "citation_count": 44,
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "venue": "Neural Networks",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2205.10803",
+      "score": 0.33333334,
+      "title": "GraphMAE: Self-Supervised Masked Graph Autoencoders",
+      "tldr": "[research paper] GraphMAE introduces a generative self-supervised approach to graph autoencoding that replaces structure reconstruction with feature reconstruction using a masked input and scaled cosine error (SCE), addressing key limitations in prior graph autoencoders such as sensitivity to reconstruction metrics, training instability, and reliance on structural augmentation. The method achieves superior performance across 21 datasets in node and graph classification tasks by eliminating the need for negative sampling or complex training dynamics, demonstrating that simple, well-designed generative objectives can outperform contrastive baselines in graph pre-training.",
+      "abstract": "Self-supervised learning (SSL) has been extensively explored in recent years. Particularly, generative SSL has seen emerging success in natural language processing and other AI fields, such as the wide adoption of BERT and GPT. Despite this, contrastive learning-which heavily relies on structural data augmentation and complicated training strategies-has been the dominant approach in graph SSL, while the progress of generative SSL on graphs, especially graph autoencoders (GAEs), has thus far not reached the potential as promised in other fields. In this paper, we identify and examine the issues that negatively impact the development of GAEs, including their reconstruction objective, training robustness, and error metric. We present a masked graph autoencoder GraphMAE that mitigates these issues for generative self-supervised graph pretraining. Instead of reconstructing graph structures, we propose to focus on feature reconstruction with both a masking strategy and scaled cosine error that benefit the robust training of GraphMAE. We conduct extensive experiments on 21 public datasets for three different graph learning tasks. The results manifest that GraphMAE-a simple graph autoencoder with careful designs-can consistently generate outperformance over both contrastive and generative state-of-the-art baselines. This study provides an understanding of graph autoencoders and demonstrates the potential of generative self-supervised pre-training on graphs.",
+      "authors": [
+        {
+          "misc": {
+            "email": "houzy21@mails.tsinghua.edu.cn"
+          },
+          "name": "Zhenyu Hou",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "liuxiao21@mails.tsinghua.edu.cn"
+          },
+          "name": "Xiao Liu",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cyk20@mails.tsinghua.edu.cn"
+          },
+          "name": "Yukuo Cen",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuxiaod@tsinghua.edu.cn"
+          },
+          "name": "Yuxiao Dong",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yang.yhx@alibaba-inc.com"
+          },
+          "name": "Hongxia Yang",
+          "orgs": [
+            "DAMO Academy, Alibaba Group"
+          ]
+        },
+        {
+          "misc": {
+            "email": "cjwang@birentech.com"
+          },
+          "name": "Chunjie Wang",
+          "orgs": [
+            "BirenTech Research"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jietang@tsinghua.edu.cn"
+          },
+          "name": "Jie Tang",
+          "orgs": [
+            "Tsinghua University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.10803",
+      "date": "2022-05-22T00:00:00",
+      "citation_count": 893,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": "https://github.com/THUDM/GraphMAE"
+    }
+  ]
+}

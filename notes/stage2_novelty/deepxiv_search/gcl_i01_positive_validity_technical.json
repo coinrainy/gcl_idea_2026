@@ -1,0 +1,273 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2505.11776",
+      "score": 0.6666667,
+      "title": "Generative and Contrastive Graph Representation Learning",
+      "tldr": "[research paper] The paper proposes a unified graph self-supervised learning framework that synergizes community-aware node-level contrastive learning with graph-level contrastive learning, addressing the limitations of both pure contrastive and generative methods. It introduces a principled positive pair generation strategy via community structure awareness, reduces reliance on computationally expensive negative sampling, and employs a comprehensive augmentation pipeline (feature masking, node, and edge perturbation) to enhance representation robustness. Experimental results on benchmark datasets show consistent performance gains—up to 2.01%—across node classification, clustering, and link prediction, outperforming state-of-the-art contrastive and generative methods, including hybrid approaches like GCMAE.",
+      "abstract": "Self-supervised learning (SSL) on graphs generates node and graph representations (i.e., embeddings) that can be used for downstream tasks such as node classification, node clustering, and link prediction. Graph SSL is particularly useful in scenarios with limited or no labeled data. Existing SSL methods predominantly follow contrastive or generative paradigms, each excelling in different tasks: contrastive methods typically perform well on classification tasks, while generative methods often excel in link prediction. In this paper, we present a novel architecture for graph SSL that integrates the strengths of both approaches. Our framework introduces community-aware node-level contrastive learning, providing more robust and effective positive and negative node pairs generation, alongside graph-level contrastive learning to capture global semantic information. Additionally, we employ a comprehensive augmentation strategy that combines feature masking, node perturbation, and edge perturbation, enabling robust and diverse representation learning. By incorporating these enhancements, our model achieves superior performance across multiple tasks, including node classification, clustering, and link prediction. Evaluations on open benchmark datasets demonstrate that our model outperforms state-of-the-art methods, achieving a performance lift of 0.23%-2.01% depending on the task and dataset.",
+      "authors": [
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "jiali.chen2@apple.com"
+          },
+          "name": "Jiali Chen",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        },
+        {
+          "misc": {
+            "url": "https://arxiv.org/abs/2505.11776",
+            "email": "avijit.mukherjee@apple.com"
+          },
+          "name": "Avijit Mukherjee",
+          "orgs": [
+            "Apple",
+            "Cupertino",
+            "California",
+            "USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.11776",
+      "date": "2025-05-17T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.22028",
+      "score": 0.5,
+      "title": "Weakly-Supervised Contrastive Learning for Imprecise Class Labels",
+      "tldr": "[research paper] The paper proposes a graph-theoretic framework for weakly-supervised contrastive learning that replaces discrete positive/negative pairs with continuous semantic similarity, derived from noisy or partial labels. By modeling sample pairs via semantic similarity—computed from augmented views and weak supervision—the method constructs a similarity graph where edges reflect the likelihood of shared class membership, enabling robust representation learning under ambiguous labels. Theoretical analysis establishes an error bound showing convergence to supervised contrastive learning under mild conditions, with empirical gains of 6.8% and 7.8% in noisy and partial label settings, respectively.",
+      "abstract": "Contrastive learning has achieved remarkable success in learning effective representations, with supervised contrastive learning often outperforming self-supervised approaches. However, in real-world scenarios, data annotations are often ambiguous or inaccurate, meaning that class labels may not reliably indicate whether two examples belong to the same class. This limitation restricts the applicability of supervised contrastive learning. To address this challenge, we introduce the concept of ``continuous semantic similarity'' to define positive and negative pairs. Instead of directly relying on imprecise class labels, we measure the semantic similarity between example pairs, which quantifies how closely they belong to the same category by iteratively refining weak supervisory signals. Based on this concept, we propose a graph-theoretic framework for weakly-supervised contrastive learning, where semantic similarity serves as the graph weights. Our framework is highly versatile and can be applied to many weakly-supervised learning scenarios. We demonstrate its effectiveness through experiments in two common settings, i.e., noisy label and partial label learning, where existing methods can be easily integrated to significantly improve performance. Theoretically, we establish an error bound for our approach, showing that it can approximate supervised contrastive learning under mild conditions. The implementation code is available at https://github.com/Speechless-10308/WSC.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Zi-Hao Zhou",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jun-Jie Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Tong Wei",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Min-Ling Zhang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.22028",
+      "date": "2025-05-28T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": "https://github.com/Speechless-10308/WSC."
+    },
+    {
+      "arxiv_id": "2205.00905",
+      "score": 0.3809524,
+      "title": "FastGCL: Fast Self-Supervised Learning on Graphs via Contrastive Neighborhood Aggregation",
+      "tldr": "[research paper] FastGCL introduces a contrastive learning framework that leverages intrinsic neighborhood aggregation in GNNs as a self-supervised signal, eliminating the need for complex graph data augmentation. It constructs positive samples via weighted neighborhood aggregation—where edge weights are learned from node representations—and negative samples via self-loop graphs, preserving graph topology and node attributes. This design avoids semantic drift and reduces computational overhead, enabling faster convergence without sacrificing performance on node and graph classification tasks.",
+      "abstract": "Graph contrastive learning (GCL), as a popular approach to graph self-supervised learning, has recently achieved a non-negligible effect. To achieve superior performance, the majority of existing GCL methods elaborate on graph data augmentation to construct appropriate contrastive pairs. However, existing methods place more emphasis on the complex graph data augmentation which requires extra time overhead, and pay less attention to developing contrastive schemes specific to encoder characteristics. We argue that a better contrastive scheme should be tailored to the characteristics of graph neural networks (e.g., neighborhood aggregation) and propose a simple yet effective method named FastGCL. Specifically, by constructing weighted-aggregated and non-aggregated neighborhood information as positive and negative samples respectively, FastGCL identifies the potential semantic information of data without disturbing the graph topology and node attributes, resulting in faster training and convergence speeds. Extensive experiments have been conducted on node classification and graph classification tasks, showing that FastGCL has competitive classification performance and significant training speedup compared to existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wangysh29@mail2.sysu.edu.cn"
+          },
+          "name": "Yuansheng Wang",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xukun6@mail2.sysu.edu.cn"
+          },
+          "name": "Kun Xu",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zulun001@ntu.edu.sg"
+          },
+          "name": "Zulun Zhu",
+          "orgs": [
+            "Nanyang Technological University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.00905",
+      "date": "2022-05-02T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2104.06317",
+      "score": 0.36666667,
+      "title": "Probing Negative Sampling Strategies to Learn GraphRepresentations via Unsupervised Contrastive Learning",
+      "tldr": "[research paper] This paper introduces a node-wise unsupervised contrastive learning framework for graph representation learning, addressing two critical issues: class collision (where negative samples mistakenly include true positives) and imbalanced negative sampling distributions. It proposes a determinantal point process (DPP)-based negative sampling strategy to ensure diverse, class-separated negative examples by leveraging probabilistic assumptions about data distributions, thereby improving the quality of node embeddings. Experiments on three real-world datasets show superior performance over baseline and state-of-the-art methods in node classification tasks.",
+      "abstract": "Graph representation learning has long been an important yet challenging task for various real-world applications. However, their downstream tasks are mainly performed in the settings of supervised or semi-supervised learning. Inspired by recent advances in unsupervised contrastive learning, this paper is thus motivated to investigate how the node-wise contrastive learning could be performed. Particularly, we respectively resolve the class collision issue and the imbalanced negative data distribution issue. Extensive experiments are performed on three real-world datasets and the proposed approach achieves the SOTA model performance.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Shiyi Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ziao Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xinni Zhang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xiaofeng Zhang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "email": "111Contact Author"
+          },
+          "name": "Dan Peng",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2104.06317",
+      "date": "2021-04-13T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2506.05214",
+      "score": 0.29347825,
+      "title": "Mitigating Degree Bias Adaptively with Hard-to-Learn Nodes in Graph Contrastive Learning",
+      "tldr": "[research paper] The paper proposes Hardness Adaptive Reweighted (HAR) contrastive loss to mitigate degree bias in graph contrastive learning by introducing more positive pairs via class-based supervision and adaptively weighting positive and negative samples based on learning hardness—defined as the difficulty of learning a node’s representation due to noisy or sparse neighborhood information. HAR prioritizes hard-to-learn nodes (e.g., low-degree nodes with noisy or imbalanced neighbors) by assigning higher weights, improving representation quality for underrepresented nodes. The method is extended to a semi-supervised setting via SHARP, which uses pseudo-labeling for unlabelled data and demonstrates bounded misclassification risk theoretically, outperforming baselines in both global and degree-level node classification across four datasets with improved class separation in latent space.",
+      "abstract": "Graph Neural Networks (GNNs) often suffer from degree bias in node classification tasks, where prediction performance varies across nodes with different degrees. Several approaches, which adopt Graph Contrastive Learning (GCL), have been proposed to mitigate this bias. However, the limited number of positive pairs and the equal weighting of all positives and negatives in GCL still lead to low-degree nodes acquiring insufficient and noisy information. This paper proposes the Hardness Adaptive Reweighted (HAR) contrastive loss to mitigate degree bias. It adds more positive pairs by leveraging node labels and adaptively weights positive and negative pairs based on their learning hardness. In addition, we develop an experimental framework named SHARP to extend HAR to a broader range of scenarios. Both our theoretical analysis and experiments validate the effectiveness of SHARP. The experimental results across four datasets show that SHARP achieves better performance against baselines at both global and degree levels.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ym21669@bristol.ac.uk"
+          },
+          "name": "Jingyu Hu",
+          "orgs": [
+            "University of Bristol"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongbo.bo@bristol.ac.uk"
+          },
+          "name": "Hongbo Bo",
+          "orgs": [
+            "University of Bristol"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jun.hong@uwe.ac.uk"
+          },
+          "name": "Jun Hong",
+          "orgs": [
+            "University of the West of England"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiaowei.liu@bristol.ac.uk"
+          },
+          "name": "Xiaowei Liu",
+          "orgs": [
+            "University of Bristol"
+          ]
+        },
+        {
+          "misc": {
+            "email": "weiru.liu@bristol.ac.uk"
+          },
+          "name": "Weiru Liu",
+          "orgs": [
+            "University of Bristol"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2506.05214",
+      "date": "2025-06-05T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

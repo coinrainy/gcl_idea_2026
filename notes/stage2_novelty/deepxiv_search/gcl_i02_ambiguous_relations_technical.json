@@ -1,0 +1,363 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2506.15893",
+      "score": 0.5,
+      "title": "Formal Models of Active Learning from Contrastive Examples",
+      "tldr": "[theoretical research paper] The paper introduces a formal framework for active learning with contrastive examples, where the learner receives a pair of instances—query and contrastive example—based on a predefined contrast set. It establishes non-trivial upper and lower bounds on sample complexity for learning geometric and Boolean concept classes (e.g., 1-decision lists, monotone DNFs), and reveals a deep connection between contrastive learning sample complexity and the mistake bounds in self-directed online learning, offering a novel theoretical bridge between active learning and online learning paradigms.",
+      "abstract": "Machine learning can greatly benefit from providing learning algorithms with pairs of contrastive training examples -- typically pairs of instances that differ only slightly, yet have different class labels. Intuitively, the difference in the instances helps explain the difference in the class labels. This paper proposes a theoretical framework in which the effect of various types of contrastive examples on active learners is studied formally. The focus is on the sample complexity of learning concept classes and how it is influenced by the choice of contrastive examples. We illustrate our results with geometric concept classes and classes of Boolean functions. Interestingly, we reveal a connection between learning from contrastive examples and the classical model of self-directed learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "ansou@uwaterloo"
+          },
+          "name": "Farnam Mansouri",
+          "orgs": [
+            "University of Waterloo"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hsimon@mpi-inf.mpg.de"
+          },
+          "name": "Hans U. Simon",
+          "orgs": [
+            "MPI-INF",
+            "Ruhr-University Bochum"
+          ]
+        },
+        {
+          "misc": {
+            "email": "adishes@mpi-sws.org"
+          },
+          "name": "Adish Singla",
+          "orgs": [
+            "MPI-SWS"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenyuxin@uchicago.edu"
+          },
+          "name": "Yuxin Chen",
+          "orgs": [
+            "University of Chicago"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zilles@cs.uregina.ca"
+          },
+          "name": "Sandra Zilles",
+          "orgs": [
+            "University of Regina"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2506.15893",
+      "date": "2025-06-18T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2406.15044",
+      "score": 0.5,
+      "title": "From Overfitting to Robustness: Quantity, Quality, and Variety Oriented Negative Sample Selection in Graph Contrastive Learning",
+      "tldr": "[research paper] The paper proposes Cumulative Sample Selection (CSS), a novel negative sample selection algorithm that addresses overfitting in graph contrastive learning by dynamically balancing the quantity, quality, and variety of negative samples. It introduces three negative sample pools—easy, medium, and hard—each representing different levels of discriminability, and uses a decision agent to adaptively increase or maintain the sampling ratio based on training performance. By avoiding uniform or hard-negative-only selection, CSS enhances model robustness and generalization across diverse graph datasets, achieving up to 2.86% accuracy improvement on seven out of nine benchmark datasets.",
+      "abstract": "Graph contrastive learning (GCL) aims to contrast positive-negative counterparts to learn the node embeddings, whereas graph data augmentation methods are employed to generate these positive-negative samples. The variation, quantity, and quality of negative samples compared to positive samples play crucial roles in learning meaningful embeddings for node classification downstream tasks. Less variation, excessive quantity, and low-quality negative samples cause the model to be overfitted for particular nodes, resulting in less robust models. To solve the overfitting problem in the GCL paradigm, this study proposes a novel Cumulative Sample Selection (CSS) algorithm by comprehensively considering negative samples' quality, variations, and quantity. Initially, three negative sample pools are constructed: easy, medium, and hard negative samples, which contain 25%, 50%, and 25% of the total available negative samples, respectively. Then, 10% negative samples are selected from each of these three negative sample pools for training the model. After that, a decision agent module evaluates model training results and decides whether to explore more negative samples from three negative sample pools by increasing the ratio or keep exploiting the current sampling ratio. The proposed algorithm is integrated into a proposed graph contrastive learning framework named NegAmplify. NegAmplify is compared with the SOTA methods on nine graph node classification datasets, with seven achieving better node classification accuracy with up to 2.86% improvement.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Adnan Ali",
+          "orgs": [
+            "University of Science and Technology of China, Jinzhai road, Hefei, 23006, Anhui, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Jinlong Li",
+          "orgs": [
+            "University of Science and Technology of China, Jinzhai road, Hefei, 23006, Anhui, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Huanhuan Chen",
+          "orgs": [
+            "University of Science and Technology of China, Jinzhai road, Hefei, 23006, Anhui, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ali Kashif Bashir",
+          "orgs": [
+            "Manchester Metropolitan University, M15 6BH, Manchester, United Kingdom"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2406.15044",
+      "date": "2024-06-21T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Applied Soft Computing",
+      "venue_year": null,
+      "github_url": "https://github.com/mhadnanali/NegAmplify."
+    },
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.4166667,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2104.06317",
+      "score": 0.3809524,
+      "title": "Probing Negative Sampling Strategies to Learn GraphRepresentations via Unsupervised Contrastive Learning",
+      "tldr": "[research paper] This paper introduces a node-wise unsupervised contrastive learning framework for graph representation learning, addressing two critical issues: class collision (where negative samples mistakenly include true positives) and imbalanced negative sampling distributions. It proposes a determinantal point process (DPP)-based negative sampling strategy to ensure diverse, class-separated negative examples by leveraging probabilistic assumptions about data distributions, thereby improving the quality of node embeddings. Experiments on three real-world datasets show superior performance over baseline and state-of-the-art methods in node classification tasks.",
+      "abstract": "Graph representation learning has long been an important yet challenging task for various real-world applications. However, their downstream tasks are mainly performed in the settings of supervised or semi-supervised learning. Inspired by recent advances in unsupervised contrastive learning, this paper is thus motivated to investigate how the node-wise contrastive learning could be performed. Particularly, we respectively resolve the class collision issue and the imbalanced negative data distribution issue. Extensive experiments are performed on three real-world datasets and the proposed approach achieves the SOTA model performance.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Shiyi Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ziao Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xinni Zhang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xiaofeng Zhang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "email": "111Contact Author"
+          },
+          "name": "Dan Peng",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2104.06317",
+      "date": "2021-04-13T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2310.14525",
+      "score": 0.33333334,
+      "title": "Graph Ranking Contrastive Learning: A Extremely Simple yet Efficient Method",
+      "tldr": "[research paper] GraphRank proposes a rank-based alternative to contrastive learning in graph representation, eliminating false negative samples by using arbitrary nodes as negatives and computing pairwise similarities without requiring class-labeled negatives. It reduces time complexity from O(N²) to O(N) by replacing negative sampling with ranking-based similarity optimization, while maintaining or outperforming state-of-the-art GCL methods across multiple graph tasks.",
+      "abstract": "Graph contrastive learning (GCL) has emerged as a representative graph self-supervised method, achieving significant success. The currently prevalent optimization objective for GCL is InfoNCE. Typically, it employs augmentation techniques to obtain two views, where a node in one view acts as the anchor, the corresponding node in the other view serves as the positive sample, and all other nodes are regarded as negative samples. The goal is to minimize the distance between the anchor node and positive samples and maximize the distance to negative samples. However, due to the lack of label information during training, InfoNCE inevitably treats samples from the same class as negative samples, leading to the issue of false negative samples. This can impair the learned node representations and subsequently hinder performance in downstream tasks. While numerous methods have been proposed to mitigate the impact of false negatives, they still face various challenges. For instance, while increasing the number of negative samples can dilute the impact of false negatives, it concurrently increases computational burden. Thus, we propose GraphRank, a simple yet efficient graph contrastive learning method that addresses the problem of false negative samples by redefining the concept of negative samples to a certain extent, thereby avoiding the issue of false negative samples. The effectiveness of GraphRank is empirically validated through experiments on the node, edge, and graph level tasks.",
+      "authors": [
+        {
+          "misc": {
+            "url": "mailto:huyulan@ruc.edu.cn",
+            "email": "huyulan@ruc.edu.cn"
+          },
+          "name": "Yulan Hu",
+          "orgs": [
+            "Renmin University of China",
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:ouyangsheng@ruc.edu.cn",
+            "email": "ouyangsheng@ruc.edu.cn"
+          },
+          "name": "Sheng Ouyang",
+          "orgs": [
+            "Renmin University of China",
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:liujingyu@ruc.edu.cn",
+            "email": "liujingyu@ruc.edu.cn"
+          },
+          "name": "Jingyu Liu",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:chenge221@mails.ucas.ac.cn",
+            "email": "chenge221@mails.ucas.ac.cn"
+          },
+          "name": "Ge Chen",
+          "orgs": [
+            "University of Chinese Academy of Sciences"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:yangzhirui@ruc.edu.cn",
+            "email": "yangzhirui@ruc.edu.cn"
+          },
+          "name": "Zhirui Yang",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:wanjunchen@kuaishou.com",
+            "email": "wanjunchen@kuaishou.com"
+          },
+          "name": "Junchen Wan",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:zhangfuzheng@kuaishou.com",
+            "email": "zhangfuzheng@kuaishou.com"
+          },
+          "name": "Fuzheng Zhang",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:wangzhongyuan@kuaishou.com",
+            "email": "wangzhongyuan@kuaishou.com"
+          },
+          "name": "Zhongyuan Wang",
+          "orgs": [
+            "Kuaishou Technology"
+          ]
+        },
+        {
+          "misc": {
+            "url": "mailto:liuyonggsai@ruc.edu.cn",
+            "email": "liuyonggsai@ruc.edu.cn"
+          },
+          "name": "Yong Liu",
+          "orgs": [
+            "Renmin University of China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2310.14525",
+      "date": "2023-10-23T00:00:00",
+      "citation_count": 2,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": null,
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

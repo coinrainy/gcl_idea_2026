@@ -1,0 +1,358 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2412.16218",
+      "score": 0.8333334,
+      "title": "GNN-Transformer Cooperative Architecture for Trustworthy Graph Contrastive Learning",
+      "tldr": "[research paper] GTCA introduces a trustworthiness-aware graph contrastive learning framework that jointly employs GCN and NodeFormer (a linear graph transformer) as encoders to capture both local and global graph structures without random augmentation. It generates a topology-driven structural view from graph properties, enabling augmentation-free positive pair construction. A novel contrastive loss function leverages intersection between node representation views and topology view to form multiple positive pairs per node, improving representation quality and mitigating semantic distortion risks. Theoretical analysis and experiments confirm superior performance over existing methods in preserving graph semantics and capturing long-range dependencies.",
+      "abstract": "Graph contrastive learning (GCL) has become a hot topic in the field of graph representation learning. In contrast to traditional supervised learning relying on a large number of labels, GCL exploits augmentation strategies to generate multiple views and positive/negative pairs, both of which greatly influence the performance. Unfortunately, commonly used random augmentations may disturb the underlying semantics of graphs. Moreover, traditional GNNs, a type of widely employed encoders in GCL, are inevitably confronted with over-smoothing and over-squashing problems. To address these issues, we propose GNN-Transformer Cooperative Architecture for Trustworthy Graph Contrastive Learning (GTCA), which inherits the advantages of both GNN and Transformer, incorporating graph topology to obtain comprehensive graph representations. Theoretical analysis verifies the trustworthiness of the proposed method. Extensive experiments on benchmark datasets demonstrate state-of-the-art empirical performance.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jianqing Liang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xinkai Wei",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Min Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zhiqiang Wang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Jiye Liang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2412.16218",
+      "date": "2024-12-18T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/a-hou/GTCA"
+    },
+    {
+      "arxiv_id": "2205.00905",
+      "score": 0.5833334,
+      "title": "FastGCL: Fast Self-Supervised Learning on Graphs via Contrastive Neighborhood Aggregation",
+      "tldr": "[research paper] FastGCL introduces a contrastive learning framework that leverages intrinsic neighborhood aggregation in GNNs as a self-supervised signal, eliminating the need for complex graph data augmentation. It constructs positive samples via weighted neighborhood aggregation—where edge weights are learned from node representations—and negative samples via self-loop graphs, preserving graph topology and node attributes. This design avoids semantic drift and reduces computational overhead, enabling faster convergence without sacrificing performance on node and graph classification tasks.",
+      "abstract": "Graph contrastive learning (GCL), as a popular approach to graph self-supervised learning, has recently achieved a non-negligible effect. To achieve superior performance, the majority of existing GCL methods elaborate on graph data augmentation to construct appropriate contrastive pairs. However, existing methods place more emphasis on the complex graph data augmentation which requires extra time overhead, and pay less attention to developing contrastive schemes specific to encoder characteristics. We argue that a better contrastive scheme should be tailored to the characteristics of graph neural networks (e.g., neighborhood aggregation) and propose a simple yet effective method named FastGCL. Specifically, by constructing weighted-aggregated and non-aggregated neighborhood information as positive and negative samples respectively, FastGCL identifies the potential semantic information of data without disturbing the graph topology and node attributes, resulting in faster training and convergence speeds. Extensive experiments have been conducted on node classification and graph classification tasks, showing that FastGCL has competitive classification performance and significant training speedup compared to existing state-of-the-art methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wangysh29@mail2.sysu.edu.cn"
+          },
+          "name": "Yuansheng Wang",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "sunwb7@mail2.sysu.edu.cn"
+          },
+          "name": "Wangbin Sun",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xukun6@mail2.sysu.edu.cn"
+          },
+          "name": "Kun Xu",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zulun001@ntu.edu.sg"
+          },
+          "name": "Zulun Zhu",
+          "orgs": [
+            "Nanyang Technological University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "chenliang6@mail.sysu.edu.cn"
+          },
+          "name": "Liang Chen",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhzibin@mail.sysu.edu.cn"
+          },
+          "name": "Zibin Zheng",
+          "orgs": [
+            "Sun Yat-sen University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2205.00905",
+      "date": "2022-05-02T00:00:00",
+      "citation_count": 5,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.06282",
+      "score": 0.5833333,
+      "title": "InfoNCE is a Free Lunch for Semantically guided Graph Contrastive Learning",
+      "tldr": "[research paper] The paper redefines graph contrastive learning (GCL) as a Positive-Unlabeled (PU) learning problem, where semantic similarity replaces augmentation-based sampling as the basis for positive samples. It proposes IFL-GCL, which leverages InfoNCE's representation similarity to extract semantic information and derive a theoretically grounded, bias-corrected InfoNCE loss function—without heuristic sample modification—resulting in up to 9.05% accuracy gains in both in-distribution and out-of-distribution settings across graph pretraining and LLM-enhanced graph tasks.",
+      "abstract": "As an important graph pre-training method, Graph Contrastive Learning (GCL) continues to play a crucial role in the ongoing surge of research on graph foundation models or LLM as enhancer for graphs. Traditional GCL optimizes InfoNCE by using augmentations to define self-supervised tasks, treating augmented pairs as positive samples and others as negative. However, this leads to semantically similar pairs being classified as negative, causing significant sampling bias and limiting performance. In this paper, we argue that GCL is essentially a Positive-Unlabeled (PU) learning problem, where the definition of self-supervised tasks should be semantically guided, i.e., augmented samples with similar semantics are considered positive, while others, with unknown semantics, are treated as unlabeled. From this perspective, the key lies in how to extract semantic information. To achieve this, we propose IFL-GCL, using InfoNCE as a \"free lunch\" to extract semantic information. Specifically, We first prove that under InfoNCE, the representation similarity of node pairs aligns with the probability that the corresponding contrastive sample is positive. Then we redefine the maximum likelihood objective based on the corrected samples, leading to a new InfoNCE loss function. Extensive experiments on both the graph pretraining framework and LLM as an enhancer show significantly improvements of IFL-GCL in both IID and OOD scenarios, achieving up to a 9.05% improvement, validating the effectiveness of semantically guided. Code for IFL-GCL is publicly available at: https://github.com/Camel-Prince/IFL-GCL.",
+      "authors": [
+        {
+          "misc": {
+            "email": "wangzixu22s@ict.ac.cn"
+          },
+          "name": "Zixu Wang",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "University of Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xubingbing@ict.ac.cn"
+          },
+          "name": "Bingbing Xu",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yuanyige20z@ict.ac.cn"
+          },
+          "name": "Yige Yuan",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "University of Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "shenhuawei@ict.ac.cn"
+          },
+          "name": "Huawei Shen",
+          "orgs": [
+            "State Key Laboratory of AI Safety",
+            "Institute of Computing Technology",
+            "Chinese Academy of Sciences",
+            "Beijing, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.06282",
+      "date": "2025-05-07T00:00:00",
+      "citation_count": 4,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+      "venue_year": null,
+      "github_url": "https://github.com/Camel-Prince/IFL-GCL."
+    },
+    {
+      "arxiv_id": "2402.10468",
+      "score": 0.25396827,
+      "title": "Adversarial Curriculum Graph Contrastive Learning with Pair-wise Augmentation",
+      "tldr": "[research paper] ACGCL introduces a pair-wise graph augmentation strategy that generates mirror graphs with controllable semantic similarity and representation distance, enabling precise control over positive and negative sample quality in graph contrastive learning. By constructing mirror pairs based on node-level semantic proximity, it creates semantically aligned positive samples and semantically divergent negative samples, while leveraging subgraph contrastive learning to improve representation stability. The adversarial curriculum training dynamically increases sample difficulty, overcoming sparsity issues in traditional curriculum methods by focusing on progressively challenging data, leading to superior performance across six benchmark datasets.",
+      "abstract": "Graph contrastive learning (GCL) has emerged as a pivotal technique in the domain of graph representation learning. A crucial aspect of effective GCL is the caliber of generated positive and negative samples, which is intrinsically dictated by their resemblance to the original data. Nevertheless, precise control over similarity during sample generation presents a formidable challenge, often impeding the effective discovery of representative graph patterns. To address this challenge, we propose an innovative framework: Adversarial Curriculum Graph Contrastive Learning (ACGCL), which capitalizes on the merits of pair-wise augmentation to engender graph-level positive and negative samples with controllable similarity, alongside subgraph contrastive learning to discern effective graph patterns therein. Within the ACGCL framework, we have devised a novel adversarial curriculum training methodology that facilitates progressive learning by sequentially increasing the difficulty of distinguishing the generated samples. Notably, this approach transcends the prevalent sparsity issue inherent in conventional curriculum learning strategies by adaptively concentrating on more challenging training data. Finally, a comprehensive assessment of ACGCL is conducted through extensive experiments on six well-known benchmark datasets, wherein ACGCL conspicuously surpasses a set of state-of-the-art baselines.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhaoxinjian2020@gmail.com"
+          },
+          "name": "Xinjian Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "1 Thørväld Circle",
+            "Hong Kong",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhangliang@sribd.cn"
+          },
+          "name": "Liang Zhang",
+          "orgs": [
+            "Shenzhen Research Institute of Big Data",
+            "Shenzhen",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yang.liu2@dukekunshan.edu.cn"
+          },
+          "name": "Yang Liu",
+          "orgs": [
+            "Duke Kunshan University",
+            "Suzhou",
+            "China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "rguo.asu@gmail.com"
+          },
+          "name": "Ruocheng Guo",
+          "orgs": [
+            "ByteDance Research",
+            "London",
+            "UK"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "1 Thørväld Circle",
+            "Hong Kong",
+            "China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.10468",
+      "date": "2024-02-16T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "arXiv.org",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.25,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    }
+  ]
+}

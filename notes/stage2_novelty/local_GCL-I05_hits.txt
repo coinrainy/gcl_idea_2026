@@ -1,0 +1,299 @@
+notes/DEEPXIV_TARGETED_SEARCH.md:27:| GCA (`2010.14945`) | brief/head/Experiments/Implementation Details available | Wiki-CS public split; Amazon/Coauthor random 10/10/80; frozen logistic evaluation; 20 runs | exact seed list and test@best |
+notes/DEEPXIV_TARGETED_SEARCH.md:33:| GraphMAE2 (`2304.04779`) | brief/head/Experiments/Appendix available | OGB-style large-scale evaluation, linear probing/fine-tuning variants | Stage-2 GCL comparability requires rerun |
+notes/stage1_5_pdf_text/2110.02027.txt:54:SimCLR (Chen et al., 2020) and GCA (Zhu et al., 2021c) for
+notes/stage1_5_pdf_text/2110.02027.txt:265:GCA (Zhu et al., 2021c) with GCN (with message passing) or
+notes/stage1_5_pdf_text/2110.02027.txt:641:tasks. For transductive tasks, we adopt GCA as base model
+notes/stage1_5_pdf_text/2110.02027.txt:651:GRL, MERIT, BGRL and GCA as introduced in the related
+notes/stage1_5_pdf_text/2110.02027.txt:653:GCA. We also compare ProGCL with supervised counter-
+notes/stage1_5_pdf_text/2110.02027.txt:716:GCA∗ X, A 92.55± 0.03 87.82 ± 0.11 92.40 ± 0.07 78.26 ± 0.06
+notes/stage1_5_pdf_text/2110.02027.txt:737:can bring signiﬁcant improvements. Compared with GCA,
+notes/stage1_5_pdf_text/2110.02027.txt:784:In addition to GCA and GRACE, we also evaluate the perfor-
+notes/stage1_5_pdf_text/2110.02027.txt:815:and drop compared with GCA respectively.
+notes/stage1_5_pdf_text/2110.02027.txt:817:GCA 92.55 87.82 92.40
+notes/stage1_5_pdf_text/2110.02027.txt:825:remove sampling bias in GCL, we equip GCA with
+notes/stage1_5_pdf_text/2110.02027.txt:830:GCA. Instead, ProGCL introduces consistent and signif-
+notes/stage1_5_pdf_text/2110.02027.txt:831:icant improvements over GCA, which further validates that
+notes/stage1_5_pdf_text/2110.02027.txt:1121:contrastive learning with adaptive augmentation. In Pro-
+notes/stage1_5_pdf_text/2110.02027.txt:1180:B. More Similarity Histograms of Negativess in SimCLR (CL) and GCA (GCL).
+notes/stage1_5_pdf_text/2110.02027.txt:1232:Following GRACE (Zhu et al., 2020) and GCA (Zhu et al., 2021c), we initialize the model parameters with Glorot initializa-
+notes/stage1_5_pdf_text/2110.02027.txt:1308:same as GRACE and GCA. Other hyper-parameters of ProGCL can be seen in Table 8. For transductive task, the two hyper-
+notes/CLOSEST_WORK_DELTA_TABLE.md:7:| G1 semantic false positives | GCA, AFGRL, CM-GCL, G-Censor | adaptive augmentations; augmentation-free positives; multimodal positives; task-oriented counterfactual views | systematic positive semantic-validity audit under frozen node evaluator | "better positives via simple feature/structure heuristic" | positive validity may fail differently across graph regimes | show a measurable semantic-positive failure not covered by adaptive augmentation or AFGRL/G-Censor | correlate positive consistency diagnostics with downstream accuracy under fixed split/evaluator | HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:9:| G3 MGM vs GCL identical evaluator | GraphMAE, GraphMAE2, MaskGAE | strong masked feature/edge/latent prediction | strict apples-to-apples GCL vs MGM under same split/evaluator/backbone | "masked reconstruction alone is a new GCL contribution" | objective choice may explain protocol-normalized differences | isolate objective difference with frozen evaluator and identical backbone | rerun GRACE/GCA/BGRL/GraphMAE variants on same split/seed/evaluator | MEDIUM-HIGH |
+notes/CLOSEST_WORK_DELTA_TABLE.md:10:| G4 negative-free collapse diagnostics | BGRL, CCA-SSG, Graph Barlow Twins, AFGRL | remove negatives; decorrelate features; discover positives | graph-specific collapse/oversmoothing diagnostics beyond accuracy | "negative-free GCL is novel" | collapse may manifest as graph smoothing/rank loss by regime | define graph representation diagnostics that predict failures | compare rank/variance/eigenspectrum vs accuracy across regimes | MEDIUM |
+notes/CLOSEST_WORK_DELTA_TABLE.md:24:- G1: simple positive/augmentation changes are more strongly blocked by GMA/GMCL, GPA, iGCL, AFGRL and G-Censor-like task-oriented views.
+notes/CLOSEST_WORK_DELTA_TABLE.md:26:- G3: MGM remains a valid comparison gap only if GRACE/GCA/BGRL/GraphMAE/GraphMAE2/MaskGAE are rerun under identical project protocol.
+notes/stage1_5_pdf_text/2106.12484.txt:39:positive node-graph pairs from negative ones; GRACE [ 57] and GCA [ 58] harness an additional
+notes/stage1_5_pdf_text/2106.12484.txt:63:GCA [58] N-N - ! - ! O(N 2)
+notes/stage1_5_pdf_text/2106.12484.txt:102:self-supervised methods MVGRL [15] and GCA [58] on 5 out of 7 benchmarks. We also provide
+notes/stage1_5_pdf_text/2106.12484.txt:115:scale GNN pretraining. GRACE [57], GCA [58] and GraphCL [52] follow the spirit of SimCLR [5]
+notes/stage1_5_pdf_text/2106.12484.txt:335:representation learning, including DGI [48], MVGRL [15], GRACE [57], GCA [58] and BGRL [39],
+notes/stage1_5_pdf_text/2106.12484.txt:339:generate negative examples by corrupting the graph structure severely, and GRACE/GCA treats all
+notes/stage1_5_pdf_text/2106.12484.txt:527:self-supervised models, DGI [48], MVGRL [15], GRACE [57] and GCA [58]. We also compare with
+notes/stage1_5_pdf_text/2106.12484.txt:558:GCA1 [58] X, A 87.85± 0.31 92.49 ± 0.09 93.10 ± 0.01 95.68± 0.05
+notes/stage1_5_pdf_text/2106.12484.txt:560:1 GCA is essentially an enhanced version of GRACE by adopting adaptive augmentations. Both GRACE
+notes/stage1_5_pdf_text/2106.12484.txt:561:and GCA would suffer from out of memory on Coauthor-Physics using a GPU wth 16GB memory. The
+notes/stage1_5_pdf_text/2106.12484.txt:593:memory cost than MVGRL, GRACE and GCA in most cases. DGI is another simple and efﬁcient
+notes/stage1_5_pdf_text/2106.12484.txt:641:GRACE/GCA 997K 8.3s 1.7G 520K 756s 12.6G 273K 314s 7.6G
+notes/stage1_5_pdf_text/2106.12484.txt:814:learning with adaptive augmentation. In WWW, 2021.
+notes/stage1_5_pdf_text/2106.12484.txt:1532:GCA [58] Rand-Aug N-N InfoNCE Node
+notes/stage1_5_pdf_text/2304.04779.txt:4:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised
+notes/stage1_5_pdf_text/2304.04779.txt:40:self-supervised learning framework 1 GraphMAE2 with the goal
+notes/stage1_5_pdf_text/2304.04779.txt:48:space. Extensive experiments show that GraphMAE2 can consis-
+notes/stage1_5_pdf_text/2304.04779.txt:57:1The code is available at: https://github.com/THUDM/GraphMAE2.
+notes/stage1_5_pdf_text/2304.04779.txt:72:lamov, Jie Tang. 2023. GraphMAE2: A Decoding-Enhanced Masked Self-
+notes/stage1_5_pdf_text/2304.04779.txt:108:Random-Init BGRL GraphMAE GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:124:Papers100M. GraphMAE2 achieves a significant advantage over
+notes/stage1_5_pdf_text/2304.04779.txt:143:In this work, we present GraphMAE2 with the goal of improving
+notes/stage1_5_pdf_text/2304.04779.txt:161:Inherited from GraphMAE, GraphMAE2 is a simple yet more
+notes/stage1_5_pdf_text/2304.04779.txt:166:datasets. The results demonstrate that GraphMAE2 can consistently
+notes/stage1_5_pdf_text/2304.04779.txt:180:GraphMAE2 84.5 → 83.5 (↓ 1.0) 81.4 → 80.1 (↓ 1.3)
+notes/stage1_5_pdf_text/2304.04779.txt:181:compared to GraphMAE. Excitingly, GraphMAE2 as an SSL method
+notes/stage1_5_pdf_text/2304.04779.txt:185:In addition, we extend GraphMAE2 to large-scale graphs with
+notes/stage1_5_pdf_text/2304.04779.txt:188:that can produce local and dense subgraphs to benefit GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:191:ple GraphMAE2 framework can generate significant performance
+notes/stage1_5_pdf_text/2304.04779.txt:197:input node features. Then we present our GraphMAE2 to overcome
+notes/stage1_5_pdf_text/2304.04779.txt:222:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:280:Figure 2: Overview of GraphMAE2 framework. For large-scale graphs, we first run local clustering to produce local clusters for each
+notes/stage1_5_pdf_text/2304.04779.txt:281:node as the preprocessing step. During the pre-training, GraphMAE2 corrupts the graph by masking input node features with a mask token
+notes/stage1_5_pdf_text/2304.04779.txt:337:2.2 The GraphMAE2 Framework
+notes/stage1_5_pdf_text/2304.04779.txt:338:We present GraphMAE2 to overcome the aforementioned issue. It
+notes/stage1_5_pdf_text/2304.04779.txt:348:to the input features. Moreover, we extend GraphMAE2 to large
+notes/stage1_5_pdf_text/2304.04779.txt:350:commodate with GraphMAE2’s training, The overall framework of
+notes/stage1_5_pdf_text/2304.04779.txt:351:GraphMAE2 is illustrated in Figure 2.
+notes/stage1_5_pdf_text/2304.04779.txt:455:tation: GraphMAE2 aims to direct the prediction of masked nodes
+notes/stage1_5_pdf_text/2304.04779.txt:462:Training and inference. The overall training flow of GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:475:Note that the time and space complexity of GraphMAE2 is linear
+notes/stage1_5_pdf_text/2304.04779.txt:486:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:499:(2) In the context of masked feature prediction, GraphMAE2 has a
+notes/stage1_5_pdf_text/2304.04779.txt:507:struct densely connected subgraphs for GraphMAE2 to tackle the
+notes/stage1_5_pdf_text/2304.04779.txt:529:conducted on the extracted subgraphs. In GraphMAE2, the self-
+notes/stage1_5_pdf_text/2304.04779.txt:538:predict unlabeled nodes. Note that GraphMAE2 is a general SSL
+notes/stage1_5_pdf_text/2304.04779.txt:562:GraphMAE2 71.89±0.03 81.59±0.02 59.24±0.01 64.89±0.04
+notes/stage1_5_pdf_text/2304.04779.txt:579:Baselines. We compare GraphMAE2 with state-of-the-art self-
+notes/stage1_5_pdf_text/2304.04779.txt:603:GraphMAE2 66.86±0.53 70.16±0.28 76.98±0.36 80.52±0.23 49.01±0.15 53.58±0.11 58.69±0.38 62.87±0.64
+notes/stage1_5_pdf_text/2304.04779.txt:618:GraphMAE2 84.5±0.6 73.4±0.3 81.4±0.5
+notes/stage1_5_pdf_text/2304.04779.txt:625:and GraphMAE2 are trained based on the presented local clustering
+notes/stage1_5_pdf_text/2304.04779.txt:642:we interpret the result from 3 aspects. First, GraphMAE2 achieves
+notes/stage1_5_pdf_text/2304.04779.txt:646:GraphMAE2 improves upon GraphMAE by a margin of 1.91% and
+notes/stage1_5_pdf_text/2304.04779.txt:656:GraphMAE2 consistently generates better performance than SGC.
+notes/stage1_5_pdf_text/2304.04779.txt:664:self-supervised pretraining of GraphMAE2 benefits downstream
+notes/stage1_5_pdf_text/2304.04779.txt:673:dataset with 1% training data, where GraphMAE2 slightly underper-
+notes/stage1_5_pdf_text/2304.04779.txt:675:noted that in ogbn-Papers100M, only GraphMAE2 and GraphMAE
+notes/stage1_5_pdf_text/2304.04779.txt:684:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:685:Table 6: Ablation studies of GraphMAE2 key components.
+notes/stage1_5_pdf_text/2304.04779.txt:687:GraphMAE2 81.59±0.02 59.24±0.01 64.89±0.04
+notes/stage1_5_pdf_text/2304.04779.txt:698:GraphMAE2 SAINT 80.96±0.03 58.75±0.03 64.21±0.11
+notes/stage1_5_pdf_text/2304.04779.txt:699:GraphMAE2 Cluster 79.35±0.05 58.05±0.02 63.77±0.11
+notes/stage1_5_pdf_text/2304.04779.txt:700:GraphMAE2 LC 81.59±0.02 59.24±0.01 64.89±0.12
+notes/stage1_5_pdf_text/2304.04779.txt:705:We compare GraphMAE2 with state-of-the-art self-supervised
+notes/stage1_5_pdf_text/2304.04779.txt:723:support our assumption that GraphMAE2 is more advantageous
+notes/stage1_5_pdf_text/2304.04779.txt:727:the designs in GraphMAE2. We choose linear probing for evalua-
+notes/stage1_5_pdf_text/2304.04779.txt:753:of GraphMAE2 comes from the design rather than any individual
+notes/stage1_5_pdf_text/2304.04779.txt:761:performance of GraphMAE2, as our algorithm shows an advan-
+notes/stage1_5_pdf_text/2304.04779.txt:770:same sampling strategy. And GraphMAE2 still generates a 1.49%
+notes/stage1_5_pdf_text/2304.04779.txt:835:GCA [58] learn the node or graph representation by maximizing
+notes/stage1_5_pdf_text/2304.04779.txt:894:GraphMAE2 to address this issue by imposing regularization on
+notes/stage1_5_pdf_text/2304.04779.txt:907:GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner WWW ’23, May 1–5, 2023, Austin, TX, USA
+notes/stage1_5_pdf_text/2304.04779.txt:1057:Graph contrastive learning with adaptive augmentation. In WWW. 2069–2080.
+notes/stage1_5_pdf_text/2304.04779.txt:1108:GraphMAE2 72.69 83.65 60.01 66.66
+notes/stage1_5_pdf_text/2304.04779.txt:1112:GraphMAE2 can bring 1.22%-3.17% improvement compared to the
+notes/stage1_5_pdf_text/2304.04779.txt:1121:training and inference. Table 9 shows the results of GraphMAE2
+notes/stage1_5_pdf_text/2304.04779.txt:1123:MAE, GraphMAE2 has a 0.2% improvement. It is worth noting that
+notes/stage1_5_pdf_text/2304.04779.txt:1137:GraphMAE2 71.95±0.08
+notes/stage1_5_pdf_text/2010.14945.txt:4:Graph Contrastive Learning with Adaptive Augmentation
+notes/stage1_5_pdf_text/2010.14945.txt:26:representation learning method with adaptive augmentation that in-
+notes/stage1_5_pdf_text/2010.14945.txt:38:with adaptive augmentation.
+notes/stage1_5_pdf_text/2010.14945.txt:57:Graph Contrastive Learning with Adaptive Augmentation. In Proceedings of
+notes/stage1_5_pdf_text/2010.14945.txt:108:Figure 1: Our proposed deep Graph Contrastive representation learning with Adaptive augmentation (GCA) model. We first
+notes/stage1_5_pdf_text/2010.14945.txt:132:augmentation, GCA for brevity. In GCA, we first generate two cor-
+notes/stage1_5_pdf_text/2010.14945.txt:150:data augmentation. The proposed GCA framework jointly
+notes/stage1_5_pdf_text/2010.14945.txt:157:under the commonly-used linear evaluation protocol. GCA
+notes/stage1_5_pdf_text/2010.14945.txt:162:publicly available at https://github.com/CRIPAC-DIG/GCA.
+notes/stage1_5_pdf_text/2010.14945.txt:165:proposed GCA model in detail. The results of the experiments are
+notes/stage1_5_pdf_text/2010.14945.txt:188:Graph Contrastive Learning with Adaptive Augmentation WWW ’21, April 19–23, 2021, Ljubljana, Slovenia
+notes/stage1_5_pdf_text/2010.14945.txt:250:GCA Node–node Adaptive Adaptive
+notes/stage1_5_pdf_text/2010.14945.txt:252:at both topology and attribute levels used in our GCA is able to pre-
+notes/stage1_5_pdf_text/2010.14945.txt:256:provide a brief comparison between the proposed GCA and other
+notes/stage1_5_pdf_text/2010.14945.txt:260:and attribute levels respectively. It is seen that the proposed GCA
+notes/stage1_5_pdf_text/2010.14945.txt:263:GCA is the only one that proposes adaptive data augmentation on
+notes/stage1_5_pdf_text/2010.14945.txt:266:In the following section, we present GCA in detail, starting with
+notes/stage1_5_pdf_text/2010.14945.txt:285:The proposed GCA framework follows the common graph CL par-
+notes/stage1_5_pdf_text/2010.14945.txt:297:In our GCA model, at each iteration, we sample two stochastic
+notes/stage1_5_pdf_text/2010.14945.txt:350:To sum up, at each training epoch, GCA first draws two data
+notes/stage1_5_pdf_text/2010.14945.txt:360:introduced by the augmentation schemes [50]. In the GCA model,
+notes/stage1_5_pdf_text/2010.14945.txt:365:Algorithm 1: The GCA training algorithm
+notes/stage1_5_pdf_text/2010.14945.txt:424:Graph Contrastive Learning with Adaptive Augmentation WWW ’21, April 19–23, 2021, Ljubljana, Slovenia
+notes/stage1_5_pdf_text/2010.14945.txt:555:GCA, the probability𝑝𝑒 and𝑝𝑓 is different for generating the two
+notes/stage1_5_pdf_text/2010.14945.txt:560:denoted as GCA-DE, GCA-EV, and GCA-PR. The three variants
+notes/stage1_5_pdf_text/2010.14945.txt:654:sitive to perturbation. Since the proposed adaptive augmentation
+notes/stage1_5_pdf_text/2010.14945.txt:659:tive used in GCA is cheap to optimize, since we do not have to
+notes/stage1_5_pdf_text/2010.14945.txt:666:• RQ1. Does our proposed GCA outperform existing baseline
+notes/stage1_5_pdf_text/2010.14945.txt:678:Graph Contrastive Learning with Adaptive Augmentation WWW ’21, April 19–23, 2021, Ljubljana, Slovenia
+notes/stage1_5_pdf_text/2010.14945.txt:771:mance across all five datasets. GCA consistently performs better
+notes/stage1_5_pdf_text/2010.14945.txt:776:enough performance; our method GCA still pushes that boundary
+notes/stage1_5_pdf_text/2010.14945.txt:777:forward. Moreover, we particularly note that GCA is competitive
+notes/stage1_5_pdf_text/2010.14945.txt:809:GCA-DE 𝑿, 𝑨 78.30 ± 0.00 87.85 ± 0.31 92.49 ± 0.09 93.10 ± 0.01 95.68 ± 0.05
+notes/stage1_5_pdf_text/2010.14945.txt:810:GCA-PR 𝑿, 𝑨 78.35 ± 0.05 87.80 ± 0.23 92.53 ± 0.16 93.06 ± 0.03 95.72 ± 0.03
+notes/stage1_5_pdf_text/2010.14945.txt:811:GCA-EV 𝑿, 𝑨 78.23 ± 0.04 87.54 ± 0.49 92.24 ± 0.21 92.95 ± 0.13 95.73 ± 0.03
+notes/stage1_5_pdf_text/2010.14945.txt:817:GCA–T–A Uniform Uniform 78.19 ± 0.01 86.25 ± 0.25 92.15 ± 0.24 92.93 ± 0.01 95.26 ± 0.02
+notes/stage1_5_pdf_text/2010.14945.txt:818:GCA–T Uniform Adaptive 78.23 ± 0.02 86.72 ± 0.49 92.20 ± 0.26 93.07 ± 0.01 95.59 ± 0.04
+notes/stage1_5_pdf_text/2010.14945.txt:819:GCA–A Adaptive Uniform 78.25 ± 0.02 87.66 ± 0.30 92.23 ± 0.20 93.02 ± 0.01 95.54 ± 0.02
+notes/stage1_5_pdf_text/2010.14945.txt:820:GCA Adaptive Adaptive 78.30 ± 0.01 87.85 ± 0.31 92.49 ± 0.09 93.10 ± 0.01 95.68 ± 0.05
+notes/stage1_5_pdf_text/2010.14945.txt:828:The superior performance of GCA verifies that our proposed adap-
+notes/stage1_5_pdf_text/2010.14945.txt:832:centrality measures of GCA outperform existing contrastive base-
+notes/stage1_5_pdf_text/2010.14945.txt:833:lines on all datasets. We also notice that GCA-DE and GCA-PR with
+notes/stage1_5_pdf_text/2010.14945.txt:839:In summary, the superior performance of GCA compared to
+notes/stage1_5_pdf_text/2010.14945.txt:841:proposed GCA framework that performs data augmentation adap-
+notes/stage1_5_pdf_text/2010.14945.txt:846:impact of each component of GCA. GCA–T–A denotes the model
+notes/stage1_5_pdf_text/2010.14945.txt:849:set to the same for all nodes. The variants GCA–T and GCA–A are
+notes/stage1_5_pdf_text/2010.14945.txt:853:for fair comparison. Please kindly note that the downgraded GCA–
+notes/stage1_5_pdf_text/2010.14945.txt:856:both topology-level and node-attribute-level adaptive augmentation
+notes/stage1_5_pdf_text/2010.14945.txt:858:In addition, the combination of adaptive augmentation schemes on
+notes/stage1_5_pdf_text/2010.14945.txt:860:Computers dataset, our proposed GCA gains 1.5% absolute improve-
+notes/stage1_5_pdf_text/2010.14945.txt:861:ment compared to the base model with no adaptive augmentation
+notes/stage1_5_pdf_text/2010.14945.txt:867:Graph Contrastive Learning with Adaptive Augmentation WWW ’21, April 19–23, 2021, Ljubljana, Slovenia
+notes/stage1_5_pdf_text/2010.14945.txt:884:Figure 3: The performance of GCA with varied different hy-
+notes/stage1_5_pdf_text/2010.14945.txt:889:parameters in GCA, namely four probabilities𝑝𝑒,1,𝑝𝑓, 1,𝑝𝑒,2, and
+notes/stage1_5_pdf_text/2010.14945.txt:914:sentation learning framework with adaptive augmentation. Our
+notes/stage1_5_pdf_text/2010.14945.txt:917:augmentation. The proposed adaptive augmentation scheme first
+notes/stage1_5_pdf_text/2010.14945.txt:926:demonstrate that our proposed GCA method consistently outper-
+notes/stage1_5_pdf_text/2010.14945.txt:943:annotating. For example, our GCA framework can be plugged into
+notes/stage1_5_pdf_text/2010.14945.txt:947:models, it does not bring new ethical concerns. However, the GCA
+notes/stage1_5_pdf_text/2010.14945.txt:1158:Graph Contrastive Learning with Adaptive Augmentation WWW ’21, April 19–23, 2021, Ljubljana, Slovenia
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:15:| GCA | Wiki-CS, Amazon, Coauthor | Wiki-CS public; others 10/10/80 | no | yes for Amazon/Coauthor | public splits | no | no | L2 logistic regression | frozen | 20 runs | UNCLEAR | UNCLEAR | yes | C | align exact split seeds/test@best |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:16:| ProGCL | Amazon, Wiki-CS, Coauthor, Reddit, Flickr, ogbn-Arxiv | follows GCA/BGRL; OGB for ogbn-Arxiv | no | yes for some | likely/follows GCA | official for ogbn-Arxiv | no | logistic classifier | frozen | 20 random for reproduced baselines | UNCLEAR | UNCLEAR | yes | C/D | rerun; exact seeds and early stopping unclear |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:22:| GraphMAE2 | ogbn-Arxiv/Products/Papers100M/MAG-Scholar-F | OGB official; MAG 5/5/40 | no | no | no | official | no | linear probing and fine-tuning | both | 10 random seeds | UNCLEAR | UNCLEAR | yes | B/C | compare only after evaluator alignment |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:26:| G-Censor | CiteSeer, Computers, Cora Full, Cora ML, DBLP, Flickr, Photo, PubMed | IID split unclear; OOD by Node2Vec clusters | UNCLEAR | UNCLEAR | no | no | no | model-agnostic GNN | likely fine-tune | UNCLEAR | UNCLEAR | test set accuracy | UNCLEAR | D | need accepted version/code/protocol |
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:37:GRACE, GCA, ProGCL, BGRL, AFGRL, GraphMAE/GraphMAE2 and HLCL, depending on selected Stage 2 gap.
+notes/CORE_PAPER_PROTOCOL_AUDIT.md:45:| GCA | Public Wiki-CS, 10/10/80 for other datasets, frozen logistic evaluator, 20 runs | remains C because exact saved split JSON/seed list/test@best are not project-aligned |
+notes/stage1_5_pdf_text/2102.06514.txt:177:analysis applies to variations of the GRACE method such as GCA (Zhu et al., 2020a).
+notes/stage1_5_pdf_text/2102.06514.txt:274:GCA 78.35± 0.05 88.94 ± 0.15 92.53 ± 0.16 93.10 ± 0.01 95.73 ± 0.03
+notes/stage1_5_pdf_text/2102.06514.txt:279:best result for GCA out of the proposed GCA-DE, GCA-PR, and GCA-EV models.
+notes/stage1_5_pdf_text/2102.06514.txt:287:highlight GCA, a variant of it that has the same learning objective but trades off more expressive but
+notes/stage1_5_pdf_text/2102.06514.txt:294:GCA requires more expensive augmentations for peak performance. This indicates that BGRL can
+notes/stage1_5_pdf_text/2102.06514.txt:306:GCA Standard 92.93 ± 0.01 95.26 ± 0.02 86.25 ± 0.25 92.15 ± 0.24
+notes/stage1_5_pdf_text/2102.06514.txt:310:Table 4: Comparison of BGRL and GCA for simple versus complex augmentation heuristics on four benchmark
+notes/stage1_5_pdf_text/2102.06514.txt:311:graphs. For GCA, we report the numbers provided in their original paper.
+notes/stage1_5_pdf_text/2102.06514.txt:550:for graphs by GRACE and variants such as GCA (Zhu et al., 2020b;a) that rely on more complex data-
+notes/stage1_5_pdf_text/2102.06514.txt:551:adaptive augmentations. GraphCL (You et al., 2020) adapts SimCLR to learn graph-level embeddings
+notes/stage1_5_pdf_text/2102.06514.txt:774:with adaptive augmentation. ArXiv, abs/2010.14945, 2020a.
+notes/stage1_5_pdf_text/2112.02472.txt:244:GCA (Zhu et al. 2021) further improves GRACE by intro-
+notes/stage1_5_pdf_text/2112.02472.txt:245:ducing advanced adaptive augmentation techniques that take
+notes/stage1_5_pdf_text/2112.02472.txt:401:GCA -19.18% -5.48% -0.27% OOM
+notes/stage1_5_pdf_text/2112.02472.txt:405:GCA -26.28% -23.27% -1.64% OOM
+notes/stage1_5_pdf_text/2112.02472.txt:423:ployed, i.e., GCA, in which case the role of augmentation
+notes/stage1_5_pdf_text/2112.02472.txt:634:GCA 77.94± 0.67 87.32± 0.50 92.39± 0.33 92.84± 0.15 OOM
+notes/stage1_5_pdf_text/2112.02472.txt:647:et al. 2021) and GCA (Zhu et al. 2021), which are the
+notes/stage1_5_pdf_text/2112.02472.txt:682:GRACE GCA BGRL AFGRL
+notes/stage1_5_pdf_text/2112.02472.txt:695:GRACE GCA BGRL AFGRL
+notes/stage1_5_pdf_text/2112.02472.txt:714:based methods, i.e., GRACE, GCA and BGRL, whose re-
+notes/stage1_5_pdf_text/2112.02472.txt:728:GRACE and GCA, are not only memory consuming (OOM
+notes/stage1_5_pdf_text/2112.02472.txt:781:(a) GCA (b) AFGRL
+notes/stage1_5_pdf_text/2112.02472.txt:785:node embeddings of GCA (Figure 8(a)) and AFGRL (Fig-
+notes/stage1_5_pdf_text/2112.02472.txt:792:compared with GCA. That is, for AFGRL, there tend to be
+notes/stage1_5_pdf_text/2112.02472.txt:797:with GCA, which implies that AFGRL captures more ﬁne-
+notes/stage1_5_pdf_text/2112.02472.txt:968:contrastive learning with adaptive augmentation. In WWW, 2069–
+notes/stage1_5_pdf_text/2112.02472.txt:1038:• GCA (Zhu et al. 2021): An advanced version of GRACE, which
+notes/stage1_5_pdf_text/2112.02472.txt:1055:GCA  
+notes/stage1_5_pdf_text/2112.02472.txt:1067:deﬁned. i.e., there is no hidden layer. For GCA and BGRL, we
+notes/stage1_5_pdf_text/2112.02472.txt:1069:their original paper, that is, Table 5 of (Zhu et al. 2021) for GCA,
+notes/stage1_5_pdf_text/2112.02472.txt:1073:ﬁcations that are reported in the GCA paper (Zhu et al. 2021), since
+notes/stage1_5_pdf_text/2112.02472.txt:1074:GRACE is equivalent to the GCA-T-A ablation of GCA, which is
+notes/stage1_5_pdf_text/2112.02472.txt:1106:introduced in AFGRL. In contrast to GRACE, GCA and BGRL,AFGRL does not have hyperparameters associated with graph
+notes/stage1_5_pdf_text/2112.02472.txt:1111:GCA https://github.com/CRIPAC-DIG/GCA
+notes/GCL_BENCHMARK_PROTOCOLS.md:18:| GCA | citation/coauthor/Amazon/PPI | UNCLEAR in current pass | likely standard citation splits | UNCLEAR | no | no | no | Accuracy/F1 | UNCLEAR | UNCLEAR | linear evaluator likely | UNCLEAR | mean±std likely | yes for GCL baselines likely | Protocol unclear |
+notes/GCL_BENCHMARK_PROTOCOLS.md:25:| GraphMAE2 | larger OGB + standard graph SSL | partly explicit in abstract for OGB-Papers100M; exact split requires PDF | no for OGB | no | possible | official split likely | no | Accuracy | UNCLEAR | UNCLEAR | decoder/evaluator protocol varies | UNCLEAR | mean±std likely | not always same | Must re-run or exact-check |
+notes/GCL_BENCHMARK_PROTOCOLS.md:29:| G-Censor | eight node-property datasets | OpenReview abstract only; exact split UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | UNCLEAR | Accuracy | UNCLEAR | UNCLEAR | model-agnostic GNN | UNCLEAR | UNCLEAR | UNCLEAR | Protocol unclear |
+notes/GCL_BENCHMARK_PROTOCOLS.md:42:DGI, MVGRL, GRACE, GCA, BGRL, CCA-SSG, GraphMAE, GraphMAE2 and MaskGAE are essential historical or closest baselines, but their published numbers should not be copied into our main table without confirming or re-running the exact protocol.
+notes/GCL_BENCHMARK_PROTOCOLS.md:46:HLCL, CM-GCL, G-Censor, LangGSL, Khan-GCL and SPGCL are high-risk closest works whose paper-level protocol must be checked before claims.
+notes/GCL_GAP_CANDIDATES.md:9:- Existing shortcoming: GRACE/GCA-style augmentations assume two corrupted views of a node preserve semantics, but edge/feature drops can destroy label-relevant context or preserve spurious structure.
+notes/GCL_GAP_CANDIDATES.md:10:- Evidence: GRACE/GCA rely on stochastic/adaptive augmentations; G-Censor argues task-oriented views matter; CM-GCL uses node-text modality to form contrastive pairs.
+notes/GCL_GAP_CANDIDATES.md:12:- Closest work: GCA, RGCL, G-Censor, CM-GCL.
+notes/GCL_GAP_CANDIDATES.md:39:- Existing shortcoming: GraphMAE/GraphMAE2/MaskGAE report strong results, but protocols often differ from GCL frozen-evaluator setups.
+notes/GCL_GAP_CANDIDATES.md:40:- Evidence: GraphMAE, GraphMAE2, MaskGAE.
+notes/GCL_GAP_CANDIDATES.md:42:- Closest work: GraphMAE2.
+notes/GCL_GAP_CANDIDATES.md:44:- Minimum falsification experiment: same split/evaluator/backbone comparing GRACE/GCA/BGRL/GraphMAE variants.
+notes/GCL_LITERATURE_MAP.md:9:- OpenReview: 部分成功；关键词搜索命中 HLCL、CM-GCL、InfoGCL、G-Censor 等，但 API 429 限制导致 LLM/false-negative 查询部分为空。
+notes/GCL_LITERATURE_MAP.md:21:| Classic GCL | GCA: Graph Contrastive Learning with Adaptive Augmentation | 2021 | WWW, peer-reviewed | yes | node classification | topology/feature-aware augmentation | directly targeted | closest augmentation-aware baseline | adaptive augmentation may cover many simple gap claims |
+notes/GCL_LITERATURE_MAP.md:30:| Masked graph | GraphMAE2 | 2023 | WWW, peer-reviewed | yes | node classification, OGB | remask decoding + latent prediction | directly targeted | strongest masked SSL competitor | latent prediction primitive already used |
+notes/GCL_LITERATURE_MAP.md:34:| Task-oriented views | G-Censor | 2023 | ICLR submission / status unclear | promised/unclear | node property prediction | counterfactual task-oriented views | directly targeted | closest task-oriented augmentation | strong risk for counterfactual view claims |
+notes/GCL_LITERATURE_MAP.md:43:1. 经典 GCL：DGI/MVGRL/GRACE/GCA 定义主 baseline floor。
+notes/GCL_LITERATURE_MAP.md:44:2. 近三年节点分类：AFGRL、GraphMAE2、HLCL、CM-GCL、LangGSL、Khan-GCL、SPGCL 是重点风险池。
+notes/GCL_LITERATURE_MAP.md:45:3. Augmentation-based GCL：GRACE/GCA/RGCL/G-Censor 说明“更好增强”本身已拥挤。
+notes/GCL_LITERATURE_MAP.md:49:7. Masked graph modeling：GraphMAE/GraphMAE2/MaskGAE 是非对比 SSL 的强竞争簇。
+notes/GCL_LITERATURE_MAP.md:65:| G-Censor | 2023 | Submitted to ICLR 2023 / UNCLEAR acceptance | https://openreview.net/forum?id=LiWGbK8_iOB | unclear/promised | reviews not extracted | task-oriented counterfactual views | high |
+notes/GCL_LITERATURE_MAP.md:71:- Any positive/negative construction claim must be separated from ProGCL, SPGCL, CM-GCL, and G-Censor.
+notes/GCL_LITERATURE_MAP.md:74:- Any masked/predictive claim must benchmark GraphMAE2 and MaskGAE under identical evaluator/split.
+notes/CORE_CLOSEST_WORK_READING.md:28:- Remaining gap: semantic validity of positives and regime-specific failure
+notes/CORE_CLOSEST_WORK_READING.md:31:## GCA
+notes/CORE_CLOSEST_WORK_READING.md:33:- Paper: Graph Contrastive Learning with Adaptive Augmentation
+notes/CORE_CLOSEST_WORK_READING.md:38:- Core mechanism: topology/feature-aware adaptive augmentation
+notes/CORE_CLOSEST_WORK_READING.md:48:- Main result: adaptive augmentation improves GCL
+notes/CORE_CLOSEST_WORK_READING.md:69:- Split protocol: follows GCA/BGRL for transductive/inductive tasks; ogbn-Arxiv follows BGRL/OGB convention
+notes/CORE_CLOSEST_WORK_READING.md:213:## GraphMAE2
+notes/CORE_CLOSEST_WORK_READING.md:215:- Paper: GraphMAE2
+notes/CORE_CLOSEST_WORK_READING.md:317:## G-Censor
+notes/CORE_CLOSEST_WORK_READING.md:319:- Paper: G-Censor: Graph Contrastive Learning with Task-Oriented Counterfactual Views
+notes/CORE_CLOSEST_WORK_READING.md:427:- GCA: Wiki-CS uses public splits; Amazon/Coauthor use random 10/10/80; frozen logistic regression is used; results are averaged over 20 runs.
+notes/STAGE2_FILTERED_IDEAS.md:19:| GCL-I05 | KEEP for novelty check | Hybrid G1/G3 route; failure views become masked evidence, not only gating. |
+notes/STAGE2_FILTERED_IDEAS.md:32:5. GCL-I05: Bad positive views as masked counter-evidence.
+notes/stage1_5_pdf_text/2205.10803.txt:88:to sample or construct from graphs, e.g., GRACE [60], GCA [61],
+notes/stage1_5_pdf_text/2205.10803.txt:238:GRACE [60], GCA [61] and GraphCL [54] use in-batch negatives.
+notes/stage1_5_pdf_text/2205.10803.txt:1022:Graph contrastive learning with adaptive augmentation. In WWW.
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:3:node_id: paper:hou2023_graphmae2_decodingenhanced_masked
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:4:title: "GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner"
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:12:tags: ["masked-graph-modeling", "node-classification", "graphmae2", "closest-work"]
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:16:# GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:19:GraphMAE2 improves masked graph autoencoding with re-mask decoding and latent prediction on large node-classification benchmarks.
+research-wiki/papers/hou2023_graphmae2_decodingenhanced_masked.md:53:> Graph self-supervised learning (SSL), including contrastive and generative approaches, offers great potential to address the fundamental challenge of label scarcity in real-world graph data. Among both sets of graph SSL techniques, the masked graph autoencoders (e.g., GraphMAE)--one type of generative method--have recently produced promising results. The idea behind this is to reconstruct the node features (or structures)--that are randomly masked from the input--with the autoencoder architecture. However, the performance of masked feature reconstruction naturally relies on the discriminability of the input features and is usually vulnerable to disturbance in the features. In this paper, we present a masked self-supervised learning framework GraphMAE2 with the goal of overcoming this issue. The idea is to impose regularization on feature reconstruction for graph SSL. Specifically, we design the strategies of multi-view random re-mask decoding and latent representation prediction to regularize the feature reconstruction. The multi-view random re-mask decoding is to introduce randomness into reconstruction in the feature space, while the latent representation prediction is to enforce the reconstruction in the embedding space. Extensive experiments show that GraphMAE2 can consistently generate top results on various public datasets, including at least 2.45% improvements over state-of-the-art baselines on ogbn-Papers100M with 111M nodes and 1.6B edges.
+research-wiki/papers/zhu2020_graph_contrastive_learning.md:4:title: "Graph Contrastive Learning with Adaptive Augmentation"
+research-wiki/papers/zhu2020_graph_contrastive_learning.md:16:# Graph Contrastive Learning with Adaptive Augmentation
+research-wiki/papers/zhu2020_graph_contrastive_learning.md:19:GCA adapts graph augmentations using topology and feature priors instead of uniform corruption.
+research-wiki/papers/zhu2020_graph_contrastive_learning.md:53:> Recently, contrastive learning (CL) has emerged as a successful method for unsupervised graph representation learning. Most graph CL methods first perform stochastic augmentation on the input graph to obtain two graph views and maximize the agreement of representations in the two views. Despite the prosperous development of graph CL methods, the design of graph augmentation schemes -- a crucial component in CL -- remains rarely explored. We argue that the data augmentation schemes should preserve intrinsic structures and attributes of graphs, which will force the model to learn representations that are insensitive to perturbation on unimportant nodes and edges. However, most existing methods adopt uniform data augmentation schemes, like uniformly dropping edges and uniformly shuffling features, leading to suboptimal performance. In this paper, we propose a novel graph contrastive representation learning method with adaptive augmentation that incorporates various priors for topological and semantic aspects of the graph. Specifically, on the topology level, we design augmentation schemes based on node centrality measures to highlight important connective structures. On the node attribute level, we corrupt node features by adding more noise to unimportant node features, to enforce the model to recognize underlying semantic information. We perform extensive experiments of node classification on a variety of real-world datasets. Experimental results demonstrate that our proposed method consistently outperforms existing state-of-the-art baselines and even surpasses some supervised counterparts, which validates the effectiveness of the proposed contrastive framework with adaptive augmentation.
+research-wiki/index.md:12:- `paper:hou2023_graphmae2_decodingenhanced_masked` — GraphMAE2: A Decoding-Enhanced Masked Self-Supervised Graph Learner (2023)
+research-wiki/index.md:25:- `paper:zhu2020_graph_contrastive_learning` — Graph Contrastive Learning with Adaptive Augmentation (2020)
+research-wiki/log.md:25:- `2026-06-25T13:48:10Z` ingest_paper: ingested paper:hou2023_graphmae2_decodingenhanced_masked (arxiv:2304.04779)
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:8:| GCA | `zhu2020_graph_contrastive_learning` | WWW 2021 | yes | Wiki-CS public; others 10/10/80; frozen logistic; 20 runs | early stopping, test@best | no | high augmentation risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:9:| ProGCL | `xia2021_progcl_rethinking_hard` | ICML 2022 | yes | follows GCA/BGRL style; 20 random splits/model initializations for reproduced baselines | exact seed list, early stopping, test@best | no | high false-negative risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:15:| GraphMAE2 | `hou2023_graphmae2_decodingenhanced_masked` | WWW 2023 | yes | OGB official; MAG 5/5/40; 10 trials | early stopping, frozen/fine-tune separation | no | latent prediction risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:19:| G-Censor | audit-only | OpenReview ICLR 2023 submission; status UNCLEAR | promised/UNCLEAR | OOD split by Node2Vec clusters; IID table datasets | IID split, seeds, early stopping | no | high task-oriented view risk |
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:30:CM-GCL: accepted NeurIPS 2022. InfoGCL: NeurIPS 2021 Poster. Transductive Linear Probing: LoG 2022 Oral. Directed GCL: NeurIPS 2021 Poster. HLCL and G-Censor remain `UNCLEAR` for final acceptance status in this pass.
+research-wiki/papers/STAGE1_PAPER_AUDIT.md:41:- GCA/CCA-SSG/AFGRL: DeepXiv confirms important evaluator/split details, but no result meets project direct-comparability requirements.
+notes/stage1_5_pdf_text/2505.15103.txt:977:Graph contrastive learning with adaptive augmentation. In
+research-wiki/gap_map.md:8:- Closest works: GCA, AFGRL, CM-GCL, G-Censor.
+research-wiki/gap_map.md:9:- Already solved: adaptive augmentations, augmentation-free positives, multimodal positives, task-oriented views.
+research-wiki/gap_map.md:12:- Minimum novelty condition: show a measurable semantic-positive failure not covered by GCA/AFGRL/G-Censor.
+research-wiki/gap_map.md:32:- Closest works: GraphMAE, GraphMAE2, MaskGAE.
+research-wiki/gap_map.md:37:- Must-run falsification: rerun GRACE/GCA/BGRL/GraphMAE variants under same split/seed/evaluator.
+research-wiki/gap_map.md:105:- G1 remains open but high risk because GMA/GMCL, GPA, iGCL, AFGRL and G-Censor-like task-oriented views already cover many positive/augmentation heuristics.
+research-wiki/gap_map.md:107:- G3 remains open because GraphMAE/GraphMAE2/MaskGAE report strong masked objectives, but DeepXiv still does not establish exact protocol equivalence with this project.
+notes/STAGE2_RAW_IDEAS.md:21:- Why current methods fail: GRACE/GCA tune augmentation; AFGRL/SPGCL discover positives; G-Censor proposes task-oriented views. None gives a protocol-aligned positive semantic-validity audit under this project's frozen evaluator.
+notes/STAGE2_RAW_IDEAS.md:22:- Closest works: GRACE, GCA, AFGRL, G-Censor, SPGCL, CM-GCL.
+notes/STAGE2_RAW_IDEAS.md:23:- What closest works already solve: random/adaptive augmentations, augmentation-free positive discovery, task-oriented counterfactual views, multimodal positives.
+notes/STAGE2_RAW_IDEAS.md:30:- Minimum novelty condition: distinct from GCA centrality, AFGRL kNN/cluster positives and G-Censor counterfactual views.
+notes/STAGE2_RAW_IDEAS.md:31:- Minimum falsification experiment: compare positive validity score vs downstream accuracy for GRACE/GCA/AFGRL under fixed splits/evaluator.
+notes/STAGE2_RAW_IDEAS.md:32:- Kill condition: validity score does not correlate with validation/test accuracy and performance does not beat GCA/AFGRL.
+notes/STAGE2_RAW_IDEAS.md:70:- Core problem: GraphMAE/GraphMAE2/MaskGAE and GCL results are hard to compare because split/evaluator/backbone/training budgets differ.
+notes/STAGE2_RAW_IDEAS.md:72:- Closest works: GraphMAE, GraphMAE2, MaskGAE, GRACE, GCA, BGRL.
+notes/STAGE2_RAW_IDEAS.md:81:- Minimum falsification experiment: rerun GRACE/GCA/BGRL/GraphMAE-style variants under identical evaluator and test if metrics predict objective ranking.
+notes/STAGE2_RAW_IDEAS.md:115:## Idea GCL-I05: Bad Positive Views as Masked Counter-Evidence
+notes/STAGE2_RAW_IDEAS.md:118:- Title: Positive failure prediction as training signal
+notes/STAGE2_RAW_IDEAS.md:120:- Core problem: failed augmentations are usually discarded or avoided, but failures can reveal label-relevant context.
+notes/STAGE2_RAW_IDEAS.md:121:- Why current methods fail: GCA avoids important perturbations; GraphMAE reconstructs random masks; neither learns from positive-pair failure.
+notes/STAGE2_RAW_IDEAS.md:122:- Closest works: GCA, G-Censor, GraphMAE2, MaskGAE.
+notes/STAGE2_RAW_IDEAS.md:123:- What closest works already solve: adaptive augmentation, counterfactual views, masked latent prediction.
+notes/STAGE2_RAW_IDEAS.md:126:- Method sketch: generate perturbations and view consistency; route low-consistency views to masked counter-evidence instead of alignment; predict failed ego-context latent; align high-consistency views; analyze failure-prediction vs downstream accuracy.
+notes/STAGE2_RAW_IDEAS.md:130:- Minimum novelty condition: distinct from GCA avoidance and GraphMAE random masking.
+notes/STAGE2_RAW_IDEAS.md:131:- Minimum falsification experiment: compare random masking, GCA adaptive augmentation and failure-driven masking.
+notes/STAGE2_RAW_IDEAS.md:132:- Kill condition: failure-driven masking is no more predictive than random masking and does not help downstream.
+notes/STAGE2_RAW_IDEAS.md:135:- Expected evaluator: frozen encoder + logistic regression plus positive failure diagnostic.
+notes/STAGE2_RAW_IDEAS.md:154:- Falsification: bin GRACE/GCA/BGRL/ProGCL and compare worst-bin vs mean.
+research-wiki/query_pack.md:9:arXiv/PDF recovery succeeded for high-risk closest works. Semantic Scholar is still rate-limited except BGRL metadata. DeepXiv has been fixed after Stage 1.5 (`deepxiv-sdk==0.3.1`, adapter search/brief verified). Exa unavailable because `EXA_API_KEY` is empty. OpenReview partly recovered; HLCL and G-Censor acceptance status remain `UNCLEAR`.
+research-wiki/query_pack.md:14:- GCA: adaptive topology/feature augmentation; Wiki-CS public splits, others 10/10/80; frozen logistic evaluator; 20 runs.
+research-wiki/query_pack.md:15:- ProGCL: probability-aware hard negatives; follows GCA/BGRL-style splits; 20 random splits/initializations for reproduced baselines.
+research-wiki/query_pack.md:18:- GraphMAE / GraphMAE2 / MaskGAE: masked graph modeling; strong but evaluator/protocol differs from GCL.
+research-wiki/query_pack.md:21:- G-Censor: task-oriented counterfactual views; OpenReview status and protocol still `UNCLEAR`.
+research-wiki/query_pack.md:50:- Do not claim better augmentation unless separated from GCA/AFGRL/G-Censor.
+research-wiki/query_pack.md:53:- Do not claim masked SSL novelty unless separated from GraphMAE2/MaskGAE.
+research-wiki/query_pack.md:62:- Exact accepted/rejected status for HLCL and G-Censor.
+research-wiki/query_pack.md:63:- Exact evaluator/seeds/early stopping for Graph Barlow Twins, HLCL, G-Censor, LangGSL, SPGCL.

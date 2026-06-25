@@ -7,6 +7,7 @@
 - 2026-06-25T14:05:00Z：Stage 1.5 closest-work 精读与协议补全完成。已生成 SOURCE_RECOVERY_REPORT、CORE_CLOSEST_WORK_READING、CORE_PAPER_PROTOCOL_AUDIT、CLOSEST_WORK_DELTA_TABLE 与 STAGE1_5_DEEPEN_REPORT；补下载并解析 high-risk PDF；Semantic Scholar 仅部分恢复，DeepXiv/Exa 仍不可用。Stage 1.5 verdict=GO；本轮不进入 Stage 2。
 - 2026-06-25T14:20:00Z：修复 DeepXiv 数据源。已安装 deepxiv-sdk 0.3.1，并修补 `/root/aris_repo/tools/deepxiv_fetch.py` 以兼容 SDK 0.3.1 的 search JSON 输出；health/search/paper-brief 验证通过。
 - 2026-06-25T15:00:00Z：Stage 1.6 DeepXiv 增强补全完成。已验证 DeepXiv CLI/adapter health、targeted search、paper brief/head/section 读取；原始结果保存到 `notes/stage1_6_deepxiv/`。更新 Stage 1/1.5 closest-work、protocol audit、delta table、query pack、gap map 和 paper audit。决策=GO for future Stage 2 only after explicit user request；本轮未生成 idea，未运行实验，未修改 `BENCHMARK_PROTOCOL.md`。
+- 2026-06-25T16:10:00Z：Stage 2A gap-driven idea discovery 完成。生成 10 个 raw ideas，targeted novelty check 5 个 top ideas，fresh `gcl_scientific_reviewer` 审查完成。主候选：`GCL-I03`、`GCL-I02`；备选：`GCL-I04`；KILL：`GCL-I05`、`GCL-I07`、`GCL-I10`。决策=GO to Stage 2B refine if explicitly requested；本轮未实现代码、未运行实验、未进入 experiment-bridge。
 - `2026-06-25T13:19:29Z` ingest_paper: ingested paper:zhu2020_deep_graph_contrastive (arxiv:2006.04131)
 - `2026-06-25T13:19:41Z` ingest_paper: ingested paper:zhu2020_graph_contrastive_learning (arxiv:2010.14945)
 - `2026-06-25T13:19:42Z` ingest_paper: ingested paper:xia2021_progcl_rethinking_hard (arxiv:2110.02027)

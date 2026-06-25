@@ -1,0 +1,279 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2110.02027",
+      "score": 0.8333334,
+      "title": "ProGCL: Rethinking Hard Negative Mining in Graph Contrastive Learning",
+      "tldr": "[research paper] Graph Contrastive Learning (GCL) suffers from poor performance when applying existing hard negative mining techniques due to the prevalence of false negatives—samples that are semantically similar to anchors but are incorrectly classified as negatives. The root cause lies in the bimodal distribution of negative similarities in GCL, which arises from GNN message passing, leading to sampling bias. ProGCL addresses this by modeling negative hardness using a two-component beta mixture model to estimate the probability of a negative being true (i.e., not sharing the same class), combining this probability with similarity to form a more reliable hardness metric. Two schemes—ProGCL-weight and ProGCL-mix—are proposed to leverage this improved measure, resulting in consistent performance gains, state-of-the-art results on unsupervised benchmarks, and superior performance compared to supervised baselines.",
+      "abstract": "Contrastive Learning (CL) has emerged as a dominant technique for unsupervised representation learning which embeds augmented versions of the anchor close to each other (positive samples) and pushes the embeddings of other samples (negatives) apart. As revealed in recent studies, CL can benefit from hard negatives (negatives that are most similar to the anchor). However, we observe limited benefits when we adopt existing hard negative mining techniques of other domains in Graph Contrastive Learning (GCL). We perform both experimental and theoretical analysis on this phenomenon and find it can be attributed to the message passing of Graph Neural Networks (GNNs). Unlike CL in other domains, most hard negatives are potentially false negatives (negatives that share the same class with the anchor) if they are selected merely according to the similarities between anchor and themselves, which will undesirably push away the samples of the same class. To remedy this deficiency, we propose an effective method, dubbed \\\\textbf{ProGCL}, to estimate the probability of a negative being true one, which constitutes a more suitable measure for negatives' hardness together with similarity. Additionally, we devise two schemes (i.e., \\\\textbf{ProGCL-weight} and \\\\textbf{ProGCL-mix}) to boost the performance of GCL. Extensive experiments demonstrate that ProGCL brings notable and consistent improvements over base GCL methods and yields multiple state-of-the-art results on several unsupervised benchmarks or even exceeds the performance of supervised ones. Also, ProGCL is readily pluggable into various negatives-based GCL methods for performance improvement. We release the code at \\\\textcolor{magenta}{\\\\url{https://github.com/junxia97/ProGCL}}.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jun Xia",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Lirong Wu",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Ge Wang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Jintao Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Stan Z. Li",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2110.02027",
+      "date": "2021-10-05T00:00:00",
+      "citation_count": 174,
+      "categories": [
+        "cs.AI"
+      ],
+      "venue": "International Conference on Machine Learning",
+      "venue_year": null,
+      "github_url": "https://github.com/junxia97/ProGCL."
+    },
+    {
+      "arxiv_id": "2305.10563",
+      "score": 0.5,
+      "title": "HaSa: Hardness and Structure-Aware Contrastive Knowledge Graph Embedding",
+      "tldr": "[research paper] HaSa introduces a structure-aware weighting mechanism in contrastive knowledge graph embedding (KGE) by modifying InfoNCE to down-weight hard negative triples that are likely to be false negatives—factual triples missing from the knowledge graph. It estimates the probability of a negative triple being false using the shortest path length between head and tail entities, thereby reducing bias from incomplete knowledge graphs. The method achieves state-of-the-art performance on WN18RR and competitive results on FB15k-237, outperforming both simple and hard InfoNCE baselines while matching or exceeding pre-trained language model-based KGE methods.",
+      "abstract": "We consider a contrastive learning approach to knowledge graph embedding (KGE) via InfoNCE. For KGE, efficient learning relies on augmenting the training data with negative triples. However, most KGE works overlook the bias from generating the negative triples-false negative triples (factual triples missing from the knowledge graph). We argue that the generation of high-quality (i.e., hard) negative triples might lead to an increase in false negative triples. To mitigate the impact of false negative triples during the generation of hard negative triples, we propose the Hardness and Structure-aware (\\\\textbf{HaSa}) contrastive KGE method, which alleviates the effect of false negative triples while generating the hard negative triples. Experiments show that HaSa improves the performance of InfoNCE-based KGE approaches and achieves state-of-the-art results in several metrics for WN18RR datasets and competitive results for FB15k-237 datasets compared to both classic and pre-trained LM-based KGE methods.",
+      "authors": [
+        {
+          "misc": {
+            "email": "honggen@hawaii.edu"
+          },
+          "name": "Honggen Zhang",
+          "orgs": [
+            "University of Hawaii at Manoa",
+            "Honolulu, HI, USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zjz@hawaii.edu"
+          },
+          "name": "June Zhang",
+          "orgs": [
+            "University of Hawaii at Manoa",
+            "Honolulu, HI, USA"
+          ]
+        },
+        {
+          "misc": {
+            "email": "igormolybog@gmail.com"
+          },
+          "name": "Igor Molybog",
+          "orgs": [
+            "University of Hawaii at Manoa",
+            "Honolulu, HI, USA"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2305.10563",
+      "date": "2023-05-17T00:00:00",
+      "citation_count": 13,
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2024,
+      "github_url": "https://github.com/honggenzhang/HaSa-CKGE"
+    },
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.33333334,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2303.06344",
+      "score": 0.33333334,
+      "title": "Graph Contrastive Learning under Heterophily via Graph Filters",
+      "tldr": "[research paper] HLCL introduces the first contrastive learning method for graph neural networks under heterophily by leveraging high-pass and low-pass graph filters within a single GNN encoder. The high-pass filter (based on the normalized Laplacian) amplifies neighborhood dissimilarities to generate non-smooth node representations, which are contrasted with smooth representations from the same encoder using the normalized adjacency matrix. This dual-filter contrast enables rich representation learning in heterophilic graphs where neighbors are dissimilar, outperforming existing methods by up to 10% on benchmarks and scaling to large real-world graphs.",
+      "abstract": "Graph contrastive learning (CL) methods learn node representations in a self-supervised manner by maximizing the similarity between the augmented node representations obtained via a GNN-based encoder. However, CL methods perform poorly on graphs with heterophily, where connected nodes tend to belong to different classes. In this work, we address this problem by proposing an effective graph CL method, namely HLCL, for learning graph representations under heterophily. HLCL first identifies a homophilic and a heterophilic subgraph based on the cosine similarity of node features. It then uses a low-pass and a high-pass graph filter to aggregate representations of nodes connected in the homophilic subgraph and differentiate representations of nodes in the heterophilic subgraph. The final node representations are learned by contrasting both the augmented high-pass filtered views and the augmented low-pass filtered node views. Our extensive experiments show that HLCL outperforms state-of-the-art graph CL methods on benchmark datasets with heterophily, as well as large-scale real-world graphs, by up to 7%, and outperforms graph supervised learning methods on datasets with heterophily by up to 10%.",
+      "authors": [
+        {
+          "misc": {
+            "email": "hangeryang18@g.ucla.edu"
+          },
+          "name": "Wenhan Yang",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baharan@cs.ucla.edu"
+          },
+          "name": "Baharan Mirzasoleiman",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2303.06344",
+      "date": "2023-03-11T00:00:00",
+      "citation_count": 12,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Conference on Uncertainty in Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2505.10307",
+      "score": 0.25,
+      "title": "Negative Metric Learning for Graphs",
+      "tldr": "[research paper] NML-GCL introduces a learnable Negative Metric Network (NMN) to construct a negative metric space where false negatives are distinguished from true negatives via distance to anchor nodes. Instead of relying on heuristic priors, the method employs a bi-level optimization scheme that iteratively refines both the graph encoder and NMN using self-supervision from augmented views, enabling implicit soft-labeling. Theoretical analysis proves NML provides a tighter lower bound of mutual information than InfoNCE, leading to improved representation quality and false-negative suppression.",
+      "abstract": "Graph contrastive learning (GCL) often suffers from false negatives, which degrades the performance on downstream tasks. The existing methods addressing the false negative issue usually rely on human prior knowledge, still leading GCL to suboptimal results. In this paper, we propose a novel Negative Metric Learning (NML) enhanced GCL (NML-GCL). NML-GCL employs a learnable Negative Metric Network (NMN) to build a negative metric space, in which false negatives can be distinguished better from true negatives based on their distance to anchor node. To overcome the lack of explicit supervision signals for NML, we propose a joint training scheme with bi-level optimization objective, which implicitly utilizes the self-supervision signals to iteratively optimize the encoder and the negative metric network. The solid theoretical analysis and the extensive experiments conducted on widely used benchmarks verify the superiority of the proposed method.",
+      "authors": [
+        {
+          "misc": {
+            "email": "zhaoyiyang0258@stu.scu.edu.cn"
+          },
+          "name": "Yiyang Zhao",
+          "orgs": [
+            "Sichuan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "wuchengpei@stu.scu.edu.cn"
+          },
+          "name": "Chengpei Wu",
+          "orgs": [
+            "Sichuan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zhanglilin@stu.scu.edu.cn"
+          },
+          "name": "Lilin Zhang",
+          "orgs": [
+            "Sichuan University"
+          ]
+        },
+        {
+          "misc": {
+            "email": "yangning@scu.edu.cn",
+            "corresponding_author": true
+          },
+          "name": "Ning Yang",
+          "orgs": [
+            "Sichuan University"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2505.10307",
+      "date": "2025-05-15T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "International Joint Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": null
+    }
+  ]
+}

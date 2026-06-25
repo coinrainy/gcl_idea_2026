@@ -1,0 +1,349 @@
+{
+  "status": "success",
+  "backend": "qdrant",
+  "total_count": 5,
+  "result": [
+    {
+      "arxiv_id": "2207.00148",
+      "score": 0.5588235,
+      "title": "Generating Counterfactual Hard Negative Samples for Graph Contrastive Learning",
+      "tldr": "[research paper] CGC introduces a counterfactual-based generative framework to produce hard negative samples in graph contrastive learning by applying minimal structural or feature perturbations to the input graph. The method ensures generated samples are semantically similar (via proximity and feature masking) yet have distinct labels, using similarity-aware loss functions that minimize perturbation norms and KL divergence between predicted class distributions. This eliminates reliance on stochastic sampling, avoids false negatives, and achieves state-of-the-art performance without requiring debiasing steps.",
+      "abstract": "Graph contrastive learning has emerged as a powerful tool for unsupervised graph representation learning. The key to the success of graph contrastive learning is to acquire high-quality positive and negative samples as contrasting pairs for the purpose of learning underlying structural semantics of the input graph. Recent works usually sample negative samples from the same training batch with the positive samples, or from an external irrelevant graph. However, a significant limitation lies in such strategies, which is the unavoidable problem of sampling false negative samples. In this paper, we propose a novel method to utilize \\\\textbf{C}ounterfactual mechanism to generate artificial hard negative samples for \\\\textbf{G}raph \\\\textbf{C}ontrastive learning, namely \\\\textbf{CGC}, which has a different perspective compared to those sampling-based strategies. We utilize counterfactual mechanism to produce hard negative samples, which ensures that the generated samples are similar to, but have labels that different from the positive sample. The proposed method achieves satisfying results on several datasets compared to some traditional unsupervised graph learning methods and some SOTA graph contrastive learning methods. We also conduct some supplementary experiments to give an extensive illustration of the proposed method, including the performances of CGC with different hard negative samples and evaluations for hard negative samples generated with different similarity measurements.",
+      "authors": [
+        {
+          "misc": {
+            "email": "haoran.yang-2@student.uts.edu.au"
+          },
+          "name": "Haoran Yang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xiangguosun@cuhk.edu.hk"
+          },
+          "name": "Xiangguo Sun",
+          "orgs": [
+            "The Chinese University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "hongxu.chen@uts.edu.au"
+          },
+          "name": "Hongxu Chen",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "qli@curtin.edu.au"
+          },
+          "name": "Qian Li",
+          "orgs": [
+            "Curtin University",
+            "Perth, WA, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zsx57575@gmail.com"
+          },
+          "name": "Sixiao Zhang",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "xianzhao@cityu.edu.hk"
+          },
+          "name": "Xiangyu Zhao",
+          "orgs": [
+            "City University of Hong Kong",
+            "Hong Kong SAR, China"
+          ]
+        },
+        {
+          "misc": {
+            "email": "guandong.xu@uts.edu.au"
+          },
+          "name": "Guandong Xu",
+          "orgs": [
+            "University of Technology Sydney",
+            "Sydney, NSW, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2207.00148",
+      "date": "2022-07-01T00:00:00",
+      "citation_count": 36,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "The Web Conference",
+      "venue_year": 2023,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2401.16011",
+      "score": 0.55,
+      "title": "GPS: Graph Contrastive Learning via Multi-scale Augmented Views from Adversarial Pooling",
+      "tldr": "[research paper] GPS introduces a learnable, adversarially trained graph pooling framework that automatically generates multi-scale augmented views—strongly and weakly augmented—by adaptively coarsening graphs to preserve semantics while introducing challenges. The method jointly optimizes similarity learning (hard) and consistency learning (soft) between original and augmented views, with pooling modules trained adversarially against the encoder to enhance robustness and representation quality, outperforming baseline methods in graph classification and transfer learning.",
+      "abstract": "Self-supervised graph representation learning has recently shown considerable promise in a range of fields, including bioinformatics and social networks. A large number of graph contrastive learning approaches have shown promising performance for representation learning on graphs, which train models by maximizing agreement between original graphs and their augmented views (i.e., positive views). Unfortunately, these methods usually involve pre-defined augmentation strategies based on the knowledge of human experts. Moreover, these strategies may fail to generate challenging positive views to provide sufficient supervision signals. In this paper, we present a novel approach named Graph Pooling ContraSt (GPS) to address these issues. Motivated by the fact that graph pooling can adaptively coarsen the graph with the removal of redundancy, we rethink graph pooling and leverage it to automatically generate multi-scale positive views with varying emphasis on providing challenging positives and preserving semantics, i.e., strongly-augmented view and weakly-augmented view. Then, we incorporate both views into a joint contrastive learning framework with similarity learning and consistency learning, where our pooling module is adversarially trained with respect to the encoder for adversarial robustness. Experiments on twelve datasets on both graph classification and transfer learning tasks verify the superiority of the proposed method over its counterparts.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Wei Ju",
+          "orgs": [
+            "School of Computer Science, National Key Laboratory for Multimedia Information Processing, Peking University, Beijing 100871, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yiyang Gu",
+          "orgs": [
+            "School of Computer Science, National Key Laboratory for Multimedia Information Processing, Peking University, Beijing 100871, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Zhengyang Mao",
+          "orgs": [
+            "School of Computer Science, National Key Laboratory for Multimedia Information Processing, Peking University, Beijing 100871, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ziyue Qiao",
+          "orgs": [
+            "Artificial Intelligence Thrust, The Hong Kong University of Science and Technology, Guangzhou 511453, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Yifang Qin",
+          "orgs": [
+            "School of Computer Science, National Key Laboratory for Multimedia Information Processing, Peking University, Beijing 100871, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Xiao Luo",
+          "orgs": [
+            "Department of Computer Science, University of California, Los Angeles 90095, USA"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Hui Xiong",
+          "orgs": [
+            "Artificial Intelligence Thrust, The Hong Kong University of Science and Technology, Guangzhou 511453, China"
+          ]
+        },
+        {
+          "misc": {},
+          "name": "Ming Zhang",
+          "orgs": [
+            "School of Computer Science, National Key Laboratory for Multimedia Information Processing, Peking University, Beijing 100871, China"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2401.16011",
+      "date": "2024-01-29T00:00:00",
+      "citation_count": 31,
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.SI"
+      ],
+      "venue": "Science China Information Sciences",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2404.00225",
+      "score": 0.33333334,
+      "title": "Heterogeneous Contrastive Learning for Foundation Models and Beyond",
+      "tldr": "[survey paper] This survey systematically categorizes and evaluates heterogeneous contrastive learning methods in foundation models, addressing both view and task heterogeneity. It identifies gaps in existing literature by showing how contrastive learning enables multi-view representation learning and task-aware pretraining/fine-tuning, while highlighting open challenges in scalability, alignment, and cross-modal generalization across diverse data sources.",
+      "abstract": "In the era of big data and Artificial Intelligence, an emerging paradigm is to utilize contrastive self-supervised learning to model large-scale heterogeneous data. Many existing foundation models benefit from the generalization capability of contrastive self-supervised learning by learning compact and high-quality representations without relying on any label information. Amidst the explosive advancements in foundation models across multiple domains, including natural language processing and computer vision, a thorough survey on heterogeneous contrastive learning for the foundation model is urgently needed. In response, this survey critically evaluates the current landscape of heterogeneous contrastive learning for foundation models, highlighting the open challenges and future trends of contrastive learning. In particular, we first present how the recent advanced contrastive learning-based methods deal with view heterogeneity and how contrastive learning is applied to train and fine-tune the multi-view foundation models. Then, we move to contrastive learning methods for task heterogeneity, including pretraining tasks and downstream tasks, and show how different tasks are combined with contrastive learning loss for different purposes. Finally, we conclude this survey by discussing the open challenges and shedding light on the future directions of contrastive learning.",
+      "authors": [
+        {
+          "misc": {
+            "email": "lecheng4@illinois.edu"
+          },
+          "name": "Lecheng Zheng",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign"
+          ]
+        },
+        {
+          "misc": {
+            "email": "baoyu2@illinois.edu"
+          },
+          "name": "Baoyu Jing",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign"
+          ]
+        },
+        {
+          "misc": {
+            "email": "zihaoli5@illinois.edu"
+          },
+          "name": "Zihao Li",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign"
+          ]
+        },
+        {
+          "misc": {
+            "email": "htong@illinois.edu"
+          },
+          "name": "Hanghang Tong",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign"
+          ]
+        },
+        {
+          "misc": {
+            "email": "jingrui@illinois.edu"
+          },
+          "name": "Jingrui He",
+          "orgs": [
+            "University of Illinois at Urbana-Champaign"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2404.00225",
+      "date": "2024-03-30T00:00:00",
+      "citation_count": 45,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "Knowledge Discovery and Data Mining",
+      "venue_year": null,
+      "github_url": null
+    },
+    {
+      "arxiv_id": "2412.16218",
+      "score": 0.33333334,
+      "title": "GNN-Transformer Cooperative Architecture for Trustworthy Graph Contrastive Learning",
+      "tldr": "[research paper] GTCA introduces a trustworthiness-aware graph contrastive learning framework that jointly employs GCN and NodeFormer (a linear graph transformer) as encoders to capture both local and global graph structures without random augmentation. It generates a topology-driven structural view from graph properties, enabling augmentation-free positive pair construction. A novel contrastive loss function leverages intersection between node representation views and topology view to form multiple positive pairs per node, improving representation quality and mitigating semantic distortion risks. Theoretical analysis and experiments confirm superior performance over existing methods in preserving graph semantics and capturing long-range dependencies.",
+      "abstract": "Graph contrastive learning (GCL) has become a hot topic in the field of graph representation learning. In contrast to traditional supervised learning relying on a large number of labels, GCL exploits augmentation strategies to generate multiple views and positive/negative pairs, both of which greatly influence the performance. Unfortunately, commonly used random augmentations may disturb the underlying semantics of graphs. Moreover, traditional GNNs, a type of widely employed encoders in GCL, are inevitably confronted with over-smoothing and over-squashing problems. To address these issues, we propose GNN-Transformer Cooperative Architecture for Trustworthy Graph Contrastive Learning (GTCA), which inherits the advantages of both GNN and Transformer, incorporating graph topology to obtain comprehensive graph representations. Theoretical analysis verifies the trustworthiness of the proposed method. Extensive experiments on benchmark datasets demonstrate state-of-the-art empirical performance.",
+      "authors": [
+        {
+          "misc": {},
+          "name": "Jianqing Liang",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Xinkai Wei",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Min Chen",
+          "orgs": []
+        },
+        {
+          "misc": {},
+          "name": "Zhiqiang Wang",
+          "orgs": []
+        },
+        {
+          "misc": {
+            "corresponding_author": true
+          },
+          "name": "Jiye Liang",
+          "orgs": []
+        }
+      ],
+      "url": "https://arxiv.org/abs/2412.16218",
+      "date": "2024-12-18T00:00:00",
+      "citation_count": 1,
+      "categories": [
+        "cs.LG"
+      ],
+      "venue": "AAAI Conference on Artificial Intelligence",
+      "venue_year": null,
+      "github_url": "https://github.com/a-hou/GTCA"
+    },
+    {
+      "arxiv_id": "2601.21171",
+      "score": 0.27,
+      "title": "AC2L-GAD: Active Counterfactual Contrastive Learning for Graph Anomaly Detection",
+      "tldr": "[research paper] AC2L-GAD introduces an active counterfactual contrastive learning framework for graph anomaly detection that resolves two key limitations in existing graph contrastive learning: (1) inconsistent positive pairs from random augmentations due to lack of semantic awareness, and (2) uninformative negatives from naive sampling that fail to expose subtle anomaly patterns. By combining information-theoretic active selection—based on structural complexity and attribute divergence—with principled counterfactual generation, the method produces anomaly-preserving positive augmentations and hard, normalized negative samples. Counterfactuals are generated only for a strategically selected subset of nodes (via active learning), reducing computational cost from O(|V|) to O(k) with k ≪ |V|, achieving ~65% overhead reduction while maintaining or improving detection performance on real-world financial graphs.",
+      "abstract": "Graph anomaly detection aims to identify abnormal patterns in networks, but faces significant challenges from label scarcity and extreme class imbalance. While graph contrastive learning offers a promising unsupervised solution, existing methods suffer from two critical limitations: random augmentations break semantic consistency in positive pairs, while naive negative sampling produces trivial, uninformative contrasts. We propose AC2L-GAD, an Active Counterfactual Contrastive Learning framework that addresses both limitations through principled counterfactual reasoning. By combining information-theoretic active selection with counterfactual generation, our approach identifies structurally complex nodes and generates anomaly-preserving positive augmentations alongside normal negative counterparts that provide hard contrasts, while restricting expensive counterfactual generation to a strategically selected subset. This design reduces computational overhead by approximately 65% compared to full-graph counterfactual generation while maintaining detection quality. Experiments on nine benchmark datasets, including real-world financial transaction graphs from GADBench, show that AC2L-GAD achieves competitive or superior performance compared to state-of-the-art baselines, with notable gains in datasets where anomalies exhibit complex attribute-structure interactions.",
+      "authors": [
+        {
+          "misc": {
+            "email": "kamal.berahmand@rmit.edu.au",
+            "orcid": "0000-0003-4459-0703"
+          },
+          "name": "Kamal Berahmand",
+          "orgs": [
+            "RMIT University, Melbourne, Victoria, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "saman.forouzandeh@rmit.edu.au",
+            "orcid": "0000-0002-5952-156X"
+          },
+          "name": "Saman Forouzandeh",
+          "orgs": [
+            "RMIT University, Melbourne, Victoria, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "m.mohammadibolbanabad@uq.edu.au",
+            "orcid": "0000-0001-9596-7414"
+          },
+          "name": "Mehrnoush Mohammadi",
+          "orgs": [
+            "The University of Queensland, Brisbane, Queensland, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "parham.moradi@rmit.edu.au",
+            "orcid": "0000-0002-5604-565X"
+          },
+          "name": "Parham Moradi",
+          "orgs": [
+            "RMIT University, Melbourne, Victoria, Australia"
+          ]
+        },
+        {
+          "misc": {
+            "email": "mahdi.jalili@rmit.edu.au",
+            "orcid": "0000-0002-0517-9420"
+          },
+          "name": "Mahdi Jalili",
+          "orgs": [
+            "RMIT University, Melbourne, Victoria, Australia"
+          ]
+        }
+      ],
+      "url": "https://arxiv.org/abs/2601.21171",
+      "date": "2026-01-29T00:00:00",
+      "citation_count": 0,
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "venue": "Proceedings of the ACM Web Conference 2026",
+      "venue_year": 2026,
+      "github_url": null
+    }
+  ]
+}
