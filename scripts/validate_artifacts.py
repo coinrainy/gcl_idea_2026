@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+"""Command-line wrapper for validating Stage 3.1 JSON artifacts."""
+
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from gcl_diag.io.schema_validate import main
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

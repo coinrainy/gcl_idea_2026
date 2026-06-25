@@ -1,7 +1,7 @@
 # Experiment Tracker
 
-Date: 2026-06-25
-Stage: Stage 3.0
+Date: 2026-06-26
+Stage: Stage 3.1
 
 No experiments have been run.
 
@@ -30,12 +30,23 @@ No experiments have been run.
 | Pilot method selection | ready_for_audit |
 | Stage 3.0 auditor report | drafted |
 | Stage 3.0 readiness report | drafted |
+| Schema validators | implemented |
+| Synthetic split fixture | implemented |
+| Split integrity checker | implemented |
+| Raw result logger | implemented |
+| Metric artifact writer | implemented |
+| Frozen evaluator dry-run | implemented |
+| Method interfaces | scaffolded |
+| Config skeletons | drafted |
+| Synthetic smoke tests | passed |
+| Pytest smoke tests | skipped: pytest not installed |
 | Actual split JSON files | not started |
 | Config templates | not started |
 | Metric extraction script | not started |
 | Pilot summary script | not started |
+| Real dataset loaders | not started |
 | Training scripts | not started |
-| Smoke tests | not started |
+| Real-data smoke tests | not started |
 | Pilot runs | not started |
 | Kill-condition checklist | specified in Stage 2B docs |
 

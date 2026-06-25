@@ -1,0 +1,14 @@
+stage: pilot
+scaffold_only: true
+method: GRACE
+objective_family: negative_based_contrastive
+dataset: synthetic_only
+split_file: tests/fixtures/synthetic_split.json
+model_seed: 0
+evaluator_seed: 0
+backbone: gcn
+hidden_dim: 256
+projection_dim: 256
+pretrain_epochs: null
+budget_policy: synthetic_smoke_only
+evaluator_type: frozen_encoder_linear_evaluator

@@ -1,0 +1,24 @@
+{
+  "class_distribution_test": null,
+  "class_distribution_train": {
+    "0": 3,
+    "1": 3
+  },
+  "class_distribution_val": {
+    "0": 2,
+    "1": 2
+  },
+  "commit_hash": "synthetic-commit",
+  "created_at": "2026-06-26T00:00:00Z",
+  "created_by": "stage3.1 synthetic smoke",
+  "dataset_name": "synthetic_only",
+  "num_nodes": 18,
+  "num_test": 8,
+  "num_train": 6,
+  "num_val": 4,
+  "split_seed": 0,
+  "split_type": "synthetic_fixed",
+  "test_indices": [10, 11, 12, 13, 14, 15, 16, 17],
+  "train_indices": [0, 1, 2, 3, 4, 5],
+  "val_indices": [6, 7, 8, 9]
+}

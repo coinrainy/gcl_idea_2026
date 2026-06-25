@@ -1,0 +1,1 @@
+"""Synthetic evaluator scaffold."""

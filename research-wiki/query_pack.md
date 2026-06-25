@@ -117,3 +117,23 @@ Stage 3.0 auditor result:
 - Stage 3.2 pilot remains blocked.
 - Post-audit fixes applied: raw result traceability fields, metric label-free/audit artifact separation, shared split test-distribution policy, transductive graph visibility declaration.
 - Still no experiment, smoke test, dataset download, baseline clone, training implementation or result evidence.
+
+## Stage 3.1 Synthetic Scaffold Status
+
+Stage 3.1 implemented scaffold-only code:
+
+- schema validator;
+- synthetic split fixture and split integrity checker;
+- raw result logger;
+- metric artifact writer with `freeze_hash`;
+- selector-safe label-free metric loader;
+- frozen evaluator dry-run on synthetic embeddings;
+- GRACE/BGRL/GraphMAE method placeholders;
+- scaffold-only configs;
+- synthetic smoke runner.
+
+Synthetic smoke status: passed via `python scripts/run_stage3_1_synthetic_smoke.py`.
+
+Auditor verdict: `WARN`; no Stage 3.1 blocking issue. Stage 3.1.5 real loader / split generation smoke may be requested next, but only under a separate user request and without training/pilot/GPU/baseline cloning.
+
+No real dataset was accessed. No model was trained. No GPU was used. No baseline repository was cloned. No pilot run or performance claim exists. Stage 3.2 remains blocked.

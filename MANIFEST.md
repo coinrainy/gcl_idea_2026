@@ -38,3 +38,14 @@
 | 2026-06-26 00:00 | stage3.0-readiness | refine-logs/STAGE3_0_AUDITOR_REPORT.md | implementation | fresh auditor report |
 | 2026-06-26 00:00 | stage3.0-readiness | refine-logs/STAGE3_0_READINESS_REPORT.md | implementation | final Stage 3.0 readiness report |
 | 2026-06-26 00:00 | stage3.0-readiness | .aris/traces/stage3_0_readiness/STAGE3_0_AUDITOR_REPORT.md | implementation | auditor trace copy |
+| 2026-06-26 00:30 | stage3.1-scaffold | refine-logs/STAGE3_1_SCOPE.md | implementation | Stage 3.1 scope boundary |
+| 2026-06-26 00:30 | stage3.1-scaffold | src/gcl_diag/ | implementation | minimal scaffold package |
+| 2026-06-26 00:30 | stage3.1-scaffold | scripts/run_stage3_1_synthetic_smoke.py | implementation | synthetic smoke runner |
+| 2026-06-26 00:30 | stage3.1-scaffold | scripts/validate_artifacts.py | implementation | schema validation CLI |
+| 2026-06-26 00:30 | stage3.1-scaffold | tests/fixtures/synthetic_split.json | implementation | synthetic split fixture |
+| 2026-06-26 00:30 | stage3.1-scaffold | tests/smoke/ | implementation | synthetic smoke tests |
+| 2026-06-26 00:30 | stage3.1-scaffold | configs/ | implementation | scaffold-only configs |
+| 2026-06-26 00:30 | stage3.1-scaffold | refine-logs/STAGE3_1_SMOKE_REPORT.md | implementation | synthetic smoke report |
+| 2026-06-26 00:30 | stage3.1-scaffold | refine-logs/STAGE3_1_SCAFFOLD_REPORT.md | implementation | Stage 3.1 scaffold report |
+| 2026-06-26 00:30 | stage3.1-scaffold | refine-logs/STAGE3_1_AUDITOR_REPORT.md | implementation | fresh auditor report |
+| 2026-06-26 00:30 | stage3.1-scaffold | .aris/traces/stage3_1_synthetic_smoke/STAGE3_1_AUDITOR_REPORT.md | implementation | auditor trace copy |
