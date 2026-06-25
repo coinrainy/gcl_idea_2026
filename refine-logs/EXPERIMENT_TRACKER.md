@@ -45,9 +45,17 @@ No experiments have been run.
 | Metric extraction script | not started |
 | Pilot summary script | not started |
 | Real dataset loaders | not started |
+| Real loader probe | partial: dependencies found, local caches missing |
+| Dataset metadata schema | drafted |
+| Dataset metadata writer | implemented |
+| Dataset metadata files | written |
+| Real split generation smoke | failed: no local dataset cache |
+| Validated split JSON files | not written |
 | Training scripts | not started |
 | Real-data smoke tests | not started |
 | Pilot runs | not started |
+| Stage 3.2 | blocked |
+| Stage 3.1.5 auditor report | blocked |
 | Kill-condition checklist | specified in Stage 2B docs |
 
 ## Rules

@@ -49,3 +49,16 @@
 | 2026-06-26 00:30 | stage3.1-scaffold | refine-logs/STAGE3_1_SCAFFOLD_REPORT.md | implementation | Stage 3.1 scaffold report |
 | 2026-06-26 00:30 | stage3.1-scaffold | refine-logs/STAGE3_1_AUDITOR_REPORT.md | implementation | fresh auditor report |
 | 2026-06-26 00:30 | stage3.1-scaffold | .aris/traces/stage3_1_synthetic_smoke/STAGE3_1_AUDITOR_REPORT.md | implementation | auditor trace copy |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_SCOPE.md | implementation | Stage 3.1.5 scope boundary |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_ENV_REPORT.md | implementation | environment dependency report |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | schemas/dataset_metadata_schema.json | implementation | dataset metadata schema |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | docs/dataset_metadata_schema_explanation.md | implementation | dataset metadata schema explanation |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | src/gcl_diag/data/ | implementation | non-downloading loader probe and metadata writer |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | src/gcl_diag/splits/generate_splits.py | implementation | split generation/extraction scaffold |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | scripts/probe_stage3_1_5_loaders.py | implementation | non-downloading loader probe script |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | scripts/run_stage3_1_5_split_smoke.py | implementation | non-training split smoke script |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_LOADER_REPORT.md | implementation | loader report |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_SPLIT_REPORT.md | implementation | split smoke report |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_REPORT.md | implementation | Stage 3.1.5 final report |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | refine-logs/STAGE3_1_5_AUDITOR_REPORT.md | implementation | fresh auditor report |
+| 2026-06-26 01:00 | stage3.1.5-loader-split | .aris/traces/stage3_1_5_loader_split_smoke/STAGE3_1_5_AUDITOR_REPORT.md | implementation | auditor trace copy |

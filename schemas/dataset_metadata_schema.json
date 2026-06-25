@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dataset Metadata Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_name",
+    "loader_backend",
+    "loader_status",
+    "local_cache_used",
+    "download_attempted",
+    "num_nodes",
+    "num_edges",
+    "num_features",
+    "num_classes",
+    "has_labels",
+    "has_masks_or_official_splits",
+    "split_source",
+    "evaluation_setting",
+    "graph_visibility",
+    "error_message",
+    "created_at",
+    "commit_hash"
+  ],
+  "properties": {
+    "dataset_name": { "type": "string" },
+    "loader_backend": { "type": "string" },
+    "loader_status": {
+      "enum": [
+        "available",
+        "missing_dependency",
+        "local_cache_missing",
+        "loader_error",
+        "download_required_not_approved",
+        "fixed_split_unavailable"
+      ]
+    },
+    "local_cache_used": { "type": "boolean" },
+    "download_attempted": { "type": "boolean" },
+    "num_nodes": { "type": ["integer", "null"], "minimum": 1 },
+    "num_edges": { "type": ["integer", "null"], "minimum": 0 },
+    "num_features": { "type": ["integer", "null"], "minimum": 0 },
+    "num_classes": { "type": ["integer", "null"], "minimum": 0 },
+    "has_labels": { "type": ["boolean", "null"] },
+    "has_masks_or_official_splits": { "type": ["boolean", "null"] },
+    "split_source": { "type": ["string", "null"] },
+    "evaluation_setting": { "const": "transductive" },
+    "graph_visibility": { "type": "string" },
+    "error_message": { "type": ["string", "null"] },
+    "created_at": { "type": "string" },
+    "commit_hash": { "type": "string" }
+  }
+}

@@ -32,7 +32,7 @@ Stage 3.0 does not create actual split files.
 - `split_seed`: seed used to create or select the split. For official splits, record the official split id or mapped integer.
 - `train_indices`, `val_indices`, `test_indices`: node indices only; no masks hidden in binary tensor files.
 - `class_distribution_*`: may be `null` only if labels are unavailable at split creation time. If computed, labels must be train/validation/test membership labels only and must not affect selector design.
-- `class_distribution_test`: for shared split files passed to training or selector code, this must be `null`. If test distribution is ever needed, it belongs in a separate auditor-only metadata file that is not read by training, selector, metric-freeze or survival-decision code.
+- `class_distribution_test`: must be `null` in the split schema. If test distribution is ever needed, it belongs in a separate auditor-only metadata file that is not read by training, selector, metric-freeze or survival-decision code.
 - `commit_hash`: code commit that generated the split file.
 
 ## Integrity Checks Required Later

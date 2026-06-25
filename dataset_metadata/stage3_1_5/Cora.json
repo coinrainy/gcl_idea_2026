@@ -1,0 +1,19 @@
+{
+  "commit_hash": "0a8acc2eff60177d994bc62c6f705ae5d35d31fc",
+  "created_at": "2026-06-26T00:00:00Z",
+  "dataset_name": "Cora",
+  "download_attempted": false,
+  "error_message": "local cache missing at candidates ['/root/autodl-tmp/gcl_idea_2026/data/Planetoid/Cora', '/root/autodl-tmp/gcl_idea_2026/data/Cora', '/root/autodl-tmp/gcl_idea_2026/datasets/Planetoid/Cora', '/root/autodl-tmp/gcl_idea_2026/datasets/Cora']; download not approved",
+  "evaluation_setting": "transductive",
+  "graph_visibility": "metadata probe only; no training/evaluator/pilot run",
+  "has_labels": null,
+  "has_masks_or_official_splits": null,
+  "loader_backend": "pyg_planetoid",
+  "loader_status": "download_required_not_approved",
+  "local_cache_used": false,
+  "num_classes": null,
+  "num_edges": null,
+  "num_features": null,
+  "num_nodes": null,
+  "split_source": null
+}

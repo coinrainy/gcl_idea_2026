@@ -137,3 +137,17 @@ Synthetic smoke status: passed via `python scripts/run_stage3_1_synthetic_smoke.
 Auditor verdict: `WARN`; no Stage 3.1 blocking issue. Stage 3.1.5 real loader / split generation smoke may be requested next, but only under a separate user request and without training/pilot/GPU/baseline cloning.
 
 No real dataset was accessed. No model was trained. No GPU was used. No baseline repository was cloned. No pilot run or performance claim exists. Stage 3.2 remains blocked.
+
+## Stage 3.1.5 Loader / Split Smoke Status
+
+Environment dependencies are available (`torch`, `torch_geometric`, `dgl`, `numpy`, `sklearn` all importable), but the target dataset caches are absent:
+
+- Cora: `download_required_not_approved`
+- Wiki-CS: `download_required_not_approved`
+- Actor: `download_required_not_approved`
+
+Metadata files were written under `dataset_metadata/stage3_1_5/` and validated against `schemas/dataset_metadata_schema.json`. No split JSON files were written because downloads are not approved and local caches are missing.
+
+Auditor verdict: `BLOCKED`. Post-audit fixes applied: split schema now requires `class_distribution_test=null`; placeholder Cora split generation was disabled until labels can be safely read from an approved local cache; command provenance was added to the Stage 3.1.5 report.
+
+Stage 3.1.5 verdict: `BLOCKED`. This is a data-access/cache blocker, not an experimental result. No training, evaluator, GPU, baseline clone, pilot run or accuracy exists. Stage 3.2 planning and pilot execution remain disallowed until data access is explicitly resolved and a rerun passes independent review.

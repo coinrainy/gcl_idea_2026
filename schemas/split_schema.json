@@ -59,12 +59,7 @@
         { "type": "null" }
       ]
     },
-    "class_distribution_test": {
-      "oneOf": [
-        { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
-        { "type": "null" }
-      ]
-    },
+    "class_distribution_test": { "type": "null" },
     "created_by": { "type": "string" },
     "created_at": {
       "type": "string",

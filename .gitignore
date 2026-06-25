@@ -22,8 +22,8 @@ wandb/
 tensorboard/
 
 # Large local data
-data/
-datasets/
+/data/
+/datasets/
 *.ckpt
 *.pt
 *.pth
