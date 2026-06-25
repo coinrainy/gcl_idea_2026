@@ -40,6 +40,7 @@ class ControlledDataset:
     cache_path: Path
     local_cache_used: bool
     download_attempted: bool
+    download_source: str
     dataset: Any | None
     data: Any | None
     error_message: str | None = None
@@ -64,7 +65,7 @@ def load_controlled_dataset(
     cache_ready_before = _has_processed_cache(dataset_name, resolved_root)
 
     try:
-        dataset = _instantiate_pyg_dataset(dataset_name, resolved_root)
+        dataset, download_source = _instantiate_pyg_dataset(dataset_name, resolved_root)
         data = dataset[0]
     except Exception as exc:  # noqa: BLE001 - record loader failure without fallback.
         return ControlledDataset(
@@ -75,6 +76,7 @@ def load_controlled_dataset(
             cache_path=resolved_root,
             local_cache_used=cache_ready_before,
             download_attempted=True,
+            download_source="pyg_official_loader",
             dataset=None,
             data=None,
             error_message=_format_exception(exc),
@@ -88,6 +90,7 @@ def load_controlled_dataset(
         cache_path=resolved_root,
         local_cache_used=cache_ready_before,
         download_attempted=True,
+        download_source=download_source,
         dataset=dataset,
         data=data,
     )
@@ -117,20 +120,40 @@ def metadata_fields(result: ControlledDataset) -> dict[str, Any]:
     }
 
 
-def _instantiate_pyg_dataset(dataset_name: str, root: Path) -> Any:
+def _instantiate_pyg_dataset(dataset_name: str, root: Path) -> tuple[Any, str]:
     if dataset_name == "Cora":
-        from torch_geometric.datasets import Planetoid
+        return _load_cora_planetoid(root)
 
-        return Planetoid(root=str(root), name="Cora")
     if dataset_name == "Wiki-CS":
         from torch_geometric.datasets import WikiCS
 
-        return WikiCS(root=str(root))
+        return WikiCS(root=str(root)), "pyg_official_loader"
     if dataset_name == "Actor":
         from torch_geometric.datasets import Actor
 
-        return Actor(root=str(root))
+        return Actor(root=str(root)), "pyg_official_loader"
     raise ValueError(f"unsupported dataset: {dataset_name}")
+
+
+def _load_cora_planetoid(root: Path) -> tuple[Any, str]:
+    from torch_geometric.datasets import Planetoid
+
+    try:
+        return Planetoid(root=str(root), name="Cora"), "pyg_official_loader"
+    except Exception as primary_exc:  # noqa: BLE001 - allow official raw endpoint retry.
+        fallback_url = "https://raw.githubusercontent.com/kimiyoung/planetoid/master/data"
+        original_url = Planetoid.url
+        try:
+            Planetoid.url = fallback_url
+            return Planetoid(root=str(root), name="Cora"), "pyg_official_loader_raw_github_endpoint"
+        except Exception as fallback_exc:  # noqa: BLE001
+            raise RuntimeError(
+                "Cora PyG Planetoid failed via default endpoint and raw GitHub endpoint; "
+                f"default_error={_format_exception(primary_exc)}; "
+                f"raw_endpoint_error={_format_exception(fallback_exc)}"
+            ) from fallback_exc
+        finally:
+            Planetoid.url = original_url
 
 
 def _resolve_allowed_root(project_root: Path, root: str | Path) -> Path:

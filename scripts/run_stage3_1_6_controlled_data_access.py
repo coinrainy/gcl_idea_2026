@@ -40,7 +40,7 @@ def main() -> int:
             download_attempted=result.download_attempted,
             data_access_mode=DATA_ACCESS_MODE,
             cache_path=str(result.cache_path.relative_to(ROOT)) if result.cache_path.is_relative_to(ROOT) else str(result.cache_path),
-            download_source="pyg_official_loader",
+            download_source=result.download_source,
             error_message=result.error_message,
             created_at=created_at,
             commit_hash=commit,
@@ -64,15 +64,15 @@ def _write_report(results, metadata_files: list[str]) -> None:
         "",
         "## Datasets Checked",
         "",
-        "| dataset | loader backend | download attempted | download/read success | local cache path | loader status | error |",
-        "| --- | --- | --- | --- | --- | --- | --- |",
+        "| dataset | loader backend | download attempted | download/read success | download source | local cache path | loader status | error |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for result, _ in results:
         success = "yes" if result.loader_status == "available" else "no"
         cache_path = str(result.cache_path.relative_to(ROOT)) if result.cache_path.is_relative_to(ROOT) else str(result.cache_path)
         lines.append(
             f"| {result.dataset_name} | {result.loader_backend} | yes | {success} | "
-            f"{cache_path} | {result.loader_status} | {result.error_message or ''} |"
+            f"{result.download_source} | {cache_path} | {result.loader_status} | {result.error_message or ''} |"
         )
 
     lines.extend(["", "## Metadata Files Written", ""])
